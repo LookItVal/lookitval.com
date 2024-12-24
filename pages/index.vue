@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .landing {
     display: flex;
     justify-content: space-between;
@@ -44,43 +44,42 @@ export default {
     height: 100vh;
     padding: 0 10%;
     overflow-y: hidden;
-}
 
-.landing h1 {
-    color: var(--lavender);
-}
+    h1 {
+        color: var(--lavender);
+        span {
+            color: var(--mauve);
+        }
+    }
 
-.landing h1 span {
-    color: var(--mauve);
-}
+    .background-lambda {
+        translate: 0 -20%;
+        font-size: 120vh;
+        color: var(--base);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1000;
+    }
 
-.background-lambda {
-    translate: 0 -20%;
-    font-size: 120vh;
-    color: var(--base);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1000;
-}
+    .left-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100vw;
+    }
 
-.left-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100vw;
-}
-.right-image {
-    width: 25%;
-}
-
-.right-image img {
-    height: 100%;
-    padding-left: 20%;
-    padding-bottom: 50%;
-    object-fit: cover;
-    object-position: bottom;
+    .right-image {
+        width: 25%;
+        img {
+            height: 100%;
+            padding-left: 20%;
+            padding-bottom: 50%;
+            object-fit: cover;
+            object-position: bottom;
+        }
+    }
 }
 
 .about {
@@ -90,17 +89,17 @@ export default {
     align-items: center;
     height: 60vh;
     padding: 5% 10%;
-}
 
-.left-image {
-    width: 25%;
-}
-.left-image img {
-    width: 100%;
-}
+    .left-image {
+        width: 25%;
+        img {
+            width: 100%;
+        }
+    }
 
-.right-text {
-    width: 75%;
+    .right-text {
+        width: 75%;
+    }
 }
 
 .skills {

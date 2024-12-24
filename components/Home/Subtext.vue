@@ -57,7 +57,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .subtext {
     padding-left: 5%;
 }
@@ -68,9 +68,10 @@ h2 {
     border-right: 0.15em solid var(--text);
     animation: blink-caret 0.75s step-end infinite;
     text-align: left;
-}
-h2 span {
-    color: var(--text);
+
+    span {
+        color: var(--text);
+    }
 }
 
 @keyframes blink-caret {

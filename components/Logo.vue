@@ -4,7 +4,7 @@
             <mask id="logo-mask" height="100%" width="100%">
                 <image href="~assets/QVC.svg" height="100%" width="100%" />
             </mask>
-            <rect width="100%" height="100%" fill="var(--mauve)" mask="url(#logo-mask)" />
+            <rect width="100%" height="100%" fill="var(--lavender)" mask="url(#logo-mask)" />
         </svg>
     </NuxtLink>
 </template>

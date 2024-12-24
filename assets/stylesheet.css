@@ -145,10 +145,12 @@ p {
 }
 
 .navbar {
+    position: absolute;
     padding: 0rem 0rem 0rem 0rem;
     display: flex;
     justify-content: space-between;
     height: 4rem;
+    width: 100%;
     border-bottom: 1px solid var(--overlay0);
 }
 

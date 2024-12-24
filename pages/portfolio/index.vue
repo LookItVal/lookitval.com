@@ -1,9 +1,11 @@
 <template>
-    <div></div>
+    <div>
+        <Logo />
+    </div>
 </template>
 
 <script>
 export default {
-name: "/contact"
+name: "/portfolio"
 }
 </script>

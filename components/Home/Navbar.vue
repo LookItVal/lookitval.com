@@ -17,10 +17,3 @@ export default {
     name: 'HomeNavbar'
 }
 </script>
-
-<style scoped>
-.logo {
-    display: block;
-    height: 100%;
-}
-</style>

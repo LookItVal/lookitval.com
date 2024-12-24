@@ -5,7 +5,7 @@
         <span class="background-lambda">λ</span>
         <div class="left-text">
             <h1>Quinn Valencia Cecil</h1>
-            <h2>Full Stack Developer</h2>
+            <HomeSubtext />
         </div>
         <div class="right-image">
             <img src="~assets/BoomOp.png" alt="Quinn Valencia Cecil" />
@@ -37,87 +37,87 @@ export default {
 </script>
 
 <style scoped>
-    .landing {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 100vh;
-        padding: 0 10%;
-        overflow-y: hidden;
-    }
+.landing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 0 10%;
+    overflow-y: hidden;
+}
 
-    .landing h1 {
-        color: var(--lavender);
-    }
+.landing h1 {
+    color: var(--lavender);
+}
 
-    .landing h1 span {
-        color: var(--mauve);
-    }
+.landing h1 span {
+    color: var(--mauve);
+}
 
-    .background-lambda {
-        translate: 0 -20%;
-        font-size: 120vh;
-        color: var(--base);
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1000;
-    }
+.background-lambda {
+    translate: 0 -20%;
+    font-size: 120vh;
+    color: var(--base);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1000;
+}
 
-    .left-text {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-    }
-    .right-image {
-        width: 25%;
-    }
+.left-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100vw;
+}
+.right-image {
+    width: 25%;
+}
 
-    .right-image img {
-        height: 100%;
-        padding-left: 20%;
-        padding-bottom: 50%;
-        object-fit: cover;
-        object-position: bottom;
-    }
+.right-image img {
+    height: 100%;
+    padding-left: 20%;
+    padding-bottom: 50%;
+    object-fit: cover;
+    object-position: bottom;
+}
 
-    .about {
-        background-color: var(--mantle);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 60vh;
-        padding: 5% 10%;
-    }
+.about {
+    background-color: var(--mantle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60vh;
+    padding: 5% 10%;
+}
 
-    .left-image {
-        width: 25%;
-    }
-    .left-image img {
-        width: 100%;
-    }
-    
-    .right-text {
-        width: 75%;
-    }
+.left-image {
+    width: 25%;
+}
+.left-image img {
+    width: 100%;
+}
 
-    .skills {
-        background-color: var(--crust);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 60vh;
-        padding: 5% 10%;
-    }
+.right-text {
+    width: 75%;
+}
 
-    .portfolio {
-        background-color: var(--mantle);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 60vh;
-        padding: 5% 10%;
-    }
+.skills {
+    background-color: var(--crust);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    padding: 5% 10%;
+}
+
+.portfolio {
+    background-color: var(--mantle);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    padding: 5% 10%;
+}
 </style>

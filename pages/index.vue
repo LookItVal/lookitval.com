@@ -13,7 +13,7 @@
     </div>
     <div class="about">
         <div class="left-image">
-            <img src="~assets/SoundGirl.jpg" alt="Quinn Valencia Cecil" />
+            <HomeHexPhoto hex-color="var(--green)" />
         </div>
         <div class="right-text">
             <h2>About Me</h2>
@@ -91,10 +91,8 @@ export default {
     padding: 5% 10%;
 
     .left-image {
-        width: 25%;
-        img {
-            width: 100%;
-        }
+        width: 50%;
+        height: 100%;
     }
 
     .right-text {

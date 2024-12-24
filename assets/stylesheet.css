@@ -145,7 +145,27 @@ p {
 }
 
 .navbar {
+    padding: 0rem 0rem 0rem 0rem;
     display: flex;
     justify-content: space-between;
     height: 4rem;
+    border-bottom: 1px solid var(--overlay0);
+}
+
+.navbar button {
+    font-weight: 600;
+    line-height: 1.2;
+    font-size: clamp(16px,3.2vw,80%);
+    color: var(--text);
+    transition: color 0.2s ease-in-out;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: 100%;
+    width: 8rem;
+    border-left: 1px solid var(--overlay0);
+}
+
+.navbar button:hover {
+    color: var(--subtext0);
 }

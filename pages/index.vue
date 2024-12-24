@@ -1,10 +1,15 @@
 <template>
   <div class="home">
     <div class="navbar">
-        <NuxtLink to="/">
-            <img src="~/assets/QVC.svg" alt="QVC" height="100%" style="color: var(--mauve)">
-        </NuxtLink>
-
+        <Logo />
+        <div height="100%">
+            <NuxtLink to="/portfolio" height="100%">
+                <button>Portfolio</button>
+            </NuxtLink>
+            <NuxtLink to="/contact" height="100%">
+                <button>Contact</button>
+            </NuxtLink>
+        </div>
     </div>
   </div>
 </template>

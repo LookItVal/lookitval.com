@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   ssr: false,
   app: {
-    cdnURL: 'https://raw.githubusercontent.com/LookItVal/lookitval.github.io/refs/heads/main/docs/'
+    baseURL: process.env.NODE_ENV === "production" ? "/lookitval.github.io/" : "/",
+    buildAssetsDir: "assets",
   },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },

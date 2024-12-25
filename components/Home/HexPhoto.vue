@@ -1,6 +1,6 @@
 <template>
     <div class="hex-container">
-        <svg viewBox="-15 -15 115 115" class="hex-svg">
+        <svg viewBox="-5 -5 110 110" class="hex-svg">
             <defs>
                 <mask id="hexMask">
                     <polygon points="50 1, 95 25, 95 75, 50 99, 5 75, 5 25" fill="white" filter="url(#roundCorners)"/>

@@ -6,6 +6,9 @@
         <div class="left-text">
             <h1>Quinn Valencia Cecil</h1>
             <HomeSubtext />
+            <div class="socials-bar">
+                <Socials />
+            </div>
         </div>
         <div class="right-image">
             <img src="~assets/BoomOp.png" alt="Quinn Valencia Cecil" />
@@ -68,6 +71,11 @@ export default {
         justify-content: center;
         align-items: flex-start;
         width: 100vw;
+
+        .socials-bar {
+            margin-top: 10px;
+            height: 32px;
+        }
     }
 
     .right-image {

@@ -12,7 +12,7 @@
             </defs>
             <g mask="url(#logo-mask)">
                 <rect width="100%" height="100%" fill="var(--lavender)" />
-                <path id="animated-path-1" d="M 9.7,7.7
+                <path id="logo-path-1" d="M 9.7,7.7
                                                L 7.4,2 
                                                C 7.2,1.6, 6.6,1.25, 6.25,1.25 
                                                H 2.3
@@ -22,12 +22,12 @@
                                                H 9
                                                L 10,10" 
                 stroke="none" fill="none" />
-                <path id="animated-path-2" d="M 9.85,7.8
+                <path id="logo-path-2" d="M 9.85,7.8
                                                L 12.2,2.1
                                                L 12.2,2
                                                L 12.5,0" 
                 stroke="none" fill="none" />
-                <path id="animated-path-3" d="M 9.7,7.7
+                <path id="logo-path-3" d="M 9.7,7.7
                                                L 9.82,8
                                                C 10,8.4, 10.5,8.75, 10.75,8.75
                                                H 17.5
@@ -39,17 +39,17 @@
                 stroke="none" fill="none" />
                 <circle r="1" fill="url(#radial-gradient)">
                     <animateMotion id="anim1" dur="1s" fill="freeze">
-                        <mpath href="#animated-path-1" />
+                        <mpath href="#logo-path-1" />
                     </animateMotion>
                 </circle>
                 <circle r="1" fill="url(#radial-gradient)">
                     <animateMotion id="anim2" dur="0.25s" fill="freeze">
-                        <mpath href="#animated-path-2" />
+                        <mpath href="#logo-path-2" />
                     </animateMotion>
                 </circle>
                 <circle r="1" fill="url(#radial-gradient)">
                     <animateMotion id="anim3" dur="1s" fill="freeze">
-                        <mpath href="#animated-path-3" />
+                        <mpath href="#logo-path-3" />
                     </animateMotion>
                 </circle>
                 <circle r="0.1" cx="21" cy="11" fill="var(--red)"></circle>

@@ -1,6 +1,6 @@
 <template>
     <div class="subtext">
-        <h2>- </h2> <GradientText :text="displayText" header-tag="h2" :color="currentColor" />
+        <h2>-</h2> <GradientText :text="displayText" header-tag="h2" :color="currentColor" />
     </div>
 </template>
 
@@ -64,6 +64,7 @@ export default {
         overflow: hidden;
         text-align: left;
         color: var(--text);
+        margin-right: 0.25em;
     }
 }
 

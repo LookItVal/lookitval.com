@@ -9,9 +9,13 @@
                     <stop offset="0%" style="stop-color:var(--red);stop-opacity:1" />
                     <stop offset="100%" style="stop-color:var(--red);stop-opacity:0" />
                 </radialGradient>
+                <radialGradient id="logo-gradient" cx="20%" cy="0%" r="150%" fx="50%" fy="50%">
+                    <stop offset="0%" style="stop-color:var(--lavender);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--mauve);stop-opacity:1" />
+                </radialGradient>
             </defs>
             <g mask="url(#logo-mask)">
-                <rect width="100%" height="100%" fill="var(--lavender)" />
+                <rect width="100%" height="100%" fill="url(#logo-gradient)" />
                 <path id="logo-path-1" d="M 9.7,7.7
                                                L 7.4,2 
                                                C 7.2,1.6, 6.6,1.25, 6.25,1.25 

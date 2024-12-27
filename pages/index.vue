@@ -34,10 +34,14 @@
         <h2>Portfolio</h2>
         <GradientText text="Testalsjhdf" header-tag="h1" color="purple" />
     </div>
+    <Wunsch />
   </div>
 </template>
 
 <script>
+import Wunsch from '~/components/Wunsch.vue';
+import { w } from '~/docs/assets/BM6EduR0';
+
 export default {
     name: "Home",
     methods: {

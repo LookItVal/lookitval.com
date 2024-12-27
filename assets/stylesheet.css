@@ -102,6 +102,15 @@ html {
     font-style: oblique;
 }
 
+@font-face {
+    font-family: 'Comic Sans';
+    src: url('comic-sans.ttf') format("truetype");
+    font-display: swap;
+    font-weight: 125 950;
+    font-stretch: 75% 125%;
+    font-style: normal;
+}
+
 body {
     font-family: Inter,system-ui,sans-serif;
     font-size: clamp(15px,4vw,2rem);

@@ -21,10 +21,10 @@
         <div class="right-text">
             <h2>About Me</h2>
             <p>Hi! I'm Quinn, a full stack developer with a background in audio engineering. I love creating things, whether it's a new song or a new app. I'm passionate about accessibility and making the web a better place for everyone. I'm currently looking for new opportunities to grow and learn.</p>
-            <button>Resume</button>
-            <GradientButton link="/" color="green">
+            <GradientButton :click="togglePDFVisibility" color="green">
                 <h4 style="font-weight: 900;color:var(--crust)">View Resume</h4>
             </GradientButton>
+            <PDFViewer ref="resumePDF" pdfUrl="https://docs.google.com/document/d/1LaukwAxBx__iYZ_xRLRSmrjDKb8UyPx0fAWnWfSYWFw/export?format=pdf" />
         </div>
     </div>
     <div class="skills">
@@ -39,7 +39,12 @@
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+  methods: {
+    viewResume() {
+      this.$refs.resumePDF.toggleVisibility();
+    }
+  }
 }
 </script>
 

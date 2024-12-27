@@ -7,7 +7,12 @@ mv docs/CNAME .
 rm -rf docs
 
 # Run npx nuxi generate
-npx nuxi generate
+if ! npx nuxi generate; then
+    echo "npx nuxi generate failed, remaking docs and moving CNAME"
+    mkdir docs
+    mv CNAME docs
+    exit 1
+fi
 
 # Make the docs folder again
 mkdir docs

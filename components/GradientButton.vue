@@ -48,7 +48,7 @@ export default {
     align-items: center;
 }
 
-::v-deep .button-background * {
+.button-background :deep(*) {
     color: var(--base); 
 }
 

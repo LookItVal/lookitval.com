@@ -126,8 +126,8 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
-
-            ::v-deep .header-highlight h2 {
+            
+            .header-highlight :deep(h2) {
                 margin-left: 0.25em;
                 font-weight: 800;
             }

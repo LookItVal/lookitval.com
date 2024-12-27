@@ -13,7 +13,8 @@ export default {
                 { text: "Data Scientist", color: "orange" },
                 { text: "Audio Engineer", color: "yellow" },
                 { text: "Web Developer", color: "green" },
-                { text: "Software Developer", color: "blue" }
+                { text: "Software Developer", color: "blue" },
+                { text: "Lover of Chicken", color: "red" }
             ],
             displayText: ' ',
             currentTextIndex: 0,

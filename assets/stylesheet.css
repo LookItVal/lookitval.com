@@ -154,6 +154,11 @@ p {
     font-weight: 400;
 }
 
+a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
 button {
     font-weight: 600;
     line-height: 1.2;

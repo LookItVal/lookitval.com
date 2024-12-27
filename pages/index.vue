@@ -39,9 +39,6 @@
 </template>
 
 <script>
-import Wunsch from '~/components/Wunsch.vue';
-import { w } from '~/docs/assets/BM6EduR0';
-
 export default {
     name: "Home",
     methods: {

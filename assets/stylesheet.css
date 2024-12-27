@@ -74,6 +74,16 @@ html {
     }
 }
 
+:root {
+    --purple-shimmer: linear-gradient(-45deg,var(--mauve),var(--lavender));
+    --blue-shimmer: linear-gradient(-45deg,var(--blue),var(--sapphire));
+    --green-shimmer: linear-gradient(-45deg,var(--green),var(--teal));
+    --yellow-shimmer: linear-gradient(-45deg,var(--yellow),var(--peach));
+    --orange-shimmer: linear-gradient(-45deg,var(--peach),var(--maroon));
+    --red-shimmer: linear-gradient(-45deg,var(--red),var(--pink));
+    --pink-shimmer: linear-gradient(-45deg,var(--pink),var(--flamingo));
+}
+
 @font-face {
     font-family: Inter;
     src: url('inter.ttf') format("truetype");
@@ -144,6 +154,17 @@ p {
     font-weight: 400;
 }
 
+button {
+    font-weight: 600;
+    line-height: 1.2;
+    padding: 1rem 1rem;
+    font-size: clamp(16px,3.2vw,80%);
+    color: var(--crust);
+    background: linear-gradient(-45deg,var(--green),var(--teal));
+    border-radius: 5rem;
+    border: none;
+}
+
 .navbar {
     position: absolute;
     padding: 0rem 0rem 0rem 0rem;
@@ -166,6 +187,8 @@ p {
     height: 100%;
     width: 8rem;
     border-left: 1px solid var(--overlay0);
+    background: none;
+    border-radius: 0;
 }
 
 .navbar button:hover {

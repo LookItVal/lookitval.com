@@ -1,5 +1,5 @@
 <template>
-    <a href="www.linkedin.com/in/qcecil" target="_blank" @mouseover="shimmer">
+    <a href="https://www.linkedin.com/in/qcecil" target="_blank" @mouseover="shimmer">
         <svg ref="linkedinSvg" viewBox="0 0 10 10">
             <defs>
                 <mask id="linkedin">

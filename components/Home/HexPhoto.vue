@@ -24,6 +24,10 @@
                         <feFuncA type="linear" slope="2.5" intercept="0" />
                     </feComponentTransfer>
                 </filter>
+                <linearGradient id="hexGradient" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" style="stop-color:var(--teal);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--green);stop-opacity:1" />
+                </linearGradient>
             </defs>
             <path class="glowing-shape" d="M 5 50
                                            L 5 32.5
@@ -38,7 +42,7 @@
                                            C 50 99 50 99 43.25 95.4
                                            L 11.75 78.6
                                            C 5 75 5 75 5 67.5
-                                           Z" fill="none" stroke-width="2" :stroke="hexColor" />
+                                           Z" fill="none" stroke-width="2" stroke="url(#hexGradient)" />
             <g class="image-mask" mask="url(#hexMask)">
                 <image class="hex-image background-image" ref="backgroundImage" href="~assets/SoundGirlBackground.jpg" width="110%" height="110%" />
                 <image class="hex-image foreground-image" ref="foregroundImage" href="~assets/SoundGirlRoto.png" width="115%" height="115%" />
@@ -50,12 +54,6 @@
 <script>
 export default {
     name: 'HomeHexPhoto',
-    props: {
-        hexColor: {
-            type: String,
-            default: 'var(--green)'
-        }
-    },
     mounted() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

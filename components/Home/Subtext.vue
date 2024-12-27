@@ -1,8 +1,6 @@
 <template>
     <div class="subtext">
-        <h2 :style="{ color: currentColor }">
-            <span>- </span>{{ displayText }}
-        </h2>
+        <h2>- </h2> <GradientText :text="displayText" header-tag="h2" :color="currentColor" />
     </div>
 </template>
 
@@ -12,10 +10,10 @@ export default {
     data() {
         return {
             texts: [
-                { text: "Data Scientist", color: "red" },
+                { text: "Data Scientist", color: "orange" },
                 { text: "Audio Engineer", color: "yellow" },
                 { text: "Web Developer", color: "green" },
-                { text: "Software Developer", color: "mauve" }
+                { text: "Software Developer", color: "blue" }
             ],
             displayText: ' ',
             currentTextIndex: 0,
@@ -50,8 +48,7 @@ export default {
     },
     computed: {
         currentColor() {
-            const color = this.texts[this.currentTextIndex].color;
-            return `var(--${color})`;
+            return this.texts[this.currentTextIndex].color;
         }
     }
 }
@@ -60,16 +57,12 @@ export default {
 <style lang="less" scoped>
 .subtext {
     padding-left: 5%;
-}
-
-h2 {
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 0.15em solid var(--text);
+    display: flex;
+    border-right: 0.2em solid var(--text);
     animation: blink-caret 0.75s step-end infinite;
-    text-align: left;
-
-    span {
+    h2 {
+        overflow: hidden;
+        text-align: left;
         color: var(--text);
     }
 }

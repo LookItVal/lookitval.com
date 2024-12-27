@@ -4,7 +4,7 @@
     <div class="landing">
         <span class="background-lambda">λ</span>
         <div class="left-text">
-            <h1>Quinn Valencia Cecil</h1>
+            <h1><span>Quinn</span> <span>Valencia</span> <span>Cecil</span></h1>
             <HomeSubtext />
             <div class="socials-bar">
                 <Socials />
@@ -29,6 +29,7 @@
     </div>
     <div class="portfolio">
         <h2>Portfolio</h2>
+        <GradientText text="Testalsjhdf" header-tag="h1" color="purple" />
     </div>
   </div>
 </template>
@@ -48,13 +49,6 @@ export default {
     padding: 0 10%;
     overflow-y: hidden;
 
-    h1 {
-        color: var(--lavender);
-        span {
-            color: var(--mauve);
-        }
-    }
-
     .background-lambda {
         translate: 0 -20%;
         font-size: 120vh;
@@ -71,6 +65,16 @@ export default {
         justify-content: center;
         align-items: flex-start;
         width: 100vw;
+
+        h1 {
+            color: var(--lavender);
+            span {
+                color: transparent;
+                background: linear-gradient(-45deg,var(--lavender),var(--mauve));
+                background-clip: text;
+                -webkit-background-clip: text;
+            }
+        }
 
         .socials-bar {
             margin-top: 10px;

@@ -168,6 +168,7 @@ button {
     background: linear-gradient(-45deg,var(--green),var(--teal));
     border-radius: 5rem;
     border: none;
+    cursor: pointer;
 }
 
 .navbar {

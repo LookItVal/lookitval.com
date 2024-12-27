@@ -39,6 +39,7 @@ export default {
 
 <style lang="less" scoped>
 .button-background {
+    z-index: 1;
     position: relative;
     width: 100%;
     height: 65px;

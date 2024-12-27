@@ -1,9 +1,10 @@
 <template>
-    <Transition name="fade">
-        <div v-if="isVisible" class="pdf-viewer" @click="toggleVisibility">
-            <iframe :src="embeddedPdfUrl" class="pdf-frame" @click.stop></iframe>
-        </div>
-    </Transition>
+    <div ref="pdfViewer" class="pdf-viewer hidden invisible" @click="toggleVisibility">
+        <iframe :src="embeddedPdfUrl" class="pdf-frame" @click.stop></iframe>
+        <a :href="pdfUrl" target="_self" class="download-link" @click.stop>
+            <img src="~assets/download.svg" alt="Download PDF" />
+        </a>
+    </div>
 </template>
 
 <script>
@@ -15,11 +16,6 @@ export default {
             required: true
         }
     },
-    data() {
-        return {
-            isVisible: true
-        };
-    },
     computed: {
         embeddedPdfUrl() {
             return `https://docs.google.com/gview?url=${this.pdfUrl}&embedded=true`;
@@ -27,7 +23,18 @@ export default {
     },
     methods: {
         toggleVisibility() {
-            this.isVisible = !this.isVisible;
+            const pdf = this.$refs.pdfViewer;
+            if (pdf.classList.contains('visible')) {
+                pdf.classList.remove('visible');
+                pdf.classList.add('invisible');
+                setTimeout(() => pdf.classList.add('hidden'), 500);
+            } else {
+                pdf.classList.remove('hidden');
+                setTimeout(() => {
+                    pdf.classList.remove('invisible');
+                    pdf.classList.add('visible');
+                }, 0); // Fuck you javascript. Do not delete this or transitions dont happen.
+            }
         }
     }
 };
@@ -51,14 +58,35 @@ export default {
         height: 80%;
         border: none;
     }
+
+    .download-link {
+        position: absolute;
+        top: 0;
+        right: 0;
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    }
 }
 
-.fade-enter-active, .fade-leave-active {
+.visible {
     opacity: 1;
     transition: opacity 0.5s;
+    .pdf-frame {
+        transform: scale(1);
+        transition: transform 0.5s;
+    }
 }
-.fade-enter, .fade-leave-to {
+.invisible {
     opacity: 0;
+    transition: opacity 0.5s;
+    .pdf-frame {
+        transform: scale(0);
+        transition: transform 0.5s;
+    }
 }
-    
+.hidden {
+    display: none;
+}
 </style>

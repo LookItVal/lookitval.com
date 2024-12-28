@@ -1,5 +1,9 @@
 <template>
   <div class="home">
+    <Head>
+        <Title>Look, It's Val!</Title>
+        <Meta name="description" content="Quinn Valencia Cecil's personal website and portfolio." />
+    </Head>
     <HomeNavbar />
     <WunschFlamingoSection>
         <div class="landing">
@@ -48,11 +52,6 @@
 
 <script>
 export default {
-    head() {
-        return {
-            title: "Look, It Val!"
-        }
-    },
     name: "Home",
     methods: {
         viewResume() {

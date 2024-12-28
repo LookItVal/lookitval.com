@@ -1,39 +1,47 @@
 <template>
   <div class="home">
     <HomeNavbar />
-    <div class="landing">
-        <span class="background-lambda">λ</span>
-        <div class="left-text">
-            <h1>Quinn <span>Valencia</span> Cecil</h1>
-            <HomeSubtext />
-            <div class="socials-bar">
-                <Socials />
+    <WunschFlamingoSection>
+        <div class="landing">
+            <span class="background-lambda">λ</span>
+            <div class="left-text">
+                <h1>Quinn <span>Valencia</span> Cecil</h1>
+                <HomeSubtext />
+                <div class="socials-bar">
+                    <Socials />
+                </div>
+            </div>
+            <div class="right-image">
+                <img src="~assets/BoomOp.png" alt="Quinn Valencia Cecil" />
             </div>
         </div>
-        <div class="right-image">
-            <img src="~assets/BoomOp.png" alt="Quinn Valencia Cecil" />
+    </WunschFlamingoSection>
+    <WunschFlamingoSection>
+        <div class="about">
+            <div class="left-image">
+                <HomeHexPhoto hex-color="var(--green)" />
+            </div>
+            <div class="right-text">
+                <div class="about-header"><h2>About</h2><GradientText text="Me" header-tag="h2" color="green" class="header-highlight"/></div>
+                <p>Hi! I'm Quinn, a full stack developer with a background in audio engineering. I love creating things, whether it's a new song or a new app. I'm passionate about accessibility and making the web a better place for everyone. I'm currently looking for new opportunities to grow and learn.</p>
+                <GradientButton :click="viewResume" color="green" class="resume-button">
+                    <h4 style="font-weight: 900;color:var(--crust)">View Resume</h4>
+                </GradientButton>
+                <PDFViewer ref="resumePDF" pdfUrl="https://docs.google.com/document/d/1LaukwAxBx__iYZ_xRLRSmrjDKb8UyPx0fAWnWfSYWFw/export?format=pdf" />
+            </div>
         </div>
-    </div>
-    <div class="about">
-        <div class="left-image">
-            <HomeHexPhoto hex-color="var(--green)" />
+    </WunschFlamingoSection>
+    <WunschFlamingoSection>
+        <div class="section skills">
+            <h2>Skills</h2>
         </div>
-        <div class="right-text">
-            <div class="about-header"><h2>About</h2><GradientText text="Me" header-tag="h2" color="green" class="header-highlight"/></div>
-            <p>Hi! I'm Quinn, a full stack developer with a background in audio engineering. I love creating things, whether it's a new song or a new app. I'm passionate about accessibility and making the web a better place for everyone. I'm currently looking for new opportunities to grow and learn.</p>
-            <GradientButton :click="viewResume" color="green" class="resume-button">
-                <h4 style="font-weight: 900;color:var(--crust)">View Resume</h4>
-            </GradientButton>
-            <PDFViewer ref="resumePDF" pdfUrl="https://docs.google.com/document/d/1LaukwAxBx__iYZ_xRLRSmrjDKb8UyPx0fAWnWfSYWFw/export?format=pdf" />
+    </WunschFlamingoSection>
+    <WunschFlamingoSection>
+        <div class="section portfolio">
+            <h2>Portfolio</h2>
+            <GradientText text="Testalsjhdf" header-tag="h1" color="purple" />
         </div>
-    </div>
-    <div class="skills">
-        <h2>Skills</h2>
-    </div>
-    <div class="portfolio">
-        <h2>Portfolio</h2>
-        <GradientText text="Testalsjhdf" header-tag="h1" color="purple" />
-    </div>
+    </WunschFlamingoSection>
     <Wunsch />
   </div>
 </template>
@@ -93,13 +101,15 @@ export default {
     }
 
     .right-image {
-        width: 25%;
         img {
-            height: 100%;
+            position: absolute;
             padding-left: 20%;
             padding-bottom: 50%;
             object-fit: cover;
             object-position: bottom;
+            right: -50px;
+            top: -500px;
+            z-index: -1;
         }
     }
 }

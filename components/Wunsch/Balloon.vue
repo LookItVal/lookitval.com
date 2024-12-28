@@ -1,5 +1,5 @@
 <template>
-    <div ref="balloon" class="balloon">
+    <div ref="balloon" class="balloon" :style="{left: position + '%'}">
         <img src="~assets/balloon.png" alt="balloon" />
         <div class="balloon-bubble">
             <h6>I am a Social Media Expert!</h6>
@@ -10,8 +10,14 @@
 <script>
 export default {
     name: 'WunschBalloon',
+    data() {
+        return {
+            position: Math.random() * 60
+        };
+    },
     methods: {
         animateBalloon() {
+            this.position = Math.random() * 60;
             const balloon = this.$refs.balloon;
             balloon.classList.remove('animate');
             setTimeout(() => balloon.classList.add('animate'), 0);
@@ -25,7 +31,6 @@ export default {
 .balloon {
     position: fixed;
     bottom: -50vh;
-    left: 20%;
     display: flex;
     justify-content: center;
     align-items: center;

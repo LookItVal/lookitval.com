@@ -18,7 +18,8 @@ export default {
         run() {
             const commands = [
                 this.$refs.balloon.animateBalloon,
-                this.$refs.colorShift.shift
+                this.$refs.colorShift.shift,
+                this.animateFlamingos
             ]
             const randomIndex = Math.floor(Math.random() * commands.length);
             commands[randomIndex]();
@@ -33,6 +34,10 @@ export default {
             } else {
                 this.letterIndex = 0;
             }     
+        },
+        animateFlamingos() {
+            console.log('Animating flamingos');
+            window.animateFlamingos.forEach((animateFlamingo) => animateFlamingo());
         }
     },
     mounted() {

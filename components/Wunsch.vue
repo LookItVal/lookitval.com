@@ -1,6 +1,7 @@
 <template>
     <div class="the-wunsch">
         <WunschBalloon ref="balloon"/>
+        <WunschColorShift ref="colorShift"/>
     </div>
 </template>
 
@@ -15,10 +16,15 @@ export default {
     },  
     methods: {
         run() {
-            this.$refs.balloon.animateBalloon();
+            const commands = [
+                this.$refs.balloon.animateBalloon,
+                this.$refs.colorShift.shift
+            ]
+            const randomIndex = Math.floor(Math.random() * commands.length);
+            commands[randomIndex]();
         },
         handleKeydown(event) {
-            if (event.key.toLowerCase() === this.wunsch[this.letterIndex].toLowerCase()) {
+            if (event.key && event.key.toLowerCase() === this.wunsch[this.letterIndex].toLowerCase()) {
                 this.letterIndex++;
                 if (this.letterIndex === this.wunsch.length) {
                     this.run();

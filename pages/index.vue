@@ -4,7 +4,7 @@
     <div class="landing">
         <span class="background-lambda">λ</span>
         <div class="left-text">
-            <h1><span>Quinn</span> <span>Valencia</span> <span>Cecil</span></h1>
+            <h1>Quinn <span>Valencia</span> Cecil</h1>
             <HomeSubtext />
             <div class="socials-bar">
                 <Socials />

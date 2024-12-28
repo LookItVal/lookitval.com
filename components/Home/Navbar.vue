@@ -17,3 +17,9 @@ export default {
     name: 'HomeNavbar'
 }
 </script>
+
+<style lang="less" scoped>
+.navbar {
+    z-index: 10
+}
+</style>

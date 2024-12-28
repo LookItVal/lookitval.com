@@ -36,7 +36,6 @@ export default {
             }     
         },
         animateFlamingos() {
-            console.log('Animating flamingos');
             window.animateFlamingos.forEach((animateFlamingo) => animateFlamingo());
         }
     },

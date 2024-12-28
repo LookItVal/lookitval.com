@@ -1,1 +1,0 @@
-import{_ as e}from"./roOendp8.js";import{_ as t,c as n,b as c,o as r}from"./DRuQoheL.js";import"./CJJNQ-mP.js";const _={name:"/portfolio"};function s(a,p,m,i,f,d){const o=e;return r(),n("div",null,[c(o)])}const $=t(_,[["render",s]]);export{$ as default};

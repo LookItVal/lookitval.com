@@ -32,11 +32,11 @@ export default {
     pointer-events: none;
 
     &.on {
-        transition: backdrop-filter 5s;
+        transition: backdrop-filter 1s;
     }
     &.off {
         backdrop-filter: hue-rotate(0deg);
-        transition: backdrop-filter 10s;
+        transition: backdrop-filter 1s;
     }
 }
 </style>

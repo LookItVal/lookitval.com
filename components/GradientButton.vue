@@ -87,11 +87,16 @@ export default {
 
     :deep(*) {
         z-index: 3;
+        color: var(--base);
+        transition: color 0.5s;
     }
 }
 
-.button-background :deep(*) {
-    color: var(--base); 
+.button-background:hover {
+    :deep(*) {
+        color: var(--surface0);
+        transition: color 0.5s;
+    }
 }
 
 .pink {

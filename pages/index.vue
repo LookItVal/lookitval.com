@@ -48,6 +48,11 @@
 
 <script>
 export default {
+    head() {
+        return {
+            title: "Look, It Val!"
+        }
+    },
     name: "Home",
     methods: {
         viewResume() {

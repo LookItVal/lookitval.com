@@ -29,6 +29,7 @@ export default {
 
 <style lang="less" scoped>
 .balloon {
+    z-index: 5;
     position: fixed;
     bottom: -50vh;
     display: flex;

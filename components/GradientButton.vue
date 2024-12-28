@@ -1,7 +1,9 @@
 <template>
     <button @click="click" @mouseover="shimmer" class="button-background" :class="color">
-        <svg viewBox="0 0 0 0" width="100%" height="100%">
-        </svg>
+        <div ref='shimmer' class="shimmer">
+            <div class="shine1"></div>
+            <div class="shine2"></div>
+        </div>
         <slot></slot>
     </button>
 </template>
@@ -31,7 +33,11 @@ export default {
         shimmer() {
             if (this.isAnimating) return;
             this.isAnimating = true;
-            setTimeout(() => this.isAnimating = false, 1000);
+            this.$refs.shimmer.classList.add('animate');
+            setTimeout(() => {
+                this.isAnimating = false
+                this.$refs.shimmer.classList.remove('animate');
+            }, 1000);
         }
     }
 }
@@ -46,14 +52,46 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+
+    .shimmer {
+        z-index: 2;
+        position: relative;
+        width: 0;
+        height: 0;
+        top: -100%;
+        transform: translate(-100px, -20px) rotate(20deg);
+        transition: none;
+
+        &.animate {
+            transform: translate(600px, -20px) rotate(20deg);
+            transition: transform 1s linear;
+        }
+
+        .shine1 {
+            margin: 0px 10px;
+            width: 10px;
+            height: 200px;
+            background: linear-gradient(80deg, transparent 0%, white 100%);
+        }
+        .shine2 {
+            margin: 0px 10px;
+            position: relative;
+            top: -200px;
+            left: 15px;
+            width: 15px;
+            height: 200px;
+            background: linear-gradient(80deg, transparent 0%, white 100%);
+        }
+    }
+
+    :deep(*) {
+        z-index: 3;
+    }
 }
 
 .button-background :deep(*) {
     color: var(--base); 
-}
-
-svg {
-    position: absolute;
 }
 
 .pink {

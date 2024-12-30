@@ -2,6 +2,7 @@
     <div class="the-wunsch">
         <WunschBalloon ref="balloon"/>
         <WunschColorShift ref="colorShift"/>
+        <WunschPick2 ref="pick2"/>
     </div>
 </template>
 
@@ -13,13 +14,14 @@ export default {
             wunsch: 'wunsch',
             letterIndex: 0
         };
-    },  
+    },
     methods: {
         run() {
             const commands = [
                 this.$refs.balloon.animateBalloon,
                 this.$refs.colorShift.shift,
-                this.animateFlamingos
+                this.animateFlamingos,
+                this.$refs.pick2.animate
             ]
             const randomIndex = Math.floor(Math.random() * commands.length);
             commands[randomIndex]();

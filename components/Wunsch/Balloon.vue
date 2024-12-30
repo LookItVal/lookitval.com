@@ -1,7 +1,7 @@
 <template>
     <div class="balloon-container">
         <div ref="balloon" class="balloon" :style="{left: position + '%'}">
-            <img src="~assets/balloon.png" alt="balloon" />
+            <img src="~assets/Wunsch/balloon.png" alt="balloon" />
             <div class="balloon-bubble">
                 <h6>I am a Social Media Expert!</h6>
             </div>

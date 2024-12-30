@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="right-image">
-                <img src="~assets/BoomOp.png" alt="Quinn Valencia Cecil" />
+                <img src="~assets/Home/BoomOp.png" alt="Quinn Valencia Cecil" />
             </div>
         </div>
     </WunschFlamingoSection>

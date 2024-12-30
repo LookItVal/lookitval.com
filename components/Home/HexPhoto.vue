@@ -44,8 +44,8 @@
                                            C 5 75 5 75 5 67.5
                                            Z" fill="none" stroke-width="2" stroke="url(#hexGradient)" />
             <g class="image-mask" mask="url(#hexMask)">
-                <image class="hex-image background-image" ref="backgroundImage" href="~assets/SoundGirlBackground.jpg" width="110%" height="110%" />
-                <image class="hex-image foreground-image" ref="foregroundImage" href="~assets/SoundGirlRoto.png" width="115%" height="115%" />
+                <image class="hex-image background-image" ref="backgroundImage" href="~assets/Home/SoundGirlBackground.jpg" width="110%" height="110%" />
+                <image class="hex-image foreground-image" ref="foregroundImage" href="~assets/Home/SoundGirlRoto.png" width="115%" height="115%" />
             </g>
         </svg>
     </div>

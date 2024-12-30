@@ -86,7 +86,7 @@ html {
 
 @font-face {
     font-family: Inter;
-    src: url('inter.ttf') format("truetype");
+    src: url('fonts/inter.ttf') format("truetype");
     font-display: swap;
     font-weight: 125 950;
     font-stretch: 75% 125%;
@@ -95,7 +95,7 @@ html {
 
 @font-face {
     font-family: Inter;
-    src: url('inter-oblique.ttf') format("truetype");
+    src: url('fonts/inter-oblique.ttf') format("truetype");
     font-display: swap;
     font-weight: 125 950;
     font-stretch: 75% 125%;
@@ -104,7 +104,7 @@ html {
 
 @font-face {
     font-family: 'Comic Sans';
-    src: url('comic-sans.ttf') format("truetype");
+    src: url('fonts/comic-sans.ttf') format("truetype");
     font-display: swap;
     font-weight: 125 950;
     font-stretch: 75% 125%;

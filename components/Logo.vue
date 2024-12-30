@@ -3,13 +3,13 @@
         <svg ref="logoSvg" height="100%" width="100%" viewBox="0 0 20 10" @mouseover="shimmer">
             <defs>
                 <mask id="logo-mask" height="100%" width="100%">
-                    <image href="~assets/QVC.svg" height="100%" width="100%" />
+                    <image href="~assets/Logo/QVC.svg" height="100%" width="100%" />
                 </mask>
                 <mask id="outer-shimmer-mask" height="100%" width="100%">
-                    <image href="~assets/QVCHILIGHTPATH1.svg" height="100%" width="100%" />
+                    <image href="~assets/Logo/QVCHILIGHTPATH1.svg" height="100%" width="100%" />
                 </mask>
                 <mask id="inner-shimmer-mask" height="100%" width="100%">
-                    <image href="~assets/QVCHILIGHTPATH2.svg" height="100%" width="100%" />
+                    <image href="~assets/Logo/QVCHILIGHTPATH2.svg" height="100%" width="100%" />
                 </mask>
                 <radialGradient id="radial-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                     <stop offset="0%" style="stop-color:var(--red);stop-opacity:1" />

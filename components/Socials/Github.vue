@@ -3,7 +3,7 @@
         <svg viewBox="0 0 10 10">
             <defs>
                 <mask id="github">
-                    <image href="~assets/github.svg" height="100%" width="100%" />
+                    <image href="~assets/icons/github.svg" height="100%" width="100%" />
                 </mask>
                 <linearGradient id="linear-gradient" x1="0" y1="0.5" x2="1" y2="0.5">
                     <stop offset="0%" style="stop-color:var(--red);stop-opacity:0" />

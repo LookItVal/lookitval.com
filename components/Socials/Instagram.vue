@@ -3,7 +3,7 @@
         <svg ref="instaSvg" viewBox="0 0 10 10">
             <defs>
                 <mask id="instagram">
-                    <image href="~assets/instagram.svg" height="100%" width="100%" />
+                    <image href="~assets/icons/instagram.svg" height="100%" width="100%" />
                 </mask>
                 <radialGradient id="radial-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                     <stop offset="0%" style="stop-color:var(--red);stop-opacity:1" />

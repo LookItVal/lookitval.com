@@ -4,7 +4,7 @@
             <slot></slot>
         </div>
         <div class="flamingo-container">
-            <img src="~assets/flamingo.png" alt="Flamingo" class="flamingo" :style="`left:${position}%`"/>
+            <img src="~assets/Wunsch/flamingo.png" alt="Flamingo" class="flamingo" :style="`left:${position}%`"/>
         </div>
     </div>
     
@@ -56,7 +56,7 @@ export default {
         bottom: 0;
         position: relative;
         width: 500px;
-        height: 0px; /* Adjust as needed */
+        height: 0px;
 
         .flamingo {
             position: absolute;

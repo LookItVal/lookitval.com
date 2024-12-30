@@ -14,14 +14,26 @@
 </template>
 
 <script>
+import audio1Src from '~/assets/Wunsch/Pick2/1.wav';
+import audio2Src from '~/assets/Wunsch/Pick2/2.wav';
+import audio3Src from '~/assets/Wunsch/Pick2/3.wav';
+
 export default {
     name: 'WunschPick2',
     methods: {
         animate() {
+            const audio1 = new Audio(audio1Src);
+            const audio2 = new Audio(audio2Src);
+            const audio3 = new Audio(audio3Src);
             this.$refs.root.classList.remove('cut');
+            audio1.play();
+            setTimeout(() => audio2.play(), 850);
             setTimeout(() => this.$refs.good.classList.remove('cut'), 1000);
+            setTimeout(() => audio2.play(), 1850);
             setTimeout(() => this.$refs.fast.classList.remove('cut'), 2000);
+            setTimeout(() => audio2.play(), 2850);
             setTimeout(() => this.$refs.cheap.classList.remove('cut'), 3000);
+            setTimeout(() => audio3.play(), 3500);
             setTimeout(() => this.$refs.pick.classList.remove('cut'), 5600);
             setTimeout(() => this.$refs.two.classList.remove('cut'), 6000);
             setTimeout(() => this.reset(), 8000);
@@ -53,6 +65,7 @@ export default {
     left: 0;
     z-index: 1000;
     background-color: black;
+    border: 1px solid black;
 
     .line1 {
         display: flex;

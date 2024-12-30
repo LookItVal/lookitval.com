@@ -8,13 +8,14 @@ export default {
     name: 'WunschColorShift',
     methods: {
         shift() {
-            const randomDegree = Math.floor(Math.random() * (350 - 10 + 1)) + 10;
+            const randomDegree = Math.floor(Math.random() * (330 - 30 + 1)) + 30;
             this.$refs.colorShift.style.backdropFilter = `hue-rotate(${randomDegree}deg)`;
-            this.$refs.colorShift.style.transition = 'backdrop-filter 10s';
+            this.$refs.colorShift.classList.remove('off');
+            this.$refs.colorShift.classList.add('on');
 
             setTimeout(() => {
-                this.$refs.colorShift.style.backdropFilter = 'hue-rotate(0deg)';
-                this.$refs.colorShift.style.transition = 'backdrop-filter 10s';
+                this.$refs.colorShift.classList.remove('on');
+                this.$refs.colorShift.classList.add('off');
             }, 15000);
         }
     }
@@ -32,11 +33,12 @@ export default {
     pointer-events: none;
 
     &.on {
-        transition: backdrop-filter 1s;
+        opacity: 1;
+        transition: opacity 3s ease-in-out;
     }
     &.off {
-        backdrop-filter: hue-rotate(0deg);
-        transition: backdrop-filter 1s;
+        opacity: 0;
+        transition: opacity 3s ease-in-out;
     }
 }
 </style>

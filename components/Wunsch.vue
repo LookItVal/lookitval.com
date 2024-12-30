@@ -12,7 +12,13 @@ export default {
     data() {
         return {
             wunsch: 'wunsch',
-            letterIndex: 0
+            letterIndex: 0,
+            runCommands: [
+                false,
+                false,
+                false,
+                false
+            ]
         };
     },
     methods: {
@@ -23,8 +29,15 @@ export default {
                 this.animateFlamingos,
                 this.$refs.pick2.animate
             ]
-            const randomIndex = Math.floor(Math.random() * commands.length);
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * commands.length);
+            } while (this.runCommands[randomIndex]);
+            this.runCommands[randomIndex] = true;
             commands[randomIndex]();
+            if (this.runCommands.every(command => command)) {
+                this.runCommands = this.runCommands.map(() => false);
+            }
         },
         handleKeydown(event) {
             if (event.key && event.key.toLowerCase() === this.wunsch[this.letterIndex].toLowerCase()) {

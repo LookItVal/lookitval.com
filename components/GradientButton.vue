@@ -4,7 +4,7 @@
             <div class="shine1"></div>
             <div class="shine2"></div>
         </div>
-        <slot></slot>
+        <slot />
     </button>
 </template>
 

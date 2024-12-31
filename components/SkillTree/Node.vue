@@ -25,30 +25,27 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'SkillTreeNode',
-    props: {
-        title: String
-    },
-    data() {
-        return {
-            children: []
-        }
-    },
-    computed: {
-        parentNode() {
-            let parent = this.$parent;
-            return parent;
-        },
-        phase() {
-            return 0;
-        }
-    },
-    mounted() {
-        this.$parent.$data.children.push(this);
-    }
-};
+
+<script lang="ts" setup>
+const props = defineProps<{
+    title: string
+}>();
+const children: Ref<Array<SkillTreeNode>> = ref([]);
+const parentNode: SkillTreeNode | undefined = inject('nodeData');
+const phase: ComputedRef<number> = computed(() => {
+    return 0
+});
+
+const nodeData = {
+    children: children
+}
+
+provide('nodeData', nodeData);
+
+onMounted(() => {
+    parentNode!.children.value.push(nodeData);
+});
+
 </script>
 
 <style lang="less" scoped>

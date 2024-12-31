@@ -9,13 +9,13 @@
     </div> 
 </template>
 
-<script>
-export default {
-    name: 'SkillTree',
-    data() {
-        return {
-            children: []
-        }
-    }
+
+<script lang="ts" setup>
+const children: Ref<Array<SkillTreeNode>> = ref([]);
+
+const nodeData = {
+    children: children
 }
+
+provide('nodeData', nodeData);
 </script>

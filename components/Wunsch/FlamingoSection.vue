@@ -7,35 +7,29 @@
             <img src="~assets/Wunsch/flamingo.png" alt="Flamingo" class="flamingo" :style="`left:${position}%`"/>
         </div>
     </div>
-    
 </template>
 
-<script>
-export default {
-    name: "WunschFlamingoSection",
-    data() {
-        return {
-            position: Math.random() * 200
-        };
-    },
-    mounted() {
-        if (!window.animateFlamingos) {
-            window.animateFlamingos = [];
-        }
-        window.animateFlamingos.push(this.animateFlamingo);
-    },
-    methods: {
-        animateFlamingo() {
-            this.position = Math.random() * 200;
-            const flamingo = this.$el.querySelector('.flamingo');
-            flamingo.classList.add('animate');
-            setTimeout(() => {
-                flamingo.classList.remove('animate');
-            }, 4000);
-        }
-    }
+
+<script lang="ts" setup>
+const position: Ref<number> = ref(Math.random() * 200);
+const appConfig = useAppConfig()
+
+function animateFlamingo() {
+    position.value = Math.random() * 200;
+    const flamingo = document.querySelector('.flamingo');
+    flamingo!.classList.add('animate');
+    setTimeout(() => {
+        flamingo!.classList.remove('animate');
+    }, 4000);
 }
+
+onMounted(() => {
+    appConfig.animateFlamingos.push(animateFlamingo)
+    updateAppConfig(appConfig)
+});
+
 </script>
+
 
 <style lang="less" scoped>
 .wunsch {

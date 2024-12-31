@@ -1,6 +1,6 @@
 <template>
     <button @click="click" @mouseover="shimmer" class="button-background" :class="color">
-        <div ref='shimmer' class="shimmer">
+        <div ref='shimmers' class="shimmer">
             <div class="shine1"></div>
             <div class="shine2"></div>
         </div>
@@ -8,40 +8,35 @@
     </button>
 </template>
 
-<script>
-export default {
-    name: "GradientButton",
-    data() {
-        return {
-            isAnimating: false
-        };
-    },
-    props: {
-        click: {
-            type: Function,
-            required: true
-        },
-        color: {
-            type: String,
-            required: true,
-            validator: (value) => {
-                return ['red', 'orange', 'yellow', 'green', 'blue', 'purple'].includes(value);
-            }
-        }
-    },
-    methods: {
-        shimmer() {
-            if (this.isAnimating) return;
-            this.isAnimating = true;
-            this.$refs.shimmer.classList.add('animate');
-            setTimeout(() => {
-                this.isAnimating = false
-                this.$refs.shimmer.classList.remove('animate');
-            }, 1000);
-        }
-    }
+
+<script lang="ts" setup>
+const props = defineProps<{
+    click: () => void;
+    color: string;
+}>();
+
+const colorValidator = (value: string) => {
+    return ['red', 'orange', 'yellow', 'green', 'blue', 'purple'].includes(value);
+};
+
+if (!colorValidator(props.color)) {
+    throw new Error(`Invalid color: ${props.color}`);
+}
+
+const isAnimating: Ref<boolean> = ref(false);
+const shimmers: Ref<HTMLElement | null> = ref(null);
+
+function shimmer(): void {
+    if (isAnimating.value) return;
+    isAnimating.value = true;
+    shimmers.value!.classList.add('animate');
+    setTimeout(() => {
+        isAnimating.value = false;
+        shimmers.value!.classList.remove('animate');
+    }, 1000);
 }
 </script>
+
 
 <style lang="less" scoped>
 .button-background {

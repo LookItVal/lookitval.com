@@ -7,38 +7,39 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'PDFViewer',
-    props: {
-        pdfUrl: {
-            type: String,
-            required: true
-        }
-    },
-    computed: {
-        embeddedPdfUrl() {
-            return `https://docs.google.com/gview?url=${this.pdfUrl}&embedded=true`;
-        }
-    },
-    methods: {
-        toggleVisibility() {
-            const pdf = this.$refs.pdfViewer;
-            if (pdf.classList.contains('visible')) {
-                pdf.classList.remove('visible');
-                pdf.classList.add('invisible');
-                setTimeout(() => pdf.classList.add('hidden'), 500);
-            } else {
-                pdf.classList.remove('hidden');
-                setTimeout(() => {
-                    pdf.classList.remove('invisible');
-                    pdf.classList.add('visible');
-                }, 0); // Fuck you javascript. Do not delete this or transitions dont happen.
-            }
+
+<script lang="ts" setup>
+const props = defineProps<{
+    pdfUrl: string;
+}>();
+
+const pdfViewer: Ref<HTMLElement | null> = ref(null);
+const embeddedPdfUrl: ComputedRef<string> = computed(() => {
+    return `https://docs.google.com/gview?url=${props.pdfUrl}&embedded=true`;
+});
+
+function toggleVisibility(): void {
+    const pdf = pdfViewer.value;
+    if (pdf) {
+        if (pdf.classList.contains('visible')) {
+            pdf.classList.remove('visible');
+            pdf.classList.add('invisible');
+            setTimeout(() => pdf.classList.add('hidden'), 500);
+        } else {
+            pdf.classList.remove('hidden');
+            setTimeout(() => {
+                pdf.classList.remove('invisible');
+                pdf.classList.add('visible');
+            }, 0);  // Do not delete this or transitions don't happen.
         }
     }
-};
+}
+
+defineExpose({
+    toggleVisibility
+});
 </script>
+
 
 <style lang="less" scoped>
 .pdf-viewer {

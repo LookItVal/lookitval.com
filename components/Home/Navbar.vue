@@ -12,11 +12,7 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'HomeNavbar'
-}
-</script>
+<script setup />
 
 <style lang="less" scoped>
 .navbar {

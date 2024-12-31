@@ -4,55 +4,46 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'HomeSubtext',
-    data() {
-        return {
-            texts: [
-                { text: "Data Scientist", color: "orange" },
-                { text: "Audio Engineer", color: "yellow" },
-                { text: "Web Developer", color: "green" },
-                { text: "Software Developer", color: "blue" }
-            ],
-            displayText: ' ',
-            currentTextIndex: 0,
-            currentCharIndex: 0,
-            isDeleting: false
-        };
-    },
-    mounted() {
-        this.type();
-    },
-    methods: {
-        type() {
-            const currentTextObj = this.texts[this.currentTextIndex];
-            const currentText = currentTextObj.text;
-            if (this.isDeleting) {
-                this.displayText = currentText.substring(0, this.currentCharIndex - 1);
-                this.currentCharIndex--;
-            } else {
-                this.displayText = currentText.substring(0, this.currentCharIndex + 1);
-                this.currentCharIndex++;
-            }
 
-            if (!this.isDeleting && this.currentCharIndex === currentText.length) {
-                setTimeout(() => this.isDeleting = true, 1000);
-            } else if (this.isDeleting && this.currentCharIndex === 0) {
-                this.isDeleting = false;
-                this.currentTextIndex = (this.currentTextIndex + 1) % this.texts.length;
-            }
+<script lang="ts" setup>
+const texts = [
+    { text: "Data Scientist", color: "orange" },
+    { text: "Audio Engineer", color: "yellow" },
+    { text: "Web Developer", color: "green" },
+    { text: "Software Developer", color: "blue" }
+];
+const displayText: Ref<string> = ref(' ');
+const currentTextIndex: Ref<number> = ref(0);
+const currentCharIndex: Ref<number> = ref(0);
+const isDeleting: Ref<boolean> = ref(false);
+const currentColor: ComputedRef<string> = computed(() => texts[currentTextIndex.value].color);
 
-            setTimeout(this.type, this.isDeleting ? 100 : 200);
-        }
-    },
-    computed: {
-        currentColor() {
-            return this.texts[this.currentTextIndex].color;
-        }
+function typer(): void {
+    const currentTextObj = texts[currentTextIndex.value];
+    const currentText = currentTextObj.text;
+    if (isDeleting.value) {
+        displayText.value = currentText.substring(0, currentCharIndex.value - 1);
+        currentCharIndex.value--;
+    } else {
+        displayText.value = currentText.substring(0, currentCharIndex.value + 1);
+        currentCharIndex.value++;
     }
+
+    if (!isDeleting.value && currentCharIndex.value === currentText.length) {
+        setTimeout(() => isDeleting.value = true, 1000);
+    } else if (isDeleting.value && currentCharIndex.value === 0) {
+        isDeleting.value = false;
+        currentTextIndex.value = (currentTextIndex.value + 1) % texts.length;
+    }
+
+    setTimeout(typer, isDeleting.value ? 100 : 200);
 }
+
+onMounted(() => {
+    typer();
+});
 </script>
+
 
 <style lang="less" scoped>
 .subtext {

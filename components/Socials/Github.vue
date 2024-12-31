@@ -18,29 +18,24 @@
     </a>
 </template>
 
-<script>
-export default {
-    name: 'SocialsGithub',
-    data() {
-        return {
-            isAnimating: false
-        };
-    },
-    methods: {
-        shimmer() {
-            if (this.isAnimating) return;
-            this.isAnimating = true;
-            this.$refs.shimmerBox.classList.add('shimmer');
-            this.$refs.shimmerBox.classList.remove('static');
-            setTimeout(() => {
-                this.$refs.shimmerBox.classList.remove('shimmer');
-                this.$refs.shimmerBox.classList.add('static');
-                this.isAnimating = false;
-            }, 1000);
-        }
-    }
-};
+
+<script lang="ts" setup>
+const isAnimating: Ref<boolean> = ref(false);
+const shimmerBox: Ref<HTMLElement | null> = ref(null);
+
+function shimmer(): void {
+    if (isAnimating.value) return;
+    isAnimating.value = true;
+    shimmerBox.value!.classList.add('shimmer');
+    shimmerBox.value!.classList.remove('static');
+    setTimeout(() => {
+        shimmerBox.value!.classList.remove('shimmer');
+        shimmerBox.value!.classList.add('static');
+        isAnimating.value = false;
+    }, 1000);
+}
 </script>
+
 
 <style lang="less" scoped>
 a {

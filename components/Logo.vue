@@ -77,32 +77,24 @@
     </NuxtLink>
 </template>
 
-<script>
-export default {
-    name: 'Logo',
-    data() {
-        return {
-            isAnimating: false
-        };
-    },
-    methods: {
-        shimmer() {
-            if (this.isAnimating) return;
-            this.isAnimating = true;
-            const svg = this.$refs.logoSvg;
-            const animations = svg.querySelectorAll('animateMotion');
-            animations.forEach(anim => {
-                anim.beginElement();
-            });
-            setTimeout(() => {
-                this.isAnimating = false;
-            }, 1000); // Adjust the timeout duration to match the longest animation duration
-        }
-    }
+
+<script lang="ts" setup>
+const isAnimating = ref<boolean>(false);
+const logoSvg = ref<SVGSVGElement | null>(null);
+
+function shimmer(): void {
+    if (isAnimating.value) return;
+    isAnimating.value = true;
+    const animations = logoSvg.value!.querySelectorAll('animateMotion');
+    animations.forEach(anim => {
+        anim.beginElement();
+    });
+    setTimeout(() => isAnimating.value = false, 1000);
 }
 </script>
 
-<style scoped>
+
+<style lang='less' scoped>
 .logo {
     display: block;
     margin-left: 0em;

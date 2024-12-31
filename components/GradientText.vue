@@ -6,31 +6,31 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'GradientText',
-    props: {
-        text: {
-            type: String,
-            required: true
-        },
-        headerTag: {
-            type: String,
-            default: 'h1',
-            validator: function (value) {
-                return ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(value);
-            }
-        },
-        color: {
-            type: String,
-            default: 'blue',
-            validator: function (value) {
-                return ['purple', 'blue', 'green', 'yellow', 'orange', 'red', 'pink'].includes(value);
-            }
-        }
-    }
+
+<script lang="ts" setup>
+const props = defineProps<{
+    text: string;
+    headerTag: string;
+    color: string;
+}>();
+
+const headerTagValidator = (value: string) => {
+    return ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(value);
 };
+
+const colorValidator = (value: string) => {
+    return ['purple', 'blue', 'green', 'yellow', 'orange', 'red', 'pink'].includes(value);
+};
+
+if (!headerTagValidator(props.headerTag)) {
+    throw new Error(`Invalid headerTag: ${props.headerTag}`);
+}
+
+if (!colorValidator(props.color)) {
+    throw new Error(`Invalid color: ${props.color}`);
+}
 </script>
+
 
 <style lang="less" scoped>
 .gradient-text {

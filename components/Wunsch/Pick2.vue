@@ -13,43 +13,51 @@
     </div>
 </template>
 
-<script>
+
+<script lang="ts" setup>
 import audio1Src from '~/assets/Wunsch/Pick2/1.wav';
 import audio2Src from '~/assets/Wunsch/Pick2/2.wav';
 import audio3Src from '~/assets/Wunsch/Pick2/3.wav';
 
-export default {
-    name: 'WunschPick2',
-    methods: {
-        animate() {
-            const audio1 = new Audio(audio1Src);
-            const audio2 = new Audio(audio2Src);
-            const audio3 = new Audio(audio3Src);
-            this.$refs.root.classList.remove('cut');
-            audio1.play();
-            setTimeout(() => audio2.play(), 850);
-            setTimeout(() => this.$refs.good.classList.remove('cut'), 1000);
-            setTimeout(() => audio2.play(), 1850);
-            setTimeout(() => this.$refs.fast.classList.remove('cut'), 2000);
-            setTimeout(() => audio2.play(), 2850);
-            setTimeout(() => this.$refs.cheap.classList.remove('cut'), 3000);
-            setTimeout(() => audio3.play(), 3500);
-            setTimeout(() => this.$refs.pick.classList.remove('cut'), 5600);
-            setTimeout(() => this.$refs.two.classList.remove('cut'), 6000);
-            setTimeout(() => this.reset(), 8000);
+const root: Ref<HTMLElement | null> = ref(null);
+const good: Ref<HTMLElement | null> = ref(null);
+const fast: Ref<HTMLElement | null> = ref(null);
+const cheap: Ref<HTMLElement | null> = ref(null);
+const pick: Ref<HTMLElement | null> = ref(null);
+const two: Ref<HTMLElement | null> = ref(null);
 
-        },
-        reset() {
-            this.$refs.root.classList.add('cut');
-            this.$refs.good.classList.add('cut');
-            this.$refs.fast.classList.add('cut');
-            this.$refs.cheap.classList.add('cut');
-            this.$refs.pick.classList.add('cut');
-            this.$refs.two.classList.add('cut');
-        }
-    }
-};
+function reset(): void {
+    root.value!.classList.add('cut');
+    good.value!.classList.add('cut');
+    fast.value!.classList.add('cut');
+    cheap.value!.classList.add('cut');
+    pick.value!.classList.add('cut');
+    two.value!.classList.add('cut');
+}
+
+function animate(): void {
+    const audio1 = new Audio(audio1Src);
+    const audio2 = new Audio(audio2Src);
+    const audio3 = new Audio(audio3Src);
+    root.value!.classList.remove('cut');
+    audio1.play();
+    setTimeout(() => audio2.play(), 850);
+    setTimeout(() => good.value!.classList.remove('cut'), 1000);
+    setTimeout(() => audio2.play(), 1850);
+    setTimeout(() => fast.value!.classList.remove('cut'), 2000);
+    setTimeout(() => audio2.play(), 2850);
+    setTimeout(() => cheap.value!.classList.remove('cut'), 3000);
+    setTimeout(() => audio3.play(), 3500);
+    setTimeout(() => pick.value!.classList.remove('cut'), 5600);
+    setTimeout(() => two.value!.classList.remove('cut'), 6000);
+    setTimeout(() => reset(), 8000);
+}
+
+defineExpose({
+    animate
+});
 </script>
+
 
 <style lang="less" scoped>
 .pick2 {

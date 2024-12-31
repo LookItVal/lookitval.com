@@ -9,25 +9,25 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'WunschBalloon',
-    data() {
-        return {
-            position: Math.random() * 60
-        };
-    },
-    methods: {
-        animateBalloon() {
-            this.position = Math.random() * 60;
-            const balloon = this.$refs.balloon;
-            balloon.classList.remove('animate');
-            setTimeout(() => balloon.classList.add('animate'), 0);
-            setTimeout(() => balloon.classList.remove('animate'), 20000);
-        }
+
+<script lang="ts" setup>
+const position = ref(Math.random() * 60);
+const balloon = ref<HTMLElement | null>(null);
+
+function animateBalloon() {
+    position.value = Math.random() * 60;
+    if (balloon.value) {
+        balloon.value.classList.remove('animate');
+        setTimeout(() => balloon.value!.classList.add('animate'), 0);
+        setTimeout(() => balloon.value!.classList.remove('animate'), 20000);
     }
-};
+}
+
+defineExpose({
+    animateBalloon
+});
 </script>
+
 
 <style lang="less" scoped>
 .balloon-container {

@@ -7,11 +7,9 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'Socials'
-};
-</script>
+
+<script lang="ts" setup />
+
 
 <style lang="less" scoped>
 .socials {

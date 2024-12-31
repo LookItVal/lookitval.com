@@ -6,59 +6,51 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'Wunsch',
-    data() {
-        return {
-            wunsch: 'wunsch',
-            letterIndex: 0,
-            runCommands: [
-                false,
-                false,
-                false,
-                false
-            ]
-        };
-    },
-    methods: {
-        run() {
-            const commands = [
-                this.$refs.balloon.animateBalloon,
-                this.$refs.colorShift.shift,
-                this.animateFlamingos,
-                this.$refs.pick2.animate
-            ]
-            let randomIndex;
-            do {
-                randomIndex = Math.floor(Math.random() * commands.length);
-            } while (this.runCommands[randomIndex]);
-            this.runCommands[randomIndex] = true;
-            commands[randomIndex]();
-            if (this.runCommands.every(command => command)) {
-                this.runCommands = this.runCommands.map(() => false);
-            }
-        },
-        handleKeydown(event) {
-            if (event.key && event.key.toLowerCase() === this.wunsch[this.letterIndex].toLowerCase()) {
-                this.letterIndex++;
-                if (this.letterIndex === this.wunsch.length) {
-                    this.run();
-                    this.letterIndex = 0;
-                }
-            } else {
-                this.letterIndex = 0;
-            }     
-        },
-        animateFlamingos() {
-            window.animateFlamingos.forEach((animateFlamingo) => animateFlamingo());
-        }
-    },
-    mounted() {
-        window.addEventListener('keydown', this.handleKeydown);
-    },
-    beforeDestroy() {
-        window.removeEventListener('keydown', this.handleKeydown);
+
+<script lang="ts" setup>
+const wunsch = 'wunsch';
+const letterIndex: Ref<number> = ref(0);
+const balloon: Ref<WunschBalloon | null> = ref(null);
+const colorShift: Ref<WunschColorShift | null> = ref(null);
+const pick2: Ref<WunschPick2 | null> = ref(null);
+const appConfig = useAppConfig();
+const runCommands = Array(4).fill(false);
+
+function run(): void {
+    const commands = [
+        balloon.value!.animateBalloon,
+        colorShift.value!.shift,
+        () => appConfig.animateFlamingos.forEach((animateFlamingo: Function) => animateFlamingo()),
+        pick2.value!.animate
+    ];
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * commands.length);
+    } while (runCommands[randomIndex]);
+    runCommands[randomIndex] = true;
+    commands[randomIndex]!();
+    if (runCommands.every(command => command)) {
+        runCommands.fill(false);
     }
-};
+}
+
+function handleKeydown(event: KeyboardEvent): void {
+    if (event.key && event.key.toLowerCase() === wunsch[letterIndex.value]) {
+        letterIndex.value++;
+        if (letterIndex.value === wunsch.length) {
+            run();
+            letterIndex.value = 0;
+        }
+    } else {
+        letterIndex.value = 0;
+    }
+}
+
+onMounted(() => {
+    window.addEventListener('keydown', handleKeydown);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener('keydown', handleKeydown);
+});
 </script>

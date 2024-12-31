@@ -34,38 +34,34 @@
     </a>
 </template>
 
-<script>
-export default {
-    name: 'SocialsIMDB',
-    data() {
-        return {
-            isAnimating: false
-        };
-    },
-    methods: {
-        shimmer() {
-            if (this.isAnimating) return;
-            this.isAnimating = true;
-            const svg = this.$refs.imdbSvg;
-            const animations = svg.querySelectorAll('animateMotion');
-            animations.forEach(anim => {
-                anim.beginElement();
-            });
-            this.$refs.shimmerBox.classList.remove('static');
-            this.$refs.shimmerBox.classList.add('shimmer');
-            this.$refs.shimmerBall.classList.remove('static');
-            this.$refs.shimmerBall.classList.add('shimmer');
-            setTimeout(() => {
-                this.$refs.shimmerBox.classList.add('static');
-                this.$refs.shimmerBox.classList.remove('shimmer');
-                this.$refs.shimmerBall.classList.add('static');
-                this.$refs.shimmerBall.classList.remove('shimmer');
-                this.isAnimating = false;
-            }, 1000);
-        }
-    }
-};
+
+<script lang="ts" setup>
+const isAnimating: Ref<boolean> = ref(false);
+const imdbSvg: Ref<HTMLElement | null> = ref(null);
+const shimmerBox: Ref<HTMLElement | null> = ref(null);
+const shimmerBall: Ref<HTMLElement | null> = ref(null);
+
+function shimmer(): void {
+    if (isAnimating.value) return;
+    isAnimating.value = true;
+    const animations = imdbSvg.value!.querySelectorAll('animateMotion');
+    animations.forEach(anim => {
+        anim.beginElement();
+    });
+    shimmerBox.value!.classList.remove('static');
+    shimmerBox.value!.classList.add('shimmer');
+    shimmerBall.value!.classList.remove('static');
+    shimmerBall.value!.classList.add('shimmer');
+    setTimeout(() => {
+        shimmerBox.value!.classList.add('static');
+        shimmerBox.value!.classList.remove('shimmer');
+        shimmerBall.value!.classList.remove('shimmer');
+        shimmerBall.value!.classList.add('static');
+        isAnimating.value = false;
+    }, 1000);
+}
 </script>
+
 
 <style lang="less" scoped>
 a {

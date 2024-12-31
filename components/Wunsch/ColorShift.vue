@@ -3,24 +3,27 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'WunschColorShift',
-    methods: {
-        shift() {
-            const randomDegree = Math.floor(Math.random() * (330 - 30 + 1)) + 30;
-            this.$refs.colorShift.style.backdropFilter = `hue-rotate(${randomDegree}deg)`;
-            this.$refs.colorShift.classList.remove('off');
-            this.$refs.colorShift.classList.add('on');
 
-            setTimeout(() => {
-                this.$refs.colorShift.classList.remove('on');
-                this.$refs.colorShift.classList.add('off');
-            }, 15000);
-        }
-    }
+<script lang="ts" setup>
+const colorShift: Ref<HTMLElement | null> = ref(null);
+
+function shift() {
+    const randomDegree = Math.floor(Math.random() * (330 - 30 + 1)) + 30;
+    colorShift.value!.style.backdropFilter = `hue-rotate(${randomDegree}deg)`;
+    colorShift.value!.classList.remove('off');
+    colorShift.value!.classList.add('on');
+
+    setTimeout(() => {
+        colorShift.value!.classList.remove('on');
+        colorShift.value!.classList.add('off');
+    }, 15000);
 }
+
+defineExpose({
+    shift
+});
 </script>
+
 
 <style lang="less" scoped>
 .color-shift {

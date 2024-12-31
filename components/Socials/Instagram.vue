@@ -42,42 +42,39 @@
     </a>
 </template>
 
-<script>
-export default {
-    name: 'SocialsInstagram',
-    data() {
-        return {
-            isAnimating: false
-        };
-    },
-    methods: {
-        shimmer() {
-            if (this.isAnimating) return;
-            this.isAnimating = true;
-            const svg = this.$refs.instaSvg;
-            const animations = svg.querySelectorAll('animateMotion');
-            animations.forEach(anim => {
-                anim.beginElement();
-            });
-            this.$refs.outerShimmerBall.classList.remove('static');
-            this.$refs.outerShimmerBall.classList.add('shimmer');
-            this.$refs.innerShimmerBall.classList.remove('static');
-            this.$refs.innerShimmerBall.classList.add('shimmer');
-            this.$refs.highlightShimmerBall.classList.remove('static');
-            this.$refs.highlightShimmerBall.classList.add('shimmer');
-            setTimeout(() => {
-                this.$refs.outerShimmerBall.classList.add('static');
-                this.$refs.outerShimmerBall.classList.remove('shimmer');
-                this.$refs.innerShimmerBall.classList.add('static');
-                this.$refs.innerShimmerBall.classList.remove('shimmer');
-                this.$refs.highlightShimmerBall.classList.add('static');
-                this.$refs.highlightShimmerBall.classList.remove('shimmer');
-                this.isAnimating = false;
-            }, 1000);
-        }
-    }      
-};
+
+<script lang="ts" setup>
+const isAnimating: Ref<boolean> = ref(false);
+const instaSvg: Ref<HTMLElement | null> = ref(null);
+const outerShimmerBall: Ref<HTMLElement | null> = ref(null);
+const innerShimmerBall: Ref<HTMLElement | null> = ref(null);
+const highlightShimmerBall: Ref<HTMLElement | null> = ref(null);
+
+function shimmer(): void {
+    if (isAnimating.value) return;
+    isAnimating.value = true;
+    const animations = instaSvg.value!.querySelectorAll('animateMotion');
+    animations.forEach(anim => {
+        anim.beginElement();
+    });
+    outerShimmerBall.value!.classList.remove('static');
+    outerShimmerBall.value!.classList.add('shimmer');
+    innerShimmerBall.value!.classList.remove('static');
+    innerShimmerBall.value!.classList.add('shimmer');
+    highlightShimmerBall.value!.classList.remove('static');
+    highlightShimmerBall.value!.classList.add('shimmer');
+    setTimeout(() => {
+        outerShimmerBall.value!.classList.add('static');
+        outerShimmerBall.value!.classList.remove('shimmer');
+        innerShimmerBall.value!.classList.add('static');
+        innerShimmerBall.value!.classList.remove('shimmer');
+        highlightShimmerBall.value!.classList.add('static');
+        highlightShimmerBall.value!.classList.remove('shimmer');
+        isAnimating.value = false;
+    }, 1000);
+}
 </script>
+
 
 <style lang="less" scoped>
 a {

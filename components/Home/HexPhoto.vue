@@ -51,39 +51,42 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'HomeHexPhoto',
-    mounted() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.$refs.hexContainer.classList.add('animate-entrance');
-                    observer.unobserve(entry.target);
-                    setTimeout(() => {
-                        this.$refs.hexContainer.classList.add('animate');
-                    }, 1000);
-                }
-            });
-        }, { threshold: 0.1 });
 
-        observer.observe(this.$refs.hexContainer);
+<script lang="ts" setup>
+const foregroundImage: Ref<HTMLElement | null> = ref(null);
+const hexContainer: Ref<HTMLElement | null> = ref(null);
 
-        window.addEventListener('scroll', this.handleScroll);
-    },
-    beforeDestroy() {
-        window.removeEventListener('scroll', this.handleScroll);
-    },
-    methods: {
-        handleScroll() {
-            const scrollValue = window.scrollY;
-            const foregroundTranslateY = 10 + scrollValue * -0.01;
-
-            this.$refs.foregroundImage.style.transform = `translateY(${foregroundTranslateY}px) translateX(-15px)`;
-        }
-    }
+function handleScroll(): void {
+    const scrollValue = window.scrollY;
+    const foregroundTranslateY = 10 + scrollValue * -0.01;
+    (foregroundImage.value as HTMLElement).style.transform = `translateY(${foregroundTranslateY}px) translateX(-15px)`;
 }
+
+onMounted(() => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                hexContainer.value!.classList.add('animate-entrance');
+                observer.unobserve(entry.target);
+                setTimeout(() => {
+                    hexContainer.value!.classList.add('animate');
+                }, 1000);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    if (hexContainer.value) {
+        observer.observe(hexContainer.value);
+    }
+
+    window.addEventListener('scroll', handleScroll);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener('scroll', handleScroll);
+});
 </script>
+
 
 <style lang="less" scoped>
 .hex-container {

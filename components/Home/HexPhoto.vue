@@ -3,19 +3,19 @@
         <svg viewBox="-5 -5 110 110" class="hex-svg">
             <defs>
                 <mask id="hexMask">
-                    <path d="M 5 50
-                             L 5 32.5
-                             C 5 25 5 25 11.75 21.4
+                    <path d="M 7.565 50
+                             L 7.565 33
+                             C 7.565 25.5 7.565 25.5 14.06 21.75
                              L 43.25 4.6
                              C 50 1 50 1 56.75 4.6
-                             L 88.25 21.4
-                             C 95 25 95 25 95 32.5
-                             L 95 67.5
-                             C 95 75 95 75 88.25 78.6
+                             L 85.94 21.75
+                             C 92.435 25.5 92.435 25.5 92.435 33
+                             L 92.435 67
+                             C 92.435 74.5 92.435 74.5 85.94 78.25
                              L 56.75 95.4
                              C 50 99 50 99 43.25 95.4
-                             L 11.75 78.6
-                             C 5 75 5 75 5 67.5
+                             L 14.06 78.25
+                             C 7.565 74.5 7.565 74.5 7.565 67
                              Z" fill="white" filter="url(#roundCorners)"/>
                 </mask>
                 <filter id="roundCorners">
@@ -29,19 +29,19 @@
                     <stop offset="100%" style="stop-color:var(--green);stop-opacity:1" />
                 </linearGradient>
             </defs>
-            <path class="glowing-shape" d="M 5 50
-                                           L 5 32.5
-                                           C 5 25 5 25 11.75 21.4
+            <path class="glowing-shape" d="M 7.565 50
+                                           L 7.565 33
+                                           C 7.565 25.5 7.565 25.5 14.06 21.75
                                            L 43.25 4.6
                                            C 50 1 50 1 56.75 4.6
-                                           L 88.25 21.4
-                                           C 95 25 95 25 95 32.5
-                                           L 95 67.5
-                                           C 95 75 95 75 88.25 78.6
+                                           L 85.94 21.75
+                                           C 92.435 25.5 92.435 25.5 92.435 33
+                                           L 92.435 67
+                                           C 92.435 74.5 92.435 74.5 85.94 78.25
                                            L 56.75 95.4
                                            C 50 99 50 99 43.25 95.4
-                                           L 11.75 78.6
-                                           C 5 75 5 75 5 67.5
+                                           L 14.06 78.25
+                                           C 7.565 74.5 7.565 74.5 7.565 67
                                            Z" fill="none" stroke-width="2" stroke="url(#hexGradient)" />
             <g class="image-mask" mask="url(#hexMask)">
                 <image class="hex-image background-image" ref="backgroundImage" href="~assets/Home/SoundGirlBackground.jpg" width="110%" height="110%" />

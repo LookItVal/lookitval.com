@@ -37,7 +37,7 @@ defineExpose({
 
     &.on {
         opacity: 1;
-        transition: opacity 3s ease-in-out;
+        transition: opacity 0.3s ease-in-out;
     }
     &.off {
         opacity: 0;

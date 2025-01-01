@@ -52,14 +52,14 @@ const phase: ComputedRef<number> = computed(() => {
         return phaseIncrement * siblingIndex.value - 90;
     }
     const outwardAngle = parentNode!.phase.value;
-    const sperationAngle = 45;
+    const sperationAngle = 60;
     const spread = sperationAngle * (parentNode!.childCount.value - 1);
     return outwardAngle - (sperationAngle * siblingIndex.value) + (spread / 2);
 });
 
 const radius: ComputedRef<number> = computed(() => {
     if (parentNode!.parentNode === undefined) return 70;
-    return 150;
+    return 125;
 });
 const x: ComputedRef<number> = computed(() => {
     return (radius.value * Math.cos(phase.value * Math.PI / 180)) + parentNode!.x.value;

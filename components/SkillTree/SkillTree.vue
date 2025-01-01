@@ -1,41 +1,36 @@
 <template>
-    <div ref="skillTree" class="skill-tree" :style="{height: height + 'px'}">
+    <div ref="skillTree" class="skill-tree" :style="{height: (height) + 'px', top: (position) + 'px'}">
         <div class="root-node">
             <SkillTreeNode title="Audio Engineering">
-                <SkillTreeNode title="Recoding">
-                    <SkillTreeNode title="Location Audio" />
-                    <SkillTreeNode title="Studio Audio" />
-                </SkillTreeNode>
                 <SkillTreeNode title="Mixing & Mastering">
-                    <SkillTreeNode title="ProTools" />
-                    <SkillTreeNode title="Cubase" />
-                    <SkillTreeNode title="Izotope Ozone" />
-                    <SkillTreeNode title="Izotope RX" />
-                    <SkillTreeNode title="Midi Composition" />
+                    <SkillTreeNode title="Audio Restoration">
+                        <SkillTreeNode title="iZotope RX" />
+                    </SkillTreeNode>
+                    <SkillTreeNode title="Mixing">
+                        <SkillTreeNode title="FoH Engineering" />
+                        <SkillTreeNode title="ProTools" />
+                        <SkillTreeNode title="Cubase" />
+                    </SkillTreeNode>
+                    <SkillTreeNode title="Mastering">
+                        <SkillTreeNode title="Izotope Ozone" />
+                        <SkillTreeNode title="Wavelab" />
+                    </SkillTreeNode>
                 </SkillTreeNode>
-                <SkillTreeNode title="Live Sound">
-                    <SkillTreeNode title="FOH Engineering" />
+                <SkillTreeNode title="">
+                    <SkillTreeNode title="Recoding">
+                        <SkillTreeNode title="Location Audio" />
+                        <SkillTreeNode title="Studio Audio" />
+                    </SkillTreeNode>
+                </SkillTreeNode>
+                <SkillTreeNode title="Composition and Performance">
+                    <SkillTreeNode title="Midi Composition" />
                     <SkillTreeNode title="Bassist in Crash" />
+                    <SkillTreeNode title="Multi-Instrumentalist in Public Class" />
                 </SkillTreeNode>
             </SkillTreeNode>
             <SkillTreeNode title="Data Science">
-                <SkillTreeNode title="Databases">
-                    <SkillTreeNode title="Orical SQL" />
-                    <SkillTreeNode title="PostgreSQL" />
-                    <SkillTreeNode title="Zoho Creator" />
-                </SkillTreeNode>
-                <SkillTreeNode title="Machine Learning" />
-                <SkillTreeNode title="Python">
-                    <SkillTreeNode title="Pandas" />
-                    <SkillTreeNode title="Numpy" />
-                    <SkillTreeNode title="Cupy" />
-                </SkillTreeNode>
-                <SkillTreeNode title="Google Apps Script" />
-                <SkillTreeNode title="R" />
             </SkillTreeNode>
             <SkillTreeNode title="Software Development">
-                <SkillTreeNode title="Live Sound">
-                </SkillTreeNode>
             </SkillTreeNode>
         </div>
     </div> 
@@ -53,7 +48,10 @@ const y: ComputedRef<number> = computed(() => {return 0});
 const min: Ref<number> = ref(0);
 const max: Ref<number> = ref(0);
 const height: ComputedRef<number> = computed(() => {
-    return max.value - min.value + 125;
+    return (max.value + 67.5) - (min.value - 67.5);
+});
+const position: ComputedRef<number> = computed(() => {
+    return (height.value / 2) - (max.value + (101.25));
 });
 
 function getPreviousSiblingAdjacent(): SkillTreeNode {

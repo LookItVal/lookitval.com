@@ -4,7 +4,7 @@
             <slot></slot>
         </div>
         <div class="flamingo-container">
-            <img src="~assets/Wunsch/flamingo.png" alt="Flamingo" class="flamingo" :style="`left:${position}%`"/>
+            <img src="~assets/Wunsch/flamingo.png" ref="flamingo" alt="Flamingo" class="flamingo" :style="`left:${position}%`"/>
         </div>
     </div>
 </template>
@@ -13,13 +13,14 @@
 <script lang="ts" setup>
 const position: Ref<number> = ref(Math.random() * 200);
 const appConfig = useAppConfig()
+const flamingo: Ref<HTMLElement | null> = ref(null)
+
 
 function animateFlamingo() {
     position.value = Math.random() * 200;
-    const flamingo = document.querySelector('.flamingo');
-    flamingo!.classList.add('animate');
+    flamingo.value!.classList.add('animate');
     setTimeout(() => {
-        flamingo!.classList.remove('animate');
+        flamingo.value!.classList.remove('animate');
     }, 4000);
 }
 

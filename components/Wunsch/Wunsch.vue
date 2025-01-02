@@ -2,7 +2,7 @@
     <div class="the-wunsch">
         <WunschBalloon ref="balloon"/>
         <WunschColorShift ref="colorShift"/>
-        <WunschPick2 ref="pick2"/>
+        <WunschPick3 ref="pick3"/>
     </div>
 </template>
 
@@ -12,7 +12,7 @@ const wunsch = 'wunsch';
 const letterIndex: Ref<number> = ref(0);
 const balloon: Ref<WunschBalloon | null> = ref(null);
 const colorShift: Ref<WunschColorShift | null> = ref(null);
-const pick2: Ref<WunschPick2 | null> = ref(null);
+const pick3: Ref<WunschPick3 | null> = ref(null);
 const appConfig = useAppConfig();
 const runCommands = Array(4).fill(false);
 
@@ -21,7 +21,7 @@ function run(): void {
         balloon.value!.animateBalloon,
         colorShift.value!.shift,
         () => appConfig.animateFlamingos.forEach((animateFlamingo: Function) => animateFlamingo()),
-        pick2.value!.animate
+        pick3.value!.animate
     ];
     let randomIndex;
     do {

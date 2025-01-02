@@ -8,7 +8,7 @@
             <h2 ref="cheap" class="cut">CHEAP</h2>
         </div>
         <div class="line3">
-            <h4 ref="pick" class="cut">Pick</h4><h4 ref="two" class="cut">two.</h4>
+            <h4 ref="pick" class="cut">Pick</h4><h4 ref="three" class="cut">three.</h4>
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@ const good: Ref<HTMLElement | null> = ref(null);
 const fast: Ref<HTMLElement | null> = ref(null);
 const cheap: Ref<HTMLElement | null> = ref(null);
 const pick: Ref<HTMLElement | null> = ref(null);
-const two: Ref<HTMLElement | null> = ref(null);
+const three: Ref<HTMLElement | null> = ref(null);
 
 function reset(): void {
     root.value!.classList.add('cut');
@@ -32,7 +32,7 @@ function reset(): void {
     fast.value!.classList.add('cut');
     cheap.value!.classList.add('cut');
     pick.value!.classList.add('cut');
-    two.value!.classList.add('cut');
+    three.value!.classList.add('cut');
 }
 
 function animate(): void {
@@ -49,7 +49,7 @@ function animate(): void {
     setTimeout(() => cheap.value!.classList.remove('cut'), 3000);
     setTimeout(() => audio3.play(), 3500);
     setTimeout(() => pick.value!.classList.remove('cut'), 5600);
-    setTimeout(() => two.value!.classList.remove('cut'), 6000);
+    setTimeout(() => three.value!.classList.remove('cut'), 6000);
     setTimeout(() => reset(), 8000);
 }
 

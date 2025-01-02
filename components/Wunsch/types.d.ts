@@ -7,7 +7,7 @@ declare global {
         shift(): void;
     }
 
-    interface WunschPick2 extends HTMLElement {
+    interface WunschPick3 extends HTMLElement {
         animate(): void;
     }
 }

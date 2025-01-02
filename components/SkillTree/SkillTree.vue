@@ -1,36 +1,78 @@
 <template>
     <div ref="skillTree" class="skill-tree" :style="{height: (height) + 'px', top: (position) + 'px'}">
         <div class="root-node">
-            <SkillTreeNode title="Audio Engineering">
-                <SkillTreeNode title="Mixing & Mastering">
-                    <SkillTreeNode title="Audio Restoration">
-                        <SkillTreeNode title="iZotope RX" />
-                    </SkillTreeNode>
-                    <SkillTreeNode title="Mixing">
-                        <SkillTreeNode title="FoH Engineering" />
-                        <SkillTreeNode title="ProTools" />
-                        <SkillTreeNode title="Cubase" />
-                    </SkillTreeNode>
-                    <SkillTreeNode title="Mastering">
-                        <SkillTreeNode title="Izotope Ozone" />
-                        <SkillTreeNode title="Wavelab" />
-                    </SkillTreeNode>
-                </SkillTreeNode>
-                <SkillTreeNode title="">
-                    <SkillTreeNode title="Recoding">
-                        <SkillTreeNode title="Location Audio" />
-                        <SkillTreeNode title="Studio Audio" />
-                    </SkillTreeNode>
-                </SkillTreeNode>
-                <SkillTreeNode title="Composition and Performance">
-                    <SkillTreeNode title="Midi Composition" />
-                    <SkillTreeNode title="Bassist in Crash" />
-                    <SkillTreeNode title="Multi-Instrumentalist in Public Class" />
-                </SkillTreeNode>
-            </SkillTreeNode>
             <SkillTreeNode title="Data Science">
+                <SkillTreeNode title="" hide>
+                    <SkillTreeNode title="Cloud Computing">
+                        <SkillTreeNode title="Azure" />
+                        <SkillTreeNode title="Google Cloud Platform" />
+                    </SkillTreeNode>
+                </SkillTreeNode>
+                <SkillTreeNode title="Data Manipulation">
+                    <SkillTreeNode title="Google Apps Script" />
+                    <SkillTreeNode title="Python">
+                        <SkillTreeNode title="Matrix Manipulation">
+                            <SkillTreeNode title="" hide/>
+                            <SkillTreeNode title="NumPy/ CuPy" />
+                            <SkillTreeNode title="Pandas" />
+                        </SkillTreeNode>
+                        <SkillTreeNode title="Machine Learning">
+                            <SkillTreeNode title="PyTorch" />
+                        </SkillTreeNode>
+                        <SkillTreeNode title="Data Visualization">
+                            <SkillTreeNode title="Matplotlib" />
+                            <SkillTreeNode title="" hide/>
+                            <SkillTreeNode title="" hide/>
+                        </SkillTreeNode>
+                    </SkillTreeNode>
+                    <SkillTreeNode title="R" />
+                </SkillTreeNode>
+                <SkillTreeNode title="" hide>
+                    <SkillTreeNode title="Database Management">
+                        <SkillTreeNode title="SQL">
+                            <SkillTreeNode title="Oracle" />
+                            <SkillTreeNode title="PostgreSQL" />
+                        </SkillTreeNode>
+                        <SkillTreeNode title="NoSQL">
+                            <SkillTreeNode title="MongoDB" />
+                            <SkillTreeNode title="Zoho Creator" />
+                        </SkillTreeNode>
+                    </SkillTreeNode>
+                </SkillTreeNode>
             </SkillTreeNode>
             <SkillTreeNode title="Software Development">
+                <SkillTreeNode title="Frontend">
+                    <SkillTreeNode title="HTML" />
+                    <SkillTreeNode title="CSS" />
+                    <SkillTreeNode title="JavaScript">
+                        <SkillTreeNode title="Vue.js" />
+                        <SkillTreeNode title="TypeScript" />
+                        <SkillTreeNode title="" hide/>
+                    </SkillTreeNode>
+                </SkillTreeNode>
+                <SkillTreeNode title="Backend">
+                    <SkillTreeNode title="" hide/>
+                    <SkillTreeNode title="" hide/>
+                    <SkillTreeNode title="Go" />
+                    <SkillTreeNode title="Shell Scripting" />
+                    <SkillTreeNode title="Linux" />
+                </SkillTreeNode>
+            </SkillTreeNode>
+            <SkillTreeNode title="Audio Engineering">
+                <SkillTreeNode title="Music Production">
+                    <SkillTreeNode title="Musician" />
+                    <SkillTreeNode title="FoH Engineering" />
+                    <SkillTreeNode title="Mix & Mastering">
+                        <SkillTreeNode title="Cubase" />
+                        <SkillTreeNode title="ProTools" />
+                        <SkillTreeNode title="" hide/>
+                    </SkillTreeNode>
+                </SkillTreeNode>
+                <SkillTreeNode title="Video Production">
+                    <SkillTreeNode title="Mix & Mastering" />
+                    <SkillTreeNode title="Audio Restoration" />
+                    <SkillTreeNode title="Recording" />
+                </SkillTreeNode>
             </SkillTreeNode>
         </div>
     </div> 
@@ -42,6 +84,9 @@ const children: Ref<Array<SkillTreeNode>> = ref([]);
 const childCount: ComputedRef<number> = computed(() => {
     return children.value!.length;
 });
+const depth: ComputedRef<number> = computed(() => {
+    return 0;
+});
 const siblingIndex: Ref<number> = ref(0);
 const x: ComputedRef<number> = computed(() => {return 0});
 const y: ComputedRef<number> = computed(() => {return 0});
@@ -52,6 +97,9 @@ const height: ComputedRef<number> = computed(() => {
 });
 const position: ComputedRef<number> = computed(() => {
     return (height.value / 2) - (max.value + (101.25));
+});
+const childrenOnCorners: ComputedRef<boolean> = computed(() => {
+    return true;
 });
 
 function getPreviousSiblingAdjacent(): SkillTreeNode {
@@ -128,12 +176,14 @@ const nextNeighbor: ComputedRef<SkillTreeNode> = computed(() => {
     throw new Error('This should never be called how did you even make this happen?.');
 });
 const phase: ComputedRef<number> = computed(() => {
-    throw new Error('This should never be called how did you even make this happen?.');
+    return 0;
 });
 
 const nodeData = {
     children: children,
     childCount: childCount,
+    childrenOnCorners: childrenOnCorners,
+    depth: depth,
     siblingIndex: siblingIndex,
     x: x,
     y: y,

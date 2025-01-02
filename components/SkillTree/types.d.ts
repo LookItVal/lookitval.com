@@ -3,11 +3,9 @@ declare global {
         parentNode: SkillTreeNode | undefined;
         children: Ref<Array<SkillTreeNode>>;
         childCount: ComputedRef<number>;
+        childrenOnCorners: ComputedRef<boolean>;
+        depth: ComputedRef<number>;
         siblingIndex: Ref<number>;
-        getPreviousSiblingAdjacent(): SkillTreeNode;
-        getNextSiblingAdjacent(): SkillTreeNode;
-        previousNeighbor: ComputedRef<SkillTreeNode>;
-        nextNeighbor: ComputedRef<SkillTreeNode>;
         traverseToBottom(direction: 'min' | 'max'): SkillTreeNode;
         x: ComputedRef<number>;
         y: ComputedRef<number>;

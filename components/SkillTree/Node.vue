@@ -1,6 +1,6 @@
 <template>
-    <div class="node-container">
-        <div class="node" :class="{ hide: hideLine }" :style="{ transform: `translate(${x}px, ${y}px)`, 'z-index': zIndex }">
+    <div class="node-container" :style="{ top: `-${diameter/2}vw`, left: `-${diameter/2}vw` }">
+        <div class="node" :class="{ hide: hideLine }" :style="{ transform: `translate(${x}vw, ${y}vw)`, 'z-index': zIndex, width: `${diameter}vw`, height: `${diameter}vw` }">
             <svg class="node-shell" viewBox="0 0 100 100">
                 <path v-if="onCorners" class="line" :d="`M 50 50 L ${lineEndX} ${lineEndY}`" stroke="var(--text)" stroke-width="2"/>
                 <path v-else class="line" :d="`M 50 50 L ${lineKneeX} ${lineKneeY} L ${lineEndX} ${lineEndY}`" stroke="var(--text)" stroke-width="2" fill="none"/>
@@ -17,13 +17,13 @@
                                      C 50 99 50 99 43.25 95.4
                                      L 14.06 78.25
                                      C 7.565 74.5 7.565 74.5 7.565 67
-                                     Z" fill="var(--crust)" stroke-width="2" stroke="var(--text)" />
+                                     Z" fill="var(--crsut)" stroke-width="2" stroke="var(--text)" />
             </svg>
             <p style="z-index: 1;">
                 {{ title }}
             </p>
         </div>
-        <div class="children">
+        <div class="children" :style="{ top: `${diameter/2}vw`, left: `${diameter/2}vw` }">
             <slot />
         </div>
     </div>
@@ -86,9 +86,12 @@ const phase: ComputedRef<number> = computed(() => {
     return outwardAngle - (sperationAngle * siblingIndex.value) + (spread / 2);
 });
 
+const diameter: ComputedRef<number> = computed(() => {
+    return 8;
+});
 const radius: ComputedRef<number> = computed(() => {
-    if (parentNode!.parentNode === undefined) return 85;
-    return 150;
+    if (parentNode!.parentNode === undefined) return 10;
+    return 9;
 });
 const x: ComputedRef<number> = computed(() => {
     return (radius.value * Math.cos(phase.value * Math.PI / 180)) + parentNode!.x.value;
@@ -116,25 +119,27 @@ const lineBendCoefficent: ComputedRef<1 | -1>  = computed(() => {
 });
 
 const lineKneeX: ComputedRef<number> = computed(() => {
-    let rad = 4*radius.value/5;
+    let rad = 100*radius.value/diameter.value;
     const angle = calculateAngleToNode(parentNode!) + (lineBendCoefficent.value * 30);
     rad = (Math.sin(30 * Math.PI / 180)* rad )/Math.sin(120 * Math.PI / 180);
     return (rad * Math.cos(angle * Math.PI / 180)) + 50;
 });
 const lineKneeY: ComputedRef<number> = computed(() => {
-    let rad = 4*radius.value/5;
+    let rad = 100*radius.value/diameter.value;
     const angle = calculateAngleToNode(parentNode!) + (lineBendCoefficent.value * 30);
     rad = (Math.sin(30 * Math.PI / 180)* rad )/Math.sin(120 * Math.PI / 180);
     return (rad * Math.sin(angle * Math.PI / 180)) + 50;
 });
 
 const lineEndX: ComputedRef<number> = computed(() => {
+    let rad = 100*radius.value/diameter.value;
     const angle = calculateAngleToNode(parentNode!);
-    return ((4*radius.value/5) * Math.cos(angle * Math.PI / 180)) + 50;
+    return (rad * Math.cos(angle * Math.PI / 180)) + 50;
 });
 const lineEndY: ComputedRef<number> = computed(() => {
+    let rad = 100*radius.value/diameter.value;
     const angle = calculateAngleToNode(parentNode!);
-    return ((4*radius.value/5) * Math.sin(angle * Math.PI / 180)) + 50;
+    return (rad * Math.sin(angle * Math.PI / 180)) + 50;
 });
 
 const root: ComputedRef<SkillTreeNode> = computed(() => {
@@ -144,6 +149,8 @@ const root: ComputedRef<SkillTreeNode> = computed(() => {
     }
     return localParentNode!;
 });
+
+function shimmer() {}
 
 function traverseToBottom(direction: 'min' | 'max'): SkillTreeNode {
     let localParentNode = parentNode;
@@ -174,7 +181,8 @@ const nodeData = {
     phase: phase,
     min: min,
     max: max,
-    traverseToBottom: traverseToBottom
+    traverseToBottom: traverseToBottom,
+    shimmer: shimmer
 }
 
 provide('nodeData', nodeData);
@@ -189,15 +197,12 @@ onMounted(() => {
 <style lang="less" scoped>
 .node-container {
     position: absolute;
-    top: -62.5px;
-    right: -62.5px; 
+
     .node {
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        height: 125px;
-        width: 125px;
         font-size: 0.45em;
         text-align: center;
         white-space: pre-line;
@@ -222,8 +227,6 @@ onMounted(() => {
 
     .children {
         position: absolute;
-        top: 62.5px;
-        left: 62.5px;
     }
 }
 </style>

@@ -13,6 +13,7 @@ declare global {
         phase: ComputedRef<number>;
         min: Ref<number>;
         max: Ref<number>;
+        shimmer(): void;
     }
 }
 

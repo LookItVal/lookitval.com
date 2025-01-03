@@ -44,7 +44,7 @@
                 <SkillTreeNode title="Frontend">
                     <SkillTreeNode title="HTML" />
                     <SkillTreeNode title="CSS" />
-                    <SkillTreeNode title="JavaScript">
+                    <SkillTreeNode title="JavaScript" invertLineBend>
                         <SkillTreeNode title="Vue.js" />
                         <SkillTreeNode title="TypeScript" />
                         <SkillTreeNode title="" hide/>
@@ -55,7 +55,7 @@
                     <SkillTreeNode title="" hide/>
                     <SkillTreeNode title="Go" />
                     <SkillTreeNode title="Shell Scripting" />
-                    <SkillTreeNode title="Linux" />
+                    <SkillTreeNode title="Haskell" invertLineBend/>
                 </SkillTreeNode>
             </SkillTreeNode>
             <SkillTreeNode title="Audio Engineering">
@@ -68,7 +68,7 @@
                         <SkillTreeNode title="" hide/>
                     </SkillTreeNode>
                 </SkillTreeNode>
-                <SkillTreeNode title="Video Production">
+                <SkillTreeNode title="Video Production" invertChildLineBend>
                     <SkillTreeNode title="Mix & Mastering" />
                     <SkillTreeNode title="Audio Restoration" />
                     <SkillTreeNode title="Recording" />
@@ -185,6 +185,7 @@ const nodeData = {
     childrenOnCorners: childrenOnCorners,
     depth: depth,
     siblingIndex: siblingIndex,
+    invertChildLineBend: false,
     x: x,
     y: y,
     phase: phase,

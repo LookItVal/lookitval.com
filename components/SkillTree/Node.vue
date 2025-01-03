@@ -34,7 +34,8 @@
 const props = defineProps<{
     title: string,
     hide?: boolean,
-    invertLineBend?: boolean
+    invertLineBend?: boolean,
+    invertChildLineBend?: boolean
 }>();
 const hideLine: ComputedRef<boolean> = computed(() => {
     return props.hide && (childCount.value === 0);
@@ -57,13 +58,13 @@ const onCorners: ComputedRef<boolean> = computed(() => {
 });
 const childrenOnCorners: ComputedRef<boolean> = computed(() => {
     if (childCount.value % 2 === 0) {
-        if (parentNode!.phase.value % 60 === 0) {
-            return false;
-        } else {
+        if (phase.value % 60 === 0) {
             return true;
+        } else {
+            return false;
         }
     } else {
-        if (parentNode!.phase.value % 60 === 30) {
+        if (phase.value % 60 === 0) {
             return false;
         } else {
             return true;
@@ -104,6 +105,9 @@ const lineBendCoefficent: ComputedRef<1 | -1>  = computed(() => {
     let val = -1;
     if (siblingIndex.value % 2 === 0) {
         val = 1;
+    }
+    if (parentNode!.invertChildLineBend) {
+        val *= -1 as -1 | 1; 
     }
     if (props.invertLineBend) {
         return -1 * val as -1 | 1; 
@@ -164,6 +168,7 @@ const nodeData = {
     childCount: childCount,
     depth: depth,
     siblingIndex: siblingIndex,
+    invertChildLineBend: props.invertChildLineBend,
     x: x,
     y: y,
     phase: phase,

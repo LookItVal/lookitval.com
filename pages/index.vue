@@ -37,7 +37,7 @@
     </WunschFlamingoSection>
     <WunschFlamingoSection>
         <div class="section skills">
-            <div class="header"><h2>My</h2><GradientText text="Skills" header-tag="h2" color="blue" class="header-highlight"/></div>
+            <div class="header"><h2>My</h2><GradientText text="Skills" header-tag="h2" color="yellow" class="header-highlight"/></div>
             <SkillTree />
         </div>
     </WunschFlamingoSection>

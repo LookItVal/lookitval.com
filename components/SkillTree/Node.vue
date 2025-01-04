@@ -1,10 +1,10 @@
 <template>
     <div ref="container" class="node-container" :style="{ top: `-${diameter/2}vw`, left: `-${diameter/2}vw` }">
-        <div class="node" :class="{ hide: hideLine }" :style="{ transform: `translate(${x}vw, ${y}vw)`, 'z-index': zIndex, width: `${diameter}vw`, height: `${diameter}vw` }" @mouseover="shimmer">
+        <div class="node" :class="{ hide: hideLine }" :style="{ transform: `translate(${x}vw, ${y}vw)`, 'z-index': zIndex, width: `${diameter}vw`, height: `${diameter}vw` }" @mouseenter="hoverIn" @mouseleave="hoverOut">
             <svg class="node-shell" viewBox="0 0 100 100" >
                 <defs>
                     <radialGradient id="spark-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                        <stop offset="0%" style="stop-color:white;stop-opacity:1" />
+                        <stop offset="0%" style="stop-color:var(--peach);stop-opacity:1" />
                         <stop offset="25%" style="stop-color:var(--yellow);stop-opacity:0.5" />
                         <stop offset="50%" style="stop-color:var(--yellow);stop-opacity:0.4" />
                         <stop offset="75%" style="stop-color:var(--yellow);stop-opacity:0.1" />
@@ -43,6 +43,7 @@
                         <mpath :href="'#path2'+uniqueId" />
                     </animateMotion>
                 </circle>
+                <circle :class="'shimmer-bg'+uniqueId" class='static' r="50" cx=50 cy=50 fill="url(#spark-gradient)" />
             </svg>
             <p style="z-index: 1;">
                 {{ title }}
@@ -362,11 +363,40 @@ const root: ComputedRef<SkillTreeNode> = computed(() => {
     return localParentNode!;
 });
 
+function hoverIn(event: MouseEvent): void {
+    shimmer(event);
+    const shimmerBgs = container.value!.querySelectorAll('.shimmer-bg'+uniqueId) || [];
+    shimmerBgs.forEach((ball: Element) => {
+        ball.classList.add('hover');
+        if (ball.classList.contains('static')) {
+            ball.classList.remove('static');
+            ball.classList.add('shine');
+        }
+    });
+}
+
+function hoverOut(event: MouseEvent): void {
+    const shimmerBgs = container.value!.querySelectorAll('.shimmer-bg'+uniqueId) || [];
+    shimmerBgs.forEach((ball: Element) => {
+        ball.classList.remove('hover');
+        if (ball.classList.contains('shine')) {
+            ball.classList.remove('shine');
+            ball.classList.add('static');
+        }
+    });
+}
+
 function shimmer(event: MouseEvent|undefined, group: number = 0): void {
     if (isAnimating.value) return;
     if (group !== 0 && animateGroup.value !== group) return;
     isAnimating.value = true;
     const shimmerBalls = container.value!.querySelectorAll('.shimmer-ball'+uniqueId) || [];
+    const shimmerBgs = container.value!.querySelectorAll('.shimmer-bg'+uniqueId) || [];
+    shimmerBgs.forEach((ball: Element) => {
+        if (soloLine.value) return;
+        ball.classList.remove('static');
+        ball.classList.add('shine');
+    });
     shimmerBalls.forEach((ball: Element) => {
         ball.classList.remove('static');
         ball.classList.add('shine');
@@ -390,6 +420,11 @@ function shimmer(event: MouseEvent|undefined, group: number = 0): void {
     }, 975/2);
     setTimeout(() => {
         shimmerBalls.forEach((ball: Element) => {
+            ball.classList.remove('shine');
+            ball.classList.add('static');
+        });
+        shimmerBgs.forEach((ball: Element) => {
+            if (ball.classList.contains('hover')) return;
             ball.classList.remove('shine');
             ball.classList.add('static');
         });
@@ -477,6 +512,18 @@ onMounted(() => {
             .shine {
                 opacity: 1;
                 transition: opacity 0.05s;
+            }
+
+            [class^="shimmer-bg"] {
+                &.shine {
+                    r: 50;
+                    transition: r 0.5s cubic-bezier(0,1,0,1);
+                }
+                &.static {
+                    r: 0;
+                    opacity: 1;
+                    transition: r 1s cubic-bezier(0,1,.5,1);
+                }
             }
         }
     }

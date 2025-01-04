@@ -1,7 +1,16 @@
 <template>
-    <div class="node-container" :style="{ top: `-${diameter/2}vw`, left: `-${diameter/2}vw` }">
-        <div class="node" :class="{ hide: hideLine }" :style="{ transform: `translate(${x}vw, ${y}vw)`, 'z-index': zIndex, width: `${diameter}vw`, height: `${diameter}vw` }">
-            <svg class="node-shell" viewBox="0 0 100 100">
+    <div ref="container" class="node-container" :style="{ top: `-${diameter/2}vw`, left: `-${diameter/2}vw` }">
+        <div class="node" :class="{ hide: hideLine }" :style="{ transform: `translate(${x}vw, ${y}vw)`, 'z-index': zIndex, width: `${diameter}vw`, height: `${diameter}vw` }" @mouseover="shimmer">
+            <svg class="node-shell" viewBox="0 0 100 100" >
+                <defs>
+                    <radialGradient id="spark-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                        <stop offset="0%" style="stop-color:white;stop-opacity:1" />
+                        <stop offset="25%" style="stop-color:var(--yellow);stop-opacity:0.5" />
+                        <stop offset="50%" style="stop-color:var(--yellow);stop-opacity:0.4" />
+                        <stop offset="75%" style="stop-color:var(--yellow);stop-opacity:0.1" />
+                        <stop offset="100%" style="stop-color:var(--yellow);stop-opacity:0" />
+                    </radialGradient>
+                </defs>
                 <path v-if="onCorners" class="line" :d="`M 50 50 L ${lineEndX} ${lineEndY}`" stroke="var(--text)" stroke-width="2"/>
                 <path v-else class="line" :d="`M 50 50 L ${lineKneeX} ${lineKneeY} L ${lineEndX} ${lineEndY}`" stroke="var(--text)" stroke-width="2" fill="none"/>
                 <path v-if="!props.hide" class="hex" d="M 7.565 50
@@ -18,6 +27,22 @@
                                      L 14.06 78.25
                                      C 7.565 74.5 7.565 74.5 7.565 67
                                      Z" fill="var(--crsut)" stroke-width="2" stroke="var(--text)" />
+                <path v-if="onCorners && !soloLine" :id="'path1'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${pathX1} ${pathY1} L ${path0X2} ${path0Y2} L ${path0X3} ${path0Y3} L ${pathX4} ${pathY4}`" stroke="none" fill="none"/>
+                <path v-if="onCorners && !soloLine" :id="'path2'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${pathX1} ${pathY1} L ${path1X2} ${path1Y2} L ${path1X3} ${path1Y3} L ${pathX4} ${pathY4}`" stroke="none" fill="none"/>
+                <path v-if="!onCorners && !soloLine" :id="'path1'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${lineKneeX} ${lineKneeY} L ${pathX1} ${pathY1} L ${path0X2} ${path0Y2} L ${path0X3} ${path0Y3} L ${pathX4} ${pathY4}`" stroke="none" fill="none"/>
+                <path v-if="!onCorners && !soloLine" :id="'path2'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${lineKneeX} ${lineKneeY} L ${pathX1} ${pathY1} L ${path1X2} ${path1Y2} L ${path1X3} ${path1Y3} L ${pathX4} ${pathY4}`" stroke="none" fill="none"/>
+                <path v-if="soloLine" :id="'path1'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${pathX4} ${pathY4}`" stoke="none" fill="none"/>
+                <path v-if="soloLine" :id="'path2'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${pathX4} ${pathY4}`" stoke="none" fill="none"/>
+                <circle :class="'shimmer-ball'+uniqueId" class='static' r="10" fill="url(#spark-gradient)">
+                    <animateMotion dur="0.5s" fill="freeze">
+                        <mpath :href="'#path1'+uniqueId" />
+                    </animateMotion>
+                </circle>
+                <circle :class="'shimmer-ball'+uniqueId" class='static' r="10" fill="url(#spark-gradient)">
+                    <animateMotion dur="0.5s" fill="freeze">
+                        <mpath :href="'#path2'+uniqueId" />
+                    </animateMotion>
+                </circle>
             </svg>
             <p style="z-index: 1;">
                 {{ title }}
@@ -31,14 +56,21 @@
 
 
 <script lang="ts" setup>
+const container = ref<HTMLElement>();
 const props = defineProps<{
     title: string,
     hide?: boolean,
     invertLineBend?: boolean,
     invertChildLineBend?: boolean
 }>();
+const isAnimating: Ref<boolean> = ref(false);
+const hexRadius: number = 49;
+const uniqueId: string =  `${Math.random().toString(36).substring(2, 11)}`
 const hideLine: ComputedRef<boolean> = computed(() => {
     return props.hide && (childCount.value === 0);
+});
+const soloLine: ComputedRef<boolean> = computed(() => {
+    return props.hide && !hideLine.value;
 });
 const children: Ref<Array<SkillTreeNode>> = ref([]);
 const parentNode: SkillTreeNode | undefined = inject('nodeData');
@@ -141,6 +173,186 @@ const lineEndY: ComputedRef<number> = computed(() => {
     const angle = calculateAngleToNode(parentNode!);
     return (rad * Math.sin(angle * Math.PI / 180)) + 50;
 });
+const initialAngle: ComputedRef<number> = computed(() => {
+    if (onCorners.value) {
+        return calculateVectorPhase(50, 50, lineEndX.value, lineEndY.value);
+    }
+    return calculateVectorPhase(lineKneeX.value, lineKneeY.value, lineEndX.value, lineEndY.value);
+});
+const secondAngle: ComputedRef<number> = computed(() => {
+    if (onCorners.value) {
+        return calculateVectorPhase(50, 50, lineEndX.value, lineEndY.value);
+    }
+    return calculateVectorPhase(50, 50, lineKneeX.value, lineKneeY.value);
+});
+const initialMagnitude: ComputedRef<number> = computed(() => {
+    const rad = 100*radius.value/diameter.value;
+    return rad - 2*hexRadius;
+});
+const pathX0: ComputedRef<number> = computed(() => {
+    let rad = hexRadius + initialMagnitude.value;
+    if (onCorners.value) {
+        return rad * Math.cos((phase.value-180) * Math.PI / 180) + 50;
+    }
+    rad = 100*radius.value/diameter.value;
+    rad = (Math.sin(30 * Math.PI / 180)* rad )/Math.sin(120 * Math.PI / 180);
+    rad = rad - hexRadius;
+    const angle = calculateVectorPhase(lineKneeX.value, lineKneeY.value, lineEndX.value, lineEndY.value);
+    const position = calulateVectorPosition(lineKneeX.value, lineKneeY.value, angle, rad);
+    return position.x;
+});
+const pathY0: ComputedRef<number> = computed(() => {
+    let rad = hexRadius + initialMagnitude.value;
+    if (onCorners.value) {
+        return rad * Math.sin((phase.value-180) * Math.PI / 180) + 50;
+    }
+    rad = 100*radius.value/diameter.value;
+    rad = (Math.sin(30 * Math.PI / 180)* rad )/Math.sin(120 * Math.PI / 180);
+    rad = rad - hexRadius;
+    const angle = calculateVectorPhase(lineKneeX.value, lineKneeY.value, lineEndX.value, lineEndY.value);
+    const position = calulateVectorPosition(lineKneeX.value, lineKneeY.value, angle, rad);
+    return position.y;
+});
+const pathX1: ComputedRef<number> = computed(() => {
+    if (onCorners.value) {
+        return hexRadius * Math.cos((phase.value-180) * Math.PI / 180) + 50;
+    }
+    let rad = 100*radius.value/diameter.value;
+    rad = (Math.sin(30 * Math.PI / 180)* rad )/Math.sin(120 * Math.PI / 180);
+    rad = rad - hexRadius;
+    const angle = calculateVectorPhase(lineKneeX.value, lineKneeY.value, 50, 50);
+    const position = calulateVectorPosition(lineKneeX.value, lineKneeY.value, angle, rad);
+    return position.x;
+});
+const pathY1: ComputedRef<number> = computed(() => {
+    if (onCorners.value) {
+        return hexRadius * Math.sin((phase.value-180) * Math.PI / 180) + 50;
+    }
+    let rad = 100*radius.value/diameter.value;
+    rad = (Math.sin(30 * Math.PI / 180)* rad )/Math.sin(120 * Math.PI / 180);
+    rad = rad - hexRadius;
+    const angle = calculateVectorPhase(lineKneeX.value, lineKneeY.value, 50, 50);
+    const position = calulateVectorPosition(lineKneeX.value, lineKneeY.value, angle, rad);
+    return position.y;
+});
+const path0X2: ComputedRef<number> = computed(() => {
+    let angle = 0
+    if (onCorners.value) {
+        angle = phase.value + 60;
+    } else {
+        angle = calculateVectorPhase(lineKneeX.value, lineKneeY.value, pathX1.value, pathY1.value) + 60;
+    }
+    const position = calulateVectorPosition(pathX1.value, pathY1.value, angle, hexRadius);
+    return position.x;
+});
+const path0Y2: ComputedRef<number> = computed(() => {
+    let angle = 0
+    if (onCorners.value) {
+        angle = phase.value + 60;
+    } else {
+        angle = calculateVectorPhase(lineKneeX.value, lineKneeY.value, pathX1.value, pathY1.value) + 60;
+    }
+    const position = calulateVectorPosition(pathX1.value, pathY1.value, angle, hexRadius);
+    return position.y;
+});
+const path1X2: ComputedRef<number> = computed(() => {
+    let angle = 0
+    if (onCorners.value) {
+        angle = phase.value - 60;
+    } else {
+        angle = calculateVectorPhase(lineKneeX.value, lineKneeY.value, pathX1.value, pathY1.value) - 60;
+    }
+    const position = calulateVectorPosition(pathX1.value, pathY1.value, angle, hexRadius);
+    return position.x;
+});
+const path1Y2: ComputedRef<number> = computed(() => {
+    let angle = 0
+    if (onCorners.value) {
+        angle = phase.value - 60;
+    } else {
+        angle = calculateVectorPhase(lineKneeX.value, lineKneeY.value, pathX1.value, pathY1.value) - 60;
+    }
+    const position = calulateVectorPosition(pathX1.value, pathY1.value, angle, hexRadius);
+    return position.y;
+});
+const path0X3: ComputedRef<number> = computed(() => {
+    const angle = calculateVectorPhase(pathX1.value, pathY1.value, path0X2.value, path0Y2.value) - 60;
+    const position = calulateVectorPosition(path0X2.value, path0Y2.value, angle, hexRadius);
+    return position.x;
+});
+const path0Y3: ComputedRef<number> = computed(() => {
+    const angle = calculateVectorPhase(pathX1.value, pathY1.value, path0X2.value, path0Y2.value) - 60;
+    const position = calulateVectorPosition(path0X2.value, path0Y2.value, angle, hexRadius);
+    return position.y;
+});
+const path1X3: ComputedRef<number> = computed(() => {
+    const angle = calculateVectorPhase(pathX1.value, pathY1.value, path1X2.value, path1Y2.value) + 60;
+    const position = calulateVectorPosition(path1X2.value, path1Y2.value, angle, hexRadius);
+    return position.x;
+});
+const path1Y3: ComputedRef<number> = computed(() => {
+    const angle = calculateVectorPhase(pathX1.value, pathY1.value, path1X2.value, path1Y2.value) + 60;
+    const position = calulateVectorPosition(path1X2.value, path1Y2.value, angle, hexRadius);
+    return position.y;
+});
+const pathX4: ComputedRef<number> = computed(() => {
+    const angle = calculateVectorPhase(path1X2.value, path1Y2.value, path1X3.value, path1Y3.value) + 60;
+    const position = calulateVectorPosition(path1X3.value, path1Y3.value, angle, hexRadius);
+    return position.x;
+});
+const pathY4: ComputedRef<number> = computed(() => {
+    const angle = calculateVectorPhase(path1X2.value, path1Y2.value, path1X3.value, path1Y3.value) + 60;
+    const position = calulateVectorPosition(path1X3.value, path1Y3.value, angle, hexRadius);
+    return position.y;
+});
+
+const animateGroupKey: ComputedRef<{[key: string]: Array<number>}> = computed(() => {
+    const angle = Math.round(secondAngle.value / 10) * 10 + 180;
+    const group1 = [
+        angle + 60,
+        angle - 60,
+        angle + 60 + 360,
+        angle - 60 + 360,
+        angle + 60 - 360,
+        angle - 60 - 360
+    ]
+    const group2 = [
+        angle + 120,
+        angle - 120,
+        angle + 120 + 360,
+        angle - 120 + 360,
+        angle + 120 - 360,
+        angle - 120 - 360
+    ]
+    const group3 = [
+        angle + 180,
+        angle - 180,
+        angle + 180 + 360,
+        angle - 180 + 360,
+        angle + 180 - 360,
+        angle - 180 - 360
+    ]
+    return {
+        group1: group1,
+        group2: group2,
+        group3: group3
+    }
+});
+
+const animateGroup: ComputedRef<number> = computed(() => {
+    const key = parentNode!.animateGroupKey.value;
+    const angle = Math.round(initialAngle.value / 10) * 10; 
+    if (key.group1.includes(angle)) {
+        return 1;
+    }
+    if (key.group2.includes(angle)) {
+        return 2;
+    }
+    if (key.group3.includes(angle)) {
+        return 3;
+    }
+    return 0;
+});
 
 const root: ComputedRef<SkillTreeNode> = computed(() => {
     let localParentNode = parentNode;
@@ -150,7 +362,40 @@ const root: ComputedRef<SkillTreeNode> = computed(() => {
     return localParentNode!;
 });
 
-function shimmer() {}
+function shimmer(event: MouseEvent|undefined, group: number = 0): void {
+    if (isAnimating.value) return;
+    if (group !== 0 && animateGroup.value !== group) return;
+    isAnimating.value = true;
+    const shimmerBalls = container.value!.querySelectorAll('.shimmer-ball'+uniqueId) || [];
+    shimmerBalls.forEach((ball: Element) => {
+        ball.classList.remove('static');
+        ball.classList.add('shine');
+        const anim = ball.querySelector('animateMotion') as SVGAnimateMotionElement;
+        anim.beginElement();
+    });
+    setTimeout(() => {
+        children.value!.forEach((child: SkillTreeNode) => {
+            child.shimmer(undefined, 1);
+        });
+    }, 350/2);
+    setTimeout(() => {
+        children.value!.forEach((child: SkillTreeNode) => {
+            child.shimmer(undefined, 2);
+        });
+    }, 650/2);        
+    setTimeout(() => {
+        children.value!.forEach((child: SkillTreeNode) => {
+            child.shimmer(undefined, 3);
+        });
+    }, 975/2);
+    setTimeout(() => {
+        shimmerBalls.forEach((ball: Element) => {
+            ball.classList.remove('shine');
+            ball.classList.add('static');
+        });
+        isAnimating.value = false;
+    }, 1000/2);
+}
 
 function traverseToBottom(direction: 'min' | 'max'): SkillTreeNode {
     let localParentNode = parentNode;
@@ -182,7 +427,9 @@ const nodeData = {
     min: min,
     max: max,
     traverseToBottom: traverseToBottom,
-    shimmer: shimmer
+    shimmer: shimmer,
+    animateGroupKey: animateGroupKey,
+    animateGroup: animateGroup
 }
 
 provide('nodeData', nodeData);
@@ -222,6 +469,15 @@ onMounted(() => {
             left: 0;
             z-index: 1;
             overflow: visible;
+
+            .static {
+                opacity: 0;
+                transition: opacity 0.05s;
+            }
+            .shine {
+                opacity: 1;
+                transition: opacity 0.05s;
+            }
         }
     }
 

@@ -2,12 +2,76 @@
     <div ref="skillTree" class="skill-tree" :style="{height: (height) + 'vw', top: (position) + 'vw'}" :click="shimmer">
         <div class="root-node" :style="{'margin-top': `${diameter}vw`, 'margin-left': `${0}vw`}">
             <SkillTreeNode title="Data Science">
-                <SkillTreeNode title="Test Item">
-                    <SkillTreeNode title="1" />
-                    <SkillTreeNode title="2" />
-                    <SkillTreeNode title="3" />
-                    <SkillTreeNode title="4" />
-                    <SkillTreeNode title="5" />
+                <SkillTreeNode title="" hide>
+                    <SkillTreeNode title="Cloud Computing">
+                        <SkillTreeNode title="Azure" />
+                        <SkillTreeNode title="Google Cloud Platform" />
+                    </SkillTreeNode>
+                </SkillTreeNode>
+                <SkillTreeNode title="Data Manipulation">
+                    <SkillTreeNode title="Google Apps Script" />
+                    <SkillTreeNode title="Python">
+                        <SkillTreeNode title="Matrix Manipulation">
+                            <SkillTreeNode title="" hide/>
+                            <SkillTreeNode title="NumPy/ CuPy" />
+                            <SkillTreeNode title="Pandas" />
+                        </SkillTreeNode>
+                        <SkillTreeNode title="Machine Learning">
+                            <SkillTreeNode title="PyTorch" />
+                        </SkillTreeNode>
+                        <SkillTreeNode title="Data Visualization">
+                            <SkillTreeNode title="Matplotlib" />
+                            <SkillTreeNode title="" hide/>
+                            <SkillTreeNode title="" hide/>
+                        </SkillTreeNode>
+                    </SkillTreeNode>
+                    <SkillTreeNode title="R" />
+                </SkillTreeNode>
+                <SkillTreeNode title="" hide>
+                    <SkillTreeNode title="Database Management">
+                        <SkillTreeNode title="SQL">
+                            <SkillTreeNode title="Oracle" />
+                            <SkillTreeNode title="PostgreSQL" />
+                        </SkillTreeNode>
+                        <SkillTreeNode title="NoSQL">
+                            <SkillTreeNode title="MongoDB" />
+                            <SkillTreeNode title="Zoho Creator" />
+                        </SkillTreeNode>
+                    </SkillTreeNode>
+                </SkillTreeNode>
+            </SkillTreeNode>
+            <SkillTreeNode title="Software Development">
+                <SkillTreeNode title="Frontend">
+                    <SkillTreeNode title="HTML" />
+                    <SkillTreeNode title="CSS" />
+                    <SkillTreeNode title="JavaScript" invertLineBend>
+                        <SkillTreeNode title="Vue.js" />
+                        <SkillTreeNode title="TypeScript" />
+                        <SkillTreeNode title="" hide/>
+                    </SkillTreeNode>
+                </SkillTreeNode>
+                <SkillTreeNode title="Backend">
+                    <SkillTreeNode title="" hide/>
+                    <SkillTreeNode title="" hide/>
+                    <SkillTreeNode title="Go" />
+                    <SkillTreeNode title="Shell Scripting" />
+                    <SkillTreeNode title="Haskell" invertLineBend/>
+                </SkillTreeNode>
+            </SkillTreeNode>
+            <SkillTreeNode title="Audio Engineering">
+                <SkillTreeNode title="Music Production">
+                    <SkillTreeNode title="Musician" />
+                    <SkillTreeNode title="FoH Engineering" />
+                    <SkillTreeNode title="Mix & Mastering">
+                        <SkillTreeNode title="Cubase" />
+                        <SkillTreeNode title="ProTools" />
+                        <SkillTreeNode title="" hide/>
+                    </SkillTreeNode>
+                </SkillTreeNode>
+                <SkillTreeNode title="Video Production" invertChildLineBend>
+                    <SkillTreeNode title="Mix & Mastering" />
+                    <SkillTreeNode title="Audio Restoration" />
+                    <SkillTreeNode title="Recording" />
                 </SkillTreeNode>
             </SkillTreeNode>
         </div>
@@ -32,7 +96,7 @@ const diameter: ComputedRef<number> = computed(() => {
     return 8;
 });
 const height: ComputedRef<number> = computed(() => {
-    return (max.value) - (min.value);
+    return (max.value + (diameter.value/2)) - (min.value - (diameter.value/2));
 });
 
 const position: ComputedRef<number> = computed(() => {
@@ -105,9 +169,13 @@ function findMax(batch: Array<SkillTreeNode>): number {
     return max;
 }
 
-function shimmer(): void {
+function shimmer(event: MouseEvent|undefined, group: number = 0): void {
+    return;
     children.value.forEach((child) => {
-        child.shimmer();
+        child.shimmer(undefined, 1);
+        child.shimmer(undefined, 2);
+        child.shimmer(undefined, 3);
+
     });
 }
 

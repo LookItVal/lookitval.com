@@ -13,7 +13,9 @@ declare global {
         phase: ComputedRef<number>;
         min: Ref<number>;
         max: Ref<number>;
-        shimmer(): void;
+        shimmer(event?: MouseEvent, group: number): void;
+        animateGroupKey: ComputedRef<{[key: string]: Array<number>}>
+        animateGroup: ComputedRef<number>;
     }
 }
 

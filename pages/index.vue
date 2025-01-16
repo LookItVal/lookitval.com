@@ -51,15 +51,12 @@
   </div>
 </template>
 
-<script>
-export default {
-    name: "Home",
-    methods: {
-        viewResume() {
-        console.log("Viewing resume");
-        this.$refs.resumePDF.toggleVisibility();
-        }
-    }
+<script lang="ts" setup>
+const resumePDF: Ref<PDFViewer | null> = ref(null);
+
+function viewResume() {
+    console.log("Viewing resume");
+    resumePDF.value!.toggleVisibility();
 }
 </script>
 

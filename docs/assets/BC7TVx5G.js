@@ -1,0 +1,1 @@
+import{_ as e}from"./BN0OXr0h.js";import{_ as t,c as n,b as c,o as r}from"./BqEfqHDS.js";import"./D4AlVAjt.js";const _={name:"/portfolio"};function s(a,p,m,i,f,d){const o=e;return r(),n("div",null,[c(o)])}const $=t(_,[["render",s]]);export{$ as default};

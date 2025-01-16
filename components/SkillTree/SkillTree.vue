@@ -13,7 +13,7 @@
                     <SkillTreeNode title="Python" icon="icons/python.svg">
                         <SkillTreeNode title="Matrix Manipulation" icon="icons/matrixManipulation.svg">
                             <SkillTreeNode title="" hide/>
-                            <SkillTreeNode title="NumPy/ CuPy" icon="icons/numpy.svg"/>
+                            <SkillTreeNode title="NumPy/ CuPy" icon="icons/numPy.svg"/>
                             <SkillTreeNode title="Pandas" icon="icons/pandas.svg"/>
                         </SkillTreeNode>
                         <SkillTreeNode title="Machine Learning" icon="icons/machineLearning.svg">

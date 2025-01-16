@@ -1,31 +1,31 @@
 <template>
     <div ref="skillTree" class="skill-tree" :style="{height: (height) + 'vw', top: (position) + 'vw'}" :click="shimmer">
         <div class="root-node" :style="{'margin-top': `${diameter}vw`, 'margin-left': `${0}vw`}">
-            <SkillTreeNode title="Data Science">
+            <SkillTreeNode title="Data Science" icon="icons/dataScience.svg">
                 <SkillTreeNode title="" hide>
-                    <SkillTreeNode title="Cloud Computing">
-                        <SkillTreeNode title="Azure" />
-                        <SkillTreeNode title="Google Cloud Platform" />
+                    <SkillTreeNode title="Cloud Computing" icon="icons/cloudComputing.svg">
+                        <SkillTreeNode title="Azure" icon="icons/Microsoft_Azure.svg"/>
+                        <SkillTreeNode title="Google Cloud Platform" icon="icons/googleCloudPlatform.svg"/>
                     </SkillTreeNode>
                 </SkillTreeNode>
-                <SkillTreeNode title="Data Manipulation">
-                    <SkillTreeNode title="Google Apps Script" />
-                    <SkillTreeNode title="Python">
-                        <SkillTreeNode title="Matrix Manipulation">
+                <SkillTreeNode title="Data Manipulation" icon="icons/dataManipulation.svg">
+                    <SkillTreeNode title="Google Apps Script" icon="icons/googleAppsScript.svg"/>
+                    <SkillTreeNode title="Python" icon="icons/python.svg">
+                        <SkillTreeNode title="Matrix Manipulation" icon="icons/matrixManipulation.svg">
                             <SkillTreeNode title="" hide/>
-                            <SkillTreeNode title="NumPy/ CuPy" />
-                            <SkillTreeNode title="Pandas" />
+                            <SkillTreeNode title="NumPy/ CuPy" icon="icons/numpy.svg"/>
+                            <SkillTreeNode title="Pandas" icon="icons/pandas.svg"/>
                         </SkillTreeNode>
-                        <SkillTreeNode title="Machine Learning">
-                            <SkillTreeNode title="PyTorch" />
+                        <SkillTreeNode title="Machine Learning" icon="icons/machineLearning.svg">
+                            <SkillTreeNode title="PyTorch" icon="icons/pyTorch.svg"/>
                         </SkillTreeNode>
-                        <SkillTreeNode title="Data Visualization">
-                            <SkillTreeNode title="Matplotlib" />
+                        <SkillTreeNode title="Data Visualization" icon="icons/dataVisualization.svg">
+                            <SkillTreeNode title="Matplotlib" icon="icons/matplotlib.svg"/>
                             <SkillTreeNode title="" hide/>
                             <SkillTreeNode title="" hide/>
                         </SkillTreeNode>
                     </SkillTreeNode>
-                    <SkillTreeNode title="R" />
+                    <SkillTreeNode title="R" icon="icons/R.svg"/>
                 </SkillTreeNode>
                 <SkillTreeNode title="" hide>
                     <SkillTreeNode title="Database Management">
@@ -45,7 +45,11 @@
                     <SkillTreeNode title="HTML" />
                     <SkillTreeNode title="CSS" />
                     <SkillTreeNode title="JavaScript" invertLineBend>
-                        <SkillTreeNode title="Vue.js" />
+                        <SkillTreeNode title="Vue.js">
+                            <SkillTreeNode title="" hide />
+                            <SkillTreeNode title="" hide />
+                            <SkillTreeNode title="Nuxt.js"/>
+                        </SkillTreeNode>
                         <SkillTreeNode title="TypeScript" />
                         <SkillTreeNode title="" hide/>
                     </SkillTreeNode>
@@ -80,6 +84,8 @@
 
 
 <script lang="ts" setup>
+import { SkillTree } from '#build/components';
+
 const children: Ref<Array<SkillTreeNode>> = ref([]);
 const childCount: ComputedRef<number> = computed(() => {
     return children.value!.length;
@@ -93,7 +99,7 @@ const y: ComputedRef<number> = computed(() => {return 0});
 const min: Ref<number> = ref(0);
 const max: Ref<number> = ref(0);
 const diameter: ComputedRef<number> = computed(() => {
-    return 8;
+    return 4;
 });
 const height: ComputedRef<number> = computed(() => {
     return (max.value + (diameter.value/2)) - (min.value - (diameter.value/2));

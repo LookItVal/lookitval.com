@@ -1,18 +1,20 @@
 <template>
     <div ref="container" class="node-container" :style="{ top: `-${diameter/2}vw`, left: `-${diameter/2}vw` }">
-        <div class="node" :class="{ hide: hideLine }" :style="{ transform: `translate(${x}vw, ${y}vw)`, 'z-index': zIndex, width: `${diameter}vw`, height: `${diameter}vw` }" @mouseenter="hoverIn" @mouseleave="hoverOut">
+        <div class="node" :class="{ hide: hideLine, hideBody: hide }" :style="{ transform: `translate(${x}vw, ${y}vw)`, 'z-index': zIndex, width: `${diameter}vw`, height: `${diameter}vw` }" @mouseenter="hoverIn" @mouseleave="hoverOut">
             <svg class="node-shell" viewBox="0 0 100 100" >
                 <defs>
                     <radialGradient id="spark-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                         <stop offset="0%" style="stop-color:var(--peach);stop-opacity:1" />
-                        <stop offset="25%" style="stop-color:var(--yellow);stop-opacity:0.5" />
-                        <stop offset="50%" style="stop-color:var(--yellow);stop-opacity:0.4" />
-                        <stop offset="75%" style="stop-color:var(--yellow);stop-opacity:0.1" />
+                        <stop offset="60%" style="stop-color:var(--yellow);stop-opacity:0.4" />
+                        <stop offset="90%" style="stop-color:var(--yellow);stop-opacity:0.1" />
                         <stop offset="100%" style="stop-color:var(--yellow);stop-opacity:0" />
                     </radialGradient>
+                    <mask :id="`icon-mask-${uniqueId}`" height="100%" width="100%">
+                        <image :href="props.icon" height="65" width="65" x="17.5" y="17.5"/>
+                    </mask>
                 </defs>
-                <path v-if="onCorners" class="line" :d="`M 50 50 L ${lineEndX} ${lineEndY}`" stroke="var(--text)" stroke-width="2"/>
-                <path v-else class="line" :d="`M 50 50 L ${lineKneeX} ${lineKneeY} L ${lineEndX} ${lineEndY}`" stroke="var(--text)" stroke-width="2" fill="none"/>
+                <path v-if="onCorners" class="line" :d="`M 50 50 L ${lineEndX} ${lineEndY}`" stroke="var(--text)" stroke-width="2.5"/>
+                <path v-else class="line" :d="`M 50 50 L ${lineKneeX} ${lineKneeY} L ${lineEndX} ${lineEndY}`" stroke="var(--text)" stroke-width="2.5" fill="none"/>
                 <path v-if="!props.hide" class="hex" d="M 7.565 50
                                      L 7.565 33
                                      C 7.565 25.5 7.565 25.5 14.06 21.75
@@ -26,7 +28,7 @@
                                      C 50 99 50 99 43.25 95.4
                                      L 14.06 78.25
                                      C 7.565 74.5 7.565 74.5 7.565 67
-                                     Z" fill="var(--crsut)" stroke-width="2" stroke="var(--text)" />
+                                     Z" fill="var(--crust)" stroke-width="2.5" stroke="var(--text)" />
                 <path v-if="onCorners && !soloLine" :id="'path1'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${pathX1} ${pathY1} L ${path0X2} ${path0Y2} L ${path0X3} ${path0Y3} L ${pathX4} ${pathY4}`" stroke="none" fill="none"/>
                 <path v-if="onCorners && !soloLine" :id="'path2'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${pathX1} ${pathY1} L ${path1X2} ${path1Y2} L ${path1X3} ${path1Y3} L ${pathX4} ${pathY4}`" stroke="none" fill="none"/>
                 <path v-if="!onCorners && !soloLine" :id="'path1'+uniqueId" :d="`M ${pathX0} ${pathY0} L ${lineKneeX} ${lineKneeY} L ${pathX1} ${pathY1} L ${path0X2} ${path0Y2} L ${path0X3} ${path0Y3} L ${pathX4} ${pathY4}`" stroke="none" fill="none"/>
@@ -43,9 +45,10 @@
                         <mpath :href="'#path2'+uniqueId" />
                     </animateMotion>
                 </circle>
-                <circle :class="'shimmer-bg'+uniqueId" class='static' r="50" cx=50 cy=50 fill="url(#spark-gradient)" />
+                <circle v-if='!props.hide' :class="'shimmer-bg'+uniqueId" class='static' r="50" cx="50" cy="50" fill="url(#spark-gradient)" />
+                <rect v-if='props.icon' class="icon" :mask="`url(#icon-mask-${uniqueId})`" x="0" y="0" height="100" width="100" fill="var(--text)"/>
             </svg>
-            <p style="z-index: 1;">
+            <p v-if="!props.icon" style="z-index: 1;">
                 {{ title }}
             </p>
         </div>
@@ -60,6 +63,7 @@
 const container = ref<HTMLElement>();
 const props = defineProps<{
     title: string,
+    icon?: string,
     hide?: boolean,
     invertLineBend?: boolean,
     invertChildLineBend?: boolean
@@ -120,11 +124,11 @@ const phase: ComputedRef<number> = computed(() => {
 });
 
 const diameter: ComputedRef<number> = computed(() => {
-    return 8;
+    return 4;
 });
 const radius: ComputedRef<number> = computed(() => {
-    if (parentNode!.parentNode === undefined) return 10;
-    return 9;
+    if (parentNode!.parentNode === undefined) return 5;
+    return 4.5;
 });
 const x: ComputedRef<number> = computed(() => {
     return (radius.value * Math.cos(phase.value * Math.PI / 180)) + parentNode!.x.value;
@@ -493,6 +497,9 @@ onMounted(() => {
 
         &.hide {
             opacity: 0;
+            pointer-events: none;
+        }
+        &.hideBody {
             pointer-events: none;
         }
 

@@ -2,7 +2,7 @@
     <div ref="pdfViewer" class="pdf-viewer hidden invisible" @click="toggleVisibility">
         <iframe :src="embeddedPdfUrl" class="pdf-frame" @click.stop></iframe>
         <a :href="pdfUrl" target="_self" class="download-link" @click.stop>
-            <img src="~assets/icons/download.svg" alt="Download PDF" />
+            <img src="/icons/download.svg" alt="Download PDF" />
         </a>
     </div>
 </template>

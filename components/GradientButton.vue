@@ -1,5 +1,5 @@
 <template>
-    <button @click="click" @mouseover="shimmer" class="button-background" :class="color">
+    <button @click="handleClick" @mouseover="shimmer" class="button-background" :class="color">
         <div ref='shimmers' class="shimmer">
             <div class="shine1"></div>
             <div class="shine2"></div>
@@ -11,7 +11,8 @@
 
 <script lang="ts" setup>
 const props = defineProps<{
-    click: () => void;
+    to?: string;
+    click?: () => void;
     color: string;
 }>();
 
@@ -34,6 +35,15 @@ function shimmer(): void {
         isAnimating.value = false;
         shimmers.value!.classList.remove('animate');
     }, 1000);
+}
+
+function handleClick(): void {
+    if (props.click) {
+        props.click();
+    }
+    if (props.to) {
+        navigateTo(props.to);
+    }
 }
 </script>
 

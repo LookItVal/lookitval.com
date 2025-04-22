@@ -18,7 +18,7 @@ const embeddedPdfUrl: ComputedRef<string> = computed(() => {
 .pdf-viewer {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     
     .pdf-frame {
         position: relative;

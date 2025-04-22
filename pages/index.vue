@@ -31,7 +31,7 @@
                 <GradientButton :click="viewResume" color="green" class="resume-button">
                     <h4 style="font-weight: 900;">View Resume</h4>
                 </GradientButton>
-                <PDFViewer ref="resumePDF" pdfUrl="https://docs.google.com/document/d/1LaukwAxBx__iYZ_xRLRSmrjDKb8UyPx0fAWnWfSYWFw/export?format=pdf" />
+                <PDFViewer ref="resumePDF" pdfUrl="https://docs.google.com/document/d/1LXQStzF78hoaLbSqoHeGr6z3VU6LYVMwxm_m94g01_Q/export?format=pdf" />
             </div>
         </div>
     </WunschFlamingoSection>

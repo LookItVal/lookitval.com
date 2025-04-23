@@ -84,8 +84,6 @@
 
 
 <script lang="ts" setup>
-import { SkillTree } from '#build/components';
-
 const children: Ref<Array<SkillTreeNode>> = ref([]);
 const childCount: ComputedRef<number> = computed(() => {
     return children.value!.length;

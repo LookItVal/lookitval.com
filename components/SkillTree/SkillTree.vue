@@ -28,22 +28,22 @@
                     <SkillTreeNode title="R" icon="icons/R.svg"/>
                 </SkillTreeNode>
                 <SkillTreeNode title="" hide>
-                    <SkillTreeNode title="Database Management">
-                        <SkillTreeNode title="SQL">
-                            <SkillTreeNode title="Oracle" />
-                            <SkillTreeNode title="PostgreSQL" />
+                    <SkillTreeNode title="Database Management" icon="icons/databaseManagement.svg">
+                        <SkillTreeNode title="SQL" icon="icons/SQLDatabases.svg">
+                            <SkillTreeNode title="Oracle" icon="icons/OracleSQL.svg"/>
+                            <SkillTreeNode title="PostgreSQL" icon="icons/postgresql.svg"/>
                         </SkillTreeNode>
-                        <SkillTreeNode title="NoSQL">
-                            <SkillTreeNode title="MongoDB" />
-                            <SkillTreeNode title="Zoho Creator" />
+                        <SkillTreeNode title="NoSQL" icon="icons/NoSQLDatabases.svg">
+                            <SkillTreeNode title="MongoDB" icon="icons/mongodb.svg"/>
+                            <SkillTreeNode title="Zoho Creator" icon="icons/zohoCreator.svg"/>
                         </SkillTreeNode>
                     </SkillTreeNode>
                 </SkillTreeNode>
             </SkillTreeNode>
-            <SkillTreeNode title="Software Development">
-                <SkillTreeNode title="Frontend">
-                    <SkillTreeNode title="HTML" />
-                    <SkillTreeNode title="CSS" />
+            <SkillTreeNode title="Software Development" icon="icons/softwareEngineering.svg">
+                <SkillTreeNode title="Frontend" icon="icons/frontend.svg">
+                    <SkillTreeNode title="HTML" icon="icons/html5.svg"/>
+                    <SkillTreeNode title="CSS" icon="icons/css3.svg"/>
                     <SkillTreeNode title="JavaScript" invertLineBend>
                         <SkillTreeNode title="Vue.js">
                             <SkillTreeNode title="" hide />
@@ -54,12 +54,12 @@
                         <SkillTreeNode title="" hide/>
                     </SkillTreeNode>
                 </SkillTreeNode>
-                <SkillTreeNode title="Backend">
+                <SkillTreeNode title="Backend" icon="icons/backend.svg">
                     <SkillTreeNode title="" hide/>
                     <SkillTreeNode title="" hide/>
                     <SkillTreeNode title="Go" />
                     <SkillTreeNode title="Shell Scripting" />
-                    <SkillTreeNode title="Haskell" invertLineBend/>
+                    <SkillTreeNode title="Haskell" icon="icons/haskell.svg" invertLineBend/>
                 </SkillTreeNode>
             </SkillTreeNode>
             <SkillTreeNode title="Audio Engineering">

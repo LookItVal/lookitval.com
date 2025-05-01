@@ -1,6 +1,7 @@
 <template>
     <div ref="skillTree" class="skill-tree" :style="{height: (height) + 'vw', top: (position) + 'vw'}" :click="shimmer">
         <div class="root-node" :style="{'margin-top': `${diameter}vw`, 'margin-left': `${0}vw`}">
+            <img src="@/assets/Logo/v_favicon.svg" alt="Logo" class="center-logo" />
             <SkillTreeNode title="Data Science" icon="icons/dataScience.svg">
                 <SkillTreeNode title="" hide>
                     <SkillTreeNode title="Cloud Computing" icon="icons/cloudComputing.svg">
@@ -232,6 +233,15 @@ provide('nodeData', nodeData);
         position: relative;
         height: 0;
         width: 0;
+    }
+
+    .center-logo {
+        z-index: 11;
+        position: absolute;
+        width: 4vw;
+        height: 4vw;
+        top: -2vw;
+        left: -2vw;
     }
 }   
 </style>

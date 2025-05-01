@@ -44,21 +44,21 @@
                 <SkillTreeNode title="Frontend" icon="icons/frontend.svg">
                     <SkillTreeNode title="HTML" icon="icons/html5.svg"/>
                     <SkillTreeNode title="CSS" icon="icons/css3.svg"/>
-                    <SkillTreeNode title="JavaScript" invertLineBend>
-                        <SkillTreeNode title="Vue.js">
+                    <SkillTreeNode title="JavaScript" icon="icons/javascript.svg" invertLineBend>
+                        <SkillTreeNode title="Vue.js" icon="icons/vuejs.svg">
                             <SkillTreeNode title="" hide />
                             <SkillTreeNode title="" hide />
-                            <SkillTreeNode title="Nuxt.js"/>
+                            <SkillTreeNode title="Nuxt.js" icon="icons/nuxtjs.svg"/>
                         </SkillTreeNode>
-                        <SkillTreeNode title="TypeScript" />
+                        <SkillTreeNode title="TypeScript" icon="icons/typescript.svg"/>
                         <SkillTreeNode title="" hide/>
                     </SkillTreeNode>
                 </SkillTreeNode>
                 <SkillTreeNode title="Backend" icon="icons/backend.svg">
                     <SkillTreeNode title="" hide/>
                     <SkillTreeNode title="" hide/>
-                    <SkillTreeNode title="Go" />
-                    <SkillTreeNode title="Shell Scripting" />
+                    <SkillTreeNode title="Go" icon="icons/golang.svg"/>
+                    <SkillTreeNode title="Shell Scripting" icon="icons/bash.svg"/>
                     <SkillTreeNode title="Haskell" icon="icons/haskell.svg" invertLineBend/>
                 </SkillTreeNode>
             </SkillTreeNode>

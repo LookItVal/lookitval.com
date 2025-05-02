@@ -68,8 +68,8 @@
                     <SkillTreeNode title="Musician" />
                     <SkillTreeNode title="FoH Engineering" />
                     <SkillTreeNode title="Mix & Mastering">
-                        <SkillTreeNode title="Cubase" />
-                        <SkillTreeNode title="ProTools" />
+                        <SkillTreeNode title="Cubase" icon="icons/cubase.svg"/>
+                        <SkillTreeNode title="ProTools" icon="icons/protools.svg"/>
                         <SkillTreeNode title="" hide/>
                     </SkillTreeNode>
                 </SkillTreeNode>

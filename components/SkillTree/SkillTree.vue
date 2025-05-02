@@ -75,7 +75,7 @@
                 </SkillTreeNode>
                 <SkillTreeNode title="Video Production" invertChildLineBend>
                     <SkillTreeNode title="Mix & Mastering" />
-                    <SkillTreeNode title="Audio Restoration" />
+                    <SkillTreeNode title="Audio Restoration" icon="icons/izotopeRX.svg"/>
                     <SkillTreeNode title="Recording" />
                 </SkillTreeNode>
             </SkillTreeNode>

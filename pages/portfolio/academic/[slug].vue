@@ -1,6 +1,5 @@
 <template>
     <div>
-        <HomeNavbar />
         <div class="heading">
             <GradientText :text="pageTitle" header-tag="h1" :color="pageColor" />
             <h2 class="subheading">

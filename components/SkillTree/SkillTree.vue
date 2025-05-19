@@ -63,20 +63,20 @@
                     <SkillTreeNode title="Haskell" icon="icons/haskell.svg" invertLineBend/>
                 </SkillTreeNode>
             </SkillTreeNode>
-            <SkillTreeNode title="Audio Engineering">
-                <SkillTreeNode title="Music Production">
-                    <SkillTreeNode title="Musician" />
-                    <SkillTreeNode title="FoH Engineering" />
-                    <SkillTreeNode title="Mix & Mastering">
+            <SkillTreeNode title="Audio Engineering" icon="icons/audioEngineering.svg">
+                <SkillTreeNode title="Music Production" icon="icons/musicProduction.svg">
+                    <SkillTreeNode title="Musician" icon="icons/musician.svg"/>
+                    <SkillTreeNode title="FoH Engineering" icon="icons/fohEngineering.svg"/>
+                    <SkillTreeNode title="Mix & Mastering" icon="icons/mixMaster.svg">
                         <SkillTreeNode title="Cubase" icon="icons/cubase.svg"/>
                         <SkillTreeNode title="ProTools" icon="icons/protools.svg"/>
                         <SkillTreeNode title="" hide/>
                     </SkillTreeNode>
                 </SkillTreeNode>
-                <SkillTreeNode title="Video Production" invertChildLineBend>
-                    <SkillTreeNode title="Mix & Mastering" />
+                <SkillTreeNode title="Video Production" invertChildLineBend icon="icons/videoProduction.svg">
+                    <SkillTreeNode title="Mix & Mastering" icon="icons/mixMaster.svg"/>
                     <SkillTreeNode title="Audio Restoration" icon="icons/izotopeRX.svg"/>
-                    <SkillTreeNode title="Recording" />
+                    <SkillTreeNode title="Recording" icon="icons/recording.svg"/>
                 </SkillTreeNode>
             </SkillTreeNode>
         </div>

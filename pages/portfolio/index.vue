@@ -4,8 +4,5 @@
     </div>
 </template>
 
-<script>
-export default {
-name: "/portfolio"
-}
+<script lang="ts" setup>
 </script>

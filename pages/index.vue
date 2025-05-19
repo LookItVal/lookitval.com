@@ -4,7 +4,6 @@
         <Title>Look, It's Val!</Title>
         <Meta name="description" content="Quinn Valencia Cecil's personal website and portfolio." />
     </Head>
-    <HomeNavbar />
     <WunschFlamingoSection>
         <div class="landing">
             <span class="background-lambda">λ</span>
@@ -61,6 +60,10 @@ function viewResume() {
 </script>
 
 <style lang="less" scoped>
+.home {
+    width: 100%;
+}
+
 .section .header {
     display: flex;
     justify-content: center;
@@ -95,7 +98,7 @@ function viewResume() {
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        width: 100vw;
+        width: 100%;
 
         h1 {
             color: var(--lavender);

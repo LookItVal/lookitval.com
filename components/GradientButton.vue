@@ -17,7 +17,7 @@ const props = defineProps<{
 }>();
 
 const colorValidator = (value: string) => {
-    return ['red', 'orange', 'yellow', 'green', 'blue', 'purple'].includes(value);
+    return ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'rainbow'].includes(value);
 };
 
 if (!colorValidator(props.color)) {
@@ -49,6 +49,7 @@ function handleClick(): void {
 
 
 <style lang="less" scoped>
+
 .button-background {
     z-index: 1;
     position: relative;
@@ -94,6 +95,7 @@ function handleClick(): void {
         z-index: 3;
         color: var(--base);
         transition: color 0.5s;
+        font-weight: 900;
     }
 }
 

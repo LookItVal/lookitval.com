@@ -28,7 +28,7 @@
                 <div class="header"><h2>About</h2><GradientText text="Me" header-tag="h2" color="green" class="header-highlight"/></div>
                 <p>Hi! I'm Quinn, a full stack developer with a background in audio engineering. I love creating things, whether it's a new song or a new app. I'm passionate about accessibility and making the web a better place for everyone. I'm currently looking for new opportunities to grow and learn.</p>
                 <GradientButton :click="viewResume" color="green" class="resume-button">
-                    <h4 style="font-weight: 900;">View Resume</h4>
+                    <h4>View Resume</h4>
                 </GradientButton>
                 <PDFViewer ref="resumePDF" pdfUrl="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
             </div>

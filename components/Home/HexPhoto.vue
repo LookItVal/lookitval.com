@@ -18,16 +18,6 @@
                              C 7.565 74.5 7.565 74.5 7.565 67
                              Z" fill="white" filter="url(#roundCorners)"/>
                 </mask>
-                <filter id="roundCorners">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="0.75" />
-                    <feComponentTransfer>
-                        <feFuncA type="linear" slope="2.5" intercept="0" />
-                    </feComponentTransfer>
-                </filter>
-                <linearGradient id="hexGradient" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" style="stop-color:var(--teal);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:var(--green);stop-opacity:1" />
-                </linearGradient>
             </defs>
             <path class="glowing-shape" d="M 7.565 50
                                            L 7.565 33
@@ -42,7 +32,7 @@
                                            C 50 99 50 99 43.25 95.4
                                            L 14.06 78.25
                                            C 7.565 74.5 7.565 74.5 7.565 67
-                                           Z" fill="none" stroke-width="2" stroke="url(#hexGradient)" />
+                                           Z" fill="none" stroke-width="2" stroke="url(#greenGradient)" />
             <g class="image-mask" mask="url(#hexMask)">
                 <image class="hex-image background-image" ref="backgroundImage" href="~assets/Home/SoundGirlBackground.jpg" width="110%" height="110%" />
                 <image class="hex-image foreground-image" ref="foregroundImage" href="~assets/Home/SoundGirlRoto.png" width="115%" height="115%" />

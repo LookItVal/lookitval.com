@@ -29,9 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-const { data: allPages } = await useAsyncData('academic-pages', () => {
-    return queryCollection('entry').all();
-});
+const { data: allPages } = await useAsyncData('academic-pages', () => queryCollection('entry').all());
 </script>
 
 <style lang="less" scoped>

@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   ],
   content: {
     experimental: {
-      clientDB: true
+      nativeSqlite: true
     }
   }
 })

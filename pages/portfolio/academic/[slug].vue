@@ -12,10 +12,10 @@
         </div>
         <div class="footer">
             <GradientButton :to="`/portfolio/academic/${previousSlug}`" class="previous-button" :color="pageColor">
-                <h3><- {{ previousSlug }}</h3>
+                <h3><Icon name="solar:map-arrow-left-bold" class="arrow" /> {{ previousSlug?.toUpperCase() }}</h3>
             </GradientButton>
             <GradientButton :to="`/portfolio/academic/${nextSlug}`" class="next-button" :color="pageColor">
-                <h3>{{ nextSlug }} -></h3>
+                <h3>{{ previousSlug?.toUpperCase() }} <Icon name="solar:map-arrow-right-bold" class="arrow" /></h3>
             </GradientButton>
         </div>
     </div>
@@ -99,11 +99,19 @@ useSeoMeta({
 
     .next-button {
         height: 2em;
-        width: 10em;        
+        width: 10em;    
+        
+        .arrow {
+            transform: translateY(0.15em);
+        }
     }
     .previous-button {
         height: 2em;
         width: 10em;
+
+        .arrow {
+            transform: translateY(0.15em);
+        }
     }
 }
 </style>

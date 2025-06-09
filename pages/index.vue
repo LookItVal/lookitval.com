@@ -46,7 +46,7 @@
             <ShimmeringText text="Coming Soon!" header-tag="h1" color="pyp" />
         </div>
         <div class="section portfolio">
-            <GradientButton to="/portfolio/academic" color="purple">
+            <GradientButton to="/portfolio/academic/" color="purple">
                 <h4>View Academic Portfolio</h4>
             </GradientButton>
         </div>

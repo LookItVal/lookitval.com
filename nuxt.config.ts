@@ -15,8 +15,12 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/'],
-      ignore: []
+      routes: [
+        '/portfolio/academic',
+        '/portfolio/academic/ds210',
+        '/portfolio/academic/ds220',
+        '/portfolio/academic/ds260'
+      ]
     }
   }
 })

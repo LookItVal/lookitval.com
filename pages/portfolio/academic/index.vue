@@ -1,7 +1,7 @@
 <template>
   <div class="academic-portfolio">
     <div class="header">
-      <GradientText text="Academic Portfolio" header-tag="h1" color="rainbow" />
+      <ShimmeringText text="Academic Portfolio" header-tag="h1" color="pyp" />
     </div>
     <div v-if="allPages && allPages.length > 0" class="card-grid">
       <div v-for="page in allPages" :key="page.title" class="card">

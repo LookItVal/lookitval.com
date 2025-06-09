@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="heading">
-            <GradientText :text="pageTitle" header-tag="h1" :color="pageColor" />
+            <ShimmeringText :text="pageTitle" header-tag="h1" :color="pageColor" />
             <h2 class="subheading">
                 {{ pageDescription }}
             </h2>
@@ -22,6 +22,8 @@
 </template>
 
 <script lang="ts" setup>
+import ShimmeringText from '~/components/ShimmeringText.vue';
+
 const route = useRoute();
 const slug = route.params.slug as string;
 const { data: page } = await useAsyncData(`academic-${slug}`, () => {

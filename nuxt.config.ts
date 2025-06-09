@@ -11,8 +11,10 @@ export default defineNuxtConfig({
     '@nuxt/content',
   ],
   content: {
-    experimental: {
-      nativeSqlite: true
+  },
+  nitro: {
+    prerender: {
+      crawlLinks: true
     }
   }
 })

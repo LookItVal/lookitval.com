@@ -11,8 +11,8 @@ export default defineNuxtConfig({
     '@nuxt/content',
   ],
   content: {
-  },
-  nitro: {
-    preset: 'cloudflare_pages'
+    experimental: {
+      clientDB: true
+    }
   }
 })

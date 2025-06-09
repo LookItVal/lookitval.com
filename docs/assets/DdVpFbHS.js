@@ -1,1 +1,0 @@
-import{S as s,U as r,V as u,W as o,i,X as c}from"./1A1OJhgw.js";function n(a){var t;const e=a||r();return((t=e==null?void 0:e.ssrContext)==null?void 0:t.head)||(e==null?void 0:e.runWithContext(()=>{if(o())return i(c)}))}function f(a,e={}){const t=n(e.nuxt);if(t)return u(a,{head:t,...e})}function h(a,e={}){const t=n(e.nuxt);if(t)return s(a,{head:t,...e})}export{h as a,f as u};

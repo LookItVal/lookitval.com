@@ -11,12 +11,5 @@ export default defineNuxtConfig({
     '@nuxt/content',
   ],
   content: {
-  },
-  nitro: {
-    prerender: {
-      routes: [
-        '/content'
-      ]
-    }
   }
 })

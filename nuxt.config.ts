@@ -16,10 +16,10 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: [
-        '/portfolio/academic',
-        '/portfolio/academic/ds210',
-        '/portfolio/academic/ds220',
-        '/portfolio/academic/ds260'
+        '/portfolio/academic/',
+        '/portfolio/academic/ds210/',
+        '/portfolio/academic/ds220/',
+        '/portfolio/academic/ds260/'
       ]
     }
   }

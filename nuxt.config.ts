@@ -11,17 +11,5 @@ export default defineNuxtConfig({
     '@nuxt/content',
   ],
   content: {
-  },
-  nitro: {
-    prerender: {
-      routes: [
-        '/',
-        '/portfolio/',
-        '/portfolio/academic/',
-        '/portfolio/academic/ds210/',
-        '/portfolio/academic/ds220/',
-        '/portfolio/academic/ds260/'
-      ]
-    }
-  }
+  }  
 })

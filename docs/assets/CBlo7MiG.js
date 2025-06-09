@@ -1,1 +1,0 @@
-import{_ as e}from"./ECiP_yI-.js";import{_ as t,c as n,b as c,o as r}from"./Bk0pLPBL.js";import"./BqhzhhUD.js";const a={name:"/portfolio/academic"};function _(s,p,m,i,d,f){const o=e;return r(),n("div",null,[c(o)])}const $=t(a,[["render",_]]);export{$ as default};

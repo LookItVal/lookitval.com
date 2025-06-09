@@ -125,7 +125,7 @@ const gradients = computed(() => {
 });
 
 const currentGradient = ref(gradients.value[0].value);
-const nextGradient = ref(gradients.value[1].value);
+const nextGradient = ref(gradients.value[0].value);
 let gradientIndex = 0;
 
 function swapGradient() {

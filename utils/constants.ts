@@ -1,0 +1,1 @@
+export const tripleGradients = ["pan", "rgb", "cmy", "pyp", 'mgs'];

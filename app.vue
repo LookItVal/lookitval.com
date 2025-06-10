@@ -141,11 +141,33 @@
           <stop offset="50%" style="stop-color:var(--mauve);stop-opacity:1" />
           <stop offset="100%" style="stop-color:var(--yellow);stop-opacity:1" />
         </linearGradient>
+        <linearGradient id="AmgsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--mauve);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--green);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--sapphire);stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="BmgsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--green);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--sapphire);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--mauve);stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="CmgsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--sapphire);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--mauve);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--green);stop-opacity:1" />
+        </linearGradient>
       </defs>
     </svg>
 
     <!-- Page Content -->
     <HomeNavbar />
-    <NuxtPage />
+    <NuxtPage class="page-root"/>
   </div>
 </template>
+
+<style lang="less" scoped>
+.page-root {
+  width: 100%;
+  overflow-x: hidden;
+}
+</style>

@@ -43,7 +43,7 @@
     <WunschFlamingoSection>
         <div class="section portfolio">
             <h2>Portfolio</h2>
-            <ShimmeringText text="Coming Soon!" header-tag="h1" color="pyp" />
+            <ShimmeringText text="Coming Soon!" header-tag="h1" color="cmy" />
         </div>
     </WunschFlamingoSection>
     <Wunsch />

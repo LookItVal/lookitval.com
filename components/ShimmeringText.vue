@@ -21,7 +21,7 @@
                             type="translate"
                             from="0 0"
                             :to="`${-textWidth} ${-svgRectHeight}`"
-                            dur="6s"
+                            :dur="`${animateTime / 1000}s`"
                             repeatCount="indefinite"
                         />
                     </rect>
@@ -32,7 +32,7 @@
                     >
                         <animate
                             attributeName="opacity"
-                            dur="6s"
+                            :dur="`${animateTime / 1000}s`"
                             repeatCount="indefinite"
                             keyTimes="0;0.01;0.05;0.95;1"
                             values="1;1;0;0;1"
@@ -48,11 +48,16 @@
 </template>
 
 <script lang="ts" setup>
+import { tripleGradients } from '~/utils/constants';
+
 const props = defineProps<{
     text: string;
     headerTag: string;
     color: string;
+    time?: number;
 }>();
+
+const animateTime = computed(() => props.time ?? 3000);
 const allowedColors = ['purple', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'pan', 'rgb', 'cmy', 'pyp'];
 
 watch(() => props.color, (newColor) => {
@@ -108,10 +113,9 @@ function updateTextWidth() {
     });
 }
 
-const triples = ["pan", "rgb", "cmy", "pyp"]; // colors that have triple gradients
 
 const gradients = computed(() => {
-    if (triples.includes(props.color)) {
+    if (tripleGradients.includes(props.color)) {
         return [
             computed(() => `url(#A${props.color}Gradient)`),
             computed(() => `url(#B${props.color}Gradient)`),
@@ -140,11 +144,11 @@ let intervalId1: ReturnType<typeof setInterval> | undefined;
 let intervalId2: ReturnType<typeof setInterval> | undefined;
 onMounted(() => {
     updateTextWidth();
-    intervalId1 = setInterval(swapGradient, 6000);
+    intervalId1 = setInterval(swapGradient, animateTime.value);
     setTimeout(() => {
         swapTransitionGradient();
-        intervalId2 = setInterval(swapTransitionGradient, 6000);
-    }, 3000); // start transition after first gradient swap
+        intervalId2 = setInterval(swapTransitionGradient, animateTime.value);
+    }, animateTime.value / 2); // start transition after first gradient swap
 
 });
 onUnmounted(() => {
@@ -170,6 +174,7 @@ const uniqueId = `text-mask-${Math.random().toString(36).substr(2, 9)}`;
     
         svg {
             transform: v-bind(svgTransform);
+            padding: 1px;
         }
         .seo-text.shimmering-header {
             z-index: 10;

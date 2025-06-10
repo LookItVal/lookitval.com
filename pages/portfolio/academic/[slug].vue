@@ -22,15 +22,13 @@
 </template>
 
 <script lang="ts" setup>
-import ShimmeringText from '~/components/ShimmeringText.vue';
-
 const route = useRoute();
 const slug = route.params.slug as string;
-const { data: page } = await useAsyncData(`entry`, () => queryCollection('entry').path(`/portfolio/academic/${slug}`).first());
+const { data: page } = await useAsyncData(`academicPortfolio`, () => queryCollection('academicPortfolio').path(`/portfolio/academic/${slug}`).first());
 
 // Fetch all markdown files in the folder
 const { data: allPages } = await useAsyncData('academic-pages', () => {
-    return queryCollection('entry').all();
+    return queryCollection('academicPortfolio').all();
 });
 
 // Find the current page index

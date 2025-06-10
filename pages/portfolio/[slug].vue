@@ -1,35 +1,35 @@
 <template>
   <div class="portfolio">
     <div class="header">
-      <ShimmeringText :text="`${slug[0].toUpperCase()+slug.substring(1)} Portfolio`" header-tag="h1" color="pyp" />
+      <ShimmeringText :text="pageTitle" header-tag="h1" :color="dynamicColor" />
     </div>
     <div v-if="allPages && allPages.length > 0" class="card-grid">
       <div
-        v-for="(page, idx) in allPages"
-        :key="page.title"
+        v-for="(subPage, idx) in allPages"
+        :key="subPage.title"
         class="card card-hidden"
         :ref="el => cardRefs[idx] = el"
       >
         <ShimmeringText
-          v-if="tripleGradients.includes(page.color ?? '')"
-          :text="page.title"
+          v-if="tripleGradients.includes(subPage.color ?? '')"
+          :text="subPage.title"
           header-tag="h2"
-          :color="page.color || 'purple'"
+          :color="subPage.color || 'purple'"
           class="card-title"
         />
         <GradientText
           v-else
-          :text="page.title"
+          :text="subPage.title"
           header-tag="h2"
-          :color="page.color || 'purple'"
+          :color="subPage.color || 'purple'"
           class="card-title"
         />
-        <p v-if="page.description" class="card-description">{{ page.description }}</p>
+        <p v-if="subPage.description" class="card-description">{{ subPage.description }}</p>
         <div class="card-link">
           <GradientButton
-            :to="`/portfolio/academic/${page.path.split('/').pop()}`"
+            :to="subPage.URL || `/portfolio/academic/${subPage.path.split('/').pop()}`"
             class="view-button"
-            :color="'purple'">
+            :color="staticColor">
             <h4>View</h4>
           </GradientButton>
         </div>
@@ -42,14 +42,42 @@
 </template>
 
 <script lang="ts" setup>
+import type { CollectionName } from '~/utils/constants';
+import { collectionNames } from '~/utils/constants'; // Ensure this exports all valid collection names as an array
+
 const route = useRoute();
 const slug = route.params.slug as string;
 
-const { data: allPagesRaw } = await useAsyncData(`${slug}Portfolio`, () => queryCollection(`${slug}Portfolio` as "academicPortfolio" | "websitePortfolio").all());
+const router = useRouter();
+
+// Check if `${slug}Portfolio` is a valid CollectionName
+const collectionName = `${slug}Portfolio`;
+const isValidCollection = (collectionNames as string[]).includes(collectionName);
+
+if (!isValidCollection) {
+  router.push('/404');
+}
+
+const { data: page } = await useAsyncData(`portfolioPage`, () => queryCollection('portfolioPage').path(`/portfolio/${slug}`).first());
+
+const pageTitle = computed(() => {
+  return page.value?.title || `${slug[0].toUpperCase() + slug.substring(1)} Portfolio`;
+});
+const staticColor = computed(() => {
+  return (page.value?.staticColor) || 'purple';
+});
+const dynamicColor = computed(() => {
+  return (page.value as { dynamicColor?: string })?.dynamicColor || 'cmy';
+});
+
+const { data: allPagesRaw } = await useAsyncData(collectionName, () => queryCollection(collectionName as CollectionName)
+                                                                           .where('visible', '=', true)
+                                                                           .all());
 
 const allPages = computed(() => {
   if (!allPagesRaw.value) return [];
-  return [...allPagesRaw.value].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+  return [...allPagesRaw.value]
+    .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
 });
 
 const cardRefs = ref<any[]>([]);

@@ -17,7 +17,7 @@ const props = defineProps<{
 }>();
 
 const colorValidator = (value: string) => {
-    return ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'rainbow'].includes(value);
+    return ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'].includes(value);
 };
 
 if (!colorValidator(props.color)) {
@@ -42,7 +42,11 @@ function handleClick(): void {
         props.click();
     }
     if (props.to) {
-        navigateTo(props.to);
+        if (props.to.startsWith('http://') || props.to.startsWith('https://')) {
+            window.open(props.to, '_blank');
+        } else {
+            navigateTo(props.to);
+        }
     }
 }
 </script>

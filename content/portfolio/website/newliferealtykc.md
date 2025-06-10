@@ -2,6 +2,6 @@
 title: New Life Realty
 description: 
 color: green
-URL: https://newliferealty.com/
+URL: https://newliferealtykc.com/
 rating: 1
 ---

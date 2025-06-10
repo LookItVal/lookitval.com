@@ -156,6 +156,21 @@
           <stop offset="50%" style="stop-color:var(--mauve);stop-opacity:1" />
           <stop offset="100%" style="stop-color:var(--green);stop-opacity:1" />
         </linearGradient>
+        <linearGradient id="AyrpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--yellow);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--rosewater);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--pink);stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="ByrpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--rosewater);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--pink);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--yellow);stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="CyrpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--pink);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--yellow);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--rosewater);stop-opacity:1" />
+        </linearGradient>
       </defs>
     </svg>
 

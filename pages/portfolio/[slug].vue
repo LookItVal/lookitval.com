@@ -1,7 +1,21 @@
 <template>
   <div class="portfolio">
     <div class="header">
+      <div class="previous-collection">
+        <ShimmeringText
+          :text="previousCollectionName"
+          header-tag="h2"
+          color="grey"
+        />
+      </div>
       <ShimmeringText :text="pageTitle" header-tag="h1" :color="dynamicColor" />
+      <div class="next-collection">
+        <ShimmeringText
+          :text="nextCollectionName"
+          header-tag="h2"
+          color="grey"
+        />
+      </div>
     </div>
     <div v-if="allPages && allPages.length > 0" class="card-grid">
       <div
@@ -51,12 +65,21 @@ const slug = route.params.slug as string;
 const router = useRouter();
 
 // Check if `${slug}Portfolio` is a valid CollectionName
-const collectionName = `${slug}Portfolio`;
-const isValidCollection = (collectionNames as string[]).includes(collectionName);
-
-if (!isValidCollection) {
-  router.push('/404');
+const collectionName = `${slug}Portfolio` as CollectionName;
+const collectionIndex = collectionNames.indexOf(collectionName as CollectionName);
+if (collectionIndex === -1) {
+  router.replace('/404');
 }
+
+const previousCollection = collectionNames[
+  collectionIndex === 0 ? collectionNames.length - 1 : collectionIndex - 1
+];
+const nextCollection = collectionNames[
+  collectionIndex === collectionNames.length - 1 ? 0 : collectionIndex + 1
+];
+const previousCollectionName = previousCollection[0].toUpperCase() + previousCollection.slice(1).replace('Portfolio', ' Portfolio');
+const nextCollectionName = nextCollection[0].toUpperCase() + nextCollection.slice(1).replace('Portfolio', ' Portfolio');
+  
 
 const { data: page } = await useAsyncData(`portfolioPage`, () => queryCollection('portfolioPage').path(`/portfolio/${slug}`).first());
 
@@ -70,7 +93,7 @@ const dynamicColor = computed(() => {
   return (page.value as { dynamicColor?: string })?.dynamicColor || 'cmy';
 });
 
-const { data: allPagesRaw } = await useAsyncData(collectionName, () => queryCollection(collectionName as CollectionName)
+const { data: allPagesRaw } = await useAsyncData(collectionName, () => queryCollection(collectionName)
                                                                            .where('visible', '=', true)
                                                                            .all());
 

@@ -171,6 +171,21 @@
           <stop offset="50%" style="stop-color:var(--yellow);stop-opacity:1" />
           <stop offset="100%" style="stop-color:var(--rosewater);stop-opacity:1" />
         </linearGradient>
+        <linearGradient id="AgreyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--subtext0);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--overlay1);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--surface2);stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="BgreyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--overlay1);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--surface2);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--subtext0);stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="CgreyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--surface2);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:var(--subtext0);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--overlay1);stop-opacity:1" />
+        </linearGradient>
       </defs>
     </svg>
 

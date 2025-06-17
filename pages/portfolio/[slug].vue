@@ -317,11 +317,9 @@ onUnmounted(() => {
 
     .title {
       width: 40vw;
-
-      .shadow {
-        position:absolute;
-        transform: translateY(-100%);
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .previous-collection {

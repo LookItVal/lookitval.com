@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   app: {
-    buildAssetsDir: "assets",
+    buildAssetsDir: "assets"
   },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },

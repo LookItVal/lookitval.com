@@ -3,22 +3,26 @@
     <div class="header">
       <div class="previous-collection">
         <div
-          :class="{ 'selected-collection': isPreviousSelected }"
+          :class="isPreviousSelected ? 'selected-collection' : 'unselected-collection'"
           @click="selectPreviousCollection"
           style="cursor: pointer;"
-        >          <ShimmeringText
+        >
+          <ShimmeringText
             :text="previousCollectionName"
             header-tag="h2"
             color="grey"
+            :id="isPreviousSelected ? 'selectedCollection' : ''"
+            :style="isPreviousSelected ? {transform: `translate(calc(${translateX}px + 3.2em), -0.49em) scale(${scaleX}, ${scaleY})`, transition: 'transform 0.5s ease-in-out'} : {}"
           />
         </div>
       </div>
       <div class="title">
         <ShimmeringText :text="pageTitle" header-tag="h1" :color="dynamicColor" class="text" />
+        <ShimmeringText :text="selectedCollectionName" header-tag="h1" :color="selectedColor" class="shadow" id="nextTitle"/>
       </div>
       <div class="next-collection">
         <div
-          :class="{ 'selected-collection': isNextSelected }"
+          :class="isNextSelected ? 'selected-collection' : 'unselected-collection'"
           @click="selectNextCollection"
           style="cursor: pointer;"
         >
@@ -26,6 +30,7 @@
             :text="nextCollectionName"
             header-tag="h2"
             color="grey"
+            :id="isNextSelected ? 'selectedCollection' : ''"
           />
         </div>
       </div>
@@ -82,7 +87,7 @@ definePageMeta({
     onLeave(el, done) {
       setTimeout(() => {
         done();
-      }, 600);
+      }, 6000000);
     }
   }
 });
@@ -161,20 +166,6 @@ const nextURL = computed(() =>
 
 const isPreviousSelected = ref(false);
 const isNextSelected = ref(false);
-function selectPreviousCollection() {
-  isPreviousSelected.value = true;
-  selectedColor.value = previousCollectionColor.value;
-  selectedCollectionName.value = previousCollectionName.value;
-  router.push(previousURL.value);
-}
-function selectNextCollection() {
-  isNextSelected.value = true;
-  selectedColor.value = nextCollectionColor.value;
-  selectedCollectionName.value = nextCollectionName.value;
-  router.push(nextURL.value);
-}
-
-
 
 const { data: allPortfolioPages } = await useAsyncData(`portfolioPage`, () => queryCollection('portfolioPage').all());
 const page = computed(() => {
@@ -202,6 +193,62 @@ const allPages = computed(() => {
   return [...allPagesRaw.value]
     .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
 });
+
+const firstX = ref(document.querySelector('#selectedCollection')?.getBoundingClientRect().x || 0);
+const firstY = ref(document.querySelector('#selectedCollection')?.getBoundingClientRect().y || 0);
+const firstWidth = ref(document.querySelector('#selectedCollecion')?.getBoundingClientRect().width || 0);
+const firstHeight =ref(document.querySelector('#selectedCollecion')?.getBoundingClientRect().height || 0);
+const lastX = ref(document.querySelector('#nextTitle')?.getBoundingClientRect().x || 0);
+const lastY = ref(document.querySelector('#nextTitle')?.getBoundingClientRect().y || 0);
+const lastWidth = ref(document.querySelector('#nextTitle')?.getBoundingClientRect().width || 0);
+const lastHeight = ref(document.querySelector('#nextTitle')?.getBoundingClientRect().height || 0);
+const translateX = computed(() => {
+  return lastX.value - firstX.value;
+});
+const translateY = computed(() => {
+  return lastY.value - firstY.value;
+});
+const scaleX = computed(() => {
+  return lastWidth.value / firstWidth.value;
+});
+const scaleY = computed(() => {
+  return lastHeight.value / firstHeight.value;
+});
+
+function updateTitleValues() {
+  firstX.value = document.querySelector('#selectedCollection')?.getBoundingClientRect().x || 0;
+  firstY.value = document.querySelector('#selectedCollection')?.getBoundingClientRect().y || 0;
+  firstWidth.value = document.querySelector('#selectedCollection')?.getBoundingClientRect().width || 0;
+  firstHeight.value = document.querySelector('#selectedCollection')?.getBoundingClientRect().height || 0;
+  lastX.value = document.querySelector('#nextTitle')?.getBoundingClientRect().x || 0;
+  lastY.value = document.querySelector('#nextTitle')?.getBoundingClientRect().y || 0;
+  lastWidth.value = document.querySelector('#nextTitle')?.getBoundingClientRect().width || 0;
+  lastHeight.value = document.querySelector('#nextTitle')?.getBoundingClientRect().height || 0;
+}
+async function selectPreviousCollection() {
+  isPreviousSelected.value = true;
+  selectedColor.value = previousCollectionColor.value;
+  selectedCollectionName.value = previousCollectionName.value;
+  await nextTick();
+  await nextTick();
+  await nextTick();
+  await nextTick();
+  updateTitleValues();
+  await nextTick();
+  router.push(previousURL.value);
+}
+async function selectNextCollection() {
+  isNextSelected.value = true;
+  selectedColor.value = nextCollectionColor.value;
+  selectedCollectionName.value = nextCollectionName.value;
+  await nextTick();
+  await nextTick();
+  await nextTick();
+  updateTitleValues();
+  await nextTick();
+  router.push(nextURL.value);
+}
+
 
 onUnmounted(() => {
   setTimeout(() => {
@@ -237,34 +284,38 @@ onUnmounted(() => {
 .portfolio-leave-to {
   .header {
     .title .text {
-      animation: titleFadeOut 0.5s ease-in-out forwards;
+      animation: titleFadeOut 0.25s ease-in-out forwards;
       @keyframes titleFadeOut {
         0% {
           opacity: 1;
           transform: translateY(0);
         }
-        50% {
+        100% {
           opacity: 0;
           transform: translateY(2em);
         }
-        75% {
-          opacity: 0;
-          transform: translateY(0);
-        }
-        100% {
-          opacity: 0;
-          transform: translateY(0);
-        }
       }
     }
-    .previous-collection:not(.selected-collection) {
-      opacity: 0;
-      transform: translate(-2.5em, 2em);
+    .previous-collection {
+      .unselected-collection {
+        opacity: 0;
+        transform: translate(-2.5em, 2em);
+      }
+      .selected-collection {
+        opacity: 1;
+        transform: translate(var(--translateX), var(--translateY)) scale(var(--scaleX), var(--scaleY));
+      }
     }
 
-    .next-collection:not(.selected-collection) {
-      opacity: 0;
-      transform: translate(2.5em, 2em);
+    .next-collection {
+      .unselected-collection {
+        opacity: 0;
+        transform: translate(2.5em, 2em);
+      }
+      .selected-collection {
+        opacity: 1;
+        transform: translate(var(--translateX), var(--translateY)) scale(var(--scaleX), var(--scaleY));
+      }
     }
   }
 
@@ -320,6 +371,11 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
+
+      .shadow {
+        position: absolute;
+        opacity: 0.5;
+      }
     }
 
     .previous-collection {

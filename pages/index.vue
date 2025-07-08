@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="right-image">
-                <img src="~assets/Home/BoomOp.png" alt="Quinn Valencia Cecil" />
+                <img src="/photos/DitherPortrait.png" alt="Quinn Valencia Cecil" />
             </div>
         </div>
     </WunschFlamingoSection>
@@ -114,12 +114,14 @@ function viewResume() {
     .right-image {
         img {
             position: absolute;
-            padding-left: 20%;
-            padding-bottom: 50%;
+            -o-object-fit: cover;
             object-fit: cover;
+            -o-object-position: bottom;
             object-position: bottom;
-            right: -50px;
-            top: -500px;
+            right: -70px;
+            height: 100%;
+            image-rendering: pixelated;
+            top: 0;
             z-index: -1;
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="shimmering-text">
+    <div class="shimmering-text" :style="{ width: fullWidth}">
         <div class="shimmering-text-container">
             <component :is="headerTag" ref="textRef" class="seo-text shimmering-header">
                 {{ text }}
@@ -157,8 +157,6 @@ const uniqueId = `text-mask-${Math.random().toString(36).substr(2, 9)}`;
 
 <style lang="less" scoped>
 .shimmering-text {
-    width: v-bind(fullWidth);
-
     .shimmering-text-container {
         display: flex;
         flex-direction: row;

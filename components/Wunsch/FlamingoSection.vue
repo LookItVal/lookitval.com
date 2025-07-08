@@ -28,7 +28,6 @@ onMounted(() => {
     appConfig.animateFlamingos.push(animateFlamingo)
     updateAppConfig(appConfig)
 });
-
 </script>
 
 

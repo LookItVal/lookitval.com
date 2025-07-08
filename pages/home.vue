@@ -10,4 +10,18 @@ const { data: page } = await useAsyncData('home', () => {
 </script>
 
 <style lang="less" scoped>
-</style>``
+:deep(.section) {
+  &.landing .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 0 7em;
+    overflow-y: hidden;
+
+    .socials-bar {
+      height: 2rem;
+    }
+  }
+}
+</style>

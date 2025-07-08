@@ -1,6 +1,6 @@
 <template>
-    <div class="wunsch">
-        <div class="section">
+    <div class="section">
+        <div class="content">
             <slot></slot>
         </div>
         <div class="flamingo-container">
@@ -32,13 +32,13 @@ onMounted(() => {
 
 
 <style lang="less" scoped>
-.wunsch {
+.section {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
 
-    .section {
+    .content {
         position: relative;
         top: 0;
         left: 0;

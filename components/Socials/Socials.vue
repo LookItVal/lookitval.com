@@ -7,9 +7,9 @@
     </div>
 </template>
 
-
-<script lang="ts" setup />
-
+<script lang="ts" setup>
+console.log("Socials component loaded");
+</script>
 
 <style lang="less" scoped>
 .socials {

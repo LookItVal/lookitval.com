@@ -1,3 +1,5 @@
+import Socials from "./components/Socials/Socials.vue";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,

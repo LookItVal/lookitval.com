@@ -7,7 +7,9 @@ description: Personal Portfolio and Website of Quinn Valencia Cecil
   ::div{class="left-text"}
     # Quinn _Valencia_ Cecil
     ::home-subtext
+    ::
     ::socials{class="socials-bar"}
+    ::
   ::
   ::div{class="right-image"}
     ![Quinn Valencia Cecil](/photos/DitherPortrait.png)

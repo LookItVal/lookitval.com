@@ -6,8 +6,8 @@
                     <radialGradient id="spark-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                         <stop offset="0%" style="stop-color:var(--peach);stop-opacity:1" />
                         <stop offset="60%" style="stop-color:var(--yellow);stop-opacity:0.4" />
-                        <stop offset="90%" style="stop-color:var(--yellow);stop-opacity:0.1" />
-                        <stop offset="100%" style="stop-color:var(--yellow);stop-opacity:0" />
+                        <stop offset="90%" style="stop-color:var(--bold-yellow);stop-opacity:0.1" />
+                        <stop offset="100%" style="stop-color:var(--bold-yellow);stop-opacity:0" />
                     </radialGradient>
                     <mask :id="`icon-mask-${uniqueId}`" height="100%" width="100%">
                         <image :href="props.icon" height="65" width="65" x="17.5" y="17.5"/>

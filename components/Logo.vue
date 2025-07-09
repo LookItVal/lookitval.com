@@ -12,11 +12,11 @@
                     <image href="~assets/Logo/QVCHILIGHTPATH2.svg" height="100%" width="100%" />
                 </mask>
                 <radialGradient id="radial-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                    <stop offset="0%" style="stop-color:var(--red);stop-opacity:1" />
-                    <stop offset="25%" style="stop-color:var(--red);stop-opacity:0.5" />
-                    <stop offset="50%" style="stop-color:var(--red);stop-opacity:0.4" />
-                    <stop offset="75%" style="stop-color:var(--red);stop-opacity:0.1" />
-                    <stop offset="100%" style="stop-color:var(--red);stop-opacity:0" />
+                    <stop offset="0%" style="stop-color:var(--bold-red);stop-opacity:1" />
+                    <stop offset="25%" style="stop-color:var(--bold-red);stop-opacity:0.5" />
+                    <stop offset="50%" style="stop-color:var(--bold-red);stop-opacity:0.4" />
+                    <stop offset="75%" style="stop-color:var(--bold-red);stop-opacity:0.1" />
+                    <stop offset="100%" style="stop-color:var(--bold-red);stop-opacity:0" />
                 </radialGradient>
                 <radialGradient id="logo-gradient" cx="20%" cy="0%" r="150%" fx="50%" fy="50%">
                     <stop offset="0%" style="stop-color:var(--lavender);stop-opacity:1" />

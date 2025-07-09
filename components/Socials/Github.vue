@@ -6,8 +6,8 @@
                     <image href="/icons/github.svg" height="100%" width="100%" />
                 </mask>
                 <linearGradient id="linear-gradient" x1="0" y1="0.5" x2="1" y2="0.5">
-                    <stop offset="0%" style="stop-color:var(--red);stop-opacity:0" />
-                    <stop offset="100%" style="stop-color:var(--red);stop-opacity:1" />
+                    <stop offset="0%" style="stop-color:var(--bold-red);stop-opacity:0" />
+                    <stop offset="100%" style="stop-color:var(--bold-red);stop-opacity:1" />
                 </linearGradient>
             </defs>
             <g mask="url(#github)">

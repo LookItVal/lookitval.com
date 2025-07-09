@@ -6,8 +6,8 @@
                     <image href="/icons/instagram.svg" height="100%" width="100%" />
                 </mask>
                 <radialGradient id="radial-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                    <stop offset="0%" style="stop-color:var(--red);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:var(--red);stop-opacity:0" />
+                    <stop offset="0%" style="stop-color:var(--bold-red);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--bold-red);stop-opacity:0" />
                 </radialGradient>
             </defs>
             <g mask="url(#instagram)">
@@ -36,7 +36,9 @@
                         <mpath href="#insta-inner-path" />
                     </animateMotion>
                 </circle>
-                <circle ref="highlightShimmerBall" class='highlight-ball static' cx="7.665" cy="2.325" r="0" fill="url(#radial-gradient)" />
+                <circle ref="highlightShimmerBall" class='ball static' cx="7.665" cy="2.325" r="0" fill="url(#radial-gradient)">
+                    <animate attributeName="r" dur="1s" values="0;0.75;0" keyTimes="0;0.5;1" fill="freeze" />
+                </circle>
             </g>
         </svg>
     </a>
@@ -53,9 +55,11 @@ const highlightShimmerBall: Ref<HTMLElement | null> = ref(null);
 function shimmer(): void {
     if (isAnimating.value) return;
     isAnimating.value = true;
-    const animations = instaSvg.value!.querySelectorAll('animateMotion');
+    const animations = instaSvg.value!.querySelectorAll('animateMotion, animate');
     animations.forEach(anim => {
-        anim.beginElement();
+        if (typeof (anim as SVGAnimationElement).beginElement === 'function') {
+            (anim as SVGAnimationElement).beginElement();
+        }
     });
     outerShimmerBall.value!.classList.remove('static');
     outerShimmerBall.value!.classList.add('shimmer');

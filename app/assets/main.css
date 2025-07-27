@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Inter", "sans-serif";
+  --font-comic: "Comic Sans MS";
+  --color-*: initial;
+  --color-rosewater: #f5e0dc;
+  --color-flamingo: #f2cdcd;
+  --color-pink: #f5c2e7;
+  --color-mauve: #cba6f7;
+  --color-red: #f38ba8;
+  --color-maroon: #eba0ac;
+  --color-peach: #fab387;
+  --color-yellow: #f9e2af;
+  --color-green: #a6e3a1;
+  --color-teal: #94e2d5;
+  --color-sky: #89dceb;
+  --color-sapphire: #74c7ec;
+  --color-blue: #89b4fa;
+  --color-lavender: #b4befe;
+  --color-text: #cdd6f4;
+  --color-subtext1: #bac2de;
+  --color-subtext0: #a6adc8;
+  --color-overlay2: #9399b2;
+  --color-overlay1: #7f849c;
+  --color-overlay0: #6c7086;
+  --color-surface2: #585b70;
+  --color-surface1: #45475a;
+  --color-surface0: #313244;
+  --color-base: #1e1e2e;
+  --color-mantle: #181825;
+  --color-crust: #11111b;
+  --color-selection-color: var(--color-mauve);
+  --color-bold-rosewater: #dc8a78;
+  --color-bold-flamingo: #dd7878;
+  --color-bold-pink: #ea76cb;
+  --color-bold-mauve: #8839ef;
+  --color-bold-red: #d20f39;
+  --color-bold-maroon: #e64553;
+  --color-bold-peach: #fe640b;
+  --color-bold-yellow: #df8e1d;
+  --color-bold-green: #40a02b;
+  --color-bold-teal: #179299;
+  --color-bold-sky: #04a5e5;
+  --color-bold-sapphire: #209fb5;
+  --color-bold-blue: #1e66f5;
+  --color-bold-lavender: #7287fd;
+  --color-inverted-text: #4c4f69;
+  --color-inverted-subtext1: #5c5f77;
+  --color-inverted-subtext0: #6c6f85;
+  --color-inverted-overlay2: #7c7f93;
+  --color-inverted-overlay1: #8c8fa1;
+  --color-inverted-overlay0: #9ca0b0;
+  --color-inverted-surface2: #acb0be;
+  --color-inverted-surface1: #bcc0cc;
+  --color-inverted-surface0: #ccd0da;
+  --color-inverted-base: #eff1f5;
+  --color-inverted-mantle: #e6e9ef;
+  --color-inverted-crust: #dce0e8;
+}
+
+:root {
+    --purple-shimmer: linear-gradient(-45deg,var(--color-mauve),var(--color-lavender));
+    --blue-shimmer: linear-gradient(-45deg,var(--color-blue),var(--color-sapphire));
+    --green-shimmer: linear-gradient(-45deg,var(--color-green),var(--color-teal));
+    --yellow-shimmer: linear-gradient(-45deg,var(--color-yellow),var(--color-peach));
+    --orange-shimmer: linear-gradient(-45deg,var(--color-peach),var(--color-maroon));
+    --red-shimmer: linear-gradient(-45deg,var(--color-red),var(--color-pink));
+    --pink-shimmer: linear-gradient(-45deg,var(--pink),var(--flamingo));
+}
+
+body {
+  font-size: clamp(16px, 4vw, 2rem);
+  color: var(--color-subtext1);
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: var(--color-crust);
+}
+
+h1, h2 {
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+h3 {
+    font-weight: 750;
+}
+
+h4 {
+    font-weight: 700;
+}
+
+h5 {
+    font-weight: 600;
+}
+
+h6 {
+    font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text);
+}
+
+b {
+  font-weight: 600;
+}
+
+a {
+    color: var(--color-blue);
+    text-decoration: none;
+}

@@ -61,16 +61,6 @@
   --color-inverted-crust: #dce0e8;
 }
 
-html {
-    box-sizing: border-box;
-}
-
-*, *::before, *::after {
-    box-sizing: inherit;
-    margin: 0;
-    padding: 0;
-}
-
 :root {
     --purple-shimmer: linear-gradient(-45deg,var(--color-mauve),var(--color-lavender));
     --blue-shimmer: linear-gradient(-45deg,var(--color-blue),var(--color-sapphire));
@@ -79,6 +69,18 @@ html {
     --orange-shimmer: linear-gradient(-45deg,var(--color-peach),var(--color-maroon));
     --red-shimmer: linear-gradient(-45deg,var(--color-red),var(--color-pink));
     --pink-shimmer: linear-gradient(-45deg,var(--pink),var(--flamingo));
+}
+
+:root {
+  --xxxs-em: calc(1em / pow(1.618033988749, 3));
+  --xxs-em: calc(1em / pow(1.618033988749, 2));
+  --xs-em: calc(1em / pow(1.618033988749, 1));
+  --s-em: calc(1em / pow(1.618033988749, 0));
+  --m-em: calc(1em * pow(1.618033988749, 1));
+  --l-em: calc(1em * pow(1.618033988749, 2));
+  --xl-em: calc(1em * pow(1.618033988749, 3));
+  --xxl-em: calc(1em * pow(1.618033988749, 4));
+  --xxxl-em: calc(1em * pow(1.618033988749, 5));
 }
 
 body {
@@ -121,4 +123,16 @@ b {
 a {
     color: var(--color-blue);
     text-decoration: none;
+}
+
+.background-lambda::before {
+    content: "λ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -100;
+    color: var(--color-base);
+    font-size: 120vh;
+    text-align: center;
+    translate: 0 -20% ;
 }

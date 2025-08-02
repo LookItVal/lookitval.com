@@ -1,24 +1,97 @@
 <template>
-  <div class="background-lambda flex justify-between items-center h-[100svh] px-(--l-em) overflow-y-hidden">
-    <div class="flex flex-col items-start">
-      <h1 class="text-4xl font-bold">Quinn Valencia Cecil</h1>
-      <HomeJobTitles  />
+  <div class="background-lambda landing flex justify-between items-center h-[100svh] pl-(--l-em) overflow-y-hidden">
+    <div class="home-text flex flex-col items-start">
+      <h1 class="text-6xl font-bold">Quinn Valencia Cecil</h1>
+      <HomeJobTitles class="mb-(--s-em)" />
       <Socials />
+    </div>
+    <div class="portrait">
+      <img
+        src="/images/DitherPortrait.png"
+        alt="Quinn Valencia Cecil"
+        class="relative object-cover object-right right-0 top-0 h-[100vh] z-0"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { HomeJobTitles } from '#components';
+useHead({
+  title: "Look, It's Val!",
+  meta: [
+    {
+      name: 'description',
+      content: 'Personal Portfolio and Website of Quinn Valencia Cecil.'
+    }
+  ]
+});
 
-  useHead({
-    title: "Look, It's Val!",
-    meta: [
-      {
-        name: 'description',
-        content: 'Personal Portfolio and Website of Quinn Valencia Cecil.'
-      }
-    ]
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    landingPageOverflow.value = calcLandingPageOverflow();
+    const leftText = document.querySelector('.landing .home-text');
+    if (leftText) {
+      textHeight.value = leftText.clientHeight * 1.2;
+    }
   });
+  setTimeout(() => {
+    const container = document.querySelector('.landing');
+    if (container) {
+      Array.from(container.children).forEach(child => {
+        child.classList.add('visible');
+      });
+    }
+    landingPageOverflow.value = calcLandingPageOverflow();
+    const leftText = document.querySelector('.landing .home-text');
+    if (leftText) {
+      textHeight.value = leftText.clientHeight * 1.2;
+    }
+  }, 100);
+});
+
+function calcLandingPageOverflow() {
+  if (window.innerWidth <= 768) return 0;
+  const container = document.querySelector('.landing');
+  if (!container) return -1;
+  const leftText = container.querySelector('.home-text');
+  if (!leftText) return -1;
+  const rightImage = container.querySelector('.portrait');
+  if (!rightImage) return -1;
+  const aspectRatio = 435/876;
+  const height = rightImage.clientHeight;
+  console.log('height', height);
+  const imageWidth = height * aspectRatio;
+  console.log('imageWidth', imageWidth);
+  const padding = parseFloat(getComputedStyle(container).paddingLeft);
+  console.log('padding', padding);
+  const textWidth = leftText.clientWidth;
+  console.log('textWidth', textWidth);
+  console.log('containerWidth', container.clientWidth);
+  return Math.min(container.clientWidth - (imageWidth + padding + textWidth), 0);
+}
+
+const textHeight = ref(0);
+
+const landingPageOverflow = ref(0);
+
+const landingImageAdjustment = computed(() => {
+  return landingPageOverflow.value / 2;
+});
+
+const landingTextAdjustment = computed(() => {
+  return landingPageOverflow.value / 3;
+})
 </script>
 
+<style scoped>
+.portrait {
+  transition: opacity 0.2s ease-out, transform 0.4s ease-out, filter 0.4s cubic-bezier(.4,.01,0,1);
+
+  img {
+    max-width: none;
+    image-rendering: pixelated;
+    transition: transform 0.4s ease-in-out;
+    transform: translateX(v-bind('landingImageAdjustment + "px"'));
+  }
+}
+</style>

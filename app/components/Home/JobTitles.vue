@@ -9,7 +9,7 @@ const texts = [
   { text: "Data Scientist", color: "orange" },
   { text: "Audio Engineer", color: "yellow" },
   { text: "Web Developer", color: "green" },
-  { text: "Software Developer", color: "blue" }
+  { text: "Software Engineer", color: "blue" }
 ];
 const displayText: Ref<string> = ref(' ');
 const currentTextIndex: Ref<number> = ref(0);

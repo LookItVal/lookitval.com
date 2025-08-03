@@ -1,5 +1,5 @@
 <template>
-  <div class="background-lambda landing flex justify-between items-center h-[100svh] md:pl-(--l-em) overflow-x-hidden">
+  <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
     <div class="home-text flex flex-col card-background-lambda absolute right-[0.5rem] max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] z-1 md:relative ">
       <h1 class="text-3xl md:text-6xl font-bold whitespace-nowrap z-1">Quinn Valencia Cecil</h1>
       <HomeJobTitles class="mb-(--s-em) z-1 text-2xl md:text-3xl" />
@@ -9,13 +9,19 @@
       <img
         src="/images/DitherPortrait.png"
         alt="Quinn Valencia Cecil"
-        class="relative object-cover object-right right-0 top-0 h-[100vh] z-0"
+        class="relative object-cover object-right right-0 top-0 h-[100vh] z-0 drop-shadow-xl"
       />
     </div>
     <BackgroundsDither 
       class="-z-10"
-      :wave-color="[255, 255, 255]"
+      :wave-color="[0.3451, 0.3569, 0.4392]"
+      :enable-mouse-interaction="false"
+      :wave-speed="0.005"
+      :pixel-size="2"
+      :color-num="5"
     />
+  </div>
+  <div class="about-me flex flex-col">
   </div>
 </template>
 
@@ -53,8 +59,30 @@ onMounted(() => {
   }, 100);
 });
 
+onMounted(() => {
+  window.addEventListener('resize', () => {
+    landingPageOverflow.value = calcLandingPageOverflow();
+    const leftText = document.querySelector('.landing .home-text');
+    if (leftText) {
+      textHeight.value = leftText.clientHeight * 1.2;
+    }
+  });
+  setTimeout(() => {
+    const container = document.querySelector('.landing');
+    if (container) {
+      Array.from(container.children).forEach(child => {
+        child.classList.add('visible');
+      });
+    }
+    landingPageOverflow.value = calcLandingPageOverflow();
+    const leftText = document.querySelector('.landing .home-text');
+    if (leftText) {
+      textHeight.value = leftText.clientHeight * 1.2;
+    }
+  }, 100);
+});
+
 function calcLandingPageOverflow() {
-  if (window.innerWidth <= 767) return 0;
   const container = document.querySelector('.landing');
   if (!container) return 0;
   const leftText = container.querySelector('.home-text');
@@ -66,6 +94,9 @@ function calcLandingPageOverflow() {
   const imageWidth = height * aspectRatio;
   const padding = parseFloat(getComputedStyle(container).paddingLeft);
   const textWidth = leftText.clientWidth;
+  if (window.innerWidth < 767) {
+    return Math.max(imageWidth - container.clientWidth, 0);
+  }
   return Math.min(container.clientWidth - (imageWidth + padding + textWidth), 0);
 }
 
@@ -73,6 +104,7 @@ const landingPageOverflow = ref(0);
 const textHeight = ref(0);
 
 const landingImageAdjustment = computed(() => {
+  if (window.innerWidth < 767) return landingPageOverflow.value;
   return landingPageOverflow.value / 2;
 });
 

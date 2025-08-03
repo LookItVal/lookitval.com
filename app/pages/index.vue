@@ -138,6 +138,16 @@ const landingTextAdjustment = computed(() => {
   transform: translateX(v-bind('landingTextAdjustment + "px"'));
   transition: transform 0.4s ease-in-out;
 
+  &:not(.visible) {
+    h1 {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+  }
+  h1 {
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
   @media (max-width: 767px) {
     background-color: color-mix(in srgb, var(--color-surface0) 75%, transparent);
   }
@@ -145,6 +155,17 @@ const landingTextAdjustment = computed(() => {
 
 .portrait {
   transition: opacity 0.2s ease-out, transform 0.4s ease-out, filter 0.4s cubic-bezier(.4,.01,0,1);
+
+  &:not(.visible) {
+    filter: blur(10px);
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  &.visible {
+    filter: blur(0px);
+    opacity: 1;
+    transform: translateX(0px);
+  }
 
   img {
     max-width: none;

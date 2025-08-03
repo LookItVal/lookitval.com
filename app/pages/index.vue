@@ -1,7 +1,7 @@
 <template>
   <div class="background-lambda landing flex justify-between items-center h-[100svh] pl-(--l-em) overflow-y-hidden">
-    <div class="home-text flex flex-col items-start">
-      <h1 class="text-6xl font-bold">Quinn Valencia Cecil</h1>
+    <div class="home-text flex flex-col items-start z-1">
+      <h1 class="text-6xl font-bold whitespace-nowrap">Quinn Valencia Cecil</h1>
       <HomeJobTitles class="mb-(--s-em)" />
       <Socials />
     </div>
@@ -59,14 +59,9 @@ function calcLandingPageOverflow() {
   if (!rightImage) return -1;
   const aspectRatio = 435/876;
   const height = rightImage.clientHeight;
-  console.log('height', height);
   const imageWidth = height * aspectRatio;
-  console.log('imageWidth', imageWidth);
   const padding = parseFloat(getComputedStyle(container).paddingLeft);
-  console.log('padding', padding);
   const textWidth = leftText.clientWidth;
-  console.log('textWidth', textWidth);
-  console.log('containerWidth', container.clientWidth);
   return Math.min(container.clientWidth - (imageWidth + padding + textWidth), 0);
 }
 
@@ -79,11 +74,18 @@ const landingImageAdjustment = computed(() => {
 });
 
 const landingTextAdjustment = computed(() => {
-  return landingPageOverflow.value / 3;
+  const container = document.querySelector('.landing')!;
+  const padding = parseFloat(getComputedStyle(container).paddingLeft);
+  return Math.min(landingPageOverflow.value / 3, padding - 5);
 })
 </script>
 
 <style scoped>
+.home-text {
+  transform: translateX(v-bind('landingTextAdjustment + "px"'));
+  transition: transform 0.4s ease-in-out;
+}
+
 .portrait {
   transition: opacity 0.2s ease-out, transform 0.4s ease-out, filter 0.4s cubic-bezier(.4,.01,0,1);
 

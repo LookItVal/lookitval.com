@@ -1,5 +1,5 @@
 <template>
-  <div class="socials flex justify-between h-[2em]">
+  <div class="socials flex justify-between">
     <SocialsGithub ref="github" />
     <SocialsIMDB ref="imdb" />
     <SocialsLinkedIn ref="linkedin" />

@@ -1,5 +1,5 @@
 <template>
-  <div class="fulltext flex pl-[var(--xs-em)]">
+  <div class="fulltext flex pl-[var(--xs-em)] gap-[var(--xxxs-em)] w-max">
     <h2>-</h2> <GradientText :text="displayText" header-tag="h2" :color="currentColor" class="gradient-text" />
   </div>
 </template>

@@ -22,6 +22,7 @@
     />
   </div>
   <div class="about-me flex flex-col">
+    <HomeHexPhoto />
   </div>
 </template>
 

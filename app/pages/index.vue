@@ -11,7 +11,7 @@
         :sequential="true"
         reveal-direction="center"
         :use-original-chars-only="false"
-        characters="!*§µ¿ÐϗåɎɸΘΞλψΛΣΦλφΩλπ"
+        characters="*⋅·∙‧᛫◦•∘●◌⊙⊛⊚⦿Ｏ○◉"
         animate-on="view"
       />
     </div>
@@ -66,6 +66,8 @@
 </template>
 <script lang="ts" setup>
 import type { ComponentPublicInstance } from 'vue';
+const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
+console.log('test length', test.length);
 
 const resumePDF: Ref<PDFViewer | null> = ref(null);
 

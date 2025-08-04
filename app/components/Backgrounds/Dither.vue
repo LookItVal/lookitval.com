@@ -230,8 +230,10 @@ void main() {
   
   vec3 col = mix(vec3(0.0), waveColor, f);
   col = dither(uv, col);
+
+  float alpha = f;
   
-  gl_FragColor = vec4(col, 1.0);
+  gl_FragColor = vec4(col, alpha);
 }
 `;
 

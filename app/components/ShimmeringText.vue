@@ -57,7 +57,9 @@ const backgroundColor = computed(() =>
   background-size: 200% 100% !important;
   background-repeat: no-repeat !important;
   background-clip: text !important;
-  animation: shimmer v-bind(speed +'s') infinite;
+  animation-name: shimmer;
+  animation-duration: v-bind(speed + 's');
+  animation-iteration-count: infinite;
 }
 @keyframes shimmer {
   0% {
@@ -67,5 +69,4 @@ const backgroundColor = computed(() =>
     background-position: -100% 0%;
   }
 }
-
 </style>

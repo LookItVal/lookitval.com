@@ -1,7 +1,17 @@
 <template>
   <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
     <div class="home-text flex flex-col card-background-lambda absolute right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] z-1 md:relative ">
-      <h1 class="text-3xl md:text-6xl font-bold whitespace-nowrap z-1">Quinn Valencia Cecil</h1>
+      <TextAnimationsDecryptedText
+        parentClassName="text-3xl md:text-6xl font-bold whitespace-nowrap z-1"
+        text="Quinn Valencia Cecil"
+        :speed="100"
+        :maxIterations="10"
+        :sequential="true"
+        revealDirection="end"
+        :useOriginalCharsOnly="false"
+        characters="!*§µ¿ÐϗåɎɸΘΞλψΛΣΦλφΩλπ"
+        animateOn="view"
+      />
       <HomeJobTitles class="mb-(--s-em) z-1 text-2xl md:text-3xl" />
       <Socials class="z-1 h-[1.5em]" />
     </div>
@@ -48,6 +58,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import DecryptedText from '~/components/TextAnimations/DecryptedText.vue';
+
 const resumePDF: Ref<PDFViewer | null> = ref(null);
 
 function viewResume() {

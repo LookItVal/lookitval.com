@@ -1,0 +1,23 @@
+import tailwindcss from "@tailwindcss/vite";
+
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: true },
+  devServer: {
+    host: '0.0.0.0', //If WSL, run `netsh interface portproxy add v4tov4 listenport=3000 listenaddress=0.0.0.0 connectport=3000 connectaddress=localhost
+    port: 3000 // If WSL, connect to the windows machine IP address, not the one listed it the console. (should be 192.168.x.x)
+  },
+  css: [
+    '@/assets/main.css'
+  ],
+  vite: {
+    plugins: [tailwindcss()]
+  },
+  modules: [
+    '@nuxt/content',
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@nuxt/ui'
+  ]
+})

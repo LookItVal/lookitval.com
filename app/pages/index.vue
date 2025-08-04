@@ -16,7 +16,7 @@
       />
     </div>
     <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
-      <div class="home-text z-1 flex flex-col card-background-lambda absolute right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] md:relative ">
+      <div class="home-text z-1 flex flex-col card-background-lambda absolute md:relative max-md:right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] md:relative ">
         <h1 ref="pageText" class="text-3xl md:text-6xl !font-black whitespace-nowrap z-50">Quinn Valencia Cecil</h1>
         <HomeJobTitles class="mb-(--s-em) z-0 text-2xl md:text-3xl" />
         <Socials class="z-1 h-[1.5em]" />
@@ -212,7 +212,7 @@ const landingTextAdjustment = computed(() => {
     content: 'λ';
     position: absolute;
     top: 0;
-    right: 7.5%;
+    right: 10%;
     font-size: v-bind('textHeight + "px"');
     color: var(--color-surface0);
     transform: translateY(-22%);

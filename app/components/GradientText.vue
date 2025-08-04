@@ -1,6 +1,6 @@
 <template>
     <div class="gradient-text">
-        <component :is="headerTag" :class="color">
+        <component :is="as" :class="color">
             {{ text }}
         </component>
     </div>
@@ -9,20 +9,20 @@
 <script lang="ts" setup>
 const props = defineProps<{
     text: string;
-    headerTag: string;
+    as: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     color: string;
 }>();
 
 const headerTagValidator = (value: string) => {
-    return ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(value);
+    return ['span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(value);
 };
 
 const colorValidator = (value: string) => {
     return ['purple', 'blue', 'green', 'yellow', 'orange', 'red', 'pink'].includes(value);
 };
 
-if (!headerTagValidator(props.headerTag)) {
-    throw new Error(`Invalid headerTag: ${props.headerTag}`);
+if (!headerTagValidator(props.as)) {
+    throw new Error(`Invalid headerTag: ${props.as}`);
 }
 
 if (!colorValidator(props.color)) {

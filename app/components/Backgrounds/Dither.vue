@@ -371,7 +371,7 @@ const initializeScene = () => {
 
   container.appendChild(canvas);
 
-  window.addEventListener("resize", resize);
+  window.addEventListener("resize", () => {setTimeout(() => resize(), 50)});
   if (props.enableMouseInteraction) {
     container.addEventListener("mousemove", handleMouseMove);
     container.addEventListener("mouseleave", handleMouseLeave);

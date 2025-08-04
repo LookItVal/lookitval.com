@@ -99,7 +99,8 @@ onMounted(() => {
  
   if (loadingText.value && pageText.value) {
     setTimeout(() => {
-      console.log('type', typeof loadingText.value, typeof pageText.value);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      
       // If loadingText is a component, use $el to get the DOM element
       const loadingEl = (loadingText.value && (loadingText.value as ComponentPublicInstance).$el) ? (loadingText.value as ComponentPublicInstance).$el : loadingText.value;
       const pageEl = (pageText.value && (pageText.value as ComponentPublicInstance).$el) ? (pageText.value as ComponentPublicInstance).$el : pageText.value;
@@ -120,8 +121,6 @@ onMounted(() => {
     }, 2400);
   }
 
-
-  window.scrollTo({ top: 0, behavior: 'auto' });
   window.addEventListener('resize', () => {
     landingPageOverflow.value = calcLandingPageOverflow();
     const leftText = document.querySelector('.landing .home-text');

@@ -1,8 +1,9 @@
 <template>
-  <div :class="['loading-screen z-1000 fixed h-svh w-svw flex flex-col items-center justify-center bg-crust', { hide: loaded }]">
+  <div :class="['fixed h-svh w-svw flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
+    <div class="loading-screen absolute top-0 left-0 w-full h-full bg-base z-10"></div>
     <TextAnimationsDecryptedText
       ref="loadingText"
-      parentClassName="loading-text text-3xl md:text-6xl font-black whitespace-nowrap z-1"
+      parentClassName="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap z-11"
       text="Quinn Valencia Cecil"
       :speed="100"
       :maxIterations="10"
@@ -14,9 +15,9 @@
     />
   </div>
   <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
-    <div class="home-text flex flex-col card-background-lambda absolute right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] z-1 md:relative ">
-      <h1 class="text-3xl md:text-6xl !font-black whitespace-nowrap z-1" ref="pageText">Quinn Valencia Cecil</h1>
-      <HomeJobTitles class="mb-(--s-em) z-1 text-2xl md:text-3xl" />
+    <div class="home-text z-1 flex flex-col card-background-lambda absolute right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] md:relative ">
+      <h1 class="text-3xl md:text-6xl !font-black whitespace-nowrap z-50" ref="pageText">Quinn Valencia Cecil</h1>
+      <HomeJobTitles class="mb-(--s-em) z-0 text-2xl md:text-3xl" />
       <Socials class="z-1 h-[1.5em]" />
     </div>
     <div class="portrait">
@@ -64,6 +65,12 @@
 <script lang="ts" setup>
 const resumePDF: Ref<PDFViewer | null> = ref(null);
 
+const loadingText = ref<HTMLElement | null>(null);
+const pageText = ref<HTMLElement | null>(null);
+
+const loadingTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
+const pageTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
+
 function viewResume() {
     resumePDF.value!.toggleVisibility();
 }
@@ -82,6 +89,31 @@ useHead({
 
 onMounted(() => {
   if (typeof window === 'undefined') return;
+
+ 
+  if (loadingText.value && pageText.value) {
+    setTimeout(() => {
+      // If loadingText is a component, use $el to get the DOM element
+      const loadingEl = (loadingText.value && (loadingText.value as any).$el) ? (loadingText.value as any).$el : loadingText.value;
+      const pageEl = (pageText.value && (pageText.value as any).$el) ? (pageText.value as any).$el : pageText.value;
+      loadingTextBoundingClientRect.value = loadingEl?.getBoundingClientRect?.();
+      pageTextBoundingClientRect.value = pageEl?.getBoundingClientRect?.();
+      const loadingRect = loadingTextBoundingClientRect.value!;
+      const pageRect = pageTextBoundingClientRect.value!;
+
+      const translateX = (loadingRect.left) - (pageRect.left) ;
+      const translateY = (loadingRect.top) - (pageRect.top);
+
+      pageText.value!.style.transform = `translate(${translateX}px, ${translateY}px)`;
+      pageText.value!.style.transition = 'transform 0s ease-in-out';
+      setTimeout(() => {
+        pageText.value!.style.transform = 'translate(0, 0)';
+        pageText.value!.style.transition = 'transform 0.4s ease-in-out';
+      }, 500);
+    }, 2400);
+  }
+
+
   window.scrollTo({ top: 0, behavior: 'auto' });
   window.addEventListener('resize', () => {
     landingPageOverflow.value = calcLandingPageOverflow();
@@ -141,18 +173,25 @@ const landingTextAdjustment = computed(() => {
 </script>
 
 <style scoped>
+
 .loading-screen {
   top: 0;
   transition: transform 0.4s ease-in-out;
   transition-delay: 2.5s;
   transform-origin: top;
+}
 
-  &.hide {
+.loading-text {
+    transition: opacity 0.1s ease-in-out;
+    transition-delay: 2.8s;
+}
+.hide {
+  & .loading-screen {
     transform: scaleY(0);
   }
 
   & .loading-text {
-    transition: opacity 0.4s ease-in-out;
+    opacity: 0;
   }
 }
 

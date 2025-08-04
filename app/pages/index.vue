@@ -51,7 +51,7 @@
           />
         </div>
         <p class="text-lg md:text-xl pb-(--xs-em)">
-          I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've been developing software for years, building a strong skill set that spans a wide range of fields, including data science, database management, system automation, and web development. My background in audio engineering has given me a unique perspective on problem-solving and creativity, and an acute attention to detail that I bring to every project I work on. 
+          I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've built a strong skill set over years of experience spanning data science, database management, system automation, and web development, all fueled by a passion for continuous learning and creative problem-solving. My background in audio engineering gives me a unique perspective on problem-solving and creativity, combined with an acute attention to detail. This, and my mathematically and technically inclined mindset, makes me a valuable asset to every project I work on.
         </p>
         <ShimmeringButton
           color="green"

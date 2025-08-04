@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import { useConstants } from '@/composables/constants';
 
-const { COLORS } = useConstants();
+const { COLORS: _COLORS } = useConstants();
 const texts = [
   { text: "Data Scientist", color: "peach", bg: "red" },
   { text: "Audio Engineer", color: "yellow", bg: "peach" },
@@ -18,8 +18,8 @@ const displayText: Ref<string> = ref(' ');
 const currentTextIndex: Ref<number> = ref(0);
 const currentCharIndex: Ref<number> = ref(0);
 const isDeleting: Ref<boolean> = ref(false);
-const currentColor: ComputedRef<keyof typeof COLORS> = computed(() => texts[currentTextIndex.value]!.color as keyof typeof COLORS);
-const currentBgColor: ComputedRef<keyof typeof COLORS> = computed(() => texts[currentTextIndex.value]!.bg as keyof typeof COLORS);
+const currentColor: ComputedRef<keyof typeof _COLORS> = computed(() => texts[currentTextIndex.value]!.color as keyof typeof _COLORS);
+const currentBgColor: ComputedRef<keyof typeof _COLORS> = computed(() => texts[currentTextIndex.value]!.bg as keyof typeof _COLORS);
 
 function typer(): void {
   const currentTextObj = texts[currentTextIndex.value]!;

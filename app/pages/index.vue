@@ -57,7 +57,15 @@
           color="green"
           @click="viewResume"
         >
-          <p class="text-xl md:text-2xl py-(--xs-em) px-(--s-em) text-base font-black">My Resume</p>
+          <p class="text-xl md:text-2xl py-(--xs-em) px-(--s-em) font-black">
+            <ShimmeringText
+              text="View Resume"
+              as="span"
+              fg-color="base"
+              bg-color="overlay1"
+              :speed="2"
+            />
+          </p>
         </ShimmeringButton>
         <PDFViewer ref="resumePDF" pdf-url="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
       </div>
@@ -100,7 +108,7 @@ onMounted(() => {
   if (loadingText.value && pageText.value) {
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'auto' });
-      
+
       // If loadingText is a component, use $el to get the DOM element
       const loadingEl = (loadingText.value && (loadingText.value as ComponentPublicInstance).$el) ? (loadingText.value as ComponentPublicInstance).$el : loadingText.value;
       const pageEl = (pageText.value && (pageText.value as ComponentPublicInstance).$el) ? (pageText.value as ComponentPublicInstance).$el : pageText.value;

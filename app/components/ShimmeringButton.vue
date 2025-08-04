@@ -37,13 +37,16 @@ const props = withDefaults(defineProps<{
 
 <style scoped>
 .shimmering-button {
-
   position: relative;
   overflow: hidden;
   border-radius: 50%;
   width: max-content;
   height: max-content;
+
   &::before {
+    will-change: transform rotate;
+    contain: layout, style, paint;
+
     content: '';
     position: absolute;
     width: 400%;

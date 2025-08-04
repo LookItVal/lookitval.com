@@ -3,9 +3,9 @@
     <component
       :is="as"
       class="shimmer absolute !text-transparent z-1"
-      
       :style="{
-        background: `linear-gradient(110deg, transparent, transparent, ${backgroundColor}, transparent, transparent)`
+        background: `linear-gradient(110deg, transparent, transparent, ${backgroundColor}, transparent, transparent)`,
+        animationDuration: speed + 's'
       }"
     >
       {{ text }}
@@ -58,7 +58,6 @@ const backgroundColor = computed(() =>
   background-repeat: no-repeat !important;
   background-clip: text !important;
   animation-name: shimmer;
-  animation-duration: v-bind(speed + 's');
   animation-iteration-count: infinite;
 }
 @keyframes shimmer {

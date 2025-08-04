@@ -50,7 +50,7 @@ onMounted(() => {
 <style scoped>
 .fulltext {
   will-change: border-color;
-  contain: layout, style, paint;
+  contain: layout style paint;
 
   border-right: 0.2em solid var(--color-text);
   animation: blink-caret 0.75s step-end infinite;
@@ -62,6 +62,6 @@ onMounted(() => {
 }
 
 .gradient-text {
-  contain: style, paint;
+  contain: style paint;
 }
 </style>

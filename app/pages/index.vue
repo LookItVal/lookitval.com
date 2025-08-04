@@ -160,11 +160,13 @@ const landingPageOverflow = ref(0);
 const textHeight = ref(0);
 
 const landingImageAdjustment = computed(() => {
+  if (typeof window === 'undefined') return 0;
   if (window.innerWidth < 767) return landingPageOverflow.value;
   return landingPageOverflow.value / 2;
 });
 
 const landingTextAdjustment = computed(() => {
+  if (typeof window === 'undefined') return 0;
   if (landingPageOverflow.value == 0) return 0;
   const container = document.querySelector('.landing')!;
   const padding = parseFloat(getComputedStyle(container).paddingLeft);

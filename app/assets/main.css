@@ -62,13 +62,16 @@
 }
 
 :root {
-    --purple-shimmer: linear-gradient(-45deg,var(--color-mauve),var(--color-lavender));
-    --blue-shimmer: linear-gradient(-45deg,var(--color-blue),var(--color-sapphire));
-    --green-shimmer: linear-gradient(-45deg,var(--color-green),var(--color-teal));
-    --yellow-shimmer: linear-gradient(-45deg,var(--color-yellow),var(--color-peach));
-    --orange-shimmer: linear-gradient(-45deg,var(--color-peach),var(--color-maroon));
-    --red-shimmer: linear-gradient(-45deg,var(--color-red),var(--color-pink));
-    --pink-shimmer: linear-gradient(-45deg,var(--pink),var(--flamingo));
+    --purple-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-lavender),var(--color-mauve),var(--color-lavender));
+    --blue-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-sapphire),var(--color-blue),var(--color-sapphire));
+    --green-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-teal),var(--color-green),var(--color-teal));
+    --yellow-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-peach),var(--color-yellow),var(--color-peach));
+    --orange-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-maroon),var(--color-peach),var(--color-maroon));
+    --red-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-pink),var(--color-red),var(--color-pink));
+    --pink-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-pink),var(--color-flamingo),var(--color-pink));
+    --rgb-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-red),var(--color-green),var(--color-blue), var(--color-red));
+    --cmy-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-teal),var(--color-mauve),var(--color-yellow), var(--color-teal));
+    --trans-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-text),var(--color-pink),var(--color-sapphire), var(--color-text));
 }
 
 :root {

@@ -52,7 +52,11 @@ const emit = defineEmits<{
 }>();
 
 const containerRef = ref<HTMLSpanElement>();
-const displayText = ref(props.text);
+const displayText = ref(
+  props.characters
+    ? props.characters[0]!.repeat(props.text.length)
+    : "*".repeat(props.text.length)
+);
 const isHovering = ref(false);
 const isScrambling = ref(false);
 const revealedIndices = ref(new Set<number>());

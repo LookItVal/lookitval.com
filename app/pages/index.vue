@@ -1,6 +1,6 @@
 <template>
   <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
-    <div class="home-text flex flex-col card-background-lambda absolute right-[0.5rem] max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] z-1 md:relative ">
+    <div class="home-text flex flex-col card-background-lambda absolute right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] z-1 md:relative ">
       <h1 class="text-3xl md:text-6xl font-bold whitespace-nowrap z-1">Quinn Valencia Cecil</h1>
       <HomeJobTitles class="mb-(--s-em) z-1 text-2xl md:text-3xl" />
       <Socials class="z-1 h-[1.5em]" />
@@ -16,16 +16,35 @@
       class="-z-10"
       :wave-color="[0.3451, 0.3569, 0.4392]"
       :enable-mouse-interaction="false"
-      :wave-speed="0.005"
+      :wave-speed="0.01"
       :pixel-size="2"
       :color-num="5"
     />
   </div>
-  <div class="about-me flex flex-col">
-    <HomeHexPhoto />
+  <div class="about-me flex flex-col md:flex-row items-center justify-between px-(--m-em) py-(--s-em) bg-base">
+    <HomeHexPhoto class="max-md:!size-svw md:w-1/2" />
+    <div class="flex flex-col items-center md:w-3/4">
+      <div class="flex flex-row text-3xl md:text-5xl font-bold pb-(--xxs-em)">
+        <h2>About</h2>
+        <ShimmeringText
+          class="pl-(--xxs-em)"
+          text="Me"
+          as="h2"
+          fgColor="green"
+          bgColor="teal"
+        />
+      </div>
+      <p class="text-lg md:text-xl pb-(--xs-em)">
+        I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've been developing software for years, building a strong skill set that spans a wide range of fields, including data science, database management, system automation, and web development. My background in audio engineering has given me a unique perspective on problem-solving and creativity, and an acute attention to detail that I bring to every project I work on. 
+      </p>
+      <ShimmeringButton
+        color="green"
+      >
+        <p class="text-xl md:text-2xl py-(--xs-em) px-(--s-em) text-base font-black">My Resume</p>
+      </ShimmeringButton>
+    </div>
   </div>
 </template>
-
 <script lang="ts" setup>
 useHead({
   title: "Look, It's Val!",
@@ -38,29 +57,7 @@ useHead({
 });
 
 onMounted(() => {
-  window.addEventListener('resize', () => {
-    landingPageOverflow.value = calcLandingPageOverflow();
-    const leftText = document.querySelector('.landing .home-text');
-    if (leftText) {
-      textHeight.value = leftText.clientHeight * 1.2;
-    }
-  });
-  setTimeout(() => {
-    const container = document.querySelector('.landing');
-    if (container) {
-      Array.from(container.children).forEach(child => {
-        child.classList.add('visible');
-      });
-    }
-    landingPageOverflow.value = calcLandingPageOverflow();
-    const leftText = document.querySelector('.landing .home-text');
-    if (leftText) {
-      textHeight.value = leftText.clientHeight * 1.2;
-    }
-  }, 100);
-});
-
-onMounted(() => {
+  if (typeof window === 'undefined') return;
   window.addEventListener('resize', () => {
     landingPageOverflow.value = calcLandingPageOverflow();
     const leftText = document.querySelector('.landing .home-text');

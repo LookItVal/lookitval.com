@@ -1,21 +1,23 @@
 <template>
   <div>
     <component
-      class="shimmer absolute !text-transparent z-1"
       :is="as"
+      class="shimmer absolute !text-transparent z-1"
+      
       :style="{
         background: `linear-gradient(110deg, transparent, transparent, ${backgroundColor}, transparent, transparent)`
       }"
-      v-text="text"
-    />
+    >
+      {{ text }}
+    </component>
     <component
+      :is="as"
       class="relative z-0"
       :style="{
         color: foregroundColor
       }"
-      :is="as"
-      v-text="text"
     >
+      {{ text }}
     </component>
   </div>
 </template>

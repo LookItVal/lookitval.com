@@ -21,7 +21,7 @@ onMounted(() => {
       setTimeout(() => {
         element.value!.shimmer();
       }, 400);
-    }, index * 150);
+    }, (index * 150) + 3000);
   });
 });
 </script>

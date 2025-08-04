@@ -1,17 +1,21 @@
 <template>
+  <div :class="['loading-screen z-1000 fixed h-svh w-svw flex flex-col items-center justify-center bg-crust', { hide: loaded }]">
+    <TextAnimationsDecryptedText
+      ref="loadingText"
+      parentClassName="loading-text text-3xl md:text-6xl font-black whitespace-nowrap z-1"
+      text="Quinn Valencia Cecil"
+      :speed="100"
+      :maxIterations="10"
+      :sequential="true"
+      revealDirection="center"
+      :useOriginalCharsOnly="false"
+      characters="!*§µ¿ÐϗåɎɸΘΞλψΛΣΦλφΩλπ"
+      animateOn="view"
+    />
+  </div>
   <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
     <div class="home-text flex flex-col card-background-lambda absolute right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] z-1 md:relative ">
-      <TextAnimationsDecryptedText
-        parentClassName="text-3xl md:text-6xl font-bold whitespace-nowrap z-1"
-        text="Quinn Valencia Cecil"
-        :speed="100"
-        :maxIterations="10"
-        :sequential="true"
-        revealDirection="end"
-        :useOriginalCharsOnly="false"
-        characters="!*§µ¿ÐϗåɎɸΘΞλψΛΣΦλφΩλπ"
-        animateOn="view"
-      />
+      <h1 class="text-3xl md:text-6xl !font-black whitespace-nowrap z-1" ref="pageText">Quinn Valencia Cecil</h1>
       <HomeJobTitles class="mb-(--s-em) z-1 text-2xl md:text-3xl" />
       <Socials class="z-1 h-[1.5em]" />
     </div>
@@ -58,13 +62,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import DecryptedText from '~/components/TextAnimations/DecryptedText.vue';
-
 const resumePDF: Ref<PDFViewer | null> = ref(null);
 
 function viewResume() {
     resumePDF.value!.toggleVisibility();
 }
+
+const loaded = ref(false);
 
 useHead({
   title: "Look, It's Val!",
@@ -78,6 +82,7 @@ useHead({
 
 onMounted(() => {
   if (typeof window === 'undefined') return;
+  window.scrollTo({ top: 0, behavior: 'auto' });
   window.addEventListener('resize', () => {
     landingPageOverflow.value = calcLandingPageOverflow();
     const leftText = document.querySelector('.landing .home-text');
@@ -98,6 +103,7 @@ onMounted(() => {
       textHeight.value = leftText.clientHeight * 1.2;
     }
   }, 100);
+  loaded.value = true;
 });
 
 function calcLandingPageOverflow() {
@@ -135,6 +141,21 @@ const landingTextAdjustment = computed(() => {
 </script>
 
 <style scoped>
+.loading-screen {
+  top: 0;
+  transition: transform 0.4s ease-in-out;
+  transition-delay: 2.5s;
+  transform-origin: top;
+
+  &.hide {
+    transform: scaleY(0);
+  }
+
+  & .loading-text {
+    transition: opacity 0.4s ease-in-out;
+  }
+}
+
 @media (max-width: 767px) {
   .background-lambda::before {
     content: '';
@@ -172,6 +193,7 @@ const landingTextAdjustment = computed(() => {
 
 .portrait {
   transition: opacity 0.2s ease-out, transform 0.4s ease-out, filter 0.4s cubic-bezier(.4,.01,0,1);
+  transition-delay: 2.8s;
 
   &:not(.visible) {
     filter: blur(10px);
@@ -189,6 +211,7 @@ const landingTextAdjustment = computed(() => {
     image-rendering: pixelated;
     transition: transform 0.4s ease-in-out;
     transform: translateX(v-bind('landingImageAdjustment + "px"'));
+    transition-delay: 2.8s;
   }
 }
 </style>

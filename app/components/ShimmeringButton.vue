@@ -23,11 +23,10 @@
 <script lang="ts" setup>
 import { useConstants } from '@/composables/constants';
 
-const { COLORS } = useConstants();
-const allowedColors = Object.keys(COLORS) as (keyof typeof COLORS)[];
+const { COLORS: _COLORS } = useConstants();
 
 const props = withDefaults(defineProps<{
-  color?: typeof allowedColors[number],
+  color?: keyof typeof _COLORS,
   glare?: boolean
 }>(), {
   color: 'mauve',
@@ -45,7 +44,7 @@ const props = withDefaults(defineProps<{
 
   &::before {
     will-change: transform rotate;
-    contain: layout, style, paint;
+    contain: layout style paint;
 
     content: '';
     position: absolute;

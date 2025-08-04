@@ -39,13 +39,21 @@
       </p>
       <ShimmeringButton
         color="green"
+        @click="viewResume"
       >
         <p class="text-xl md:text-2xl py-(--xs-em) px-(--s-em) text-base font-black">My Resume</p>
       </ShimmeringButton>
+      <PDFViewer ref="resumePDF" pdfUrl="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+const resumePDF: Ref<PDFViewer | null> = ref(null);
+
+function viewResume() {
+    resumePDF.value!.toggleVisibility();
+}
+
 useHead({
   title: "Look, It's Val!",
   meta: [

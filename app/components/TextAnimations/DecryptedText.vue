@@ -35,7 +35,6 @@ interface DecryptedTextProps {
 }
 
 const props = withDefaults(defineProps<DecryptedTextProps>(), {
-  text: "",
   speed: 50,
   maxIterations: 10,
   sequential: false,

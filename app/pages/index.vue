@@ -1,72 +1,76 @@
 <template>
-  <div :class="['fixed h-svh w-svw flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
-    <div class="loading-screen absolute top-0 left-0 w-full h-full bg-base z-10"></div>
-    <TextAnimationsDecryptedText
-      ref="loadingText"
-      parentClassName="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap z-11"
-      text="Quinn Valencia Cecil"
-      :speed="100"
-      :maxIterations="10"
-      :sequential="true"
-      revealDirection="center"
-      :useOriginalCharsOnly="false"
-      characters="!*§µ¿ÐϗåɎɸΘΞλψΛΣΦλφΩλπ"
-      animateOn="view"
-    />
-  </div>
-  <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
-    <div class="home-text z-1 flex flex-col card-background-lambda absolute right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] md:relative ">
-      <h1 class="text-3xl md:text-6xl !font-black whitespace-nowrap z-50" ref="pageText">Quinn Valencia Cecil</h1>
-      <HomeJobTitles class="mb-(--s-em) z-0 text-2xl md:text-3xl" />
-      <Socials class="z-1 h-[1.5em]" />
-    </div>
-    <div class="portrait">
-      <img
-        src="/images/DitherPortrait.png"
-        alt="Quinn Valencia Cecil"
-        class="relative object-cover object-right right-0 top-0 h-[100vh] z-0 drop-shadow-xl"
+  <div>
+    <div :class="['fixed h-svh w-svw flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
+      <div class="loading-screen absolute top-0 left-0 w-full h-full bg-base z-10"/>
+      <TextAnimationsDecryptedText
+        ref="loadingText"
+        parent-class-name="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap z-11"
+        text="Quinn Valencia Cecil"
+        :speed="100"
+        :max-iterations="10"
+        :sequential="true"
+        reveal-direction="center"
+        :use-original-chars-only="false"
+        characters="!*§µ¿ÐϗåɎɸΘΞλψΛΣΦλφΩλπ"
+        animate-on="view"
       />
     </div>
-    <BackgroundsDither 
-      class="-z-10"
-      :wave-color="[0.3451, 0.3569, 0.4392]"
-      :enable-mouse-interaction="false"
-      :wave-speed="0.01"
-      :pixel-size="2"
-      :color-num="5"
-    />
-  </div>
-  <div class="about-me flex flex-col md:flex-row items-center justify-between px-(--m-em) py-(--s-em) bg-base">
-    <HomeHexPhoto class="max-md:!size-svw md:w-1/2" />
-    <div class="flex flex-col items-center md:w-3/4">
-      <div class="flex flex-row text-3xl md:text-5xl font-bold pb-(--xxs-em)">
-        <h2>About</h2>
-        <ShimmeringText
-          class="pl-(--xxs-em)"
-          text="Me"
-          as="h2"
-          fgColor="green"
-          bgColor="teal"
-        />
+    <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
+      <div class="home-text z-1 flex flex-col card-background-lambda absolute right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] md:relative ">
+        <h1 ref="pageText" class="text-3xl md:text-6xl !font-black whitespace-nowrap z-50">Quinn Valencia Cecil</h1>
+        <HomeJobTitles class="mb-(--s-em) z-0 text-2xl md:text-3xl" />
+        <Socials class="z-1 h-[1.5em]" />
       </div>
-      <p class="text-lg md:text-xl pb-(--xs-em)">
-        I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've been developing software for years, building a strong skill set that spans a wide range of fields, including data science, database management, system automation, and web development. My background in audio engineering has given me a unique perspective on problem-solving and creativity, and an acute attention to detail that I bring to every project I work on. 
-      </p>
-      <ShimmeringButton
-        color="green"
-        @click="viewResume"
-      >
-        <p class="text-xl md:text-2xl py-(--xs-em) px-(--s-em) text-base font-black">My Resume</p>
-      </ShimmeringButton>
-      <PDFViewer ref="resumePDF" pdfUrl="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
+      <div class="portrait">
+        <img
+          src="/images/DitherPortrait.png"
+          alt="Quinn Valencia Cecil"
+          class="relative object-cover object-right right-0 top-0 h-[100vh] z-0 drop-shadow-xl"
+        >
+      </div>
+      <BackgroundsDither 
+        class="-z-10"
+        :wave-color="[0.3451, 0.3569, 0.4392]"
+        :enable-mouse-interaction="false"
+        :wave-speed="0.01"
+        :pixel-size="2"
+        :color-num="5"
+      />
+    </div>
+    <div class="about-me flex flex-col md:flex-row items-center justify-between px-(--m-em) py-(--s-em) bg-base">
+      <HomeHexPhoto class="max-md:!size-svw md:w-1/2" />
+      <div class="flex flex-col items-center md:w-3/4">
+        <div class="flex flex-row text-3xl md:text-5xl font-bold pb-(--xxs-em)">
+          <h2>About</h2>
+          <ShimmeringText
+            class="pl-(--xxs-em)"
+            text="Me"
+            as="h2"
+            fg-color="green"
+            bg-color="teal"
+          />
+        </div>
+        <p class="text-lg md:text-xl pb-(--xs-em)">
+          I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've been developing software for years, building a strong skill set that spans a wide range of fields, including data science, database management, system automation, and web development. My background in audio engineering has given me a unique perspective on problem-solving and creativity, and an acute attention to detail that I bring to every project I work on. 
+        </p>
+        <ShimmeringButton
+          color="green"
+          @click="viewResume"
+        >
+          <p class="text-xl md:text-2xl py-(--xs-em) px-(--s-em) text-base font-black">My Resume</p>
+        </ShimmeringButton>
+        <PDFViewer ref="resumePDF" pdf-url="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import type { ComponentPublicInstance } from 'vue';
+
 const resumePDF: Ref<PDFViewer | null> = ref(null);
 
-const loadingText = ref<HTMLElement | null>(null);
-const pageText = ref<HTMLElement | null>(null);
+const loadingText = ref<ComponentPublicInstance | HTMLElement | null>(null);
+const pageText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 
 const loadingTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 const pageTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
@@ -93,9 +97,10 @@ onMounted(() => {
  
   if (loadingText.value && pageText.value) {
     setTimeout(() => {
+      console.log('type', typeof loadingText.value, typeof pageText.value);
       // If loadingText is a component, use $el to get the DOM element
-      const loadingEl = (loadingText.value && (loadingText.value as any).$el) ? (loadingText.value as any).$el : loadingText.value;
-      const pageEl = (pageText.value && (pageText.value as any).$el) ? (pageText.value as any).$el : pageText.value;
+      const loadingEl = (loadingText.value && (loadingText.value as ComponentPublicInstance).$el) ? (loadingText.value as ComponentPublicInstance).$el : loadingText.value;
+      const pageEl = (pageText.value && (pageText.value as ComponentPublicInstance).$el) ? (pageText.value as ComponentPublicInstance).$el : pageText.value;
       loadingTextBoundingClientRect.value = loadingEl?.getBoundingClientRect?.();
       pageTextBoundingClientRect.value = pageEl?.getBoundingClientRect?.();
       const loadingRect = loadingTextBoundingClientRect.value!;
@@ -104,11 +109,11 @@ onMounted(() => {
       const translateX = (loadingRect.left) - (pageRect.left) ;
       const translateY = (loadingRect.top) - (pageRect.top);
 
-      pageText.value!.style.transform = `translate(${translateX}px, ${translateY}px)`;
-      pageText.value!.style.transition = 'transform 0s ease-in-out';
+      pageEl.style.transform = `translate(${translateX}px, ${translateY}px)`;
+      pageEl.style.transition = 'transform 0s ease-in-out';
       setTimeout(() => {
-        pageText.value!.style.transform = 'translate(0, 0)';
-        pageText.value!.style.transition = 'transform 0.4s ease-in-out';
+        pageEl.style.transform = 'translate(0, 0)';
+        pageEl.style.transition = 'transform 0.4s ease-in-out';
       }, 500);
     }, 2400);
   }

@@ -11,12 +11,13 @@
         :sequential="true"
         reveal-direction="center"
         :use-original-chars-only="false"
+        :show-pre-text="true"
         characters="*⋅·∙‧᛫◦•∘●◌⊙⊛⊚⦿Ｏ○◉"
         animate-on="view"
       />
     </div>
     <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
-      <div class="home-text z-1 flex flex-col card-background-lambda absolute md:relative max-md:right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem] md:relative ">
+      <div class="home-text z-1 flex flex-col card-background-lambda absolute md:relative max-md:right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem]">
         <h1 ref="pageText" class="text-3xl md:text-6xl !font-black whitespace-nowrap z-50">Quinn Valencia Cecil</h1>
         <HomeJobTitles class="mb-(--s-em) z-0 text-2xl md:text-3xl" />
         <Socials class="z-1 h-[1.5em]" />
@@ -40,7 +41,7 @@
     <div class="about-me flex flex-col md:flex-row items-center justify-between px-(--m-em) py-(--s-em) bg-base">
       <HomeHexPhoto class="max-md:!size-svw md:w-1/2" />
       <div class="flex flex-col items-center md:w-3/4">
-        <div class="flex flex-row text-3xl md:text-5xl font-bold pb-(--xxs-em)">
+        <div class="flex flex-row text-4xl md:text-6xl font-bold pb-(--xxs-em)">
           <h2>About</h2>
           <ShimmeringText
             class="pl-(--xxs-em)"
@@ -50,14 +51,26 @@
             bg-color="teal"
           />
         </div>
-        <p class="text-lg md:text-xl pb-(--xs-em)">
+        <TextAnimationsDecryptedText
+          class="text-xl md:text-2xl pb-(--xs-em) text-wrap text-center"
+          text="I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've built a strong skill set over years of experience spanning data science, database management, system automation, and web development, all fueled by a passion for continuous learning and creative problem-solving. My background in audio engineering gives me a unique perspective on problem-solving and creativity, combined with an acute attention to detail. This, and my mathematically and technically inclined mindset, makes me a valuable asset to every project I work on."
+          :speed="1"
+          :max-iterations="2"
+          :sequential="true"
+          reveal-direction="start"
+          :use-original-chars-only="false"
+          :show-pre-text="false"
+          characters="*"
+          animate-on="view"
+        />
+        <!-- <p class="text-lg md:text-xl pb-(--xs-em)">
           I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've built a strong skill set over years of experience spanning data science, database management, system automation, and web development, all fueled by a passion for continuous learning and creative problem-solving. My background in audio engineering gives me a unique perspective on problem-solving and creativity, combined with an acute attention to detail. This, and my mathematically and technically inclined mindset, makes me a valuable asset to every project I work on.
-        </p>
+        </p> -->
         <ShimmeringButton
           color="green"
           @click="viewResume"
         >
-          <p class="text-xl md:text-2xl py-(--xs-em) px-(--s-em) font-black">
+          <p class="text-2xl md:text-3xl py-(--xs-em) px-(--s-em) font-black">
             <ShimmeringText
               text="View Resume"
               as="span"
@@ -103,11 +116,16 @@ useHead({
 
 onMounted(() => {
   if (typeof window === 'undefined') return;
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  function scrollHandler() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  document.addEventListener('scroll', scrollHandler);
 
- 
   if (loadingText.value && pageText.value) {
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'auto' });
+      document.removeEventListener('scroll', scrollHandler);
 
       // If loadingText is a component, use $el to get the DOM element
       const loadingEl = (loadingText.value && (loadingText.value as ComponentPublicInstance).$el) ? (loadingText.value as ComponentPublicInstance).$el : loadingText.value;

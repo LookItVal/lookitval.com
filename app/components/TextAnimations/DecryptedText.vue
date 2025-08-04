@@ -1,7 +1,7 @@
 <template>
   <span
     ref="containerRef"
-    :class="`inline-block whitespace-pre-wrap ${props.parentClassName}`"
+    :class="`decrypted-text inline-block whitespace-pre-wrap ${props.parentClassName} ${hide ? 'hide' : ''}`"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
@@ -27,6 +27,7 @@ interface DecryptedTextProps {
   sequential?: boolean
   revealDirection?: "start" | "end" | "center"
   useOriginalCharsOnly?: boolean
+  showPreText?: boolean
   characters?: string
   className?: string
   encryptedClassName?: string
@@ -40,6 +41,7 @@ const props = withDefaults(defineProps<DecryptedTextProps>(), {
   sequential: false,
   revealDirection: "start",
   useOriginalCharsOnly: false,
+  showPreText: false,
   characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+",
   className: "",
   parentClassName: "",
@@ -53,14 +55,21 @@ const emit = defineEmits<{
 
 const containerRef = ref<HTMLSpanElement>();
 const displayText = ref(
-  props.characters
-    ? props.characters[0]!.repeat(props.text.length)
-    : "*".repeat(props.text.length)
+  props.showPreText
+    ? (props.characters
+        ? props.characters[0]!.repeat(props.text.length)
+        : "*".repeat(props.text.length))
+    : ""
 );
 const isHovering = ref(false);
 const isScrambling = ref(false);
 const revealedIndices = ref(new Set<number>());
 const hasAnimated = ref(false);
+const hide = ref(
+  props.showPreText
+    ? false
+    : true
+);
 
 let interval: NodeJS.Timeout | null = null;
 let intersectionObserver: IntersectionObserver | null = null;
@@ -207,6 +216,7 @@ onMounted(async () => {
     await nextTick();
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      hide.value = false;
       entries.forEach((entry) => {
         if (entry.isIntersecting && !hasAnimated.value) {
           isHovering.value = true;
@@ -237,3 +247,14 @@ onUnmounted(() => {
   }
 });
 </script>
+
+<style scoped>
+.decrypted-text {
+  &.hide {
+    opacity: 0;
+  }
+  &:not(.hide) {
+    opacity: 1;
+  }
+}
+</style>

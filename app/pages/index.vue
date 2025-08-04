@@ -44,7 +44,7 @@
           <h2>About</h2>
           <ShimmeringText
             class="pl-(--xxs-em)"
-            text="Me"
+            text=" Me"
             as="h2"
             fg-color="green"
             bg-color="teal"

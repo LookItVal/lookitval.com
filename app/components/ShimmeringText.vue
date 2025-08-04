@@ -53,7 +53,7 @@ const backgroundColor = computed(() =>
 <style scoped>
 .shimmer {
   will-change: background-position;
-  contain: layout, style, paint;
+  contain: layout style paint;
   background-size: 200% 100% !important;
   background-repeat: no-repeat !important;
   background-clip: text !important;

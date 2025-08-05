@@ -23,13 +23,13 @@
 <script lang="ts" setup>
 import { useConstants } from '@/composables/constants';
 
-const { COLORS: _COLORS } = useConstants();
+const { SHIMMER_COLORS } = useConstants();
 
 const props = withDefaults(defineProps<{
-  color?: keyof typeof _COLORS,
+  color?: typeof SHIMMER_COLORS[number],
   glare?: boolean
 }>(), {
-  color: 'mauve',
+  color: 'purple',
   glare: true
 })
 </script>

@@ -9,10 +9,10 @@ import { useConstants } from '@/composables/constants';
 
 const { COLORS: _COLORS } = useConstants();
 const texts = [
-  { text: "Data Scientist", color: "peach", bg: "red" },
-  { text: "Audio Engineer", color: "yellow", bg: "peach" },
-  { text: "Web Developer", color: "green", bg: "teal" },
-  { text: "Software Engineer", color: "blue", bg: "sapphire" }
+  { text: "Data Scientist", color: "peach-100", bg: "red-100" },
+  { text: "Audio Engineer", color: "yellow-100", bg: "peach-100" },
+  { text: "Web Developer", color: "green-100", bg: "teal-100" },
+  { text: "Software Engineer", color: "blue-100", bg: "sapphire-100" }
 ];
 const displayText: Ref<string> = ref(' ');
 const currentTextIndex: Ref<number> = ref(0);
@@ -52,13 +52,13 @@ onMounted(() => {
   will-change: border-color;
   contain: layout style paint;
 
-  border-right: 0.2em solid var(--color-text);
+  border-right: 0.2em solid var(--color-text-100);
   animation: blink-caret 0.75s step-end infinite;
 }
 
 @keyframes blink-caret {
   from, to { border-color: transparent; }
-  50% { border-color: var(--color-text); }
+  50% { border-color: var(--color-text-100); }
 }
 
 .gradient-text {

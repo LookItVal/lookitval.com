@@ -1,191 +1,31 @@
 <template>
   <div>
+    <!-- <div class="display-none
+      bg-rosewater-100 bg-rosewater-500
+      bg-flamingo-100 bg-flamingo-500
+      bg-pink-100 bg-pink-500
+      bg-mauve-100 bg-mauve-500
+      bg-red-100 bg-red-500
+      bg-maroon-100 bg-maroon-500
+      bg-peach-100 bg-peach-500
+      bg-yellow-100 bg-yellow-500
+      bg-green-100 bg-green-500
+      bg-teal-100 bg-teal-500
+      bg-sky-100 bg-sky-500
+      bg-sapphire-100 bg-sapphire-500
+      bg-blue-100 bg-blue-500
+      bg-lavender-100 bg-lavender-500
+      bg-text-100 bg-text-500
+      bg-subtext-100 bg-subtext-300 bg-subtext-500 bg-subtext-700
+      bg-overlay-100 bg-overlay-200 bg-overlay-300 bg-overlay-500 bg-overlay-600 bg-overlay-700
+      bg-overlay-100 bg-overlay-200 bg-overlay-300 bg-overlay-500 bg-overlay-600 bg-overlay-700
+      bg-base-100 bg-base-500
+      bg-mantle-100 bg-mantle-500
+      bg-crust-100 bg-crust-500
+    "></div> Don't delete this it's the only thing making tailwind inject all colors -->
     <!-- SVG Defnitions -->
     <svg style="position: absolute;">
       <defs>
-        <filter id="roundCorners">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="0.75" />
-          <feComponentTransfer>
-            <feFuncA type="linear" slope="2.5" intercept="0" />
-          </feComponentTransfer>
-        </filter>
-
-
-        <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-lavender);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-lavender);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="invpurpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-lavender);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-sapphire);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-blue);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-sapphire);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="invblueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-blue);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-sapphire);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-blue);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-teal);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-green);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-teal);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="invgreenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-green);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-teal);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-green);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="yellowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-peach);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-peach);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="invyellowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-peach);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-maroon);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-peach);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-maroon);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="invorangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-peach);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-maroon);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-peach);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-pink);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-red);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-pink);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="invredGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-red);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-pink);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-red);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-flamingo);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-pink);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-flamingo);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="invpinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-pink);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-flamingo);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-pink);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="ApanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-red);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-sky);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="BpanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-sky);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-red);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="CpanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-sky);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-red);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="ArgbGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-red);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-green);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-blue);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="BrgbGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-green);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-blue);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-red);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="CrgbGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-blue);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-red);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-green);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="AcmyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-sky);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="BcmyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-sky);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="CcmyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-sky);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="ApypGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-pink);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="BpypGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-pink);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="CpypGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-pink);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="AmgsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-green);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-sapphire);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="BmgsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-green);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-sapphire);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="CmgsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-sapphire);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-mauve);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-green);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="AyrpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-rosewater);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-pink);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="ByrpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-rosewater);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-pink);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="CyrpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-pink);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-yellow);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-rosewater);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="AgreyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-subtext0);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-overlay1);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-surface2);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="BgreyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-overlay1);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-surface2);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-subtext0);stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="CgreyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:var(--color-surface2);stop-opacity:1" />
-          <stop offset="50%" style="stop-color:var(--color-subtext0);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-overlay1);stop-opacity:1" />
-        </linearGradient>
       </defs>
     </svg>
 

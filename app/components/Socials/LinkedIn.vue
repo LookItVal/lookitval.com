@@ -6,16 +6,16 @@
           <image href="/icons/linkedin.svg" height="100%" width="100%" />
         </mask>
         <linearGradient id="linear-gradient" x1="0" y1="0.5" x2="1" y2="0.5">
-          <stop offset="0%" style="stop-color:var(--color-bold-red);stop-opacity:0" />
-          <stop offset="100%" style="stop-color:var(--color-bold-red);stop-opacity:1" />
+          <stop offset="0%" style="stop-color:var(--color-red-500);stop-opacity:0" />
+          <stop offset="100%" style="stop-color:var(--color-red-500);stop-opacity:1" />
         </linearGradient>
         <radialGradient id="radial-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-          <stop offset="0%" style="stop-color:var(--color-bold-red);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-bold-red);stop-opacity:0" />
+          <stop offset="0%" style="stop-color:var(--color-red-500);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--color-red-500);stop-opacity:0" />
         </radialGradient>
       </defs>
       <g mask="url(#linkedin)">
-        <rect width="100%" height="100%" fill="var(--color-lavender)" />
+        <rect width="100%" height="100%" fill="var(--color-lavender-100)" />
         <path id="outer-path" d="M 6.25 8.25
                                  L 5 9.55
                                  C 9.25 9.55 9.55 9.25 9.55 5
@@ -29,10 +29,10 @@
             <mpath href="#outer-path" />
           </animateMotion>
         </circle>
-        <rect ref="coverBox1" class="cover-box static" x="8.4" y="0" width="2" height="10" fill="var(--color-lavender)" />
-        <rect ref="coverBox2" class="cover-box static" x="6" y="0" width="5" height="3" fill="var(--color-lavender)" />
-        <rect ref="coverBox3" class="cover-box static" x="-7.05" y="0" width="2" height="10" fill="var(--color-lavender)" />
-        <rect ref="coverBox4" class="cover-box static" x="-7.05" y="0" width="3" height="1.25" fill="var(--color-lavender)" />
+        <rect ref="coverBox1" class="cover-box static" x="8.4" y="0" width="2" height="10" fill="var(--color-lavender-100)" />
+        <rect ref="coverBox2" class="cover-box static" x="6" y="0" width="5" height="3" fill="var(--color-lavender-100)" />
+        <rect ref="coverBox3" class="cover-box static" x="-7.05" y="0" width="2" height="10" fill="var(--color-lavender-100)" />
+        <rect ref="coverBox4" class="cover-box static" x="-7.05" y="0" width="3" height="1.25" fill="var(--color-lavender-100)" />
       </g>
     </svg>
   </a>

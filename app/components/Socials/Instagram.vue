@@ -6,12 +6,12 @@
           <image href="/icons/instagram.svg" height="100%" width="100%" />
         </mask>
         <radialGradient id="radial-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-          <stop offset="0%" style="stop-color:var(--color-bold-red);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:var(--color-bold-red);stop-opacity:0" />
+          <stop offset="0%" style="stop-color:var(--color-red-500);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--color-red-500);stop-opacity:0" />
         </radialGradient>
       </defs>
       <g mask="url(#instagram)">
-        <rect width="100%" height="100%" fill="var(--color-lavender)" />
+        <rect width="100%" height="100%" fill="var(--color-lavender-100)" />
         <path id="insta-outer-path" d="M 2.5 7.5
                                        L 5 9.55
                                        C 9.25 9.55 9.55 9.25 9.55 5

@@ -2,6 +2,16 @@
     <div class="hex-container" ref="hexContainer">
         <svg viewBox="-5 -5 110 110" class="hex-svg">
             <defs>
+                <filter id="roundCorners">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="0.75" />
+                    <feComponentTransfer>
+                        <feFuncA type="linear" slope="2.5" intercept="0" />
+                    </feComponentTransfer>
+                </filter>
+                <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--color-teal-100);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--color-green-100);stop-opacity:1" />
+                </linearGradient>
                 <mask id="hexMask">
                     <path d="M 7.565 50
                              L 7.565 33

@@ -6,12 +6,12 @@
           <image href="/icons/github.svg" height="100%" width="100%" />
         </mask>
         <linearGradient id="linear-gradient" x1="0" y1="0.5" x2="1" y2="0.5">
-          <stop offset="0%" style="stop-color:var(--color-bold-red);stop-opacity:0" />
-          <stop offset="100%" style="stop-color:var(--color-bold-red);stop-opacity:1" />
+          <stop offset="0%" style="stop-color:var(--color-red-500);stop-opacity:0" />
+          <stop offset="100%" style="stop-color:var(--color-red-500);stop-opacity:1" />
         </linearGradient>
       </defs>
       <g mask="url(#github)">
-        <rect width="100%" height="100%" fill="var(--color-lavender)" />
+        <rect width="100%" height="100%" fill="var(--color-lavender-100)" />
         <rect ref="shimmerBox" class='shimmer-box static' x="4.25" y="5" width="1.5" height="7" fill="url(#linear-gradient)" />
       </g>
     </svg>

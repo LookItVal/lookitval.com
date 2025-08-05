@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :class="['fixed h-svh w-svw flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
-      <div class="loading-screen absolute top-0 left-0 w-full h-full bg-base z-10"/>
+      <div class="loading-screen absolute top-0 left-0 w-full h-full bg-base-100 z-10"/>
       <TextAnimationsDecryptedText
         ref="loadingText"
         parent-class-name="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap z-11"
@@ -12,7 +12,7 @@
         reveal-direction="center"
         :use-original-chars-only="false"
         :show-pre-text="true"
-        characters="•⋅·∙‧◦"
+        characters="⋅·∙‧◦•"
         animate-on="view"
       />
     </div>
@@ -29,7 +29,8 @@
           class="relative object-cover object-right right-0 top-0 h-[100vh] z-0 drop-shadow-xl"
         >
       </div>
-      <BackgroundsDither 
+      <BackgroundsDither
+        v-if="webGLSupported && highPerformance"
         class="-z-10"
         :wave-color="[0.3451, 0.3569, 0.4392]"
         :enable-mouse-interaction="false"
@@ -38,59 +39,16 @@
         :color-num="5"
       />
     </div>
-    <div class="about-me flex flex-col md:flex-row items-center justify-between px-(--m-em) py-(--s-em) bg-base">
-      <HomeHexPhoto class="max-md:!size-svw md:w-1/2" />
-      <div class="flex flex-col items-center md:w-3/4">
-        <div class="flex flex-row text-4xl md:text-6xl font-bold pb-(--xxs-em)">
-          <h2>About</h2>
-          <ShimmeringText
-            class="pl-(--xxs-em)"
-            text=" Me"
-            as="h2"
-            fg-color="green"
-            bg-color="teal"
-          />
-        </div>
-        <TextAnimationsDecryptedText
-          class="text-xl md:text-2xl pb-(--xs-em) text-wrap text-center"
-          text="I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've built a strong skill set over years of experience spanning data science, database management, system automation, and web development, all fueled by a passion for continuous learning and creative problem-solving. My background in audio engineering gives me a unique perspective on problem-solving and creativity, combined with an acute attention to detail. This, and my mathematically and technically inclined mindset, makes me a valuable asset to every project I work on."
-          :speed="1"
-          :max-iterations="2"
-          :sequential="true"
-          reveal-direction="start"
-          :use-original-chars-only="false"
-          :show-pre-text="false"
-          characters="*"
-          animate-on="view"
-        />
-        <!-- <p class="text-lg md:text-xl pb-(--xs-em)">
-          I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've built a strong skill set over years of experience spanning data science, database management, system automation, and web development, all fueled by a passion for continuous learning and creative problem-solving. My background in audio engineering gives me a unique perspective on problem-solving and creativity, combined with an acute attention to detail. This, and my mathematically and technically inclined mindset, makes me a valuable asset to every project I work on.
-        </p> -->
-        <ShimmeringButton
-          color="green"
-          @click="viewResume"
-        >
-          <p class="text-2xl md:text-3xl py-(--xs-em) px-(--s-em) font-black">
-            <ShimmeringText
-              text="View Resume"
-              as="span"
-              fg-color="base"
-              bg-color="overlay1"
-              :speed="2"
-            />
-          </p>
-        </ShimmeringButton>
-        <PDFViewer ref="resumePDF" pdf-url="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
-      </div>
-    </div>
+    <HomeAbout />
   </div>
 </template>
 <script lang="ts" setup>
-import type { ComponentPublicInstance } from 'vue';
+
 const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
 console.log('test length', test.length);
 
-const resumePDF: Ref<PDFViewer | null> = ref(null);
+const webGLSupported = ref(false);
+const highPerformance = ref(false);
 
 const loadingText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 const pageText = ref<ComponentPublicInstance | HTMLElement | null>(null);
@@ -98,11 +56,25 @@ const pageText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 const loadingTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 const pageTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 
-function viewResume() {
-    resumePDF.value!.toggleVisibility();
-}
-
 const loaded = ref(false);
+
+function calculatePerformance() {
+  if (typeof window === 'undefined') return;
+  let frameCount = 0;
+  let startTime = performance.now();
+
+  function countFrame() {
+    frameCount++;
+    const now = performance.now();
+    if (now - startTime < 2000) {
+      requestAnimationFrame(countFrame);
+    } else {
+      const avgFps = frameCount / ((now - startTime) / 1000);
+      highPerformance.value = avgFps > 60;
+    }
+  }
+  requestAnimationFrame(countFrame);
+}
 
 useHead({
   title: "Look, It's Val!",
@@ -121,6 +93,8 @@ onMounted(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
   document.addEventListener('scroll', scrollHandler);
+  webGLSupported.value = !!window.WebGLRenderingContext;
+  calculatePerformance();
 
   if (loadingText.value && pageText.value) {
     setTimeout(() => {
@@ -239,7 +213,7 @@ const landingTextAdjustment = computed(() => {
     top: 0;
     right: 10%;
     font-size: v-bind('textHeight + "px"');
-    color: var(--color-surface0);
+    color: var(--color-surface-300);
     transform: translateY(-22%);
     z-index: 0;
   }
@@ -260,7 +234,7 @@ const landingTextAdjustment = computed(() => {
   }
 
   @media (max-width: 767px) {
-    background-color: color-mix(in srgb, var(--color-surface0) 75%, transparent);
+    background-color: color-mix(in srgb, var(--color-surface-300) 75%, transparent);
   }
 }
 

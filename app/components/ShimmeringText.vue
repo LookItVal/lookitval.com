@@ -62,10 +62,10 @@ const backgroundColor = computed(() =>
 }
 @keyframes shimmer {
   0% {
-    background-position: 200% 0%;
+    background-position: 150% 0%;
   }
   100% {
-    background-position: -100% 0%;
+    background-position: -50% 0%;
   }
 }
 </style>

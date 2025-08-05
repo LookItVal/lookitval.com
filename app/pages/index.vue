@@ -4,7 +4,7 @@
       <div class="loading-screen absolute top-0 left-0 w-full h-full bg-base-100 z-10"/>
       <TextAnimationsDecryptedText
         ref="loadingText"
-        parent-class-name="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap z-11"
+        parent-class-name="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap leading-[1.2] z-11"
         text="Quinn Valencia Cecil"
         :speed="100"
         :max-iterations="10"

@@ -9,8 +9,8 @@
                     </feComponentTransfer>
                 </filter>
                 <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:var(--color-teal-100);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:var(--color-green-100);stop-opacity:1" />
+                    <stop offset="0%" :style="{ stopColor: `var(--color-${props.color1})`, stopOpacity: 1 }" />
+                    <stop offset="100%" :style="{ stopColor: `var(--color-${props.color2})`, stopOpacity: 1 }" />
                 </linearGradient>
                 <mask id="hexMask">
                     <path d="M 7.565 50
@@ -53,6 +53,18 @@
 
 
 <script lang="ts" setup>
+import { useConstants } from '@/composables/constants';
+const { COLORS: _COLORS } = useConstants();
+
+interface Props {
+    color1?: keyof typeof _COLORS;
+    color2?: keyof typeof _COLORS;
+}
+const props = withDefaults(defineProps<Props>(), {
+    color1: 'green-100',
+    color2: 'teal-100'
+});
+
 const foregroundImage: Ref<HTMLElement | null> = ref(null);
 const hexContainer: Ref<HTMLElement | null> = ref(null);
 

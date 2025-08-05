@@ -23,15 +23,21 @@
 <script lang="ts" setup>
 import { useConstants } from '@/composables/constants';
 
-const { SHIMMER_COLORS } = useConstants();
+const { COLORS: _COLORS } = useConstants();
 
 const props = withDefaults(defineProps<{
-  color?: typeof SHIMMER_COLORS[number],
+  color1?: keyof typeof _COLORS,
+  color2?: keyof typeof _COLORS,
   glare?: boolean
+  speed?: number
 }>(), {
-  color: 'purple',
-  glare: true
+  color1: 'lavender-100',
+  color2: 'mauve-100',
+  glare: true,
+  speed: 3
 })
+
+const conicGradient: Ref<string> = ref(`conic-gradient(from 90deg at 50% 50%, var(--color-${props.color1}), var(--color-${props.color2}), var(--color-${props.color1}))`);
 </script>
 
 <style scoped>
@@ -54,8 +60,11 @@ const props = withDefaults(defineProps<{
     top: -175%;
     z-index: -1;
     border-radius: 50%;
-    background: v-bind('`var(--${props.color ?? "purple"}-shimmer)`');
-    animation: rotate 5s linear infinite;
+    background: v-bind('conicGradient');
+    animation-name: rotate;
+    animation-duration: v-bind('props.speed + "s"');
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
     transform-origin: center center;
     pointer-events: none;
   }

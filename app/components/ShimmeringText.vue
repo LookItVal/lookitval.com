@@ -59,6 +59,8 @@ const backgroundColor = computed(() =>
   background-clip: text !important;
   animation-name: shimmer;
   animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: reverse;
 }
 @keyframes shimmer {
   0% {

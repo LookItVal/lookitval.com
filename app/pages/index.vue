@@ -61,7 +61,7 @@ const loaded = ref(false);
 function calculatePerformance() {
   if (typeof window === 'undefined') return;
   let frameCount = 0;
-  let startTime = performance.now();
+  const startTime = performance.now();
 
   function countFrame() {
     frameCount++;
@@ -70,7 +70,7 @@ function calculatePerformance() {
       requestAnimationFrame(countFrame);
     } else {
       const avgFps = frameCount / ((now - startTime) / 1000);
-      highPerformance.value = avgFps > 60;
+      highPerformance.value = avgFps > 45;
     }
   }
   requestAnimationFrame(countFrame);

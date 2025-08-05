@@ -25,7 +25,7 @@
         reveal-direction="start"
         :use-original-chars-only="false"
         :show-pre-text="false"
-        characters="⋅·∙‧◦•"
+        characters=" "
         animate-on="view"
       />
       <!-- <p class="text-lg md:text-xl pb-(--xs-em)">

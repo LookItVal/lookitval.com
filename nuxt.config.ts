@@ -12,7 +12,10 @@ export default defineNuxtConfig({
     '@/assets/main.css'
   ],
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    optimizeDeps: {
+      exclude: ['pyodide']
+    }
   },
   modules: [
     '@nuxt/content',

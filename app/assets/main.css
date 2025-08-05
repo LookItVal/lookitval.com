@@ -130,7 +130,7 @@ a {
 .background-lambda::before {
     content: "λ";
     position: absolute;
-    top: 0;
+    top: -7.5%;
     left: 0;
     z-index: -100;
     color: var(--color-base-100);

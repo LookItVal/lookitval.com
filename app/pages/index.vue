@@ -6,8 +6,8 @@
         ref="loadingText"
         parent-class-name="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap leading-[1.2] z-11"
         text="Quinn Valencia Cecil"
-        :speed="100"
-        :max-iterations="10"
+        :speed="50"
+        :max-iterations="20"
         :sequential="true"
         reveal-direction="center"
         :use-original-chars-only="false"
@@ -210,7 +210,7 @@ const landingTextAdjustment = computed(() => {
   .card-background-lambda::before {
     content: 'λ';
     position: absolute;
-    top: 0;
+    top: -7.5%;
     right: 10%;
     font-size: v-bind('textHeight + "px"');
     color: var(--color-surface-300);

@@ -9,7 +9,7 @@
       :quantity="3"
     />
     <h1 class="text-4xl font-bold text-center mb-8">Bird Recognition</h1>
-    <BirdClassificationRecordButton />
+    <BirdClassificationAudioRecorder />
   </div>
 </template>
 

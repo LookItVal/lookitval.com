@@ -4,8 +4,8 @@
     class="outer-ring relative rounded-full p-(--m-em)"
     @click="clickHandler"
   >
-    <div ref="blockShape" class="record-button play bg-red-500 aspect-square h-[5em] flex items-center justify-center">
-      <div class="icon w-[1em] h-[1em] rounded-full z-10 flex flex-row" />
+    <div ref="blockShape" class="record-button play bg-red-500 aspect-square h-[6em] flex items-center justify-center">
+      <div class="icon w-[2em] h-[2em] rounded-full z-10 flex flex-row" />
     </div>
   </button>
 </template>
@@ -35,15 +35,15 @@ function clickHandler() {
   &::before {
     content: '';
     position: absolute;
-    z-index: 100;
+    z-index: -1;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     padding: 1em;
     border-radius: inherit; /* !importanté */
-    background: linear-gradient(135deg, var(--color-red-500), var(--color-pink-500));
-    mask: radial-gradient(circle at center, transparent 3.5em, black 3.6em, black 4em);
+    background: linear-gradient(135deg, var(--color-red-500), var(--color-pink-100));
+    mask: radial-gradient(circle at center, transparent 3em, black 4.5em, black 5em);
     animation: spin 1s infinite linear;
     animation-play-state: paused;
   }
@@ -87,7 +87,7 @@ function clickHandler() {
       z-index: 11;
       height: 100%;
       width: 50%;
-      border-radius: 0.5em 0 0 0.5em;
+      border-radius: 1em 0 0 1em;
     }
 
     & .icon::after {
@@ -98,7 +98,7 @@ function clickHandler() {
       z-index: 11;
       height: 100%;
       width: 50%;
-      border-radius: 0 0.5em 0.5em 0;
+      border-radius: 0 1em 1em 0;
     }
 
   }
@@ -107,7 +107,7 @@ function clickHandler() {
     border-radius: 1em;
 
     & .icon {
-      gap: 0.2em;
+      gap: 0.4em;
     }
 
     & .icon::before {
@@ -118,7 +118,7 @@ function clickHandler() {
       z-index: 11;
       height: 100%;
       width: 50%;
-      border-radius: 0 0 0 0;
+      border-radius: 0.4em 0.4em 0.4em 0.4em;
     }
 
     & .icon::after {
@@ -129,7 +129,7 @@ function clickHandler() {
       z-index: 11;
       height: 100%;
       width: 50%;
-      border-radius: 0 0 0 0;
+      border-radius: 0.4em 0.4em 0.4em 0.4em;
     }
   }
 }

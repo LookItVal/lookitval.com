@@ -12,7 +12,7 @@
         reveal-direction="center"
         :use-original-chars-only="false"
         :show-pre-text="true"
-        characters="*⋅·∙‧᛫◦•∘●◌⊙⊛⊚⦿Ｏ○◉"
+        characters="•⋅·∙‧◦"
         animate-on="view"
       />
     </div>

@@ -48,7 +48,7 @@ const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
 console.log('test length', test.length);
 
 const webGLSupported = ref(false);
-const highPerformance = ref(false);
+const highPerformance = ref(true);
 
 const loadingText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 const pageText = ref<ComponentPublicInstance | HTMLElement | null>(null);
@@ -70,7 +70,7 @@ function calculatePerformance() {
       requestAnimationFrame(countFrame);
     } else {
       const avgFps = frameCount / ((now - startTime) / 1000);
-      highPerformance.value = avgFps > 45;
+      highPerformance.value = avgFps > 30;
     }
   }
   requestAnimationFrame(countFrame);

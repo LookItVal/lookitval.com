@@ -2,6 +2,8 @@
   <div id="bird-recognition-page" class="h-svh flex flex-col items-center justify-center">
     <BackgroundsBirds
       class="absolute top-0 left-0 w-full h-full -z-10 opacity-75"
+      :mouse-controls="false"
+      :touch-controls="false"
       color1="mauve-500"
       color2="lavender-500"
       background-color="crust-100"

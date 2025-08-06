@@ -1,11 +1,11 @@
-export const useAudio = () => {
-  const audioContext = ref<AudioContext | null>(null);
-  const isRecording = ref(false);
-  const mediaRecorder = ref<MediaRecorder | null>(null);
-  const audioChunks = ref<Blob[]>([]);
-  const audioBlob = ref<Blob | null>(null);
-  const analyserNode = ref<AnalyserNode | null>(null);
+const audioContext = ref<AudioContext | null>(null);
+const isRecording = ref(false);
+const mediaRecorder = ref<MediaRecorder | null>(null);
+const audioChunks = ref<Blob[]>([]);
+const audioBlob = ref<Blob | null>(null);
+const analyserNode = ref<AnalyserNode | null>(null);
 
+export const useAudio = () => {
   const toggleRecording = async () => {
     if (isRecording.value) {
       stopRecording();
@@ -23,6 +23,7 @@ export const useAudio = () => {
       audioContext.value = new AudioContext();
       const source = audioContext.value.createMediaStreamSource(stream);
       analyserNode.value = audioContext.value.createAnalyser();
+      analyserNode.value.fftSize = 1024; //  roughly 21ms at 48kHz
       source.connect(analyserNode.value);
       
       isRecording.value = true;

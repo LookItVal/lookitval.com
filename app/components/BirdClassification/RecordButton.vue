@@ -1,33 +1,14 @@
 <template>
-  <button
-    ref="playButton"
-    class="outer-ring relative rounded-full p-(--m-em)"
-    @click="clickHandler"
-  >
-    <div ref="blockShape" class="record-button play bg-red-500 aspect-square h-[6em] flex items-center justify-center">
+  <button :class="['outer-ring relative rounded-full p-(--m-em) z-1', { animate: isRecording }]">
+    <div :class="['record-button bg-red-500 aspect-square h-[6em] flex items-center justify-center', isRecording ? 'stop' : 'play']">
       <div class="icon w-[2em] h-[2em] rounded-full z-10 flex flex-row" />
     </div>
   </button>
 </template>
 
 <script lang="ts" setup>
-const blockShape = ref<HTMLElement | null>(null);
-const playButton = ref<HTMLElement | null>(null);
-const recording = ref(false);
-
-function clickHandler() {
-  if (recording.value) {
-    blockShape.value?.classList.remove('stop');
-    blockShape.value?.classList.add('play');
-    playButton.value?.classList.remove('animate');
-    recording.value = false;
-  } else {
-    blockShape.value?.classList.remove('play');
-    blockShape.value?.classList.add('stop');
-    playButton.value?.classList.add('animate');
-    recording.value = true;
-  }
-}
+import { useAudio } from '@/composables/audio';
+const { isRecording } = useAudio();
 </script>
 
 <style scoped>
@@ -46,6 +27,7 @@ function clickHandler() {
     mask: radial-gradient(circle at center, transparent 3em, black 4.5em, black 5em);
     animation: spin 1s infinite linear;
     animation-play-state: paused;
+    pointer-events: none;
   }
 
   &.animate::before {
@@ -63,6 +45,7 @@ function clickHandler() {
 
 .record-button {
   transition: border-radius 0.2s ease-in-out, background-color 0.4s ease-in-out;
+  pointer-events: none;
 
   & .icon {
     transition: gap 0.2s ease-in-out;

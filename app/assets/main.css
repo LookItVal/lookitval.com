@@ -2,6 +2,33 @@
 
 @import "tailwindcss";
 
+@font-face {
+    font-family: "Inter";
+    src: url('fonts/inter.ttf') format("truetype");
+    font-display: swap;
+    font-weight: 125 950;
+    font-stretch: 75% 125%;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url('fonts/inter-oblique.ttf') format("truetype");
+    font-display: swap;
+    font-weight: 125 950;
+    font-stretch: 75% 125%;
+    font-style: oblique;
+}
+
+@font-face {
+    font-family: 'Comic Sans';
+    src: url('fonts/comic-sans.ttf') format("truetype");
+    font-display: swap;
+    font-weight: 125 950;
+    font-stretch: 75% 125%;
+    font-style: normal;
+}
+
 @theme {
   --font-display: "Inter", "sans-serif";
   --font-comic: "Comic Sans MS";
@@ -130,7 +157,7 @@ a {
 .background-lambda::before {
     content: "λ";
     position: absolute;
-    top: -7.5%;
+    top: -5%;
     left: 0;
     z-index: -100;
     color: var(--color-base-100);

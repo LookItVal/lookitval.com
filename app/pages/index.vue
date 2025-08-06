@@ -210,7 +210,7 @@ const landingTextAdjustment = computed(() => {
   .card-background-lambda::before {
     content: 'λ';
     position: absolute;
-    top: -7.5%;
+    top: 0%;
     right: 10%;
     font-size: v-bind('textHeight + "px"');
     color: var(--color-surface-300);

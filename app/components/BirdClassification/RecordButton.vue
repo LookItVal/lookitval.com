@@ -62,7 +62,7 @@ function clickHandler() {
 }
 
 .record-button {
-  transition: border-radius 0.2s ease-in-out;
+  transition: border-radius 0.2s ease-in-out, background-color 0.4s ease-in-out;
 
   & .icon {
     transition: gap 0.2s ease-in-out;
@@ -74,6 +74,7 @@ function clickHandler() {
 
   &.play {
     border-radius: 50%;
+    background-color: var(--color-red-500);
 
     & .icon {
       gap: 0;
@@ -105,6 +106,7 @@ function clickHandler() {
 
   &.stop {
     border-radius: 1em;
+    background-color: var(--color-red-500);
 
     & .icon {
       gap: 0.4em;

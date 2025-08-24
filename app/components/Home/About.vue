@@ -5,7 +5,11 @@
       :color1="fgColor"
       :color2="bgColor"
     />
-    <div class="flex flex-col items-center md:w-3/4">
+    <UICard 
+      class="flex flex-col items-center md:w-3/4 p-(--s-em)"
+      depth="overlay"
+      opacity="0.8"
+    >
       <div class="flex flex-row text-4xl md:text-6xl font-bold pb-(--xxs-em)">
         <h2>About</h2>
         <UIShimmeringText
@@ -47,7 +51,7 @@
         </p>
       </UIShimmeringButton>
       <PDFViewer ref="resumePDF" pdf-url="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
-    </div>
+    </UICard>
   </div>
 </template>
 

@@ -32,4 +32,4 @@
     <!-- Page Content -->
     <NuxtPage />
   </div>
-</template>
+</template> <!-- TODO: Convert nested css to less -->

@@ -4,8 +4,6 @@
 
 <script lang="js" setup>
 import { useConstants } from '@/composables/constants';
-import BIRDS from 'vanta/dist/vanta.birds.min';
-import * as THREE from 'three';
 
 const { COLORS } = useConstants();
 
@@ -92,7 +90,6 @@ watchEffect(() => {
 });
 
 const vantaBirds = ref(null);
-
 const vantaEffect = ref(null);
 
 const backgroundColorValue = computed(() => {
@@ -113,8 +110,13 @@ const color2Value = computed(() => {
   return parseInt(hex.replace('#', ''), 16);
 });
 
-onMounted(() => {
-  if (typeof window === 'undefined') return;
+onMounted(async () => {
+  if (!(process.client && vantaBirds.value)) return;
+  
+  const [{ default: BIRDS }, THREE] = await Promise.all([
+    import('vanta/dist/vanta.birds.min'),
+    import('three')
+  ]);
 
   vantaEffect.value = BIRDS({
     el: vantaBirds.value,

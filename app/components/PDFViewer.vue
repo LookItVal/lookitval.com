@@ -18,7 +18,7 @@ const embeddedPdfUrl: ComputedRef<string> = computed(() => {
     return `https://docs.google.com/gview?url=${props.pdfUrl}&embedded=true`;
 });
 
-function toggleVisibility(): void {
+function toggleVisibility(): void { // TODO: Fade In only works on first open.
     const pdf = pdfViewer.value;
     if (pdf) {
         if (pdf.classList.contains('visible')) {

@@ -17,7 +17,7 @@
         />
       </div>
       <TextAnimationsDecryptedText
-        class="text-xl md:text-2xl pb-(--xs-em) text-wrap text-center"
+        class="text-xl md:text-2xl pb-(--xs-em) text-balance text-center"
         text="I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've built a strong skill set over years of experience spanning data science, database management, system automation, and web development, all fueled by a passion for continuous learning and creative problem-solving. My background in audio engineering gives me a unique perspective on problem-solving and creativity, combined with an acute attention to detail. This, and my mathematically and technically inclined mindset, makes me a valuable asset to every project I work on."
         :speed="0.1"
         :max-iterations="2"
@@ -41,8 +41,7 @@
             text="View Resume"
             as="span"
             fg-color="base-100"
-            bg-color="overlay-200"
-            :speed="2"
+            bg-color="surface-100"
           />
         </p>
       </ShimmeringButton>

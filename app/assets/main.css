@@ -3,30 +3,30 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: "Inter";
-    src: url('fonts/inter.ttf') format("truetype");
-    font-display: swap;
-    font-weight: 125 950;
-    font-stretch: 75% 125%;
-    font-style: normal;
+  font-family: "Inter";
+  src: url('fonts/inter.ttf') format("truetype");
+  font-display: swap;
+  font-weight: 125 950;
+  font-stretch: 75% 125%;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: "Inter";
-    src: url('fonts/inter-oblique.ttf') format("truetype");
-    font-display: swap;
-    font-weight: 125 950;
-    font-stretch: 75% 125%;
-    font-style: oblique;
+  font-family: "Inter";
+  src: url('fonts/inter-oblique.ttf') format("truetype");
+  font-display: swap;
+  font-weight: 125 950;
+  font-stretch: 75% 125%;
+  font-style: oblique;
 }
 
 @font-face {
-    font-family: 'Comic Sans';
-    src: url('fonts/comic-sans.ttf') format("truetype");
-    font-display: swap;
-    font-weight: 125 950;
-    font-stretch: 75% 125%;
-    font-style: normal;
+  font-family: 'Comic Sans';
+  src: url('fonts/comic-sans.ttf') format("truetype");
+  font-display: swap;
+  font-weight: 125 950;
+  font-stretch: 75% 125%;
+  font-style: normal;
 }
 
 @theme {
@@ -88,16 +88,16 @@
 }
 
 :root {
-    --purple-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-lavender-100),var(--color-mauve-100),var(--color-lavender-100));
-    --blue-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-sapphire-100),var(--color-blue-100),var(--color-sapphire-100));
-    --green-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-teal-100),var(--color-green-100),var(--color-teal-100));
-    --yellow-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-peach-100),var(--color-yellow-100),var(--color-peach-100));
-    --orange-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-maroon-100),var(--color-peach-100),var(--color-maroon-100));
-    --red-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-pink-100),var(--color-red-100),var(--color-pink-100));
-    --pink-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-pink-100),var(--color-flamingo-100),var(--color-pink-100));
-    --rgb-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-red-100),var(--color-green-100),var(--color-blue-100), var(--color-red-100));
-    --cmy-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-teal-100),var(--color-mauve-100),var(--color-yellow-100), var(--color-teal-100));
-    --trans-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-text-100),var(--color-pink-100),var(--color-sapphire-100), var(--color-text-100));
+  --purple-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-lavender-100),var(--color-mauve-100),var(--color-lavender-100));
+  --blue-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-sapphire-100),var(--color-blue-100),var(--color-sapphire-100));
+  --green-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-teal-100),var(--color-green-100),var(--color-teal-100));
+  --yellow-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-peach-100),var(--color-yellow-100),var(--color-peach-100));
+  --orange-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-maroon-100),var(--color-peach-100),var(--color-maroon-100));
+  --red-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-pink-100),var(--color-red-100),var(--color-pink-100));
+  --pink-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-pink-100),var(--color-flamingo-100),var(--color-pink-100));
+  --rgb-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-red-100),var(--color-green-100),var(--color-blue-100), var(--color-red-100));
+  --cmy-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-teal-100),var(--color-mauve-100),var(--color-yellow-100), var(--color-teal-100));
+  --trans-shimmer: conic-gradient(from 90deg at 50% 50%,var(--color-text-100),var(--color-pink-100),var(--color-sapphire-100), var(--color-text-100));
 }
 
 :root {
@@ -121,24 +121,24 @@ body {
 }
 
 h1, h2 {
-    font-weight: 800;
-    line-height: 1.2;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 h3 {
-    font-weight: 750;
+  font-weight: 750;
 }
 
 h4 {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 h5 {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 h6 {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -150,8 +150,15 @@ b {
 }
 
 a {
-    color: var(--color-blue-100);
-    text-decoration: none;
+  color: var(--color-blue-100);
+  text-decoration: none;
+}
+
+p {
+  text-wrap: balance;
+}
+span {
+  text-wrap: balance;
 }
 
 .background-lambda::before {

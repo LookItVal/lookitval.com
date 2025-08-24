@@ -9,8 +9,8 @@
                     </feComponentTransfer>
                 </filter>
                 <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" :style="{ stopColor: `var(--color-${props.color1})`, stopOpacity: 1 }" />
-                    <stop offset="100%" :style="{ stopColor: `var(--color-${props.color2})`, stopOpacity: 1 }" />
+                    <stop offset="0%" :style="{ stopColor: `var(--color-${props.color2})`, stopOpacity: 1 }" />
+                    <stop offset="100%" :style="{ stopColor: `var(--color-${props.color1})`, stopOpacity: 1 }" />
                 </linearGradient>
                 <mask id="hexMask">
                     <path d="M 7.565 50

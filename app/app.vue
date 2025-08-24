@@ -18,11 +18,12 @@
       bg-text-100 bg-text-500
       bg-subtext-100 bg-subtext-300 bg-subtext-500 bg-subtext-700
       bg-overlay-100 bg-overlay-200 bg-overlay-300 bg-overlay-500 bg-overlay-600 bg-overlay-700
-      bg-overlay-100 bg-overlay-200 bg-overlay-300 bg-overlay-500 bg-overlay-600 bg-overlay-700
+      bg-surface-100 bg-surface-200 bg-surface-300 bg-surface-500 bg-surface-600 bg-surface-700
       bg-base-100 bg-base-500
       bg-mantle-100 bg-mantle-500
       bg-crust-100 bg-crust-500
-    "></div> Don't delete this it's the only thing making tailwind inject all colors -->
+    "></div> -->
+    <!-- Don't delete this it's the only thing making tailwind inject all colors -->
     <!-- SVG Defnitions -->
     <svg style="position: absolute;">
       <defs>

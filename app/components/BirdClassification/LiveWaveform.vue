@@ -91,8 +91,6 @@ function startAnimation() {
 
 function stopAnimation() {
   if (animationId.value) {
-
-
     cancelAnimationFrame(animationId.value);
     animationId.value = null;
   }
@@ -139,6 +137,10 @@ function updateWaveformData() {
 
 function interpolateLineHeights() {
   for (let i = 0; i < lineCount.value; i++) {
+    if (!lineActiveStates.value![i]!) {
+      lineHeights.value![i] = 0;
+      continue;
+    }
     const smoothing = lineActiveStates.value![i]! ? props.smoothingFactor! : props.smoothingFactor! * 4;
     const current = lineHeights.value![i]!;
     const target = targetLineHeights.value![i]!;

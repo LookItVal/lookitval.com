@@ -8,7 +8,7 @@
     <div class="flex flex-col items-center md:w-3/4">
       <div class="flex flex-row text-4xl md:text-6xl font-bold pb-(--xxs-em)">
         <h2>About</h2>
-        <ShimmeringText
+        <UIShimmeringText
           class="pl-(--xxs-em)"
           text=" Me"
           as="h2"
@@ -31,13 +31,13 @@
       <!-- <p class="text-lg md:text-xl pb-(--xs-em)">
         I am a former audio engineer with over seven years of experience in the video production industry, pivoting my career into technology. I've built a strong skill set over years of experience spanning data science, database management, system automation, and web development, all fueled by a passion for continuous learning and creative problem-solving. My background in audio engineering gives me a unique perspective on problem-solving and creativity, combined with an acute attention to detail. This, and my mathematically and technically inclined mindset, makes me a valuable asset to every project I work on.
       </p> -->
-      <ShimmeringButton
+      <UIShimmeringButton
         :color1="fgColor"
         :color2="bgColor"
         @click="viewResume"
       >
         <p class="text-2xl md:text-3xl py-(--xs-em) px-(--s-em) font-black">
-          <ShimmeringText
+          <UIShimmeringText
             text="View Resume"
             as="span"
             fg-color="base-100"
@@ -45,7 +45,7 @@
             :speed="2"
           />
         </p>
-      </ShimmeringButton>
+      </UIShimmeringButton>
       <PDFViewer ref="resumePDF" pdf-url="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
     </div>
   </div>

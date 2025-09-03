@@ -1,16 +1,17 @@
 <template>
-  <div class="flex flex-col items-center justify-center w-full max-w-5xl p-(--m-em)">
-    <div class="relative mb-(--s-em) w-full h-[5em]">
-      <div class="absolute top-0 left-0 w-full h-full bg-surface-300 rounded-4xl opacity-50" />
-      <div class="relative top-0 left-0 w-full h-full rounded-4xl overflow-hidden">
-        <canvas
-          ref="waveformCanvas"
-          class="w-full h-full"
-          :width="canvasWidth"
-          :height="canvasHeight"
-        />
-      </div>
-    </div>
+  <div class="flex flex-col items-center justify-center w-full max-w-5xl">
+    <UICard
+      class="relative w-full h-[5em]"
+      depth="overlay"
+      :opacity="0.5"
+    >
+      <canvas
+        ref="waveformCanvas"
+        class="w-full h-full"
+        :width="canvasWidth"
+        :height="canvasHeight"
+      />
+    </UICard>
   </div>
 </template>
 

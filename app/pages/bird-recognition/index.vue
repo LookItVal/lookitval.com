@@ -10,16 +10,35 @@
       :background-alpha="0.0"
       :quantity="3"
     />
-    <div class="flex flex-col items-center justify-center p-(--m-em) w-full max-w-6xl rounded-4xl bg-surface-100">
+    <UICard
+      class="flex flex-col items-center justify-center px-(--m-em) py-(--s-em) w-full max-w-6xl"
+      depth="surface"
+      :opacity="0.5"
+    >
       <h1 class="text-4xl font-bold text-center mb-8">Bird Recognition</h1>
+      <div>
+        <div v-for="(bird, index) in classifierBuffer" :key="index">
+          <UICard
+            depth="item"
+            :opacity="0.5"
+          >
+            <p>{{ bird }}</p>
+          </UICard>
+        </div>
+      </div>
       <BirdClassificationLiveWaveform />
-      <BirdClassificationRecordButton @click="toggleRecording" />
-    </div>
+    </UICard>
+    <BirdClassificationRecordButton 
+      @click="toggleRecording"
+      class="mt-(--s-em)"
+    />
   </div>
 </template>
 
 
 <script lang="ts" setup>
 import { useAudio } from '@/composables/audio';
+import { useClassifier } from '@/composables/birdClassifier';
 const { toggleRecording } = useAudio();
+const { classifierBuffer } = useClassifier();
 </script>

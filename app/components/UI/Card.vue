@@ -12,9 +12,9 @@ const colorMap = {
 }
 const radiusMap = {
   item: 1 * 1.618033988749 ** 2
-}
-radiusMap['overlay'] = radiusMap['item'] * 1.618033988749
-radiusMap['surface'] = radiusMap['overlay'] * 1.618033988749
+} as Record<string, number>
+radiusMap['overlay'] = radiusMap['item']! * 1.618033988749
+radiusMap['surface'] = radiusMap['overlay']! * 1.618033988749
 
 const props = withDefaults(defineProps<{
   depth: 'surface' | 'overlay' | 'item'
@@ -24,17 +24,18 @@ const props = withDefaults(defineProps<{
   opacity: 1
 })
 
-const backgroundColor: Computed<string> = computed(() => {
+const backgroundColor: ComputedRef<string> = computed(() => {
   return colorMap[props.depth] || colorMap['surface']
 })
-const borderRadius: Computed<string> = computed(() => {
-  return radiusMap[props.depth] || radiusMap['surface']
+const borderRadius: ComputedRef<number> = computed(() => {
+  return radiusMap[props.depth] || 1 * 1.618033988749 ** 2
 })
 </script>
 
 <style scoped>
 .ui-card {
   position: relative;
+  border-radius: v-bind(borderRadius + 'rem');
 }
 .ui-card::before {
   content: '';
@@ -44,8 +45,8 @@ const borderRadius: Computed<string> = computed(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: v-bind(`${borderRadius}rem`);
+  border-radius: v-bind(borderRadius + 'rem');
   background-color: v-bind(backgroundColor);
-  opacity: v-bind(props.opacity);
+  opacity: v-bind(opacity);
 }
 </style>

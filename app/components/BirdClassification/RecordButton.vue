@@ -1,5 +1,5 @@
 <template>
-  <button :class="['outer-ring relative rounded-full p-(--m-em) z-1', { animate: isRecording }]">
+  <button :class="['outer-ring relative rounded-full p-(--m-em) z-1 overflow-clip', { animate: isRecording }]">
     <div :class="['record-button bg-red-500 aspect-square h-[6em] flex items-center justify-center', isRecording ? 'stop' : 'play']">
       <div class="icon w-[2em] h-[2em] rounded-full z-10 flex flex-row" />
     </div>

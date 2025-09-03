@@ -1,7 +1,7 @@
 import type { PyodideAPI } from 'pyodide'
 import { loadPyodide } from 'pyodide'
 
-export const usePyodide = () => {
+export const usePython = () => {
   const pyodide: Ref<PyodideAPI | null> = ref(null)
   const isLoading = ref(true)
   const isReady = computed(() => !!pyodide.value && !isLoading.value)

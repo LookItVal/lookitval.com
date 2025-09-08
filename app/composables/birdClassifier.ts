@@ -1,9 +1,24 @@
 import { usePython } from './python';
-const { runPython, installPackage } = usePython();
+const { runPython, installPackage, initialize, isReady} = usePython();
 const bufferSize = ref(3); // length of the classifier buffer
 const classifierBuffer = ref<string[]>([]); // buffer to hold recent classifications
 
 export const useClassifier = () => {
+  const initPackages = async () => {
+    if (!isReady.value) {
+      await initialize();
+    }
+    
+    // Install necessary Python packages
+    //await installPackage('pandas');
+    //await installPackage('numpy');
+    //await installPackage('scipy');
+    //await installPackage('scikit-learn');
+
+    //const pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());
+    //await runPython(pythonCode);
+  };
+
   const updateBufferSize = (newSize: number) => {
     bufferSize.value = newSize;
   };
@@ -24,6 +39,7 @@ export const useClassifier = () => {
   };
 
   return {
+    initPackages,
     classifySignal,
     classifierBuffer,
     updateBufferSize

@@ -155,7 +155,7 @@ export const useAudio = () => {
       try {
         workletNode.value.port.onmessage = null;
         workletNode.value.disconnect();
-      } catch (e) { /* ignore */ }
+      } catch (e) { console.error('Error disconnecting worklet node:', e); }
       workletNode.value = null;
     }
 
@@ -167,7 +167,7 @@ export const useAudio = () => {
 
     // Close audio context
     if (audioContext.value) {
-      try { await audioContext.value.close(); } catch (e) { /* ignore */ }
+      try { await audioContext.value.close(); } catch (e) { console.error('Error closing audio context:', e); }
       audioContext.value = null;
     }
 

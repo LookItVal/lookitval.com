@@ -1,5 +1,11 @@
 <template>
   <div id="bird-recognition-page" class="h-svh flex flex-col items-center justify-center">
+    <div class="loading-screen fixed top-0 left-0 w-full h-full bg-base-100 z-10 flex items-center justify-center">
+      <UIFeatherLoadingBar 
+        class="w-full h-(--xxl-em) px-(--m-em)"
+        :progress="loadingProgress"
+      />
+    </div>
     <BackgroundsBirds
       class="absolute top-0 left-0 w-full h-full -z-10 opacity-75"
       :mouse-controls="false"
@@ -40,9 +46,10 @@
 import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
 const { toggleRecording } = useAudio();
-const { classifierBuffer, initPackages } = useClassifier();
+const { classifierBuffer, initPackages, loadingProgress } = useClassifier();
 
 onMounted(async () => {
   await initPackages();
+  // Simulate loading progress over 5 seconds
 });
 </script>

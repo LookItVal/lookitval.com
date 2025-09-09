@@ -3,23 +3,36 @@ const { runPython, installPackage, initialize, isReady} = usePython();
 const { latitude, longitude, elevation, requestAccess } = useLocation();
 const bufferSize = ref(3); // length of the classifier buffer
 const classifierBuffer = ref<string[]>([]); // buffer to hold recent classifications
+const loadingProgress = ref(0);
 
 export const useClassifier = () => {
   const initPackages = async () => {
+    const steps = 9; // Total number of steps
+    const updateProgress = () => { loadingProgress.value += 1 / steps; };
     if (!isReady.value) {
       await initialize();
     }
+    updateProgress();
 
     requestAccess(); // Request location access
+    updateProgress();
 
     // Install necessary Python packages
     await installPackage('pandas');
+    updateProgress();
     await installPackage('numpy');
+    updateProgress();
     await installPackage('scipy');
+    updateProgress();
     await installPackage('scikit-learn');
+    updateProgress();
 
     const pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());
+    updateProgress();
     await runPython(pythonCode);
+    updateProgress();
+    await runPython('await load_model()');
+    loadingProgress.value = 1.0;
   };
 
   const updateBufferSize = (newSize: number) => {
@@ -54,6 +67,7 @@ export const useClassifier = () => {
     initPackages,
     classifySignal,
     classifierBuffer,
-    updateBufferSize
+    updateBufferSize,
+    loadingProgress
   };
 };

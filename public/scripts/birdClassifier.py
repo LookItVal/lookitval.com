@@ -612,7 +612,3 @@ async def load_model() -> None:
   except Exception as e:
     print(f"Error loading model: {e}")
     BIRD_CLASSIFIER = None
-
-
-# Load the model when the script is imported
-await load_model() # type: ignore

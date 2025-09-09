@@ -19,7 +19,7 @@
     "eslint": "^9.32.0",
     "nuxt": "^4.1.1",
     "ogl": "^1.0.11",
-    "pyodide": "^0.28.1",
+    "pyodide": "^0.28.2",
     "tailwindcss": "^4.1.11",
     "three": "^0.121.0",
     "typescript": "^5.8.3",

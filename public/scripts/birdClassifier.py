@@ -577,7 +577,7 @@ def package_signal_data(signal: Union[List, np.ndarray], sample_rate: int, metad
   for freq, value in zip(freq_bins, freq_signal):
     data[f'{int(freq)}Hz'] = value
   
-  return pd.Series(data)
+  return pd.Series(data).reindex(['date', 'latitude', 'elevation', 'longitude', 'time'] + [f'{int(freq)}Hz' for freq in freq_bins]) # Ensure the order of columns is consistent
 
 
 def classify_bird(signal: Union[List, np.ndarray], sample_rate: int, metadata: dict) -> str:

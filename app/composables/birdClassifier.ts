@@ -11,7 +11,7 @@ export const useClassifier = () => {
     }
 
     requestAccess(); // Request location access
-    
+
     // Install necessary Python packages
     await installPackage('pandas');
     await installPackage('numpy');
@@ -20,7 +20,6 @@ export const useClassifier = () => {
 
     const pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());
     await runPython(pythonCode);
-    console.log('Bird classifier initialized');
   };
 
   const updateBufferSize = (newSize: number) => {
@@ -36,8 +35,7 @@ export const useClassifier = () => {
 
   const classifySignal = async (signal: Float32Array, sample_rate: number) => {
     // Call the Python function to classify the signal
-    let pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());   
-    pythonCode += '\n\n'; 
+    let pythonCode = '';
     pythonCode += 'metadata = {}\n';
     pythonCode += `metadata['date'] = '${new Date().toISOString().slice(0,10)}'\n`;
     pythonCode += `metadata['time'] = '${new Date().toLocaleTimeString([], { timeStyle: 'short'}).split(' ').join('').toLowerCase()}'\n`;
@@ -47,8 +45,8 @@ export const useClassifier = () => {
     pythonCode += 'signal = np.array(SOURCE_SIGNAL, dtype=np.float32)\n';
     pythonCode += 'sample_rate = SOURCE_SAMPLE_RATE\n';
     pythonCode += 'classify_bird(signal, sample_rate, metadata)\n';
-    const globals = { SOURCE_SIGNAL: signal, SOURCE_SAMPLE_RATE: sample_rate };
-    const classification = await runPython(pythonCode, globals);
+    const locals = { SOURCE_SIGNAL: signal, SOURCE_SAMPLE_RATE: sample_rate };
+    const classification = await runPython(pythonCode, locals);
     addToBuffer(classification);
   };
 

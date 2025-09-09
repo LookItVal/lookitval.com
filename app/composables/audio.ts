@@ -32,7 +32,6 @@ export const useAudio = () => {
         const samplesForProcessing = audioBuffer.value.slice(0, sampleCount.value);
         
         // Process the samples
-        console.log(`Processing ${sampleCount.value} samples...`);
         classifySignal(samplesForProcessing, audioSampleRate.value);
       }
       

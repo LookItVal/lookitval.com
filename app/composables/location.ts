@@ -17,7 +17,6 @@ export const useLocation = () => {
         longitude.value = position.coords.longitude;
         elevation.value = position.coords.altitude; // May be null if not available
         access.value = true;
-        console.log('Location access granted');
       },
       (error) => {
         console.error('Error obtaining location:', error);

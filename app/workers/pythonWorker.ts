@@ -27,18 +27,18 @@ export async function runPython(code: string, globals_vars = {}): Promise<string
     // Run code (async if contains await)
     if (code.includes('await')) {
       if (Object.keys(globals_vars).length !== 0) {
-        const globals = pyodide.toPy(globals_vars)
-        return await pyodide.runPythonAsync(code, { globals })
-      } else {
-        return await pyodide.runPythonAsync(code)
+        for (const [key, value] of Object.entries(globals_vars)) {
+          pyodide.globals.set(key, value)
+        }
       }
+      return await pyodide.runPythonAsync(code)
     } else {
       if (Object.keys(globals_vars).length !== 0) {
-        const globals = pyodide.toPy(globals_vars)
-        return pyodide.runPython(code, { globals })
-      } else {
-        return pyodide.runPython(code)
+        for (const [key, value] of Object.entries(globals_vars)) {
+          pyodide.globals.set(key, value)
+        }
       }
+      return pyodide.runPython(code)
     }
   } catch (error) {
     throw new Error(`Python Error: ${(error as Error).message}`)
@@ -65,7 +65,7 @@ self.onmessage = async (event) => {
     
     switch (type) {
       case 'initialize':
-        result = await initializePyodide()
+        await initializePyodide()
         self.postMessage({ id, type: 'success', result: 'initialized' })
         break
         
@@ -83,6 +83,10 @@ self.onmessage = async (event) => {
         throw new Error(`Unknown message type: ${type}`)
     }
   } catch (error) {
-    self.postMessage({ id, type: 'error', error: (error as Error).message })
+    self.postMessage({ 
+      id, 
+      type: 'error', 
+      error: error instanceof Error ? error.message : String(error)
+    })
   }
 }

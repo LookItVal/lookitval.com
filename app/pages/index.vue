@@ -43,9 +43,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-
-const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
-console.log('test length', test.length);
+// const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
 
 const webGLSupported = ref(false);
 const highPerformance = ref(false);

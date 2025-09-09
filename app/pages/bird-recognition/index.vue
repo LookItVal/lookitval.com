@@ -1,6 +1,6 @@
 <template>
   <div id="bird-recognition-page" class="h-svh flex flex-col items-center justify-center">
-    <!-- <BackgroundsBirds
+    <BackgroundsBirds
       class="absolute top-0 left-0 w-full h-full -z-10 opacity-75"
       :mouse-controls="false"
       :touch-controls="false"
@@ -9,7 +9,7 @@
       background-color="crust-100"
       :background-alpha="0.0"
       :quantity="3"
-    /> -->
+    />
     <UICard
       class="flex flex-col items-center justify-center px-(--m-em) py-(--s-em) w-full max-w-6xl"
       depth="surface"

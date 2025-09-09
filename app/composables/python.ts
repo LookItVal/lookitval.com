@@ -56,33 +56,6 @@ export const usePython = () => {
     return await sendMessage('runPython', { code, globals_vars }) as Promise<string>;
   }
 
-  // const runPython = async (code: string, globals_vars = {}): Promise<string> => {
-  //   if (!pyodide.value) {
-  //     throw new Error('Pyodide not initialized')
-  //   }
-  // 
-  //   try {
-  //     // Run code (async if contains await)
-  //     if (code.includes('await')) {
-  //       if (Object.keys(globals_vars).length !== 0) {
-  //         const globals = pyodide.value.toPy(globals_vars)
-  //         return await pyodide.value.runPythonAsync(code, { globals })
-  //       } else {
-  //         return await pyodide.value.runPythonAsync(code)
-  //       }
-  //     } else {
-  //       if (Object.keys(globals_vars).length !== 0) {
-  //         const globals = pyodide.value.toPy(globals_vars)
-  //         return pyodide.value.runPython(code, { globals })
-  //       } else {
-  //         return pyodide.value.runPython(code)
-  //       }
-  //     }
-  //   } catch (error) {
-  //     throw new Error(`Python Error: ${(error as Error).message}`)
-  //   }
-  // }
-
   const installPackage = async (packageName: string): Promise<void> => {
     await sendMessage('installPackage', { packageName })
   }

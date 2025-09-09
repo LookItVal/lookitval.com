@@ -1,6 +1,8 @@
 import pickle
 import re
+import js
 from sys import float_info
+from io import BytesIO
 from datetime import datetime
 from typing import List, Union, Optional, Tuple
 from functools import lru_cache
@@ -13,6 +15,7 @@ from scipy.signal import stft, istft, hilbert
 from scipy.ndimage import gaussian_filter1d
 
 number = Union[int, float]
+BIRD_CLASSIFIER: Optional[MLPClassifier] = None
 
 
 def polar_to_complex(magnitudes: np.ndarray|number, phases: np.ndarray|number) -> np.ndarray|complex:
@@ -586,13 +589,28 @@ def classify_bird(signal: Union[List, np.ndarray], sample_rate: int, metadata: d
   Returns:
     str: The predicted bird species.
   """
-  assert "BIRD_CLASSIFIER" in globals(), "BIRD_CLASSIFIER is not defined"
-  model = globals()["BIRD_CLASSIFIER"]
-  assert isinstance(model, MLPClassifier), "BIRD_CLASSIFIER is not an instance of MLPClassifier"
-
   try:
     signal_data = package_signal_data(signal, sample_rate, metadata)
-    prediction = model.predict(pd.DataFrame([signal_data]));
+    prediction = BIRD_CLASSIFIER.predict(pd.DataFrame([signal_data]));
     return prediction[0]
   except Exception as e:
     return "Model Prediction Error"
+
+
+async def load_model() -> None:
+  """Load the pre-trained bird classification model from a pickle file."""
+  global BIRD_CLASSIFIER
+  try:
+    response = await js.fetch('/models/birdClassifier.pkl', create_proxy({"method": "GET"})) # Fetch the model file
+    if not response.ok:
+      raise Exception(f"Failed to load model: {response.status}")
+    
+    buffer = await response.arrayBuffer()
+    bytes_data = BytesIO(pyodide.ffi.to_py(buffer))
+    BIRD_CLASSIFIER = pickle.load(bytes_data) # Load the model from the pickle file
+  except Exception as e:
+    print(f"Error loading model: {e}")
+    BIRD_CLASSIFIER = None
+
+
+# await load_model() # Load the model when the script is imported

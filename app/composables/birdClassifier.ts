@@ -1,5 +1,6 @@
 import { usePython } from './python';
 const { runPython, installPackage, initialize, isReady} = usePython();
+const { latitude, longitude, elevation, requestAccess } = useLocation();
 const bufferSize = ref(3); // length of the classifier buffer
 const classifierBuffer = ref<string[]>([]); // buffer to hold recent classifications
 
@@ -8,15 +9,18 @@ export const useClassifier = () => {
     if (!isReady.value) {
       await initialize();
     }
+
+    requestAccess(); // Request location access
     
     // Install necessary Python packages
-    //await installPackage('pandas');
-    //await installPackage('numpy');
-    //await installPackage('scipy');
-    //await installPackage('scikit-learn');
+    await installPackage('pandas');
+    await installPackage('numpy');
+    await installPackage('scipy');
+    await installPackage('scikit-learn');
 
-    //const pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());
-    //await runPython(pythonCode);
+    const pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());
+    await runPython(pythonCode);
+    console.log('Bird classifier initialized');
   };
 
   const updateBufferSize = (newSize: number) => {
@@ -30,12 +34,22 @@ export const useClassifier = () => {
     }
   };
 
-  const classifySignal = async (signal: Float32Array) => {
+  const classifySignal = async (signal: Float32Array, sample_rate: number) => {
     // Call the Python function to classify the signal
-    console.log('Classifying signal:', signal);
-    console.log('length of signal:', signal.length);
-    const result = (classifierBuffer.value[classifierBuffer.value.length - 1] ? Number(classifierBuffer.value[classifierBuffer.value.length - 1]) + 1 : 1).toString();
-    addToBuffer(result);
+    let pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());   
+    pythonCode += '\n\n'; 
+    pythonCode += 'metadata = {}\n';
+    pythonCode += `metadata['date'] = '${new Date().toISOString()}'\n`;
+    pythonCode += `metadata['time'] = '${new Date().toLocaleTimeString()}'\n`;
+    pythonCode += `metadata['latitude'] = float(${latitude.value ?? '0'})\n`;
+    pythonCode += `metadata['longitude'] = float(${longitude.value ?? '0'})\n`;
+    pythonCode += `metadata['elevation'] = float(${elevation.value ?? '0'})\n`;
+    pythonCode += 'signal = np.array(SOURCE_SIGNAL, dtype=np.float32)\n';
+    pythonCode += 'sample_rate = SOURCE_SAMPLE_RATE\n';
+    pythonCode += 'classify_bird(signal, sample_rate, metadata)\n';
+    const globals = { SOURCE_SIGNAL: signal, SOURCE_SAMPLE_RATE: sample_rate };
+    const classification = await runPython(pythonCode, globals);
+    addToBuffer(classification);
   };
 
   return {

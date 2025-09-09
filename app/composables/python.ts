@@ -10,7 +10,9 @@ export const usePython = () => {
     if (pyodide.value) return pyodide.value
     
     try {
-      pyodide.value = await loadPyodide()
+      pyodide.value = await loadPyodide({
+        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.28.2/full/'
+      })
       await pyodide.value.loadPackage("micropip")
       isLoading.value = false
       return pyodide.value
@@ -21,28 +23,28 @@ export const usePython = () => {
     }
   }
 
-  const runPython = async (code: string): Promise<string> => {
+  const runPython = async (code: string, globals = {}): Promise<string> => {
     if (!pyodide.value) {
       throw new Error('Pyodide not initialized')
     }
 
     try {
-      // Capture stdout
-      pyodide.value.runPython(`
-        import sys
-        from io import StringIO
-        sys.stdout = StringIO()
-      `)
-
       // Run code (async if contains await)
       if (code.includes('await')) {
-        await pyodide.value.runPythonAsync(code)
+        if (Object.keys(globals).length !== 0) {
+          globals = pyodide.value.toPy(globals)
+          return await pyodide.value.runPythonAsync(code, { globals })
+        } else {
+          return await pyodide.value.runPythonAsync(code)
+        }
       } else {
-        pyodide.value.runPython(code)
+        if (Object.keys(globals).length !== 0) {
+          globals = pyodide.value.toPy(globals)
+          return pyodide.value.runPython(code, { globals })
+        } else {
+          return pyodide.value.runPython(code)
+        }
       }
-
-      // Get output
-      return pyodide.value.runPython('sys.stdout.getvalue()')
     } catch (error) {
       throw new Error(`Python Error: ${(error as Error).message}`)
     }

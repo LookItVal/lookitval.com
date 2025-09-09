@@ -33,7 +33,7 @@ export const useAudio = () => {
         
         // Process the samples
         console.log(`Processing ${sampleCount.value} samples...`);
-        classifySignal(samplesForProcessing);
+        classifySignal(samplesForProcessing, audioSampleRate.value);
       }
       
       // Reset the buffer for next chunk
@@ -181,6 +181,7 @@ export const useAudio = () => {
 
   return {
     isRecording,
+    audioSampleRate,
     analyserNode,
     startRecording,
     stopRecording,

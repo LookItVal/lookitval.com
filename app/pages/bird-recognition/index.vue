@@ -42,7 +42,7 @@ import { useClassifier } from '@/composables/birdClassifier';
 const { toggleRecording } = useAudio();
 const { classifierBuffer, initPackages } = useClassifier();
 
-onMounted(() => {
-  //await initPackages();
+onMounted(async () => {
+  await initPackages();
 });
 </script>

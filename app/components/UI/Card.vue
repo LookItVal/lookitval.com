@@ -17,8 +17,8 @@ radiusMap['overlay'] = radiusMap['item']! * 1.618033988749
 radiusMap['surface'] = radiusMap['overlay']! * 1.618033988749
 
 const props = withDefaults(defineProps<{
-  depth: 'surface' | 'overlay' | 'item'
-  opacity: number
+  depth?: 'surface' | 'overlay' | 'item'
+  opacity?: number
 }>(), {
   depth: 'surface',
   opacity: 1

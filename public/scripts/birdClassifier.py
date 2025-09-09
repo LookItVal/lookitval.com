@@ -6,8 +6,8 @@ from datetime import datetime
 from typing import List, Union, Optional, Tuple
 from functools import lru_cache
 
-import js
-import pyodide
+import js # type: ignore
+import pyodide # type: ignore
 
 import pandas as pd
 import numpy as np
@@ -591,11 +591,10 @@ def classify_bird(signal: Union[List, np.ndarray], sample_rate: int, metadata: d
   Returns:
     str: The predicted bird species.
   """
-  signal_data = package_signal_data(signal, sample_rate, metadata)
-  prediction = BIRD_CLASSIFIER.predict(pd.DataFrame([signal_data]));
-  return prediction[0]
   try:
-    print('test')
+    signal_data = package_signal_data(signal, sample_rate, metadata)
+    prediction = BIRD_CLASSIFIER.predict(pd.DataFrame([signal_data]));
+    return prediction[0]
   except Exception as e:
     return "Model Prediction Error"
 
@@ -606,15 +605,14 @@ async def load_model() -> None:
   response = await js.fetch('/models/birdClassifier.pkl', pyodide.ffi.create_proxy({"method": "GET"})) # Fetch the model file
   if not response.ok:
     raise Exception(f"Failed to load model: {response.status}")
-  
-  buffer = await response.arrayBuffer()
-  bytes_data = buffer.to_bytes()
-  BIRD_CLASSIFIER = pickle.loads(bytes_data) # Load the model from the pickle file
   try:
-    print('test')
+    buffer = await response.arrayBuffer()
+    bytes_data = buffer.to_bytes()
+    BIRD_CLASSIFIER = pickle.loads(bytes_data) # Load the model from the pickle file
   except Exception as e:
     print(f"Error loading model: {e}")
     BIRD_CLASSIFIER = None
 
 
-await load_model() # Load the model when the script is imported
+# Load the model when the script is imported
+await load_model() # type: ignore

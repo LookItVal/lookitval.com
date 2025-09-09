@@ -1,6 +1,6 @@
 <template>
   <a class="mx-(--xs-em) h-full aspect-square" href="https://www.imdb.com/name/nm11999345/" target="_blank" @mouseover="shimmer">
-    <svg class="h-full" ref="imdbSvg" viewBox="0 0 10 10">
+    <svg ref="imdbSvg" class="h-full" viewBox="0 0 10 10">
       <defs>
         <mask id="imdb">
           <image href="/icons/imdb.svg" height="100%" width="100%" />
@@ -16,7 +16,8 @@
       </defs>
       <g mask="url(#imdb)">
         <rect width="100%" height="100%" fill="var(--color-lavender-100)" />
-        <path id="imdb-outer-path" d="M 5 7.5
+        <path
+id="imdb-outer-path" d="M 5 7.5
                                       V 9.55
                                       C 9.25 9.55 9.55 9.25 9.55 5
                                       C 9.55 0.75 9.25 0.45 5 0.45

@@ -8,7 +8,7 @@
     <UICard 
       class="flex flex-col items-center md:w-3/4 p-(--s-em)"
       depth="overlay"
-      opacity="0.8"
+      :opacity="0.8"
     >
       <div class="flex flex-row text-4xl md:text-6xl font-bold pb-(--xxs-em)">
         <h2>About</h2>

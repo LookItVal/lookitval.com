@@ -111,7 +111,7 @@ const color2Value = computed(() => {
 });
 
 onMounted(async () => {
-  if (!(process.client && vantaBirds.value)) return;
+  if (!(import.meta.client && vantaBirds.value)) return;
   
   const [{ default: BIRDS }, THREE] = await Promise.all([
     import('vanta/dist/vanta.birds.min'),

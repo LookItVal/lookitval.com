@@ -1,6 +1,6 @@
 <template>
   <a class="mx-(--xs-em) h-full aspect-square" href="https://www.instagram.com/lookitval" target="_blank" @mouseover="shimmer">
-    <svg class="h-full" ref="instaSvg" viewBox="0 0 10 10">
+    <svg ref="instaSvg" class="h-full" viewBox="0 0 10 10">
       <defs>
         <mask id="instagram">
           <image href="/icons/instagram.svg" height="100%" width="100%" />
@@ -12,14 +12,16 @@
       </defs>
       <g mask="url(#instagram)">
         <rect width="100%" height="100%" fill="var(--color-lavender-100)" />
-        <path id="insta-outer-path" d="M 2.5 7.5
+        <path
+id="insta-outer-path" d="M 2.5 7.5
                                        L 5 9.55
                                        C 9.25 9.55 9.55 9.25 9.55 5
                                        C 9.55 0.75 9.25 0.45 5 0.45
                                        C 0.75 0.45 0.45 0.75 0.45 5
                                        C 0.45 9.25 0.75 9.55 5 9.55
                                        L 7.5 7.5" stroke="none" fill="none"/>
-        <path id="insta-inner-path" d="M 5 5
+        <path
+id="insta-inner-path" d="M 5 5
                                        L 5 3
                                        C 3.75 3 3 3.75 3 5
                                        C 3 6.25 3.75 7 5 7

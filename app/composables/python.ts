@@ -23,7 +23,7 @@ export const usePython = () => {
     }
   }
 
-  const runPython = async (code: string, globals = {}): Promise<string> => {
+  const runPython = async (code: string, globals_vars = {}): Promise<string> => {
     if (!pyodide.value) {
       throw new Error('Pyodide not initialized')
     }
@@ -31,15 +31,15 @@ export const usePython = () => {
     try {
       // Run code (async if contains await)
       if (code.includes('await')) {
-        if (Object.keys(globals).length !== 0) {
-          globals = pyodide.value.toPy(globals)
+        if (Object.keys(globals_vars).length !== 0) {
+          const globals = pyodide.value.toPy(globals_vars)
           return await pyodide.value.runPythonAsync(code, { globals })
         } else {
           return await pyodide.value.runPythonAsync(code)
         }
       } else {
-        if (Object.keys(globals).length !== 0) {
-          globals = pyodide.value.toPy(globals)
+        if (Object.keys(globals_vars).length !== 0) {
+          const globals = pyodide.value.toPy(globals_vars)
           return pyodide.value.runPython(code, { globals })
         } else {
           return pyodide.value.runPython(code)

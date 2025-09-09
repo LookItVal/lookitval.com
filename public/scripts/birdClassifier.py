@@ -562,10 +562,10 @@ def package_signal_data(signal: Union[List, np.ndarray], sample_rate: int, metad
   signal = np.asarray(signal)
 
   # Preprocess the signal
-  # signal = normalize_signal(signal)
-  # signal = reduce_noise_floor(signal, sample_rate)
-  # signal = reduce_clicks(signal, sample_rate)
-  # signal = reduce_transients(signal, sample_rate)
+  signal = normalize_signal(signal)
+  signal = reduce_noise_floor(signal, sample_rate)
+  signal = reduce_clicks(signal, sample_rate)
+  signal = reduce_transients(signal, sample_rate)
   signal = normalize_signal(signal)
 
   # Group Frequencies and convert to decibels

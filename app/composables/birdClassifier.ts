@@ -39,8 +39,8 @@ export const useClassifier = () => {
     let pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());   
     pythonCode += '\n\n'; 
     pythonCode += 'metadata = {}\n';
-    pythonCode += `metadata['date'] = '${new Date().toISOString()}'\n`;
-    pythonCode += `metadata['time'] = '${new Date().toLocaleTimeString()}'\n`;
+    pythonCode += `metadata['date'] = '${new Date().toISOString().slice(0,10)}'\n`;
+    pythonCode += `metadata['time'] = '${new Date().toLocaleTimeString([], { timeStyle: 'short'}).split(' ').join('').toLowerCase()}'\n`;
     pythonCode += `metadata['latitude'] = float(${latitude.value ?? '0'})\n`;
     pythonCode += `metadata['longitude'] = float(${longitude.value ?? '0'})\n`;
     pythonCode += `metadata['elevation'] = float(${elevation.value ?? '0'})\n`;

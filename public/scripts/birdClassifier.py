@@ -1,11 +1,13 @@
 import pickle
 import re
-import js
 from sys import float_info
 from io import BytesIO
 from datetime import datetime
 from typing import List, Union, Optional, Tuple
 from functools import lru_cache
+
+import js
+import pyodide
 
 import pandas as pd
 import numpy as np
@@ -560,10 +562,10 @@ def package_signal_data(signal: Union[List, np.ndarray], sample_rate: int, metad
   signal = np.asarray(signal)
 
   # Preprocess the signal
-  signal = normalize_signal(signal)
-  signal = reduce_noise_floor(signal, sample_rate)
-  signal = reduce_clicks(signal, sample_rate)
-  signal = reduce_transients(signal, sample_rate)
+  # signal = normalize_signal(signal)
+  # signal = reduce_noise_floor(signal, sample_rate)
+  # signal = reduce_clicks(signal, sample_rate)
+  # signal = reduce_transients(signal, sample_rate)
   signal = normalize_signal(signal)
 
   # Group Frequencies and convert to decibels
@@ -589,10 +591,11 @@ def classify_bird(signal: Union[List, np.ndarray], sample_rate: int, metadata: d
   Returns:
     str: The predicted bird species.
   """
+  signal_data = package_signal_data(signal, sample_rate, metadata)
+  prediction = BIRD_CLASSIFIER.predict(pd.DataFrame([signal_data]));
+  return prediction[0]
   try:
-    signal_data = package_signal_data(signal, sample_rate, metadata)
-    prediction = BIRD_CLASSIFIER.predict(pd.DataFrame([signal_data]));
-    return prediction[0]
+    print('test')
   except Exception as e:
     return "Model Prediction Error"
 
@@ -600,17 +603,18 @@ def classify_bird(signal: Union[List, np.ndarray], sample_rate: int, metadata: d
 async def load_model() -> None:
   """Load the pre-trained bird classification model from a pickle file."""
   global BIRD_CLASSIFIER
+  response = await js.fetch('/models/birdClassifier.pkl', pyodide.ffi.create_proxy({"method": "GET"})) # Fetch the model file
+  if not response.ok:
+    raise Exception(f"Failed to load model: {response.status}")
+  
+  buffer = await response.arrayBuffer()
+  bytes_data = buffer.to_bytes()
+  BIRD_CLASSIFIER = pickle.loads(bytes_data) # Load the model from the pickle file
   try:
-    response = await js.fetch('/models/birdClassifier.pkl', create_proxy({"method": "GET"})) # Fetch the model file
-    if not response.ok:
-      raise Exception(f"Failed to load model: {response.status}")
-    
-    buffer = await response.arrayBuffer()
-    bytes_data = BytesIO(pyodide.ffi.to_py(buffer))
-    BIRD_CLASSIFIER = pickle.load(bytes_data) # Load the model from the pickle file
+    print('test')
   except Exception as e:
     print(f"Error loading model: {e}")
     BIRD_CLASSIFIER = None
 
 
-# await load_model() # Load the model when the script is imported
+await load_model() # Load the model when the script is imported

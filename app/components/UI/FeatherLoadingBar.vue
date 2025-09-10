@@ -100,7 +100,7 @@ onMounted(async () => {
     }, 0);
     entryAnimationTimeline.to(barbsPathUnloaded.value, {
       strokeDasharray: `${barbsLength} 0`,
-      duration: 1.5
+      duration: 1
     }, '>');
 
     entryAnimationTimeline.to(shaftPathUnloaded.value, {
@@ -109,7 +109,7 @@ onMounted(async () => {
     }, 0);
     entryAnimationTimeline.to(shaftPathUnloaded.value, {
       strokeDasharray: `${shaftLength} 0`,
-      duration: 1.5
+      duration: 1
     }, '>');
   }
   if (barbsPathLoaded.value && shaftPathLoaded.value) {
@@ -129,7 +129,7 @@ onMounted(async () => {
 
     loadingAnimationTimeline.to([barbsPathLoaded.value, shaftPathLoaded.value], {
       strokeWidth: props.strokeWidth,
-      duration: 0.5
+      duration: 0.1
     }, 0);
     loadingAnimationTimeline.to(barbsPathLoaded.value, {
       strokeDasharray: `${barbsLength} 0`,
@@ -138,7 +138,7 @@ onMounted(async () => {
 
     loadingAnimationTimeline.to(shaftPathLoaded.value, {
       strokeWidth: props.strokeWidth,
-      duration: 0.5
+      duration: 0.1
     }, 0);
     loadingAnimationTimeline.to(shaftPathLoaded.value, {
       strokeDasharray: `${shaftLength} 0`,

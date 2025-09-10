@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   devServer: {
-    https: false, // Set to true and provide certs to enable HTTPS
+    https: true, // Set to true and provide certs to enable HTTPS
     // https: {
     //   key: './ssl/localhost-key.pem',
     //   cert: './ssl/localhost.pem'

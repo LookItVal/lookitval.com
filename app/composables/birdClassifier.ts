@@ -4,35 +4,54 @@ const { latitude, longitude, elevation, requestAccess } = useLocation();
 const bufferSize = ref(3); // length of the classifier buffer
 const classifierBuffer = ref<string[]>([]); // buffer to hold recent classifications
 const loadingProgress = ref(0);
+const loadingStep = ref<string>('Initializing Python environment');
 
 export const useClassifier = () => {
   const initPackages = async () => {
-    const steps = 9; // Total number of steps
-    const updateProgress = () => { loadingProgress.value += 1 / steps; };
+    const steps = 15; // Total number of steps
+    const updateProgress = (step: string) => { loadingProgress.value += 1 / steps; loadingStep.value = step; };
     if (!isReady.value) {
       await initialize();
     }
-    updateProgress();
+    updateProgress('Loading location data');
 
     requestAccess(); // Request location access
-    updateProgress();
+    updateProgress('Installing Pandas from CDN');
 
     // Install necessary Python packages
     await installPackage('pandas');
-    updateProgress();
+    updateProgress('Installing Numpy from CDN');
     await installPackage('numpy');
-    updateProgress();
+    updateProgress('Installing Scipy from CDN');
     await installPackage('scipy');
-    updateProgress();
+    updateProgress('Installing Scikit-learn from CDN');
     await installPackage('scikit-learn');
-    updateProgress();
+    updateProgress('Downloading Audio Preprocessing Code');
 
     const pythonCode = await fetch('/scripts/birdClassifier.py').then(res => res.text());
-    updateProgress();
-    await runPython(pythonCode);
-    updateProgress();
+    updateProgress('Formatting Audio Preprocessing Code');
+    const lines = pythonCode.split('\n');
+    const initPythonLines = lines.slice(0, lines.findIndex(line => line.startsWith('import pandas'))).join('\n');
+    const initPandas = lines.slice(lines.findIndex(line => line.startsWith('import pandas')), lines.findIndex(line => line.startsWith('import numpy'))).join('\n');
+    const initNumpy = lines.slice(lines.findIndex(line => line.startsWith('import numpy')), lines.findIndex(line => line.startsWith('from sklearn'))).join('\n');
+    const initSKLearn = lines.slice(lines.findIndex(line => line.startsWith('from sklearn')), lines.findIndex(line => line.startsWith('from scipy'))).join('\n');
+    const initScipy = lines.slice(lines.findIndex(line => line.startsWith('from scipy')), lines.findIndex(line => line.startsWith('def '))).join('\n');
+    const mainCode = lines.slice(lines.findIndex(line => line.startsWith('def '))).join('\n');
+    updateProgress('Initializing Python Packages');
+    await runPython(initPythonLines);
+    updateProgress('Initializing Pandas Packages');
+    await runPython(initPandas);
+    updateProgress('Initializing Numpy Packages');
+    await runPython(initNumpy);
+    updateProgress('Initializing Scikit-learn Packages');
+    await runPython(initSKLearn);
+    updateProgress('Initializing Scipy Packages');
+    await runPython(initScipy);
+    updateProgress('Loading Audio Preprocessing Code');
+    await runPython(mainCode);
+    updateProgress('Loading Model');
     await runPython('await load_model()');
-    loadingProgress.value = 1.0;
+    updateProgress('Initialization Complete');
   };
 
   const updateBufferSize = (newSize: number) => {
@@ -68,6 +87,7 @@ export const useClassifier = () => {
     classifySignal,
     classifierBuffer,
     updateBufferSize,
-    loadingProgress
+    loadingProgress,
+    loadingStep
   };
 };

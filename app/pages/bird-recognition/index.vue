@@ -22,7 +22,7 @@
       depth="surface"
       :opacity="0.5"
     >
-      <h1 class="text-4xl font-bold text-center mb-8">Bird Recognition</h1>
+      <h1 ref="mainHeading" class="main-heading text-4xl font-bold text-center text-nowrap mb-8 z-20">Bird Recognition</h1>
       <div>
         <div v-for="(bird, index) in classifierBuffer" :key="index">
           <UICard
@@ -45,17 +45,21 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
+import { Flip } from "gsap/Flip";
 import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
 const { toggleRecording } = useAudio();
 const { classifierBuffer, initPackages, loadingProgress, loadingStep } = useClassifier();
 
 const loadingScreen = ref<HTMLElement>();
+const mainHeading = ref<HTMLElement>();
+gsap.registerPlugin(Flip);
 
 function revealPage() {
   if (loadingScreen.value) {
     console.log('Revealing page');
     const timeline = gsap.timeline();
+    const beginningState = Flip.getState(mainHeading.value!);
     loadingScreen.value!.style.transformOrigin = 'top';
     timeline.to(loadingScreen.value, {
       scaleY: 0,
@@ -66,6 +70,14 @@ function revealPage() {
       loadingScreen.value!.style.display = 'none';
       }
     });
+    // Toggle the "main-heading" class before running Flip animation
+    mainHeading.value!.classList.toggle('main-heading');
+    const flipAnimation = Flip.from(beginningState, {
+      duration: 0.75,
+      delay: 0.5,
+      ease: 'power2.inOut'
+    });
+    timeline.add(flipAnimation, 0);
   }
 }
 
@@ -80,3 +92,12 @@ watch(loadingProgress, (newProgress) => {
   }
 });
 </script>
+
+<style scoped>
+.main-heading {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

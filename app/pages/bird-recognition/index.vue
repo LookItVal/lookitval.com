@@ -1,5 +1,5 @@
 <template>
-  <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center py-(--m-em)">
+  <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center p-(--m-em)">
     <div ref="loadingScreen" class="loading-screen fixed top-0 left-0 w-full h-full bg-base-100 z-10 flex flex-col items-center justify-center">
       <UIFeatherLoadingBar 
         class="w-full h-(--xxl-em) px-(--m-em)"
@@ -22,16 +22,16 @@
       depth="surface"
       :opacity="0.5"
     >
-      <h1 ref="mainHeading" class="main-heading text-4xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-20">Bird Recognition</h1>
+      <h1 ref="mainHeading" class="main-heading text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-20">Bird Recognition</h1>
       <UICard
         class="w-min-[45%] p-(--s-em) mb-(--s-em)"
         depth="overlay"
         :opacity="0.5"
       >
-        <h2 class="text-2xl font-semibold text-center mb-(--s-em)">Sounds like...</h2>
+        <h2 class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em)">Sounds like...</h2>
         <div v-for="(bird, index) in classifierBuffer" :key="index">
           <UICard
-            class="mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-lg"
+            class="mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
             depth="item"
             :opacity="0.5"
           >

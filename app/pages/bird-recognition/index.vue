@@ -1,5 +1,5 @@
 <template>
-  <div id="bird-recognition-page" class="h-svh flex flex-col items-center justify-center">
+  <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center">
     <div ref="loadingScreen" class="loading-screen fixed top-0 left-0 w-full h-full bg-base-100 z-10 flex flex-col items-center justify-center">
       <UIFeatherLoadingBar 
         class="w-full h-(--xxl-em) px-(--m-em)"
@@ -18,7 +18,7 @@
       :quantity="3"
     />
     <UICard
-      class="flex flex-col items-center justify-center px-(--m-em) py-(--s-em) w-full max-w-6xl"
+      class="flex flex-col items-center justify-center px-(--m-em) py-(--s-em) mt-(--s-em) w-full max-w-6xl"
       depth="surface"
       :opacity="0.5"
     >
@@ -26,6 +26,7 @@
       <div>
         <div v-for="(bird, index) in classifierBuffer" :key="index">
           <UICard
+            class="my-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center"
             depth="item"
             :opacity="0.5"
           >
@@ -64,7 +65,7 @@ function revealPage() {
     timeline.to(loadingScreen.value, {
       scaleY: 0,
       duration: 0.75,
-      delay: 0.5,
+      delay: 1,
       ease: 'power2.inOut',
       onComplete: () => {
       loadingScreen.value!.style.display = 'none';
@@ -74,7 +75,7 @@ function revealPage() {
     mainHeading.value!.classList.toggle('main-heading');
     const flipAnimation = Flip.from(beginningState, {
       duration: 0.75,
-      delay: 0.5,
+      delay: 1,
       ease: 'power2.inOut'
     });
     timeline.add(flipAnimation, 0);

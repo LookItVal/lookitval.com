@@ -92,7 +92,7 @@ onMounted(async () => {
       strokeWidth: 0
     });
 
-    entryAnimationTimeline = gsap.timeline({ ease: props.easeFunction });
+    entryAnimationTimeline = gsap.timeline({ ease: 'linear' });
 
     entryAnimationTimeline.to(barbsPathUnloaded.value, {
       strokeWidth: props.strokeWidth,

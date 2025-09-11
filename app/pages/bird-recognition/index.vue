@@ -24,18 +24,20 @@
     >
       <h1 ref="mainHeading" class="main-heading text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-20">Bird Recognition</h1>
       <UICard
+        id="predictionsCard"
         class="w-min-[45%] p-(--s-em) mb-(--s-em)"
         depth="overlay"
         :opacity="0.5"
       >
         <h2 class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em)">Sounds like...</h2>
-        <div v-for="(bird, index) in classifierBuffer" :key="index">
+        <div v-for="bird in birdList" :key="bird">
           <UICard
-            class="mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
+            class="precitiion mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
             depth="item"
             :opacity="0.5"
+            :data-flip-id="bird"
           >
-            <p>Tyrant Flycatchers: Pewees, Kingbirds, and Allies</p>
+            <p>{{ bird }}</p>
           </UICard>
         </div>
       </UICard>
@@ -55,11 +57,12 @@ import { Flip } from "gsap/Flip";
 import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
 const { toggleRecording } = useAudio();
-const { classifierBuffer, initPackages, loadingProgress, loadingStep } = useClassifier();
+const { classifierBuffer, bufferSize, initPackages, loadingProgress, loadingStep } = useClassifier();
 gsap.registerPlugin(Flip);
 
 const loadingScreen = ref<HTMLElement>();
 const mainHeading = ref<HTMLElement>();
+const birdList = ref<string[]>([...classifierBuffer.value]);
 
 
 function revealPage() {
@@ -96,6 +99,19 @@ watch(loadingProgress, (newProgress) => {
   if (newProgress >= 0.99) {
     revealPage();
   }
+});
+
+watch(() => [...classifierBuffer.value], (newBuffer, oldBuffer) => {
+  console.log('Classifier buffer changed:', oldBuffer, 'to', newBuffer);
+  let totalBuffer: string[] = [];
+  if (oldBuffer.length === bufferSize.value) {
+    totalBuffer = [...newBuffer, oldBuffer[oldBuffer.length - 1]!];
+  } else {
+    totalBuffer = [...newBuffer];
+  }
+  birdList.value = totalBuffer;
+  nextTick(() => {
+  });
 });
 </script>
 

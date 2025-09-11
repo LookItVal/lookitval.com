@@ -31,8 +31,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   activeColor: 'text-100',
   inactiveColor: 'overlay-100',
-  lineWidth: 5,
-  lineSpacing: 5,
+  lineWidth: 4,
+  lineSpacing: 4,
   updateInterval: 50, // in milliseconds
   smoothingFactor: 0.3
 });
@@ -51,7 +51,7 @@ const lineActiveStates = ref<boolean[] | null>(null);
 
 const lineCount = computed(() => {
   if (canvasWidth.value === 0) return 0;
-  return Math.floor(canvasWidth.value / (props.lineWidth! + props.lineSpacing!));
+  return Math.floor((canvasWidth.value - props.lineSpacing!) / (props.lineWidth! + props.lineSpacing!));
 });
 const lineColorActive = computed(() => COLORS[props.activeColor || 'subtext-100']);
 const lineColorInactive = computed(() => COLORS[props.inactiveColor || 'overlay-100']);
@@ -162,8 +162,11 @@ function drawWaveform() {
   canvasContext.value.lineWidth = props.lineWidth!;
   canvasContext.value.lineCap = 'round';
 
+  const totalLinesWidth = lineCount.value * props.lineWidth! + (lineCount.value - 1) * props.lineSpacing!;
+  const canvasMargin = canvasWidth.value - totalLinesWidth;
+
   for (let i = 0; i < lineCount.value; i++) {
-    const x = (lineCount.value - i - 1) * (props.lineWidth! + props.lineSpacing!) + props.lineWidth! / 2;
+    const x = (canvasMargin / 2) + (lineCount.value - i - 1) * (props.lineWidth! + props.lineSpacing!) + props.lineWidth! / 2;
     const centerLineY = canvasHeight.value / 2;
     canvasContext.value.beginPath();
     canvasContext.value.strokeStyle = lineActiveStates.value![i]! ? lineColorActive.value : lineColorInactive.value;

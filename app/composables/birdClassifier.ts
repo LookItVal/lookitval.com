@@ -85,9 +85,10 @@ export const useClassifier = () => {
   return {
     initPackages,
     classifySignal,
-    classifierBuffer,
+    classifierBuffer: readonly(classifierBuffer),
+    bufferSize: readonly(bufferSize),
     updateBufferSize,
-    loadingProgress,
-    loadingStep
+    loadingProgress: readonly(loadingProgress),
+    loadingStep: readonly(loadingStep)
   };
 };

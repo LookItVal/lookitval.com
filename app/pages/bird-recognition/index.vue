@@ -51,19 +51,19 @@ import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
 const { toggleRecording } = useAudio();
 const { classifierBuffer, initPackages, loadingProgress, loadingStep } = useClassifier();
+gsap.registerPlugin(Flip);
 
 const loadingScreen = ref<HTMLElement>();
 const mainHeading = ref<HTMLElement>();
-gsap.registerPlugin(Flip);
+
 
 function revealPage() {
   if (loadingScreen.value) {
     console.log('Revealing page');
     const timeline = gsap.timeline();
     const beginningState = Flip.getState(mainHeading.value!);
-    loadingScreen.value!.style.transformOrigin = 'top';
     timeline.to(loadingScreen.value, {
-      scaleY: 0,
+      translateY: '-100%',
       duration: 0.75,
       delay: 1,
       ease: 'power2.inOut',

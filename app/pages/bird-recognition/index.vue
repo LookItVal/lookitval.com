@@ -1,5 +1,5 @@
 <template>
-  <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center">
+  <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center py-(--m-em)">
     <div ref="loadingScreen" class="loading-screen fixed top-0 left-0 w-full h-full bg-base-100 z-10 flex flex-col items-center justify-center">
       <UIFeatherLoadingBar 
         class="w-full h-(--xxl-em) px-(--m-em)"
@@ -8,7 +8,7 @@
       <p class="mt-(--s-em) text-center text-lg">{{ loadingStep }}</p>
     </div>
     <BackgroundsBirds
-      class="absolute top-0 left-0 w-full h-full -z-10 opacity-75"
+      class="fixed top-0 left-0 w-full h-full -z-10 opacity-75"
       :mouse-controls="false"
       :touch-controls="false"
       color1="mauve-500"
@@ -18,22 +18,27 @@
       :quantity="3"
     />
     <UICard
-      class="flex flex-col items-center justify-center px-(--m-em) py-(--s-em) mt-(--s-em) w-full max-w-6xl"
+      class="flex flex-col items-center justify-center p-(--m-em) w-full max-w-6xl"
       depth="surface"
       :opacity="0.5"
     >
-      <h1 ref="mainHeading" class="main-heading text-4xl font-bold text-center text-nowrap mb-8 z-20">Bird Recognition</h1>
-      <div>
+      <h1 ref="mainHeading" class="main-heading text-6xl font-bold text-center text-nowrap mb-(--s-em) z-20">Bird Recognition</h1>
+      <UICard
+        class="w-[45%] p-(--s-em) mb-(--s-em)"
+        depth="overlay"
+        :opacity="0.5"
+      >
+        <h2 class="text-2xl font-semibold text-center mb-(--s-em)">Sounds like...</h2>
         <div v-for="(bird, index) in classifierBuffer" :key="index">
           <UICard
-            class="my-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center"
+            class="mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-lg"
             depth="item"
             :opacity="0.5"
           >
-            <p>{{ bird }}</p>
+            <p>Tyrant Flycatchers: Pewees, Kingbirds, and Allies</p>
           </UICard>
         </div>
-      </div>
+      </UICard>
       <BirdClassificationLiveWaveform />
     </UICard>
     <BirdClassificationRecordButton 

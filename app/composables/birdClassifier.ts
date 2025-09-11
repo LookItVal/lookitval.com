@@ -59,9 +59,9 @@ export const useClassifier = () => {
   };
 
   const addToBuffer = (classification: string) => {
-    classifierBuffer.value.push(classification);
+    classifierBuffer.value.unshift(classification);
     if (classifierBuffer.value.length > bufferSize.value) {
-      classifierBuffer.value.shift();
+      classifierBuffer.value.pop();
     }
   };
 

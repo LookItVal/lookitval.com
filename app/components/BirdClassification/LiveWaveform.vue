@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center w-full max-w-5xl">
+  <div class="flex flex-col items-center justify-center w-full">
     <UICard
       class="relative w-full h-[5em]"
       depth="overlay"

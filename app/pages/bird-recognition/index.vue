@@ -22,9 +22,9 @@
       depth="surface"
       :opacity="0.5"
     >
-      <h1 ref="mainHeading" class="main-heading text-6xl font-bold text-center text-nowrap mb-(--s-em) z-20">Bird Recognition</h1>
+      <h1 ref="mainHeading" class="main-heading text-4xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-20">Bird Recognition</h1>
       <UICard
-        class="w-[45%] p-(--s-em) mb-(--s-em)"
+        class="w-min-[45%] p-(--s-em) mb-(--s-em)"
         depth="overlay"
         :opacity="0.5"
       >

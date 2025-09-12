@@ -30,12 +30,12 @@
         :opacity="0.5"
       >
         <h2 class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em)">Sounds like...</h2>
-        <div v-for="bird in birdList" :key="bird">
+        <div v-for="(bird, idx) in birdList" :key="bird">
           <UICard
-            class="precitiion mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
+            class="prediction mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
             depth="item"
             :opacity="0.5"
-            :data-flip-id="bird"
+            :data-flip-id="idx"
           >
             <p>{{ bird }}</p>
           </UICard>
@@ -101,16 +101,55 @@ watch(loadingProgress, (newProgress) => {
   }
 });
 
-watch(() => [...classifierBuffer.value], (newBuffer, oldBuffer) => {
-  console.log('Classifier buffer changed:', oldBuffer, 'to', newBuffer);
+watch(() => [...classifierBuffer.value], (newBuffer, oldBuffer) => {  
   let totalBuffer: string[] = [];
+  let removeLast = false;
+  
   if (oldBuffer.length === bufferSize.value) {
     totalBuffer = [...newBuffer, oldBuffer[oldBuffer.length - 1]!];
+    removeLast = true;
   } else {
     totalBuffer = [...newBuffer];
   }
-  birdList.value = totalBuffer;
-  nextTick(() => {
+  birdList.value = totalBuffer; // Now update the reactive data
+  
+  nextTick(async () => {
+    const predictions = document.querySelectorAll("#predictionsCard .prediction");
+    gsap.set(predictions[0]!, { position: 'absolute', scale: 0, transformOrigin: 'center center' });
+    await nextTick();
+
+    const stateFirst = Flip.getState(predictions[0]!);
+    const allButFirst = Array.from(predictions).slice(1);
+    const stateOthers = Flip.getState(allButFirst);
+    gsap.set(predictions[0]!, { position: 'relative', scale: 1 });
+    if (removeLast) {
+      gsap.set(predictions[predictions.length - 1]!, { position: 'absolute', yPercent: 0 });
+    }
+    await nextTick();
+    Flip.from(stateFirst, {
+      scale: true,
+      duration: 0.5,
+      delay: 0.3,
+      ease: 'bounce.out',
+    });
+    Flip.from(stateOthers, {
+      duration: 0.5,
+      ease: 'power2.out',
+      stagger: {
+        each: 0.1,
+        from: "end"
+      }
+    });
+    if (removeLast) {
+      gsap.to(predictions[predictions.length - 1]!, {
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+        onComplete: () => {
+          birdList.value.pop();
+        }
+      });
+    }
   });
 });
 </script>

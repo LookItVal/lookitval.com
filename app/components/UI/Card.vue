@@ -1,5 +1,6 @@
 <template>
   <div class="ui-card">
+    <div class="card-background"></div>
     <slot />
   </div>
 </template>
@@ -37,8 +38,7 @@ const borderRadius: ComputedRef<number> = computed(() => {
   position: relative;
   border-radius: v-bind(borderRadius + 'rem');
 }
-.ui-card::before {
-  content: '';
+.card-background {
   position: absolute;
   z-index: -1;
   top: 0;

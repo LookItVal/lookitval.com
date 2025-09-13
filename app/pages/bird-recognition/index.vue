@@ -18,32 +18,36 @@
       :quantity="3"
     />
     <UICard
+      ref="mainContentCard"
       class="flex flex-col items-center justify-center p-(--m-em) w-full max-w-6xl"
       depth="surface"
       :opacity="0.5"
     >
       <h1 ref="mainHeading" class="main-heading text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-20">Bird Recognition</h1>
       <UICard
-        id="predictionsCard"
-        class="w-min-[45%] p-(--s-em) mb-(--s-em)"
+        ref="predictionsCard"
+        class="flex flex-col items-center justify-center w-min-[10rem] w-min-[45%] p-(--s-em) mb-(--s-em)"
         depth="overlay"
         :opacity="0.5"
       >
-        <h2 class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em)">Sounds like...</h2>
-        <div v-for="(bird, idx) in birdList" :key="bird">
-          <UICard
-            class="prediction mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
-            depth="item"
-            :opacity="0.5"
-            :data-flip-id="idx"
-          >
-            <p>{{ bird }}</p>
-          </UICard>
+        <h2 ref="predictionsHeading" class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em) mx-(--l-em)">Sounds like...</h2>
+        <div>
+          <div v-for="(bird, idx) in birdList" :key="bird">
+            <UICard
+              class="prediction mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
+              depth="item"
+              :opacity="0.5"
+              :data-flip-id="idx"
+            >
+              <p>{{ bird }}</p>
+            </UICard>
+          </div>
         </div>
       </UICard>
-      <BirdClassificationLiveWaveform />
+      <BirdClassificationLiveWaveform ref="liveWaveform" />
     </UICard>
     <BirdClassificationRecordButton 
+      ref="recordButton"
       class="mt-(--s-em)"
       @click="toggleRecording"
     />
@@ -56,12 +60,20 @@ import { gsap } from 'gsap';
 import { Flip } from "gsap/Flip";
 import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
-const { toggleRecording } = useAudio();
+import RecordButton from '~/components/BirdClassification/RecordButton.vue';
+import LiveWaveform from '~/components/BirdClassification/LiveWaveform.vue';
+import Card from '~/components/UI/Card.vue';
+const { toggleRecording, isRecording } = useAudio();
 const { classifierBuffer, bufferSize, initPackages, loadingProgress, loadingStep } = useClassifier();
 gsap.registerPlugin(Flip);
 
 const loadingScreen = ref<HTMLElement>();
 const mainHeading = ref<HTMLElement>();
+const predictionsHeading = ref<HTMLElement>();
+const recordButton = ref<InstanceType<typeof RecordButton>>();
+const liveWaveform = ref<InstanceType<typeof LiveWaveform>>();
+const mainContentCard = ref<InstanceType<typeof Card>>();
+const predictionsCard = ref<InstanceType<typeof Card>>();
 const birdList = ref<string[]>([...classifierBuffer.value]);
 
 
@@ -92,7 +104,19 @@ function revealPage() {
 
 onMounted(async () => {
   await initPackages();
-  // Simulate loading progress over 5 seconds
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      if (isRecording.value) {
+        recordButton.value?.$el?.click();
+      }
+    } else {
+      // Resume or re-initialize if needed
+    }
+  };
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  onUnmounted(() => {
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+  });
 });
 
 watch(loadingProgress, (newProgress) => {
@@ -101,7 +125,39 @@ watch(loadingProgress, (newProgress) => {
   }
 });
 
-watch(() => [...classifierBuffer.value], (newBuffer, oldBuffer) => {  
+watch(() => [...classifierBuffer.value], (newBuffer, oldBuffer) => {
+  // Global animation settings
+  const duration = 0.5;
+  const stagger = 0.2; // stagger per item
+  const manualDelay = stagger * bufferSize.value; // 0.35 when bufferSize is 5
+  const ease = 'power1.inOut';
+  // Helper to determine if the list is getting smaller
+  const isGettingSmaller = (newBuffer: string[], oldBuffer: string[]) => {
+    const newBufferLengths = newBuffer.map(b => b.length);
+    const oldBufferLengths = oldBuffer.map(b => b.length);
+    const newMax = Math.max(...newBufferLengths);
+    const oldMax = Math.max(...oldBufferLengths);
+    return newMax < oldMax;
+  };
+  
+  // Capture all states upfront
+  if (!liveWaveform.value) return;
+  if (!recordButton.value) return;
+  if (!mainContentCard.value) return;
+  if (!predictionsCard.value) return;
+  if (!mainHeading.value) return;
+  if (!predictionsHeading.value) return;
+  const statePredictionsCard = Flip.getState(predictionsCard.value.$el.querySelector('.card-background'));
+  const stateHeadings = Flip.getState([
+    predictionsHeading.value,
+    mainHeading.value
+  ]);
+  const statePage = Flip.getState([
+    liveWaveform.value.$el,
+    recordButton.value.$el,
+    mainContentCard.value.$el
+  ]);
+  // Update birdList with newBuffer and manage size
   let totalBuffer: string[] = [];
   let removeLast = false;
   
@@ -114,41 +170,74 @@ watch(() => [...classifierBuffer.value], (newBuffer, oldBuffer) => {
   birdList.value = totalBuffer; // Now update the reactive data
   
   nextTick(async () => {
-    const predictions = document.querySelectorAll("#predictionsCard .prediction");
-    gsap.set(predictions[0]!, { position: 'absolute', scale: 0, transformOrigin: 'center center' });
-    await nextTick();
+    // Create the main timeline
+    const timeline = gsap.timeline();
 
+    const predictions: NodeListOf<Element> = predictionsCard.value?.$el.querySelectorAll('.prediction') || [];
+    if (predictions.length === 0) return;
+    gsap.set(predictions[0]!, { position: 'absolute', scale: 0, transformOrigin: 'center center', right: 0, left: 0 });
+    await nextTick();
     const stateFirst = Flip.getState(predictions[0]!);
     const allButFirst = Array.from(predictions).slice(1);
     const stateOthers = Flip.getState(allButFirst);
     gsap.set(predictions[0]!, { position: 'relative', scale: 1 });
     if (removeLast) {
-      gsap.set(predictions[predictions.length - 1]!, { position: 'absolute', yPercent: 0 });
+      gsap.set(predictions[predictions.length - 1]!, { position: 'absolute', left: 0, right: 0 });
     }
+
     await nextTick();
-    Flip.from(stateFirst, {
+    
+    // Add all flip animations to timeline
+    timeline.add(Flip.from(statePage, {
+      duration,
+      ease
+    }), 0);
+
+    timeline.add(Flip.from(stateHeadings, {
+      duration,
+      ease
+    }), 0);
+    
+    if (isGettingSmaller(newBuffer, oldBuffer)) {
+      timeline.add(Flip.from(statePredictionsCard, {
+        duration: duration + manualDelay,
+        ease: 'power2.inOut',
+        nested: true,
+        onStart: () => {
+          gsap.set(predictionsCard.value!.$el.querySelector('.card-background'), { x: 0 }); // Reset any x offset
+        }
+      }), 0);
+    } else {
+      timeline.add(Flip.from(statePredictionsCard, {
+        duration,
+        ease,
+      }), 0);
+    }
+    
+    timeline.add(Flip.from(stateFirst, {
       scale: true,
-      duration: 0.5,
-      delay: 0.3,
+      duration: duration + (manualDelay),
       ease: 'bounce.out',
-    });
-    Flip.from(stateOthers, {
-      duration: 0.5,
-      ease: 'power2.out',
+    }), manualDelay);
+    
+    timeline.add(Flip.from(stateOthers, {
+      duration,
+      ease,
       stagger: {
-        each: 0.1,
+        each: stagger,
         from: "end"
       }
-    });
+    }), 0.1);
+    
     if (removeLast) {
-      gsap.to(predictions[predictions.length - 1]!, {
+      timeline.add(gsap.to(predictions[predictions.length - 1]!, {
         opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out',
+        duration,
+        ease,
         onComplete: () => {
           birdList.value.pop();
         }
-      });
+      }), 0);
     }
   });
 });

@@ -1,11 +1,15 @@
 <template>
   <div class="ui-card">
-    <div class="card-background"></div>
-    <slot />
+    <div ref="background" class="card-background"></div>
+    <div ref="content" class="contents">
+      <slot />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+const content = ref<HTMLElement | null>(null);
+const background = ref<HTMLElement | null>(null);
 const colorMap = {
   surface: 'var(--color-surface-300)',
   overlay: 'var(--color-surface-200)',
@@ -31,6 +35,11 @@ const backgroundColor: ComputedRef<string> = computed(() => {
 const borderRadius: ComputedRef<number> = computed(() => {
   return radiusMap[props.depth] || 1 * 1.618033988749 ** 2
 })
+
+defineExpose({
+  content,
+  background
+});
 </script>
 
 <style scoped>

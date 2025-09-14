@@ -1,4 +1,4 @@
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from "@tailwindcss/vite"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -22,12 +22,7 @@ export default defineNuxtConfig({
       exclude: ['pyodide']
     }
   },
-  modules: [
-    '@nuxt/content',
-    '@nuxt/eslint',
-    '@nuxt/image',
-    '@nuxt/ui'
-  ],
+  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/image', '@nuxt/ui', 'v-gsap-nuxt'],
   content: {
     watch: {
       hostname: 'localhost' // If HTTPS, set hostname to localhost to ensure WebSocket works

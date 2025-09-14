@@ -12,7 +12,7 @@
         class="absolute top-0 left-0 bottom-0 right-0 text-subtext-300 hover:text-text-100 transition-colors duration-300"
         @click.stop="toggleOpened"
       >
-        <Icon name="material-symbols:question-mark-rounded" class="absolute inset-0 m-auto" />
+        <Icon ref="questionIcon" name="material-symbols:question-mark-rounded" class="absolute inset-0 m-auto" />
       </button>
     </UICard>
     <UICard 
@@ -27,7 +27,7 @@
         class="absolute top-(--xxs-em) right-(--xxs-em) p-(--xs-em) text-subtext-300 hover:text-text-100 transition-colors duration-300"
         @click="toggleOpened"
       >
-        <Icon name="material-symbols:cancel-outline-rounded" />
+        <Icon ref="cancelIcon" name="material-symbols:cancel-outline-rounded" />
       </button>
       <h3>This is a heading</h3>
       <p>This is some text inside the FAQ component.</p>
@@ -46,6 +46,8 @@ import Card from '@/components/UI/Card.vue';
 
 const faqCard = ref<InstanceType<typeof Card> | null>(null);
 const openButton = ref<InstanceType<typeof Card> | null>(null);
+const questionIcon = ref<InstanceType<typeof Card> | null>(null);
+const cancelIcon = ref<InstanceType<typeof Card> | null>(null);
 const opened = ref(false);
 const openButtonState = ref(true);
 const faqCardState = ref(false);
@@ -56,34 +58,88 @@ async function toggleOpened() {
   faqCardState.value = true;
   opened.value = false;
   await nextTick();
-  const state = Flip.getState([faqCard.value?.$el, openButton.value?.$el]);
+  const backgrounds = [
+    faqCard.value?.$el.querySelectorAll('.card-background'),
+    openButton.value?.$el.querySelectorAll('.card-background')
+  ];
+  backgrounds.forEach((bg) => {
+    bg.forEach((el: Element) => {
+      el.setAttribute('data-flip-id', 'background');
+    });
+  });
+  const cardContents = [
+    faqCard.value?.$el.querySelectorAll('.contents'),
+    openButton.value?.$el.querySelectorAll('.contents')
+  ];
+  cardContents.forEach((content) => {
+    content.forEach((el: Element) => {
+      el.setAttribute('data-flip-id', 'content');
+    });
+  });
+  gsap.set(cardContents.flat().filter(Boolean), { display: 'block' });
+  await nextTick();
+  const timeline = gsap.timeline();
+  timeline.to([questionIcon.value?.$el, cancelIcon.value?.$el].filter(Boolean), {
+    opacity: 0,
+    duration: 0.25,
+    ease: "power1.inOut",
+    onStart: () => {
+      opened.value = !setTo;
+      gsap.set(cardContents.flat().filter(Boolean), { display: 'contents' });
+    },
+    onComplete: () => {
+      opened.value = true;
+      gsap.set(cardContents.flat().filter(Boolean), { display: 'block' });
+    }
+  });
+  const stateBackground = Flip.getState(backgrounds.filter(Boolean));
+  const stateContent = Flip.getState(cardContents.filter(Boolean));
   opened.value = !opened.value;
   await nextTick();
   if (setTo) {
-    Flip.from(state, {
-      duration: 0.5,
+    timeline.add(Flip.from(stateBackground, {
+      duration: 1,
       ease: "power1.inOut",
       absolute: true,
-      scale: true,
+      nested: true,
       onComplete: () => {
         opened.value = setTo;
         openButtonState.value = !opened.value;
         faqCardState.value = opened.value;
       }
-    });
+    }), '>+0.1');
+    timeline.add(Flip.from(stateContent, {
+      duration: 1,
+      ease: "power1.inOut",
+      absolute: false,
+      scale: true,
+      nested: true
+    }), "<");
   } else {
-    Flip.to(state, {
-      duration: 0.5,
+    timeline.add(Flip.to(stateBackground, {
+      duration: 1,
       ease: "power1.inOut",
       absolute: true,
-      scale: true,
+      nested: true,
       onComplete: () => {
         opened.value = setTo;
         openButtonState.value = !opened.value;
         faqCardState.value = opened.value;
       }
-    });
+    }), '>+0.1');
+    timeline.add(Flip.to(stateContent, {
+      duration: 1,
+      ease: "power1.inOut",
+      absolute: false,
+      scale: true,
+      nested: true
+    }), "<");
   }
+  timeline.to([questionIcon.value?.$el, cancelIcon.value?.$el].filter(Boolean), {
+    opacity: 1,
+    duration: 0.25,
+    ease: "power1.inOut"
+  });
 }
 </script>
 

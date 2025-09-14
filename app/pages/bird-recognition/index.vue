@@ -19,7 +19,7 @@
     />
     <UICard
       ref="mainContentCard"
-      class="flex flex-col items-center justify-center p-(--m-em) w-full max-w-6xl"
+      class="flex flex-col items-center justify-center p-(--s-em) w-full max-w-6xl"
       depth="surface"
       :opacity="0.5"
     >
@@ -51,6 +51,7 @@
       class="mt-(--s-em)"
       @click="toggleRecording"
     />
+    <BirdClassificationFAQ class="fixed bottom-(--m-em) right-(--m-em) z-5" />
   </div>
 </template>
 
@@ -190,12 +191,14 @@ watch(() => [...classifierBuffer.value], (newBuffer, oldBuffer) => {
     // Add all flip animations to timeline
     timeline.add(Flip.from(statePage, {
       duration,
-      ease
+      ease,
+      nested: true
     }), 0);
 
     timeline.add(Flip.from(stateHeadings, {
       duration,
-      ease
+      ease,
+      nested: true
     }), 0);
     
     if (isGettingSmaller(newBuffer, oldBuffer)) {

@@ -1,9 +1,9 @@
 faq:
-  - question: "What exactly is this?"
-    answer: "This is a web application that uses a machine learning model to identify broad types of bird audio. The model was trained on a dataset of bird sounds and can recognize various species based on their audio features, location, and other contextual information. Birds are all this model has ever known. As far as this model is concerned, everything else is a bird."
-#  - question: "How accurate is the model?"
-#    answer: "Well for one you could bark at this thing and it would probably tell you something like "Sounds like Owls". This model was designed for an academic report and achieved 95% accuracy on the test set, but the model was not optimized for production use. Biases in the training data and combined with poor audio quality can lead to misclassifications. This model is not intended for real world use but rather as a proof of concept for the deployment of this model on the frontend without the use of a backend server."
-#  - question: "Wait there is no server?"
-#    answer: "Correct! This entire application runs in your browser. I wrote the model in python, and pickled the models weights, then this webpage loads a version of python that runs in the browser (Pyodide) and downloades all the dependencies and pickled model weights and then is send arrays of audio data to classify. This is all done on your computer, no data is sent to any server."
-#  - question: "How did you make this?"
-#    answer: "Theres a write-up coming soon, but you can check out the github repo on the model archetecture [here](https://github.com/LookItVal/FinalProject/blob/master/revised_final.ipynb) and the repo for this web app [here](https://github.com/LookItVal/lookitval.github.io)."
+  - question: What exactly is this?
+    answer: This is a web application that uses a machine learning model to identify broad types of bird audio. The model was trained on a dataset of bird sounds and can recognize various species based on their audio features, location, and other contextual information. Birds are all this model has ever known. As far as this model is concerned, everything else is a bird.
+  - question: How accurate is the model?
+    answer: Well for one you could bark at this thing and it would probably tell you something like "Sounds like Owls". This model was designed for an academic report and achieved 95% accuracy on the test set, but the model was not optimized for production use. Biases in the training data and combined with poor audio quality can lead to misclassifications. This model is not intended for real world use but rather as a proof of concept for the deployment of this model on the frontend without the use of a backend server."
+  - question: "Wait there is no server?"
+    answer: "Correct! This entire application runs in your browser. I wrote the model in python, and pickled the models weights, then this webpage loads a version of python that runs in the browser (Pyodide) and downloades all the dependencies and pickled model weights and then is send arrays of audio data to classify. This is all done on your computer, no data is sent to any server."
+  - question: "How did you make this?"
+    answer: "Theres a write-up coming soon, but you can check out the github repo on the model archetecture [here](https://github.com/LookItVal/FinalProject/blob/master/revised_final.ipynb) and the repo for this web app [here](https://github.com/LookItVal/lookitval.github.io)."

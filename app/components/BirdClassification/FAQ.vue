@@ -30,9 +30,9 @@
         <Icon ref="cancelIcon" name="material-symbols:cancel-outline-rounded" />
       </button>
       <div 
-        v-for="(item, index) in faqData.faq" 
+        v-for="(item, index) in faqData?.faq || []" 
         :key="index" 
-        :class="index !== faqData.faq.length - 1 ? 'mb-(--s-em)' : ''"
+        :class="index !== (faqData?.faq?.length || 0) - 1 ? 'mb-(--s-em)' : ''"
       >
         <details
           @toggle="(event: Event) => updateDataState(event, index)"
@@ -48,8 +48,8 @@
           class="text-base mt-2"
           :data-state="faqStates[index] ? 'open' : 'hidden'"
           v-gsap.onState-state-open.animateText.fast
+          v-html="parseLinks(item.answer)"
         >
-          {{ item.answer }}
         </p>
       </div>
     </UICard>
@@ -74,6 +74,11 @@ const openButtonState = ref(true);
 const faqCardState = ref(false);
 const faqStates = ref<boolean[]>([]);
 
+function parseLinks(text: string) {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  return text.replace(linkRegex, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-mauve-100 hover:text-mauve-500 underline">$1</a>');
+}
+
 // Initialize faqStates array when faqData is loaded
 watchEffect(() => {
   if (faqData.value?.faq) {
@@ -87,6 +92,9 @@ function updateDataState(event: Event, index: number) {
 }
 
 async function toggleOpened() {
+  for (const faq of faqData.value!.faq) {
+    console.log(parseLinks(faq.answer));
+  }
   const setTo = !opened.value;
   if (setTo === false) {
     const anyOpen = faqStates.value.some(state => state);

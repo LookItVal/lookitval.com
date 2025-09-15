@@ -23,7 +23,7 @@
       depth="surface"
       :opacity="0.5"
     >
-      <h1 ref="mainHeading" class="main-heading text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-20">Bird Recognition</h1>
+      <h1 ref="mainHeading" class="main-heading text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11">Bird Recognition</h1>
       <UICard
         ref="predictionsCard"
         class="flex flex-col items-center justify-center w-min-[10rem] w-min-[45%] p-(--s-em) mb-(--s-em)"
@@ -51,7 +51,7 @@
       class="mt-(--s-em)"
       @click="toggleRecording"
     />
-    <BirdClassificationFAQ class="fixed bottom-(--m-em) right-(--m-em) z-5" />
+    <BirdClassificationFAQ v-if="loadingProgress >= 0.99" v-gsap.whenVisible.once.from='{ opacity: 0 }' class="fixed bottom-(--m-em) right-(--m-em) z-50" />
   </div>
 </template>
 

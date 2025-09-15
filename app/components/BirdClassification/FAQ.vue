@@ -35,7 +35,7 @@
         :class="index !== faqData.faq.length - 1 ? 'mb-(--s-em)' : ''"
       >
         <details
-          @toggle.prevent="(event: Event) => updateDataState(event, index)"
+          @toggle="(event: Event) => updateDataState(event, index)"
         >
           <summary 
             class="font-semibold text-lg cursor-pointer"
@@ -88,6 +88,13 @@ function updateDataState(event: Event, index: number) {
 
 async function toggleOpened() {
   const setTo = !opened.value;
+  if (setTo === false) {
+    const anyOpen = faqStates.value.some(state => state);
+    faqStates.value = faqStates.value.map(() => false);
+    if (anyOpen) {
+      await new Promise(resolve => setTimeout(resolve, 1750));
+    }
+  }
   openButtonState.value = true;
   faqCardState.value = true;
   opened.value = false;
@@ -115,7 +122,7 @@ async function toggleOpened() {
   const timeline = gsap.timeline();
   timeline.to([questionIcon.value?.$el, cancelIcon.value?.$el].filter(Boolean), {
     opacity: 0,
-    duration: 0.25,
+    duration: 0.125,
     ease: "power1.inOut",
     onStart: () => {
       opened.value = !setTo;
@@ -132,7 +139,7 @@ async function toggleOpened() {
   await nextTick();
   if (setTo) {
     timeline.add(Flip.from(stateBackground, {
-      duration: 1,
+      duration: 0.5,
       ease: "power1.inOut",
       absolute: true,
       nested: true,
@@ -141,9 +148,9 @@ async function toggleOpened() {
         openButtonState.value = !opened.value;
         faqCardState.value = opened.value;
       }
-    }), '>+0.1');
+    }), '>+0.01');
     timeline.add(Flip.from(stateContent, {
-      duration: 1,
+      duration: 0.5,
       ease: "power1.inOut",
       absolute: false,
       scale: true,
@@ -151,7 +158,7 @@ async function toggleOpened() {
     }), "<");
   } else {
     timeline.add(Flip.to(stateBackground, {
-      duration: 1,
+      duration: 0.5,
       ease: "power1.inOut",
       absolute: true,
       nested: true,
@@ -160,9 +167,9 @@ async function toggleOpened() {
         openButtonState.value = !opened.value;
         faqCardState.value = opened.value;
       }
-    }), '>+0.1');
+    }), '>+0.01');
     timeline.add(Flip.to(stateContent, {
-      duration: 1,
+      duration: 0.5,
       ease: "power1.inOut",
       absolute: false,
       scale: true,
@@ -171,7 +178,7 @@ async function toggleOpened() {
   }
   timeline.to([questionIcon.value?.$el, cancelIcon.value?.$el].filter(Boolean), {
     opacity: 1,
-    duration: 0.25,
+    duration: 0.125,
     ease: "power1.inOut"
   });
 }

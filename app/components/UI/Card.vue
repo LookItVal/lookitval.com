@@ -1,6 +1,6 @@
 <template>
   <div class="ui-card">
-    <div ref="background" class="card-background"></div>
+    <div ref="background" class="card-background" />
     <div ref="content" class="contents">
       <slot />
     </div>

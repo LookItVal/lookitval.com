@@ -84,9 +84,9 @@ import { gsap } from 'gsap';
 import { Flip } from "gsap/Flip";
 import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
-import RecordButton from '~/components/BirdClassification/RecordButton.vue';
-import LiveWaveform from '~/components/BirdClassification/LiveWaveform.vue';
-import Card from '~/components/UI/Card.vue';
+import type RecordButton from '~/components/BirdClassification/RecordButton.vue';
+import type LiveWaveform from '~/components/BirdClassification/LiveWaveform.vue';
+import type Card from '~/components/UI/Card.vue';
 
 const { toggleRecording, isRecording } = useAudio();
 const { classifierBuffer, bufferSize, initPackages, loadingProgress, loadingStep } = useClassifier();
@@ -130,12 +130,8 @@ async function revealPage() {
   }
 }
 
-onMounted(async () => {
-  // Start performance calculation in parallel with package initialization
-  calculatePerformance();
-  
-  await initPackages();
-  const handleVisibilityChange = () => {
+
+const handleVisibilityChange = () => {
     if (document.hidden) {
       if (isRecording.value) {
         recordButton.value?.$el?.click();
@@ -144,10 +140,16 @@ onMounted(async () => {
       // Resume or re-initialize if needed
     }
   };
+
+onMounted(async () => {
+  // Start performance calculation in parallel with package initialization
+  calculatePerformance();
+  await initPackages();
   document.addEventListener('visibilitychange', handleVisibilityChange);
-  onUnmounted(() => {
-    document.removeEventListener('visibilitychange', handleVisibilityChange);
-  });
+});
+
+onUnmounted(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
 });
 
 watch(loadingProgress, (newProgress) => {

@@ -35,7 +35,7 @@
         :class="index !== (faqData?.faq?.length || 0) - 1 ? 'mb-(--s-em)' : ''"
       >
         <details
-          @toggle="(event: Event) => updateDataState(event, index)"
+          @click.prevent="(event: Event) => updateDataState(event, index)"
         >
           <summary 
             class="font-semibold text-lg cursor-pointer"
@@ -86,19 +86,28 @@ watchEffect(() => {
   }
 });
 
+function closeAllDetails() {
+  const detailsElements = faqCard.value?.$el.querySelectorAll('details');
+  detailsElements?.forEach((detail: unknown) => {
+    (detail as HTMLDetailsElement).open = false;
+  });
+  faqStates.value = faqStates.value.map(() => false);
+}
+
 function updateDataState(event: Event, index: number) {
-  const target = event.target as HTMLDetailsElement;
-  faqStates.value[index] = target.open;
+  const target = (event.target as HTMLElement).closest('details') as HTMLDetailsElement;
+  console.log(target);
+  const setTo = target.open;
+  closeAllDetails();
+  target.open = !setTo;
+  faqStates.value[index] = !setTo;
 }
 
 async function toggleOpened() {
-  for (const faq of faqData.value!.faq) {
-    console.log(parseLinks(faq.answer));
-  }
   const setTo = !opened.value;
   if (setTo === false) {
     const anyOpen = faqStates.value.some(state => state);
-    faqStates.value = faqStates.value.map(() => false);
+    closeAllDetails();
     if (anyOpen) {
       await new Promise(resolve => setTimeout(resolve, 1750));
     }

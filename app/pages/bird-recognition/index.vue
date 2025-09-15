@@ -51,7 +51,11 @@
       class="mt-(--s-em)"
       @click="toggleRecording"
     />
-    <BirdClassificationFAQ v-if="loadingProgress >= 0.99" v-gsap.whenVisible.once.from='{ opacity: 0 }' class="fixed bottom-(--m-em) right-(--m-em) z-50" />
+    <BirdClassificationFAQ 
+      v-if="loadingProgress >= 0.99" 
+      v-gsap.whenVisible.once.from='{ opacity: 0, delay: 2.5, duration: 2 }'
+      class="fixed bottom-(--m-em) right-(--m-em) z-50" 
+    />
   </div>
 </template>
 

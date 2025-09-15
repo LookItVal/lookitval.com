@@ -50,6 +50,9 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.9.2
+      v-gsap-nuxt:
+        specifier: ^1.4.4
+        version: 1.4.4(magicast@0.3.5)
       vanta:
         specifier: ^0.5.24
         version: 0.5.24
@@ -5579,6 +5582,9 @@ packages:
   uuid@11.1.0:
     resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
     hasBin: true
+
+  v-gsap-nuxt@1.4.4:
+    resolution: {integrity: sha512-ygzTkdVmiHHytIS9Hw2xXeIuyLbKLKHGakPfYwLj3MA1OfaSCbANPTwEa2/4EkA9DyJA7xYwvO8T3Gf2+hc8kA==}
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -12584,6 +12590,14 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   uuid@11.1.0: {}
+
+  v-gsap-nuxt@1.4.4(magicast@0.3.5):
+    dependencies:
+      '@nuxt/kit': 3.18.1(magicast@0.3.5)
+      defu: 6.1.4
+      gsap: 3.13.0
+    transitivePeerDependencies:
+      - magicast
 
   validate-npm-package-license@3.0.4:
     dependencies:

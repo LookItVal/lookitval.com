@@ -18,7 +18,7 @@
     <UICard 
       v-if="faqCardState"
       ref="faqCard"
-      class="relative p-(--m-em) min-w-[50vw]"
+      class="relative p-(--m-em) min-w-[50vw] max-w-4xl"
       :class="!opened ? 'hidden' : ''"
       depth="surface"
       data-flip-id="faq-card"
@@ -29,10 +29,29 @@
       >
         <Icon ref="cancelIcon" name="material-symbols:cancel-outline-rounded" />
       </button>
-      <h3>This is a heading</h3>
-      <p>This is some text inside the FAQ component.</p>
-      <h3>This is another heading</h3>
-      <p>More text inside the FAQ component.</p>
+      <div 
+        v-for="(item, index) in faqData.faq" 
+        :key="index" 
+        :class="index !== faqData.faq.length - 1 ? 'mb-(--s-em)' : ''"
+      >
+        <details
+          @toggle.prevent="(event: Event) => updateDataState(event, index)"
+        >
+          <summary 
+            class="font-semibold text-lg cursor-pointer"
+          >
+            {{ item.question }}
+          </summary>
+          <p></p>
+        </details>
+        <p
+          class="text-base mt-2"
+          :data-state="faqStates[index] ? 'open' : 'hidden'"
+          v-gsap.onState-state-open.animateText.fast
+        >
+          {{ item.answer }}
+        </p>
+      </div>
     </UICard>
   </div>
 </template>
@@ -44,6 +63,8 @@ gsap.registerPlugin(Flip);
 
 import Card from '@/components/UI/Card.vue';
 
+const { data: faqData } = await useAsyncData('faq', () => queryCollection('faq').first())
+
 const faqCard = ref<InstanceType<typeof Card> | null>(null);
 const openButton = ref<InstanceType<typeof Card> | null>(null);
 const questionIcon = ref<InstanceType<typeof Card> | null>(null);
@@ -51,6 +72,19 @@ const cancelIcon = ref<InstanceType<typeof Card> | null>(null);
 const opened = ref(false);
 const openButtonState = ref(true);
 const faqCardState = ref(false);
+const faqStates = ref<boolean[]>([]);
+
+// Initialize faqStates array when faqData is loaded
+watchEffect(() => {
+  if (faqData.value?.faq) {
+    faqStates.value = new Array(faqData.value.faq.length).fill(false);
+  }
+});
+
+function updateDataState(event: Event, index: number) {
+  const target = event.target as HTMLDetailsElement;
+  faqStates.value[index] = target.open;
+}
 
 async function toggleOpened() {
   const setTo = !opened.value;

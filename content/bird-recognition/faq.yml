@@ -1,0 +1,3 @@
+faq:
+  - question: "What exactly is this?"
+    answer: "This is a web application that uses a machine learning model to identify bird species from images. The model was trained on a dataset of bird images and can recognize various species based on their visual features."

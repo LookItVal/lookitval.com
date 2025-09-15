@@ -1,7 +1,0 @@
-title: FAQ
-description: This is the deployment to a bird recognition model I trained as part of my curriculum in the Johnson County Community College Data Analytics program.
-
----
-
-"What exactly is this?":
-  This is a web application that uses a machine learning model to identify bird species from images. The model was trained on a dataset of bird images and can recognize various species based on their visual features.

@@ -1,6 +1,14 @@
 <template>
   <div class="ui-card">
-    <div ref="background" class="card-background" />
+    <div
+      ref="background"
+      class="card-background"
+      :style="{
+        borderRadius: borderRadius + 'rem',
+        backgroundColor: backgroundColor,
+        opacity: opacity
+      }"
+    />
     <div ref="content" class="contents">
       <slot />
     </div>
@@ -45,7 +53,6 @@ defineExpose({
 <style scoped>
 .ui-card {
   position: relative;
-  border-radius: v-bind(borderRadius + 'em');
 }
 .card-background {
   position: absolute;
@@ -54,8 +61,5 @@ defineExpose({
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: v-bind(borderRadius + 'rem');
-  background-color: v-bind(backgroundColor);
-  opacity: v-bind(opacity);
 }
 </style>

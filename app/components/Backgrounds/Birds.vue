@@ -142,6 +142,22 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
-  if (vantaEffect.value) vantaEffect.value.destroy();
+  cleanup();
 });
+
+onUnmounted(() => {
+  cleanup();
+});
+
+const cleanup = () => {
+  if (vantaEffect.value) {
+    try {
+      vantaEffect.value.destroy();
+    } catch (error) {
+      console.warn('Error destroying Vanta Birds effect:', error);
+    } finally {
+      vantaEffect.value = null;
+    }
+  }
+};
 </script>

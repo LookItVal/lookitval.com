@@ -45,8 +45,7 @@
 <script lang="ts" setup>
 // const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
 
-const webGLSupported = ref(false);
-const highPerformance = ref(false);
+const { webGLSupported, highPerformance, calculatePerformance } = usePerformance();
 
 const loadingText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 const pageText = ref<ComponentPublicInstance | HTMLElement | null>(null);
@@ -55,24 +54,6 @@ const loadingTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 const pageTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 
 const loaded = ref(false);
-
-function calculatePerformance() {
-  if (typeof window === 'undefined') return;
-  let frameCount = 0;
-  const startTime = performance.now();
-
-  function countFrame() {
-    frameCount++;
-    const now = performance.now();
-    if (now - startTime < 2000) {
-      requestAnimationFrame(countFrame);
-    } else {
-      const avgFps = frameCount / ((now - startTime) / 1000);
-      highPerformance.value = avgFps > 45;
-    }
-  }
-  requestAnimationFrame(countFrame);
-}
 
 useHead({
   title: "Look, It's Val!",
@@ -91,7 +72,6 @@ onMounted(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
   document.addEventListener('scroll', scrollHandler);
-  webGLSupported.value = !!window.WebGLRenderingContext;
   calculatePerformance();
 
   if (loadingText.value && pageText.value) {

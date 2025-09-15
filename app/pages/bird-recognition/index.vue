@@ -1,13 +1,23 @@
 <template>
   <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center p-(--m-em)">
     <div ref="loadingScreen" class="loading-screen fixed top-0 left-0 w-full h-full bg-base-100 z-10 flex flex-col items-center justify-center">
-      <UIFeatherLoadingBar 
+      <div class="z-11 h-(--xl-em)">
+        <h1
+          ref="mainHeadingLoading"
+          class="text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
+          data-flip-id="main-heading"
+        >
+          Bird Recognition
+        </h1>
+      </div>
+      <UIFeatherLoadingBar
         class="w-full h-(--xxl-em) px-(--m-em)"
         :progress="loadingProgress"
       />
       <p class="mt-(--s-em) text-center text-lg">{{ loadingStep }}</p>
     </div>
     <BackgroundsBirds
+      v-if="webGLSupported && highPerformance"
       class="fixed top-0 left-0 w-full h-full -z-10 opacity-75"
       :mouse-controls="false"
       :touch-controls="false"
@@ -23,7 +33,16 @@
       depth="surface"
       :opacity="0.5"
     >
-      <h1 ref="mainHeading" class="main-heading text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11">Bird Recognition</h1>
+      <div class="z-11 h-(--xl-em)">
+        <h1
+          ref="mainHeading"
+          class="text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
+          data-flip-id="main-heading"
+          style="display: none;"
+        >
+          Bird Recognition
+        </h1>
+      </div>
       <UICard
         ref="predictionsCard"
         class="flex flex-col items-center justify-center w-min-[10rem] w-min-[45%] p-(--s-em) mb-(--s-em)"
@@ -53,7 +72,7 @@
     />
     <BirdClassificationFAQ 
       v-if="loadingProgress >= 0.99" 
-      v-gsap.whenVisible.once.from='{ opacity: 0, delay: 2.5, duration: 2 }'
+      v-gsap.whenVisible.once.from='{ opacity: 0, delay: 0.5, duration: 2 }'
       class="fixed bottom-(--m-em) right-(--m-em) z-50" 
     />
   </div>
@@ -68,12 +87,16 @@ import { useClassifier } from '@/composables/birdClassifier';
 import RecordButton from '~/components/BirdClassification/RecordButton.vue';
 import LiveWaveform from '~/components/BirdClassification/LiveWaveform.vue';
 import Card from '~/components/UI/Card.vue';
+
 const { toggleRecording, isRecording } = useAudio();
 const { classifierBuffer, bufferSize, initPackages, loadingProgress, loadingStep } = useClassifier();
+const { webGLSupported, highPerformance, calculatePerformance } = usePerformance();
+
 gsap.registerPlugin(Flip);
 
 const loadingScreen = ref<HTMLElement>();
 const mainHeading = ref<HTMLElement>();
+const mainHeadingLoading = ref<HTMLElement>();
 const predictionsHeading = ref<HTMLElement>();
 const recordButton = ref<InstanceType<typeof RecordButton>>();
 const liveWaveform = ref<InstanceType<typeof LiveWaveform>>();
@@ -81,33 +104,36 @@ const mainContentCard = ref<InstanceType<typeof Card>>();
 const predictionsCard = ref<InstanceType<typeof Card>>();
 const birdList = ref<string[]>([...classifierBuffer.value]);
 
-
-function revealPage() {
+async function revealPage() {
   if (loadingScreen.value) {
     console.log('Revealing page');
     const timeline = gsap.timeline();
-    const beginningState = Flip.getState(mainHeading.value!);
+    const beginningState = Flip.getState([mainHeading.value!, mainHeadingLoading.value!]);
+    gsap.set(mainHeadingLoading.value!, { display: 'none' });
+    gsap.set(mainHeading.value!, { display: 'block' });
+    await nextTick();
     timeline.to(loadingScreen.value, {
       translateY: '-100%',
       duration: 0.75,
-      delay: 1,
-      ease: 'power2.inOut',
+      delay: 0.25,
+      ease: 'power1.inOut',
       onComplete: () => {
       loadingScreen.value!.style.display = 'none';
       }
     });
-    // Toggle the "main-heading" class before running Flip animation
-    mainHeading.value!.classList.toggle('main-heading');
     const flipAnimation = Flip.from(beginningState, {
       duration: 0.75,
-      delay: 1,
-      ease: 'power2.inOut'
+      delay: 0.25,
+      ease: 'power1.inOut'
     });
     timeline.add(flipAnimation, 0);
   }
 }
 
 onMounted(async () => {
+  // Start performance calculation in parallel with package initialization
+  calculatePerformance();
+  
   await initPackages();
   const handleVisibilityChange = () => {
     if (document.hidden) {
@@ -249,12 +275,3 @@ watch(() => [...classifierBuffer.value], (newBuffer, oldBuffer) => {
   });
 });
 </script>
-
-<style scoped>
-.main-heading {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-</style>

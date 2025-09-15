@@ -18,7 +18,7 @@
     <UICard 
       v-if="faqCardState"
       ref="faqCard"
-      class="relative p-(--m-em) min-w-[50vw] max-w-4xl"
+      class="relative p-(--m-em) min-w-[50vw] max-w-4xl text-3xl"
       :class="!opened ? 'hidden' : ''"
       depth="surface"
       data-flip-id="faq-card"

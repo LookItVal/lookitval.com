@@ -17,7 +17,7 @@
       <p class="mt-(--s-em) text-center text-lg">{{ loadingStep }}</p>
     </div>
     <BackgroundsBirds
-      v-if="webGLSupported && highPerformance"
+      v-if="highPerformance"
       class="fixed top-0 left-0 w-full h-full -z-10 opacity-75"
       :mouse-controls="false"
       :touch-controls="false"
@@ -90,7 +90,7 @@ import Card from '~/components/UI/Card.vue';
 
 const { toggleRecording, isRecording } = useAudio();
 const { classifierBuffer, bufferSize, initPackages, loadingProgress, loadingStep } = useClassifier();
-const { webGLSupported, highPerformance, calculatePerformance } = usePerformance();
+const { highPerformance, calculatePerformance } = usePerformance();
 
 gsap.registerPlugin(Flip);
 

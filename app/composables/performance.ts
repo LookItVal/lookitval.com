@@ -1,7 +1,8 @@
 import { ref, readonly } from 'vue';
 
 const webGLSupported = ref(true);
-const highPerformance = ref(true);
+const highFramerate = ref(true);
+const highPerformance = computed(() => webGLSupported.value && highFramerate.value);
 const isPerformanceCalculated = ref(false);
 
 export const usePerformance = () => {
@@ -22,7 +23,7 @@ export const usePerformance = () => {
           requestAnimationFrame(countFrame);
         } else {
           const avgFps = frameCount / ((now - startTime) / 1000);
-          highPerformance.value = avgFps > 45;
+          highFramerate.value = avgFps > 45;
           isPerformanceCalculated.value = true;
           resolve();
         }
@@ -32,7 +33,6 @@ export const usePerformance = () => {
   };
 
   return {
-    webGLSupported: readonly(webGLSupported),
     highPerformance: readonly(highPerformance),
     isPerformanceCalculated: readonly(isPerformanceCalculated),
     calculatePerformance

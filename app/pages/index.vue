@@ -30,7 +30,7 @@
         >
       </div>
       <BackgroundsDither
-        v-if="webGLSupported && highPerformance"
+        v-if="highPerformance"
         class="-z-10"
         :wave-color="[0.3451, 0.3569, 0.4392]"
         :enable-mouse-interaction="false"
@@ -45,7 +45,7 @@
 <script lang="ts" setup>
 // const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
 
-const { webGLSupported, highPerformance, calculatePerformance } = usePerformance();
+const { highPerformance, calculatePerformance } = usePerformance();
 
 const loadingText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 const pageText = ref<ComponentPublicInstance | HTMLElement | null>(null);

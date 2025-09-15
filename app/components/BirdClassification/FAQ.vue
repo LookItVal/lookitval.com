@@ -51,6 +51,13 @@
           v-html="parseLinks(item.answer)"
         >
         </p>
+        <p
+            class="absolute text-base -translate-y-full"
+            :style="`padding-right: ${faqPadding}; opacity: ${faqStates[index] ? 1 : 0}; transition: opacity ${faqStates[index] ? 2 : 0}s ease-in-out ${faqStates[index] ? 1.5 : 0}s; pointer-events: ${faqStates[index] ? 'auto' : 'none'};`"
+            :data-state="faqStates[index] ? 'hidden' : 'open'"
+            v-html="parseLinks(item.answer)"
+          >
+        </p>
       </div>
     </UICard>
   </div>
@@ -73,10 +80,16 @@ const opened = ref(false);
 const openButtonState = ref(true);
 const faqCardState = ref(false);
 const faqStates = ref<boolean[]>([]);
+const faqPadding = computed(() => {
+  if (!faqCard.value) return null;
+  const el = faqCard.value.$el as HTMLElement;
+  const style = window.getComputedStyle(el);
+  return style.getPropertyValue('padding-right');
+});
 
 function parseLinks(text: string) {
   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-  return text.replace(linkRegex, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-mauve-100 hover:text-mauve-500 underline">$1</a>');
+  return text.replace(linkRegex, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 }
 
 // Initialize faqStates array when faqData is loaded

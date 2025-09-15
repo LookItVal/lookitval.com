@@ -133,8 +133,12 @@ b {
 }
 
 a {
-    color: var(--color-blue-100);
-    text-decoration: none;
+  transition: color 0.3s ease-in-out;
+  color: var(--color-mauve-100);
+  text-decoration: underline;
+}
+a:hover {
+  color: var(--color-lavender-100);
 }
 
 .background-lambda::before {

@@ -1,5 +1,4 @@
-export const useConstants = () => {
-  const COLORS = {
+const COLORS = {
   'rosewater-100': '#f5e0dc',
   'rosewater-500': '#dc8a78',
   'flamingo-100': '#f2cdcd',
@@ -52,21 +51,22 @@ export const useConstants = () => {
   'mantle-500': '#e6e9ef',
   'crust-100': '#11111b',
   'crust-500': '#dce0e8'
-  } as const;
+} as const;
 
-  const SHIMMER_COLORS = [
-    'purple',
-    'blue',
-    'green',
-    'yellow',
-    'orange',
-    'red',
-    'pink',
-    'rgb',
-    'cmy',
-    'trans'
-  ] as const;
-  
+const SHIMMER_COLORS = [
+  'purple',
+  'blue',
+  'green',
+  'yellow',
+  'orange',
+  'red',
+  'pink',
+  'rgb',
+  'cmy',
+  'trans'
+] as const;
+
+export const useConstants = () => {   
   return {
     COLORS,
     SHIMMER_COLORS

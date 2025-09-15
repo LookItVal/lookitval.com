@@ -1,6 +1,6 @@
 <template>
   <div class="fulltext flex pl-[var(--xs-em)] gap-[var(--xxxs-em)] w-max">
-    <h2>-</h2> <ShimmeringText :text="displayText" as="h2" :speed="4" :fg-color="currentColor" :bg-color="currentBgColor" class="gradient-text" />
+    <h2>-</h2> <UIShimmeringText :text="displayText" as="h2" :speed="4" :fg-color="currentColor" :bg-color="currentBgColor" class="gradient-text" />
   </div>
 </template>
 

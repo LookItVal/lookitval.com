@@ -30,7 +30,7 @@
         >
       </div>
       <BackgroundsDither
-        v-if="webGLSupported && highPerformance"
+        v-if="highPerformance"
         class="-z-10"
         :wave-color="[0.3451, 0.3569, 0.4392]"
         :enable-mouse-interaction="false"
@@ -43,12 +43,9 @@
   </div>
 </template>
 <script lang="ts" setup>
+// const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
 
-const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
-console.log('test length', test.length);
-
-const webGLSupported = ref(false);
-const highPerformance = ref(true);
+const { highPerformance, calculatePerformance } = usePerformance();
 
 const loadingText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 const pageText = ref<ComponentPublicInstance | HTMLElement | null>(null);
@@ -57,24 +54,6 @@ const loadingTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 const pageTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 
 const loaded = ref(false);
-
-function calculatePerformance() {
-  if (typeof window === 'undefined') return;
-  let frameCount = 0;
-  const startTime = performance.now();
-
-  function countFrame() {
-    frameCount++;
-    const now = performance.now();
-    if (now - startTime < 2000) {
-      requestAnimationFrame(countFrame);
-    } else {
-      const avgFps = frameCount / ((now - startTime) / 1000);
-      highPerformance.value = avgFps > 30;
-    }
-  }
-  requestAnimationFrame(countFrame);
-}
 
 useHead({
   title: "Look, It's Val!",
@@ -93,7 +72,6 @@ onMounted(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
   document.addEventListener('scroll', scrollHandler);
-  webGLSupported.value = !!window.WebGLRenderingContext;
   calculatePerformance();
 
   if (loadingText.value && pageText.value) {

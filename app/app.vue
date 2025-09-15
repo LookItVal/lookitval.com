@@ -26,11 +26,10 @@
     <!-- Don't delete this it's the only thing making tailwind inject all colors -->
     <!-- SVG Defnitions -->
     <svg style="position: absolute;">
-      <defs>
-      </defs>
+      <defs/>
     </svg>
 
     <!-- Page Content -->
     <NuxtPage />
   </div>
-</template>
+</template> <!-- TODO: Convert nested css to less -->

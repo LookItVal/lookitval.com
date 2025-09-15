@@ -120,6 +120,16 @@ body {
   background-color: var(--color-crust-100);
 }
 
+/* Hide scrollbars globally while keeping scroll functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
 h1, h2 {
   font-weight: 800;
   line-height: 1.2;
@@ -150,15 +160,12 @@ b {
 }
 
 a {
-  color: var(--color-blue-100);
-  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+  color: var(--color-mauve-100);
+  text-decoration: underline;
 }
-
-p {
-  text-wrap: balance;
-}
-span {
-  text-wrap: balance;
+a:hover {
+  color: var(--color-lavender-100);
 }
 
 .background-lambda::before {

@@ -1,6 +1,6 @@
 <template>
-  <a class="mx-(--xs-em) h-full aspect-square"href="https://www.linkedin.com/in/qcecil" target="_blank" @mouseover="shimmer">
-    <svg class="h-full" ref="linkedinSvg" viewBox="0 0 10 10">
+  <a class="mx-(--xs-em) h-full aspect-square" href="https://www.linkedin.com/in/qcecil" target="_blank" @mouseover="shimmer">
+    <svg ref="linkedinSvg" class="h-full" viewBox="0 0 10 10">
       <defs>
         <mask id="linkedin">
           <image href="/icons/linkedin.svg" height="100%" width="100%" />
@@ -16,7 +16,8 @@
       </defs>
       <g mask="url(#linkedin)">
         <rect width="100%" height="100%" fill="var(--color-lavender-100)" />
-        <path id="outer-path" d="M 6.25 8.25
+        <path
+id="outer-path" d="M 6.25 8.25
                                  L 5 9.55
                                  C 9.25 9.55 9.55 9.25 9.55 5
                                  C 9.55 0.75 9.25 0.45 5 0.45

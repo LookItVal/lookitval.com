@@ -53,7 +53,7 @@
         </p>
         <p
             class="absolute text-base -translate-y-full"
-            :style="`padding-right: ${faqPadding}; opacity: ${faqStates[index] ? 1 : 0}; transition: opacity ${faqStates[index] ? 2 : 0}s ease-in-out ${faqStates[index] ? 1.5 : 0}s; pointer-events: ${faqStates[index] ? 'auto' : 'none'};`"
+            :style="`padding-right: ${faqPadding}; opacity: ${faqStates[index] ? 1 : 0}; transition: opacity ${faqStates[index] ? 2 : 0}s ease-in-out ${faqStates[index] ? item.answer.length * 0.005 : 0}s; pointer-events: ${faqStates[index] ? 'auto' : 'none'};`"
             :data-state="faqStates[index] ? 'hidden' : 'open'"
             v-html="parseLinks(item.answer)"
           >
@@ -120,9 +120,11 @@ async function toggleOpened() {
   const setTo = !opened.value;
   if (setTo === false) {
     const anyOpen = faqStates.value.some(state => state);
+    const openedIndex = faqStates.value.findIndex(state => state);
+    const openedText = faqData.value?.faq?.[openedIndex || 0]?.answer || '';
     closeAllDetails();
     if (anyOpen) {
-      await new Promise(resolve => setTimeout(resolve, 1750));
+      await new Promise(resolve => setTimeout(resolve, openedText.length * 5));
     }
   }
   openButtonState.value = true;

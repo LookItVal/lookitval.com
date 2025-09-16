@@ -1,5 +1,5 @@
 # https://github.com/actions/deploy-pages#usage
-name: Deploy to lookitval.com
+name: Deploy to staging.lookitval.com
 on:
   workflow_dispatch:
   push:

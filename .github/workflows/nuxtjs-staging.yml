@@ -32,7 +32,7 @@ jobs:
     # Deploy to the github_pages environment
     environment:
       name: github-pages
-      url: staging.lookitval.com
+      url: https://staging.lookitval.com
     # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:

@@ -81,9 +81,9 @@
 <script lang="ts" setup>
 import { gsap } from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-
 // Register GSAP plugins
 gsap.registerPlugin(MotionPathPlugin);
+
 
 const isAnimating = ref<boolean>(false);
 const logoSvg = ref<SVGSVGElement | null>(null);
@@ -92,6 +92,9 @@ const shimmerCircle2 = ref<SVGCircleElement | null>(null);
 const shimmerCircle3 = ref<SVGCircleElement | null>(null);
 
 function shimmer(): void {
+  const animationDuration = 0.75; // seconds
+  const mainEaseFunction = "power3.in";
+
   if (isAnimating.value) return;
   isAnimating.value = true;
 
@@ -128,47 +131,47 @@ function shimmer(): void {
     }
   });
   tl.to(shimmerCircle1.value, {
-    duration: 1,
+    duration: animationDuration,
     motionPath: {
       path: "#logo-path-1",
       autoRotate: false,
     },
-    ease: "power3.in"
+    ease: mainEaseFunction
   }, 0)
   tl.to(shimmerCircle1.value, {
-    duration: 0.5,
+    duration: animationDuration / 2,
     opacity: 1,
     ease: "power2.out"
   }, 0)
 
   // Animate along path 2 (shorter duration)
   tl.to(shimmerCircle2.value, {
-    duration: 0.5,
+    duration: animationDuration / 2,
     opacity: 1,
     ease: "power2.out"
   }, 0)
   .to(shimmerCircle2.value, {
-    duration: 0.65,
+    duration: animationDuration * 0.65,
     motionPath: {
       path: "#logo-path-2",
       autoRotate: false,
     },
-    ease: "power3.in"
+    ease: mainEaseFunction
   }, 0);
 
   // Animate along path 3
   tl.to(shimmerCircle3.value, {
-    duration: 0.5,
+    duration: animationDuration / 2,
     opacity: 1,
     ease: "power2.out"
   }, 0)
   .to(shimmerCircle3.value, {
-    duration: 1,
+    duration: animationDuration,
     motionPath: {
       path: "#logo-path-3",
       autoRotate: false,
     },
-    ease: "power3.in"
+    ease: mainEaseFunction
   }, 0);
 }
 </script>

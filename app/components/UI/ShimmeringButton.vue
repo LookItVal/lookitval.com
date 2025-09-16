@@ -1,22 +1,18 @@
 <template>
   <div>
-    <template v-if="props.glare">
-      <AnimationsGlareHover 
-        class="shimmering-button relative overflow-hidden rounded-full z-1"
-        :width="'max-content'"
-        :height="'100%'"
-        :border-radius="'50em'" 
-      >
-        <slot class="z-1"/>
-      </AnimationsGlareHover>
-    </template>
-    <template v-else>
-      <button
-        class="shimmering-button relative overflow-hidden rounded-full z-1"
-      >
-        <slot class="z-1"/>
-      </button>
-    </template>
+    <AnimationsGlareHover 
+      v-if="props.glare"
+      class="shimmering-button relative overflow-hidden rounded-full  z-1"
+      style="width: max-content; height: 100%; border-radius: 50em; border-width: 0;"
+    >
+      <slot class="z-1"/>
+    </AnimationsGlareHover>
+    <button
+      v-else
+      class="shimmering-button relative overflow-hidden rounded-full z-1 0"
+    >
+      <slot class="z-1"/>
+    </button>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UILogo />
+    <UIMenuBar />
   </div>
 </template>
 

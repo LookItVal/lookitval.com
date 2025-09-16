@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - staging
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
     # Deploy to the github_pages environment
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: staging.lookitval.com
     # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:

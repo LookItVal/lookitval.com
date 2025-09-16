@@ -25,7 +25,7 @@
       </defs>
       <g mask="url(#logo-mask)">
         <rect width="100%" height="100%" fill="url(#logo-gradient)" />
-        <circle r="0.1" cx="21" cy="11" fill="var(--red)"></circle>
+        <circle r="0.1" cx="21" cy="11" fill="var(--red)"/>
       </g>
       <g mask="url(#outer-shimmer-mask)">
         <path 
@@ -56,9 +56,9 @@
           stroke="none"
           fill="none" 
         />
-        <circle ref="shimmerCircle1" r="1" fill="url(#radial-gradient)" opacity="0"></circle>
-        <circle ref="shimmerCircle3" r="1" fill="url(#radial-gradient)" opacity="0"></circle>
-        <circle r="0.1" cx="21" cy="11" fill="var(--red)"></circle>
+        <circle ref="shimmerCircle1" r="1" fill="url(#radial-gradient)" opacity="0"/>
+        <circle ref="shimmerCircle3" r="1" fill="url(#radial-gradient)" opacity="0"/>
+        <circle r="0.1" cx="21" cy="11" fill="var(--red)"/>
       </g>
       <g mask="url(#inner-shimmer-mask)">
         <path
@@ -70,8 +70,8 @@
           stroke="none"
           fill="none"
         />
-        <circle ref="shimmerCircle2" r="1" fill="url(#radial-gradient)" opacity="0"></circle>
-        <circle r="0.1" cx="21" cy="11" fill="var(--red)"></circle>
+        <circle ref="shimmerCircle2" r="1" fill="url(#radial-gradient)" opacity="0"/>
+        <circle r="0.1" cx="21" cy="11" fill="var(--red)"/>
       </g>
     </svg>
   </NuxtLink>

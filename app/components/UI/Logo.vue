@@ -1,6 +1,6 @@
 <template>
   <NuxtLink to="/" class="logo">
-    <svg ref="logoSvg" height="100%" width="100%" viewBox="0 0 20 10" @mouseover="animateEntrance">
+    <svg ref="logoSvg" height="100%" width="100%" viewBox="0 0 20 10" @mouseover="shimmer">
       <defs>
         <mask id="logo-mask" height="100%" width="100%">
           <image href="/logo/QVC.svg" height="100%" width="100%" />
@@ -91,14 +91,6 @@ const logoSvg = ref<SVGSVGElement | null>(null);
 const shimmerCircle1 = ref<SVGCircleElement | null>(null);
 const shimmerCircle2 = ref<SVGCircleElement | null>(null);
 const shimmerCircle3 = ref<SVGCircleElement | null>(null);
-
-function animateEntrance() {
-  const mainDuration = 1;
-  const mainEaseFunction = "power1.inOut";
-  
-}
-
-    
 
 
 function shimmer(): void {

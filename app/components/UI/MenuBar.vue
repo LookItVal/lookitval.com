@@ -2,22 +2,21 @@
   <div
     ref="menuBar"
     :class="[
-      'fixed left-1/2 transform -translate-x-1/2 h-(--l-em) flex flex-row justify-between bg-surface-300 text-3xl',
+      'fixed left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
       props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)',
-      props.type === 'micro' ? 'w-md' : 'w-4xl',
+      props.type === 'micro' ? 'w-sm' : 'w-4xl',
       loaded ? 'visible' : 'invisible',
     ]"
     style="border-radius: 20em 50em 50em 20em;"
   >
-    <UILogo ref="logo" />
+    <UINewLogo ref="logo" />
     <Socials 
       v-if="props.type === 'simple'"
       ref="socialsSection"
-      class="m-(--xxxs-em) py-(--xxs-em) rounded-full bg-base-100 aspect-square"
+      class="py-(--xxs-em) rounded-full bg-base-100 aspect-square"
     />
     <UIShimmeringButton
       ref="featuredButton"
-      class="p-(--xxxs-em)"
       color1="mauve-100"
       color2="lavender-100"
       :speed="30"
@@ -40,7 +39,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   position: 'top',
   type: 'micro',
-  featuredItemText: 'Untitled'
+  featuredItemText: 'Resume'
 });
 
 const loaded = ref(false);
@@ -79,7 +78,7 @@ function animateEntrance() {
       width : buttonHeight!,
       scale: 0
     });
-    gsap.set(socialsSection.value?.$el, { opacity: 0 });
+    gsap.set([logo.value?.$el, socialsSection.value?.$el], { opacity: 0 });
 
     // Animate the entrance of the menu bar
     timeline.to(menuBar.value, {
@@ -100,7 +99,7 @@ function animateEntrance() {
     }, `>-${mainDuration / 2}`);
 
     // Fade in the logo, socials, and button
-    timeline.to(socialsSection.value?.$el, {
+    timeline.to([logo.value?.$el, socialsSection.value?.$el], {
       duration: mainDuration / 2,
       opacity: 1,
       ease: 'power2.out'

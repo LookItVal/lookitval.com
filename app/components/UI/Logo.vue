@@ -77,7 +77,6 @@
   </NuxtLink>
 </template>
 
-
 <script lang="ts" setup>
 import { gsap } from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';

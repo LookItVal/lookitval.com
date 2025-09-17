@@ -9,7 +9,11 @@
     ]"
     style="border-radius: 20em 50em 50em 20em;"
   >
-    <UINewLogo ref="logo" />
+    <UINewLogo
+      ref="logo"
+      :animate-on-mount="false"
+      start-position="final"
+    />
     <Socials 
       v-if="props.type === 'simple'"
       ref="socialsSection"
@@ -28,7 +32,7 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
-import type Logo from '@/components/UI/Logo.vue';
+import type Logo from '@/components/UI/NewLogo.vue';
 import type Socials from '@/components/Socials/Socials.vue';
 import type ShimmeringButton from '@/components/UI/ShimmeringButton.vue';
 
@@ -56,7 +60,9 @@ function animateEntrance() {
   const initialDelay = 1;
 
   const ctx = gsap.context(() => {
-    const timeline = gsap.timeline();
+    const timeline = gsap.timeline({ onComplete: () => {
+      ctx.revert();
+    }});
 
     const barWidth = menuBar.value?.offsetWidth || 0;
     const barHeight = menuBar.value?.offsetHeight || 0;
@@ -64,6 +70,8 @@ function animateEntrance() {
     const barTopRightRadius = getComputedStyle(menuBar.value || document.documentElement).borderTopRightRadius || '0px';
     const buttonHeight = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
     const buttonWidth = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
+
+    logo.value?.toPosition('start');
     
     gsap.set(menuBar.value, { 
       borderBottomLeftRadius: barTopRightRadius,
@@ -78,7 +86,10 @@ function animateEntrance() {
       width : buttonHeight!,
       scale: 0
     });
-    gsap.set([logo.value?.$el, socialsSection.value?.$el], { opacity: 0 });
+    gsap.set(socialsSection.value?.$el, { opacity: 0 });
+    gsap.set(logo.value?.$el, { 
+      scale: 0,
+    });
 
     // Animate the entrance of the menu bar
     timeline.to(menuBar.value, {
@@ -99,32 +110,41 @@ function animateEntrance() {
     }, `>-${mainDuration / 2}`);
 
     // Fade in the logo, socials, and button
-    timeline.to([logo.value?.$el, socialsSection.value?.$el], {
+    timeline.to(socialsSection.value?.$el, {
       duration: mainDuration / 2,
       opacity: 1,
       ease: 'power2.out'
     })
-    .to(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
+    .to([featuredButton.value?.$el.querySelectorAll('.shimmering-button'), logo.value?.$el], {
       duration: mainDuration,
       scale: 1,
       ease: 'elastic.out(1,1)'
     }, `<-${(mainDuration*2) / 3}`);
 
+    const logoAnmiation1 = logo.value?.animateToMiddle({ paused: true });
+    const logoAnmiation2 = logo.value?.animateToFinal({ paused: true });
 
     // Animate the button
     timeline.to(featuredButtonText.value, {
       duration: mainDuration,
       text: props.featuredItemText,
-      ease: 'power1.inOut',
-      onComplete: () => {
-        ctx.revert();
-      }
+      ease: 'power1.inOut'
     })
     .to(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
       duration: mainDuration,
       width: buttonWidth,
       ease: mainEaseFunction
-    }, '<');
+    }, '<')
+    .to(logoAnmiation1!, {
+      progress: 1,
+      duration: mainDuration,
+      ease: 'linear'
+    }, '<')
+    .to(logoAnmiation2!, {
+      progress: 1,
+      duration: mainDuration,
+      ease: 'linear'
+    });
   });
 }
 

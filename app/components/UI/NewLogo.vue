@@ -7,49 +7,72 @@
           <stop offset="100%" style="stop-color:var(--color-mauve-100);stop-opacity:1" />
         </radialGradient>
         <path 
-          id="StartKeyframe"
+          id="StartLargeKeyframe"
           d="M 499.999 0 A 225 225 0 1 0 500 0 Z"
+        />
+        <path 
+          id="StartSmallKeyframe"
+          d="M 499.99 200 A 25 25 0 1 0 500 200 Z"
         />
         <path
           id="QKeyframe1A"
-          d="M 204 121 C 147 121 116 171 117 221 C 118 286 160 322 205 321 C 228 321 252 309 268 294 C 350 221 373 299 389 325 C 416 370 469 391 511 391 C 638 391 655 257 656 221 C 656 187 645 58 511 58 C 492 58 432 58 389 121 C 361 163 339 191 264 141 C 248 131 231 121 204 121 Z"
+          d="M 250 225 C 250 239 255 246 261 249 C 272 255 288 252 297 250 C 525 188 525 320 525 225 C 525 130 525 262 297 200 C 289 198 273 196 263 200 C 255 203 250 210 250 225 Z"
         />
         <path
           id="QKeyframe1B"
-          d="M 205 56 C 110 57 60 142 61 225 C 63 334 133 391 209 393 C 220 393 231 392 240 390 C 251 388 261 385 270 380 C 291 371 307 356 319 339 C 326 330 331 320 336 310 C 341 300 345 290 348 279 C 354 258 357 239 357 225 C 358 160 332 56 205 56 Z M 213 209 H 213 V 209 H 213 Z"
+          d="M 69 226 C 70 300 110 323 160 323 C 180 323 251 319 270 300 C 290 280 300 260 300 225 C 300 190 295 170 280 150 C 248 108 174 121 165 121 C 111 121 68 147 69 226 Z"
         />
         <path
-          id="VKeyframe1"
-          d="M 500 60
-             C 405 60 360 145 360 225
-             C 360 305 405 395 500 395
-             C 595 395 640 305 640 225
-             C 640 145 595 60 500 60
-             Z"
+          id="QKeyframe1C"
+          d="M 213 57 C 132 57 62 112 61 225 C 60 338 132 393 213 392 C 280 392 325 363 343 300 C 349 279 352 254 352 225 C 352 203 350 182 345 164 C 328 96 281 57 213 57 Z"
+        />
+        <path
+          id="VKeyframe1A"
+          d="M 499.99 200 A 25 25 0 1 0 500 200 Z"
+        />
+        <path
+          id="VKeyframe1B"
+          d="M 509 57 C 428 57 359 112 358 225 C 357 338 428 393 509 392 C 599 392 648 341 648 225 C 648 119 596 57 509 57 Z"
         />
         <path
           id="CKeyframe1A"
-          d="M 726 223 C 644 89 501 278 482 195 C 477 166 363 118 361 221 C 363 340 472 281 476 259 C 497 156 650 346 726 224 Z"
+          d="M 750 225 C 750 243 742 249 733 251 C 723 253 710 252 703 250 C 487 200 473 316 474 225 C 475 134 490 250 703 200 C 711 198 724 197 734 199 C 743 201 750 208 750 225 Z"
         />
         <path
           id="CKeyframe1B"
-          d="M 881 229 C 887 -133 636 170 567 176 C 497 176 359 121 361 221 C 368 328 500 248 561 248 C 638 247 878 677 881 241 Z"
+          d="M 940 226 C 939 303 895 323 841 323 C 800 323 760 310 729 290 C 709 277 700 250 700 225 C 700 200 710 180 729 162 C 764 130 779 122 844 121 C 898 121 941 147 940 226 Z"
         />
         <path
           id="CKeyframe1C"
-          d="M 800 57 C 721 57 655 112 654 225 C 653 338 726 392 800 392 C 874 394 936 338 936 225 C 935 112 879 57 800 57 Z"
+          d="M 805 57 C 738 57 678 95 660 173 C 656 189 654 206 654 225 C 654 245 656 262 660 278 C 678 355 739 392 805 392 C 895 392 945 340 945 225 C 945 119 892 57 805 57 Z"
+        />
+        <path
+          id="QKeyframe2A"
+          d="M 213 57 C 132 57 62 113 61 225 C 60 338 132 393 213 393 C 280 392 325 363 343 300 C 349 279 352 254 352 225 C 352 203 350 182 345 164 C 328 96 281 57 213 57 Z M 212 206 C 212 206 212 206 212 206 C 212 206 212 206 212 206 C 212 206 212 206 212 206 C 212 206 212 206 212 206 Z"
+        />
+        <path
+          id="QKeyframe2B"
+          d="M 205 56 C 110 57 60 142 61 225 C 63 334 133 391 209 393 C 222 393 242 393 255 387 C 260 393 263 397 268 404 C 287 429 315 414 307 400 C 303 394 293 380 287 370 C 341 338 357 256 357 225 C 358 160 332 56 205 56 Z M 253 208 C 253 230 229 257 207 256 C 185 256 163 230 163 208 C 163 187 185 162 207 161 C 229 161 253 186 253 208 Z"
         />
         <path
           id="VKeyframe2A"
-          d="M 440 370 C 375 285 400 170 360 90 C 345 60 330 30 300 30 H 299 H 298 H 297 H 296 C 295 30 295 30 295 30 C 230 4 280 0 280 0 C 281 0 281 0 281 0 L 282 0 H 283 H 284 H 285 C 340 0 360 40 385 65 C 415 95 470 130 500 130 C 530 130 530 120 550 120 C 570 120 580 120 590 140 C 600 160 600 320 580 350 C 560 380 600 420 630 420 H 630 H 631 H 632 H 633 C 634 420 635 420 636 420 C 646 420 700 450 575 450 H 574 L 573 450 L 572 450 H 571 H 570 C 520 450 460 395 440 370 Z"
+          d="M 430 360 C 360 290 360 250 360 90 C 359 87 358 84 356 82 C 355 79 354 77 352 74 C 349 67 345 61 341 56 C 337 51 334 47 330 44 C 326 40 323 35 321 29 C 317 17 320 6 336 11 C 340 12 345 14 351 17 C 357 21 363 27 369 34 C 374 40 379 45 384 50 C 386 53 389 56 392 59 C 395 61 397 63 400 65 C 430 85 470 110 500 110 C 530 110 541 106 560 100 C 590 90 629 70 634 130 C 640 190 650 280 620 350 C 616 359 616 371 618 383 C 619 390 622 397 625 404 C 627 408 629 411 632 414 C 635 418 639 420 644 420 C 647 420 650 420 652 421 C 661 422 661 427 653 433 C 649 435 644 438 636 440 C 633 441 630 442 626 443 C 619 445 612 446 603 447 C 591 449 576 450 560 450 C 525 450 467 397 430 360 Z"
         />
         <path
           id="VKeyframe2B"
-          d="M 470 390 C 405 305 420 175 360 90 C 340 65 330 30 285 30 H 85 C 55 30 30 55 30 85 V 86 V 87 V 88 C 30 150 0 150 0 88 V 87 V 86 V 85 C 0 38 38 0 85 0 H 285 C 340 0 365 20 385 65 C 385 65 470 220 500 220 C 530 220 570 120 580 110 C 590 100 610 90 625 110 C 640 130 520 370 525 390 C 530 410 540 420 570 420 H 915 C 945 420 970 395 970 365 V 364 C 970 363 970 363 970 363 C 970 362 960 362 970 362 C 975 300 1000 300 1000 362 V 363 V 364 V 365 C 1000 410 960 450 915 450 H 560 C 510 450 490 415 470 390 Z"
+          d="M 480 390 C 437 333 388 357 360 90 C 345 55 330 30 285 30 H 85 C 77 30 70 32 64 34 C 58 37 53 40 48 44 C 41 51 35 54 30 55 C 21 58 17 52 17 45 C 17 38 19 30 25 25 C 32 18 40 12 50 8 C 60 3 72 0 85 0 H 285 C 314 0 335 6 351 17 C 365 28 376 44 385 65 C 385 65 470 194 500 194 C 530 194 596 100 596 100 C 611 70 629 70 634 130 C 640 190 563 310 599 390 C 606 406 624 420 644 420 H 915 C 923 420 931 418 937 416 C 943 413 949 409 953 404 C 958 399 964 395 969 393 C 983 386 994 391 989 405 C 987 411 982 418 974 426 C 968 433 960 438 951 442 C 940 447 928 450 915 450 H 560 C 525 450 500 425 480 390 Z"
         />
         <path
           id="VKeyframe2C"
-          d="M 480 390 L 360 90 C 345 55 330 30 285 30 H 85 C 55 30 30 55 30 85 V 365 C 30 395 55 420 85 420 C 150 420 150 420 86 420 C 150 420 150 450 86 450 C 345 450 85 450 85 450 C 40 450 0 410 0 365 V 85 C 0 38 38 0 85 0 H 285 C 340 0 365 20 385 65 C 385 65 465 290 495 290 C 525 290 600 65 615 55 C 625 45 640 40 650 55 C 660 70 520 370 525 390 C 530 410 540 420 570 420 H 915 C 945 420 970 395 970 365 V 85 C 970 55 945 30 915 30 H 914 C 850 30 850 0 915 0 H 915 C 960 0 1000 40 1000 85 V 365 C 1000 412 962 450 915 450 H 560 C 525 450 500 425 480 390 Z"
+          d="M 480 390 L 360 90 C 345 55 330 30 285 30 H 85 C 55 30 30 55 30 85 V 365 C 30 380 36 394 46 404 C 52 408 55 415 54 421 C 53 426 49 431 42 432 C 37 432 30 429 22 422 C 8 407 0 387 0 365 V 85 C 0 62 10 40 25 25 C 40 10 62 0 85 0 H 285 C 340 0 365 20 385 65 C 385 65 470 310 500 310 C 530 310 605 80 605 80 C 620 50 646 65 640 80 C 640 80 556 295 599 390 C 606 406 624 420 644 420 H 915 C 945 420 970 395 970 365 V 85 C 970 71 965 58 956 49 C 951 44 947 39 944 35 C 935 20 941 12 953 13 C 960 14 969 19 978 28 C 992 43 1000 63 1000 85 V 365 C 1000 412 962 450 915 450 H 560 C 525 450 500 425 480 390 Z"
+        />
+        <path
+          id="CKeyframe2A"
+          d="M 805 57 C 738 57 678 95 660 173 C 656 189 654 206 654 225 C 654 245 656 262 660 278 C 678 355 739 392 805 392 C 852 392 888 378 912 348 C 916 342 921 336 924 328 C 928 320 932 311 935 302 C 937 294 939 286 941 278 C 942 269 943 259 944 249 C 944 241 945 233 945 225 C 945 219 945 213 944 208 C 944 203 943 197 943 192 C 942 184 941 177 939 169 C 937 161 935 153 932 145 C 930 138 927 132 924 126 C 901 81 860 57 805 57 Z"
+        />
+        <path
+          id="CKeyframe2B"
+          d="M 800 57 C 720 58 655 112 654 225 C 653 338 726 392 803 392 C 903 394 935 326 939 283 C 945 225 900 220 893 252 C 890 275 874 290 842 290 C 808 290 786 267 785 224 C 784 188 806 158 840 158 C 867 159 886 167 893 197 C 900 224 950 220 939 168 V 167 C 924 89 869 56 800 57 Z"
         />
         <mask id="logo-mask" height="100%" width="100%">
           <path 
@@ -114,107 +137,204 @@ import { gsap } from 'gsap';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 gsap.registerPlugin(MorphSVGPlugin);
 
-function animateEntrance() {
-  const mainDuration = 10;
-  const mainEaseFunction = "linear";
-  const initialDelay = 0;
+const props = withDefaults(defineProps<{
+  startPosition?: 'final' | 'middle' | 'start',
+  animateOnMount?: boolean,
+  duration?: number,
+  easeFunction?: string,
+  delay?: number,
+  holdAtMiddle?: number
+}>(), {
+  startPosition: 'final',
+  animateOnMount: true,
+  duration: 1.5,
+  easeFunction: "standard",
+  delay: 0,
+  holdAtMiddle: 0
+});
 
-  const ctx = gsap.context(() => {
-    const timeline = gsap.timeline();
+function toPosition(position: 'final' | 'middle' | 'start') {
+  if (position === 'final') {
+    gsap.set("#logo-mask #QFinal", { morphSVG: "#QFinal" });
+    gsap.set("#logo-mask #VFinal", { morphSVG: "#VFinal" });
+    gsap.set("#logo-mask #CFinal", { morphSVG: "#CFinal" });
+  } else if (position === 'middle') {
+    gsap.set("#logo-mask #QFinal", { morphSVG: "#QKeyframe2A" });
+    gsap.set("#logo-mask #VFinal", { morphSVG: "#VKeyframe1B" });
+    gsap.set("#logo-mask #CFinal", { morphSVG: "#CKeyframe2A" });
+  } else if (position === 'start') {
+    gsap.set("#logo-mask #QFinal", { morphSVG: "#StartSmallKeyframe" });
+    gsap.set("#logo-mask #VFinal", { morphSVG: "#StartLargeKeyframe" });
+    gsap.set("#logo-mask #CFinal", { morphSVG: "#StartSmallKeyframe" });
+  }
+}
 
-    gsap.set("#logo-mask #VFinal", { morphSVG: "#StartKeyframe" });
-    gsap.set("#logo-mask #QFinal", { morphSVG: "#StartKeyframe" });
-    gsap.set("#logo-mask #CFinal", { morphSVG: "#StartKeyframe" });
+function animateToMiddle({paused = false, duration = props.duration, easeFunction = props.easeFunction, delay = props.delay} = {}): gsap.core.Timeline {
+  easeFunction = easeFunction === 'standard' ? 'bounce.out' : easeFunction;
 
+  const timeline = gsap.timeline({ paused });
 
-    // Keyframe 1
-    const QKeyframe1Timeline = gsap.timeline( {paused: true} );
-    QKeyframe1Timeline.to("#logo-mask #QFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#QKeyframe1A"
-    })
-    .to("#logo-mask #QFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#QKeyframe1B"
-    });
-    const CKeyframe1Timeline = gsap.timeline( {paused: true} );
-    CKeyframe1Timeline.to("#logo-mask #CFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#CKeyframe1A"
-    })
-    .to("#logo-mask #CFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#CKeyframe1B"
-    })
-    .to("#logo-mask #CFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#CKeyframe1C"
-    });
-
-    timeline.to(QKeyframe1Timeline, {
-      progress: 1,
-      duration: mainDuration,
-      ease: mainEaseFunction
-    }, initialDelay)
-    .to("#logo-mask #VFinal", {
-      duration: mainDuration / 3,
-      ease: mainEaseFunction,
-      morphSVG: "#VKeyframe1"
-    }, `<`)
-    .to(CKeyframe1Timeline, {
-      progress: 1,
-      duration: mainDuration,
-      ease: mainEaseFunction
-    }, `<`);
-
-
-    // Keyframe 2
-    const VKeyframe2Timeline = gsap.timeline( {paused: true} );
-    VKeyframe2Timeline.to("#logo-mask #VFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#VKeyframe2A"
-    })
-    .to("#logo-mask #VFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#VKeyframe2B"
-    })
-    .to("#logo-mask #VFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#VKeyframe2C"
-    })
-    .to("#logo-mask #VFinal", {
-      duration: 1,
-      ease: 'linear',
-      morphSVG: "#VFinal"
-    });
-
-    timeline.to("#logo-mask #QFinal", {
-      duration: mainDuration,
-      ease: mainEaseFunction,
-      morphSVG: "#QFinal"
-    })
-    .to(VKeyframe2Timeline, {
-      progress: 1,
-      duration: mainDuration,
-      ease: mainEaseFunction
-    }, '<')
-    .to("#logo-mask #CFinal", {
-      duration: mainDuration,
-      ease: mainEaseFunction,
-      morphSVG: "#CFinal"
-    }, '<');
+  const QKeyframe1Timeline = gsap.timeline( {paused: true} );
+  QKeyframe1Timeline.to("#logo-mask #QFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#QKeyframe1A"
+  })
+  .to("#logo-mask #QFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#QKeyframe1B"
+  })
+  .to("#logo-mask #QFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#QKeyframe1C"
   });
+
+  const VKeyframe1Timeline = gsap.timeline( {paused: true} );
+  VKeyframe1Timeline.to("#logo-mask #VFinal", {
+    duration: 1,
+    ease: 'power4.in',
+    morphSVG: "#VKeyframe1A"
+  })
+  .to("#logo-mask #VFinal", {
+    duration: 1,
+    ease: 'power4.out',
+    morphSVG: "#VKeyframe1B"
+  });
+
+  const CKeyframe1Timeline = gsap.timeline( {paused: true} );
+  CKeyframe1Timeline.to("#logo-mask #CFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#CKeyframe1A"
+  })
+  .to("#logo-mask #CFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#CKeyframe1B"
+  })
+  .to("#logo-mask #CFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#CKeyframe1C"
+  });
+
+  timeline.call(toPosition, ['start']);
+  timeline.to(QKeyframe1Timeline, {
+    progress: 1,
+    duration,
+    ease: easeFunction
+  }, delay)
+  .to(VKeyframe1Timeline, {
+    progress: 1,
+    duration,
+    ease: easeFunction
+  }, `<`)
+  .to(CKeyframe1Timeline, {
+    progress: 1,
+    duration,
+    ease: easeFunction
+  }, `<`);
+
+  return timeline;
+}
+
+function animateToFinal({paused = false, duration = props.duration, easeFunction = props.easeFunction, delay = props.holdAtMiddle} = {}): gsap.core.Timeline {
+  easeFunction = easeFunction === 'standard' ? 'power2.inOut' : easeFunction;
+
+  const timeline = gsap.timeline({ paused });
+
+  const QKeyframe2Timeline = gsap.timeline( {paused: true} );
+  QKeyframe2Timeline.to("#logo-mask #QFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#QKeyframe2B"
+  })
+  .to("#logo-mask #QFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#QFinal"
+  });
+
+  const VKeyframe2Timeline = gsap.timeline( {paused: true} );
+  VKeyframe2Timeline.to("#logo-mask #VFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#VKeyframe2A"
+  })
+  .to("#logo-mask #VFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#VKeyframe2B"
+  })
+  .to("#logo-mask #VFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#VKeyframe2C"
+  })
+  .to("#logo-mask #VFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#VFinal"
+  });
+
+  const CKeyframe2Timeline = gsap.timeline( {paused: true} );
+  CKeyframe2Timeline.to("#logo-mask #CFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#CKeyframe2B"
+  })
+  .to("#logo-mask #CFinal", {
+    duration: 1,
+    ease: 'linear',
+    morphSVG: "#CFinal"
+  });
+
+  timeline.call(toPosition, ['middle']);
+  timeline.to(QKeyframe2Timeline, {
+    progress: 1,
+    duration,
+    ease: easeFunction
+  }, delay)
+  .to(VKeyframe2Timeline, {
+    progress: 1,
+    duration,
+    ease: easeFunction
+  }, '<')
+  .to(CKeyframe2Timeline, {
+    progress: 1,
+    duration,
+    ease: easeFunction
+  }, '<');
+
+  return timeline;
+}
+
+function animateEntrance({ paused = false } = {}) {
+  const timeline = gsap.timeline({ paused });
+  timeline.add(animateToMiddle());
+  timeline.add(animateToFinal());
+  return timeline;
 }
 
 onMounted(() => {
-  animateEntrance();
+  if (props.animateOnMount) {
+    const ctx = gsap.context(() => {
+      const timeline = gsap.timeline({ onComplete: () => {
+        ctx.revert();
+      } });
+      timeline.add(animateEntrance());
+    });
+  } else {
+    toPosition(props.startPosition!);
+  }
+});
+
+defineExpose({
+  animateEntrance,
+  animateToMiddle,
+  animateToFinal,
+  toPosition
 });
 </script>

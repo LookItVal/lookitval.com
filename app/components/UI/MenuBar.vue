@@ -26,8 +26,9 @@
       :color1="props.secondaryColor"
       :color2="props.primaryColor"
       :speed="30"
+      :click="props.featuredAction"
     >
-      <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em)">{{ props.featuredItemText }}</p>
+      <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredItemText }}</p>
     </UIShimmeringButton>
   </div>
 </template>
@@ -45,6 +46,7 @@ const props = withDefaults(defineProps<{
   position?: 'top' | 'bottom',
   type?: 'micro' | 'simple' | 'full'
   featuredItemText?: string,
+  featuredAction?: (() => void) | string,
   primaryColor?: keyof typeof _COLORS,
   secondaryColor?: keyof typeof _COLORS,
   animateOnMount?: boolean,
@@ -54,7 +56,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   position: 'top',
   type: 'micro',
-  featuredItemText: 'Resume',
+  featuredItemText: 'Featured',
+  featuredAction: () => {},
   primaryColor: 'lavender-100',
   secondaryColor: 'mauve-100',
   animateOnMount: true,
@@ -247,7 +250,6 @@ function animateToFinalPosition({paused = false, duration = props.duration, ease
   return timeline;
 }
 
-
 function animateEntrance({paused = false} = {}) {
   const timeline = gsap.timeline({ paused });
   timeline.add(animateToFirstPosition());
@@ -257,82 +259,6 @@ function animateEntrance({paused = false} = {}) {
   return timeline;
 }
 
-
-function legacyAnimateEntrance() {
-  const mainDuration = 1;
-  const mainEaseFunction = "power1.inOut";
-  const initialDelay = 1;
-
-  const ctx = gsap.context(() => {
-    const timeline = gsap.timeline({ onComplete: () => {
-      ctx.revert();
-    }});
-
-    logo.value!.toPosition('start');
-    
-    gsap.set(menuBar.value, { 
-      borderBottomLeftRadius: barTopRightRadius.value,
-      borderTopRightRadius: barTopRightRadius.value,
-      borderBottomRightRadius: barTopRightRadius.value,
-      borderTopLeftRadius: barTopRightRadius.value,
-      scale: 0,
-      width: barHeight.value || 0,
-    });
-    gsap.set(featuredButtonText.value, { text: '' });
-    gsap.set(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
-      width : buttonHeight.value!,
-      scale: 0
-    });
-    gsap.set(socialsSection.value?.$el, { opacity: 0 });
-    gsap.set(logo.value?.$el, { 
-      scale: 0,
-    });
-
-    // Animate the entrance of the menu bar
-    timeline.to(menuBar.value, {
-      duration: mainDuration * 1.5,
-      scale: 1,
-      ease: 'elastic.out(1,0.4)'
-    }, initialDelay)
-    .to(menuBar.value, {
-      duration: mainDuration,
-      width: barWidth.value,
-      ease: mainEaseFunction
-    }, `>-${(mainDuration*3) / 5}`)
-    .to(menuBar.value, {
-      duration: mainDuration / 2,
-      borderBottomLeftRadius: barTopLeftRadius.value,
-      borderTopLeftRadius: barTopLeftRadius.value,
-      ease: mainEaseFunction,
-    }, `>-${mainDuration / 2}`);
-
-    // Fade in the logo, socials, and button
-    timeline.to(socialsSection.value?.$el, {
-      duration: mainDuration / 2,
-      opacity: 1,
-      ease: 'power2.out'
-    })
-    .to([featuredButton.value?.$el.querySelectorAll('.shimmering-button'), logo.value?.$el], {
-      duration: mainDuration,
-      scale: 1,
-      ease: 'elastic.out(1,1)'
-    }, `<-${(mainDuration*2) / 3}`);
-
-    // Animate the button
-    timeline.to(featuredButtonText.value, {
-      duration: mainDuration,
-      text: props.featuredItemText,
-      ease: 'power1.inOut'
-    })
-    .to(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
-      duration: mainDuration,
-      width: buttonWidth.value,
-      ease: mainEaseFunction
-    }, '<')
-    .add(logo.value!.animateEntrance());
-
-  });
-}
 
 onMounted(() => {
   // Initialize reactive values after DOM is mounted
@@ -345,7 +271,19 @@ onMounted(() => {
 
   loaded.value = true;
   if (props.animateOnMount) {
-    animateEntrance();
+    const ctx = gsap.context(() => {
+      const timeline = gsap.timeline({ onComplete: () => { ctx.revert(); } });
+      timeline.add(animateEntrance());
+    });
   }
+});
+
+defineExpose({
+  animateEntrance,
+  animateToFirstPosition,
+  animateToSecondPosition,
+  animateToThirdPosition,
+  animateToFinalPosition,
+  toPosition
 });
 </script>

@@ -258,6 +258,7 @@ function animateEntrance({paused = false} = {}) {
   timeline.add(animateToSecondPosition());
   timeline.add(animateToThirdPosition());
   timeline.add(animateToFinalPosition());
+  timeline.call(toPosition, ['final']);
   return timeline;
 }
 

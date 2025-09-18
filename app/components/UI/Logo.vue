@@ -161,18 +161,22 @@ const props = withDefaults(defineProps<{
 });
 
 function toPosition(position: 'final' | 'middle' | 'start') {
-  if (position === 'final') {
-    gsap.set("#logo-mask #QFinal", { morphSVG: "#QFinal" });
-    gsap.set("#logo-mask #VFinal", { morphSVG: "#VFinal" });
-    gsap.set("#logo-mask #CFinal", { morphSVG: "#CFinal" });
-  } else if (position === 'middle') {
-    gsap.set("#logo-mask #QFinal", { morphSVG: "#QKeyframe2A" });
-    gsap.set("#logo-mask #VFinal", { morphSVG: "#VKeyframe1B" });
-    gsap.set("#logo-mask #CFinal", { morphSVG: "#CKeyframe2A" });
-  } else if (position === 'start') {
-    gsap.set("#logo-mask #QFinal", { morphSVG: "#StartSmallKeyframe" });
-    gsap.set("#logo-mask #VFinal", { morphSVG: "#StartLargeKeyframe" });
-    gsap.set("#logo-mask #CFinal", { morphSVG: "#StartSmallKeyframe" });
+  switch (position) {
+    case 'final':
+      gsap.set("#logo-mask #QFinal", { morphSVG: "#QFinal" });
+      gsap.set("#logo-mask #VFinal", { morphSVG: "#VFinal" });
+      gsap.set("#logo-mask #CFinal", { morphSVG: "#CFinal" });
+      break;
+    case 'middle':
+      gsap.set("#logo-mask #QFinal", { morphSVG: "#QKeyframe2A" });
+      gsap.set("#logo-mask #VFinal", { morphSVG: "#VKeyframe1B" });
+      gsap.set("#logo-mask #CFinal", { morphSVG: "#CKeyframe2A" });
+      break;
+    case 'start':
+      gsap.set("#logo-mask #QFinal", { morphSVG: "#StartSmallKeyframe" });
+      gsap.set("#logo-mask #VFinal", { morphSVG: "#StartLargeKeyframe" });
+      gsap.set("#logo-mask #CFinal", { morphSVG: "#StartSmallKeyframe" });
+      break;
   }
 }
 
@@ -227,7 +231,7 @@ function animateToMiddle({paused = false, duration = props.duration, easeFunctio
     morphSVG: "#CKeyframe1C"
   });
 
-  timeline.call(toPosition, ['start']);
+  timeline.call(toPosition, ['start'], delay);
   timeline.to(QKeyframe1Timeline, {
     progress: 1,
     duration,
@@ -298,7 +302,7 @@ function animateToFinal({paused = false, duration = props.duration, easeFunction
     morphSVG: "#CFinal"
   });
 
-  timeline.call(toPosition, ['middle']);
+  timeline.call(toPosition, ['middle'], delay);
   timeline.to(QKeyframe2Timeline, {
     progress: 1,
     duration,
@@ -322,6 +326,7 @@ function animateEntrance({ paused = false } = {}) {
   const timeline = gsap.timeline({ paused });
   timeline.add(animateToMiddle());
   timeline.add(animateToFinal());
+  timeline.call(toPosition, ['final']);
   return timeline;
 }
 

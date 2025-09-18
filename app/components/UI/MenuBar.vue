@@ -9,10 +9,12 @@
     ]"
     style="border-radius: 20em 50em 50em 20em;"
   >
-    <UINewLogo
+    <UILogo
       ref="logo"
       :animate-on-mount="false"
       start-position="final"
+      :primary-color="props.primaryColor"
+      :secondary-color="props.secondaryColor"
     />
     <Socials 
       v-if="props.type === 'simple'"
@@ -21,8 +23,8 @@
     />
     <UIShimmeringButton
       ref="featuredButton"
-      color1="mauve-100"
-      color2="lavender-100"
+      :color1="props.secondaryColor"
+      :color2="props.primaryColor"
       :speed="30"
     >
       <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em)">{{ props.featuredItemText }}</p>
@@ -32,18 +34,25 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
-import type Logo from '@/components/UI/NewLogo.vue';
+import { useConstants } from '@/composables/constants';
+import type Logo from '~/components/UI/Logo.vue';
 import type Socials from '@/components/Socials/Socials.vue';
 import type ShimmeringButton from '@/components/UI/ShimmeringButton.vue';
+
+const { COLORS: _COLORS } = useConstants();
 
 const props = withDefaults(defineProps<{
   position?: 'top' | 'bottom',
   type?: 'micro' | 'simple' | 'full'
-  featuredItemText?: string
+  featuredItemText?: string,
+  primaryColor?: keyof typeof _COLORS,
+  secondaryColor?: keyof typeof _COLORS
 }>(), {
   position: 'top',
   type: 'micro',
-  featuredItemText: 'Resume'
+  featuredItemText: 'Resume',
+  primaryColor: 'lavender-100',
+  secondaryColor: 'mauve-100'
 });
 
 const loaded = ref(false);
@@ -71,7 +80,9 @@ function animateEntrance() {
     const buttonHeight = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
     const buttonWidth = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
 
-    logo.value?.toPosition('start');
+    if (logo.value) {
+      logo.value.toPosition('start');
+    }
     
     gsap.set(menuBar.value, { 
       borderBottomLeftRadius: barTopRightRadius,
@@ -121,9 +132,6 @@ function animateEntrance() {
       ease: 'elastic.out(1,1)'
     }, `<-${(mainDuration*2) / 3}`);
 
-    const logoAnmiation1 = logo.value?.animateToMiddle({ paused: true });
-    const logoAnmiation2 = logo.value?.animateToFinal({ paused: true });
-
     // Animate the button
     timeline.to(featuredButtonText.value, {
       duration: mainDuration,
@@ -135,16 +143,8 @@ function animateEntrance() {
       width: buttonWidth,
       ease: mainEaseFunction
     }, '<')
-    .to(logoAnmiation1!, {
-      progress: 1,
-      duration: mainDuration,
-      ease: 'linear'
-    }, '<')
-    .to(logoAnmiation2!, {
-      progress: 1,
-      duration: mainDuration,
-      ease: 'linear'
-    });
+    .add(logo.value!.animateEntrance());
+
   });
 }
 

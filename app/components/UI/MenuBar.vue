@@ -46,13 +46,21 @@ const props = withDefaults(defineProps<{
   type?: 'micro' | 'simple' | 'full'
   featuredItemText?: string,
   primaryColor?: keyof typeof _COLORS,
-  secondaryColor?: keyof typeof _COLORS
+  secondaryColor?: keyof typeof _COLORS,
+  animateOnMount?: boolean,
+  duration?: number,
+  initialDelay?: number,
+  delayBetweenItems?: number
 }>(), {
   position: 'top',
   type: 'micro',
   featuredItemText: 'Resume',
   primaryColor: 'lavender-100',
-  secondaryColor: 'mauve-100'
+  secondaryColor: 'mauve-100',
+  animateOnMount: true,
+  duration: 1.5,
+  initialDelay: 0,
+  delayBetweenItems: 0
 });
 
 const loaded = ref(false);
@@ -62,6 +70,25 @@ const logo = ref<InstanceType<typeof Logo> | null>(null);
 const socialsSection = ref<InstanceType<typeof Socials> | null>(null);
 const featuredButton = ref<InstanceType<typeof ShimmeringButton> | null>(null);
 const featuredButtonText = ref<HTMLElement | null>(null);
+
+
+function toPosition(position: 'start' | 'first' | 'second' | 'third' | 'final') {
+  switch (position) {
+    case 'start':
+      logo.value!.toPosition('start');
+
+      break;
+    case 'first':
+      break;
+    case 'second':
+      break;
+    case 'third':
+      break;
+    case 'final':
+      break;
+  }
+}
+
 
 function animateEntrance() {
   const mainDuration = 1;
@@ -80,9 +107,7 @@ function animateEntrance() {
     const buttonHeight = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
     const buttonWidth = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
 
-    if (logo.value) {
-      logo.value.toPosition('start');
-    }
+    logo.value!.toPosition('start');
     
     gsap.set(menuBar.value, { 
       borderBottomLeftRadius: barTopRightRadius,

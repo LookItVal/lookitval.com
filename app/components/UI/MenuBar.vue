@@ -2,7 +2,7 @@
   <div
     ref="menuBar"
     :class="[
-      'fixed left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
+      'fixed left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl z-9',
       props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)',
       props.type === 'micro' ? 'w-sm' : 'w-4xl',
       loaded ? 'visible' : 'invisible',
@@ -26,8 +26,9 @@
       :color1="props.secondaryColor"
       :color2="props.primaryColor"
       :speed="30"
+      :click="props.featuredAction"
     >
-      <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em)">{{ props.featuredItemText }}</p>
+      <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredItemText }}</p>
     </UIShimmeringButton>
   </div>
 </template>
@@ -45,8 +46,10 @@ const props = withDefaults(defineProps<{
   position?: 'top' | 'bottom',
   type?: 'micro' | 'simple' | 'full'
   featuredItemText?: string,
+  featuredAction?: (() => void) | string,
   primaryColor?: keyof typeof _COLORS,
   secondaryColor?: keyof typeof _COLORS,
+  startPosition?: 'start' | 'first' | 'second' | 'third' | 'final',
   animateOnMount?: boolean,
   duration?: number,
   initialDelay?: number,
@@ -54,11 +57,13 @@ const props = withDefaults(defineProps<{
 }>(), {
   position: 'top',
   type: 'micro',
-  featuredItemText: 'Resume',
+  featuredItemText: 'Featured',
+  featuredAction: () => {},
   primaryColor: 'lavender-100',
   secondaryColor: 'mauve-100',
+  startPosition: 'final',
   animateOnMount: true,
-  duration: 1.5,
+  duration: 1,
   initialDelay: 0,
   delayBetweenItems: 0
 });
@@ -71,110 +76,219 @@ const socialsSection = ref<InstanceType<typeof Socials> | null>(null);
 const featuredButton = ref<InstanceType<typeof ShimmeringButton> | null>(null);
 const featuredButtonText = ref<HTMLElement | null>(null);
 
+const barWidth = ref(0);
+const barHeight = ref(0);
+const barTopLeftRadius = ref('0px');
+const barTopRightRadius = ref('0px');
+const buttonHeight = ref(0);
+const buttonWidth = ref(0);
 
 function toPosition(position: 'start' | 'first' | 'second' | 'third' | 'final') {
   switch (position) {
     case 'start':
-      logo.value!.toPosition('start');
+      toPosition('first');
+      gsap.set(menuBar.value, {
+        scale: 0
+      });
+      break;
 
-      break;
     case 'first':
+      toPosition('second');
+      gsap.set(menuBar.value, {
+        width: barHeight.value,
+        scale: 1
+      });
+      gsap.set(featuredButton.value?.$el, {
+        xPercent: -100
+      });
       break;
+
     case 'second':
+      toPosition('third');
+      logo.value?.toPosition('start');
+      gsap.set(featuredButton.value?.$el, {
+        xPercent: 0
+      });
+      gsap.set(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
+        width : buttonHeight.value,
+      });
+      gsap.set(menuBar.value, {
+        width: barWidth.value
+      });
+      gsap.set(logo.value!.$el, {
+        width: logo.value!.$el.clientHeight || 0,
+      });
+      gsap.set(logo.value!.$el.querySelectorAll('svg'), {
+        width: logo.value!.$el.clientHeight * (1000/450) || 0,
+        x: ((logo.value!.$el.clientHeight * (1000/450)) - logo.value!.$el.clientHeight) / (-2) || 0
+      });
       break;
+
     case 'third':
+      toPosition('final');
+      logo.value?.toPosition('middle');
+      gsap.set(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
+        width : buttonWidth.value,
+      });
+      gsap.set(menuBar.value, {
+        borderBottomLeftRadius: barTopRightRadius.value,
+        borderTopRightRadius: barTopRightRadius.value,
+        borderBottomRightRadius: barTopRightRadius.value,
+        borderTopLeftRadius: barTopRightRadius.value,
+      });
+      gsap.set(featuredButtonText.value, { text: '' });
+      gsap.set(logo.value!.$el.querySelectorAll('svg'), {
+        width: logo.value!.$el.clientHeight * (1000/450) || 0,
+        x: 0
+      });
       break;
+      
     case 'final':
+      logo.value?.toPosition('final');
+      gsap.set(menuBar.value, {
+        borderBottomLeftRadius: barTopLeftRadius.value,
+        borderTopRightRadius: barTopRightRadius.value,
+        borderBottomRightRadius: barTopRightRadius.value,
+        borderTopLeftRadius: barTopLeftRadius.value,
+      });
+      gsap.set(featuredButtonText.value, { text: props.featuredItemText });
       break;
   }
 }
 
-
-function animateEntrance() {
-  const mainDuration = 1;
-  const mainEaseFunction = "power1.inOut";
-  const initialDelay = 1;
-
-  const ctx = gsap.context(() => {
-    const timeline = gsap.timeline({ onComplete: () => {
-      ctx.revert();
-    }});
-
-    const barWidth = menuBar.value?.offsetWidth || 0;
-    const barHeight = menuBar.value?.offsetHeight || 0;
-    const barTopLeftRadius = getComputedStyle(menuBar.value || document.documentElement).borderTopLeftRadius || '0px';
-    const barTopRightRadius = getComputedStyle(menuBar.value || document.documentElement).borderTopRightRadius || '0px';
-    const buttonHeight = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
-    const buttonWidth = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
-
-    logo.value!.toPosition('start');
-    
-    gsap.set(menuBar.value, { 
-      borderBottomLeftRadius: barTopRightRadius,
-      borderTopRightRadius: barTopRightRadius,
-      borderBottomRightRadius: barTopRightRadius,
-      borderTopLeftRadius: barTopRightRadius,
-      scale: 0,
-      width: barHeight || 0,
-    });
-    gsap.set(featuredButtonText.value, { text: '' });
-    gsap.set(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
-      width : buttonHeight!,
-      scale: 0
-    });
-    gsap.set(socialsSection.value?.$el, { opacity: 0 });
-    gsap.set(logo.value?.$el, { 
-      scale: 0,
-    });
-
-    // Animate the entrance of the menu bar
-    timeline.to(menuBar.value, {
-      duration: mainDuration * 1.5,
-      scale: 1,
-      ease: 'elastic.out(1,0.4)'
-    }, initialDelay)
-    .to(menuBar.value, {
-      duration: mainDuration,
-      width: barWidth,
-      ease: mainEaseFunction
-    }, `>-${(mainDuration*3) / 5}`)
-    .to(menuBar.value, {
-      duration: mainDuration / 2,
-      borderBottomLeftRadius: barTopLeftRadius,
-      borderTopLeftRadius: barTopLeftRadius,
-      ease: mainEaseFunction,
-    }, `>-${mainDuration / 2}`);
-
-    // Fade in the logo, socials, and button
-    timeline.to(socialsSection.value?.$el, {
-      duration: mainDuration / 2,
-      opacity: 1,
-      ease: 'power2.out'
-    })
-    .to([featuredButton.value?.$el.querySelectorAll('.shimmering-button'), logo.value?.$el], {
-      duration: mainDuration,
-      scale: 1,
-      ease: 'elastic.out(1,1)'
-    }, `<-${(mainDuration*2) / 3}`);
-
-    // Animate the button
-    timeline.to(featuredButtonText.value, {
-      duration: mainDuration,
-      text: props.featuredItemText,
-      ease: 'power1.inOut'
-    })
-    .to(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
-      duration: mainDuration,
-      width: buttonWidth,
-      ease: mainEaseFunction
-    }, '<')
-    .add(logo.value!.animateEntrance());
-
+function animateToFirstPosition({paused = false, duration = props.duration, easeFunction = 'elastic', delay = props.initialDelay} = {}): gsap.core.Timeline {
+  const timeline = gsap.timeline({ paused, delay });
+  timeline.call(() => {
+    toPosition('start');
   });
+
+  timeline.to(menuBar.value, {
+    scale: 1,
+    duration,
+    ease: easeFunction
+  });
+
+  return timeline;
 }
 
+function animateToSecondPosition({paused = false, duration = props.duration, easeFunction = 'power2.inOut', delay = props.delayBetweenItems} = {}): gsap.core.Timeline {
+  const timeline = gsap.timeline({ paused, delay });
+  timeline.call(() => {
+    toPosition('first');
+  });
+
+  const subTimeline = gsap.timeline({ paused: true });
+  subTimeline.to(featuredButton.value?.$el, {
+    xPercent: 0,
+    duration: 1,
+    ease: 'linear'
+  }, 0).to(menuBar.value, {
+    width: (buttonHeight.value * 2) + (parseFloat(getComputedStyle(menuBar.value!).paddingLeft) * 2),
+    duration: 1,
+    ease: 'linear'
+  }, 0)
+  .to(menuBar.value, {
+    width: barWidth.value,
+    duration: 3,
+    ease: 'linear'
+  });
+
+  timeline.to(subTimeline, {
+    progress: 1,
+    duration,
+    ease: easeFunction
+  });
+
+  return timeline;
+}
+
+function animateToThirdPosition({paused = false, duration = props.duration, easeFunction = 'power3.inOut', delay = props.delayBetweenItems} = {}): gsap.core.Timeline {
+  const timeline = gsap.timeline({ paused, delay });
+  timeline.call(() => {
+    toPosition('second');
+  });
+
+  const subTimeline = gsap.timeline({ paused: true });
+  subTimeline.to(logo.value!.$el.querySelectorAll('svg'), {
+    x: 0,
+    ease: 'power4.out',
+    duration
+  });
+  subTimeline.add(logo.value!.animateToMiddle({ duration }), 0)
+
+  timeline.to(subTimeline, {
+    progress: 1,
+    duration,
+    ease: 'linear'
+  })
+  .to(featuredButton.value?.$el.querySelectorAll('.shimmering-button'), {
+    width : buttonWidth.value,
+    duration,
+    ease: easeFunction
+  }, `<`)
+
+  return timeline;
+}
+
+function animateToFinalPosition({paused = false, duration = props.duration, easeFunction = 'power1.inOut', delay = props.delayBetweenItems} = {}): gsap.core.Timeline {
+  const timeline = gsap.timeline({ paused, delay });
+  timeline.call(() => {
+    toPosition('third');
+  });
+
+  timeline.add(logo.value!.animateToFinal({ duration }), 0)
+  timeline.to(featuredButtonText.value, {
+    text: props.featuredItemText,
+    duration,
+    ease: easeFunction
+  }, `<`)
+  timeline.to(menuBar.value, {
+    borderBottomLeftRadius: barTopLeftRadius.value,
+    borderTopLeftRadius: barTopLeftRadius.value,
+    duration,
+    ease: easeFunction
+  }, `<`)
+
+  return timeline;
+}
+
+function animateEntrance({paused = false} = {}) {
+  const timeline = gsap.timeline({ paused });
+  timeline.add(animateToFirstPosition());
+  timeline.add(animateToSecondPosition());
+  timeline.add(animateToThirdPosition());
+  timeline.add(animateToFinalPosition());
+  return timeline;
+}
+
+
 onMounted(() => {
-  animateEntrance();
+  // Initialize reactive values after DOM is mounted
+  barWidth.value = menuBar.value?.offsetWidth || 0;
+  barHeight.value = menuBar.value?.offsetHeight || 0;
+  barTopLeftRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopLeftRadius || '0px';
+  barTopRightRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopRightRadius || '0px';
+  buttonHeight.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
+  buttonWidth.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
+
   loaded.value = true;
+  if (props.animateOnMount) {
+    const ctx = gsap.context(() => {
+      toPosition('start');
+      const timeline = gsap.timeline({ onComplete: () => { ctx.revert(); } });
+      timeline.add(animateEntrance());
+    });
+  } else {
+    toPosition(props.startPosition!);
+  }
+});
+
+defineExpose({
+  animateEntrance,
+  animateToFirstPosition,
+  animateToSecondPosition,
+  animateToThirdPosition,
+  animateToFinalPosition,
+  toPosition
 });
 </script>

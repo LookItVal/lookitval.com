@@ -1,18 +1,47 @@
 <template>
-  <div>
+  <div class="pointer">
     <AnimationsGlareHover 
       v-if="props.glare"
       class="shimmering-button relative overflow-hidden rounded-full  z-1"
       style="width: max-content; height: 100%; border-radius: 50em; border-width: 0;"
     >
-      <slot class="z-1"/>
+      <NuxtLink
+        v-if="nuxtLinkUrl"
+        :to="nuxtLinkUrl"
+        class="relative overflow-hidden z-1 cursor-pointer"
+        style="text-decoration: none;"
+      >
+        <slot />
+      </NuxtLink>
+      <button
+        v-else
+        class="relative overflow-hidden z-1 cursor-pointer"
+        @click="handleClick"
+      >
+        <slot />
+      </button>
     </AnimationsGlareHover>
-    <button
+    <div 
       v-else
-      class="shimmering-button relative overflow-hidden rounded-full z-1 0"
+      class="shimmering-button relative overflow-hidden rounded-full  z-1"
+      style="width: max-content; height: 100%; border-radius: 50em; border-width: 0;"
     >
-      <slot class="z-1"/>
-    </button>
+      <NuxtLink
+        v-if="nuxtLinkUrl"
+        :to="nuxtLinkUrl"
+        class="relative overflow-hidden z-1 cursor-pointer"
+        style="text-decoration: none;"
+      >
+        <slot />
+      </NuxtLink>
+      <button
+        v-else
+        class="relative overflow-hidden z-1 cursor-pointer"
+        @click="handleClick"
+      >
+        <slot />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -25,13 +54,46 @@ const props = withDefaults(defineProps<{
   color1?: keyof typeof _COLORS,
   color2?: keyof typeof _COLORS,
   glare?: boolean
-  speed?: number
+  speed?: number,
+  click?: (() => void) | string
 }>(), {
   color1: 'lavender-100',
   color2: 'mauve-100',
   glare: true,
-  speed: 3
+  speed: 3,
+  click: () => {}
 })
+
+const nuxtLinkUrl = computed(() => {
+  if (typeof props.click === 'string') {
+    if (props.click.startsWith('/')) {
+      return props.click;
+    }
+  }
+  return null;
+});
+const externalLinkUrl = computed(() => {
+  if (typeof props.click === 'string') {
+    if (props.click.startsWith('http')) {
+      return props.click;
+    }
+  }
+  return null;
+});
+const clickFunction = computed(() => {
+  if (!nuxtLinkUrl.value && !externalLinkUrl.value) {
+    return true;
+  }
+  return false;
+});
+const handleClick = () => {
+  if (clickFunction.value) {
+    (props.click as () => void)();
+  }
+  if (externalLinkUrl.value) {
+    window.open(externalLinkUrl.value, '_blank');
+  }
+};
 
 const conicGradient: Ref<string> = ref(`conic-gradient(from 90deg at 50% 50%, var(--color-${props.color1}), var(--color-${props.color2}), var(--color-${props.color1}))`);
 </script>

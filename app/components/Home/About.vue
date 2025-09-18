@@ -29,7 +29,7 @@
       <UIShimmeringButton
         :color1="fgColor"
         :color2="bgColor"
-        @click="viewResume"
+        :click="viewResume"
       >
         <p class="text-2xl md:text-3xl py-(--xs-em) px-(--s-em) font-black">
           <UIShimmeringText

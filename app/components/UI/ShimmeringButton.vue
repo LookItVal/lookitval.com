@@ -9,6 +9,7 @@
         v-if="nuxtLinkUrl"
         :to="nuxtLinkUrl"
         class="relative overflow-hidden z-1 cursor-pointer"
+        style="text-decoration: none;"
       >
         <slot />
       </NuxtLink>
@@ -29,6 +30,7 @@
         v-if="nuxtLinkUrl"
         :to="nuxtLinkUrl"
         class="relative overflow-hidden z-1 cursor-pointer"
+        style="text-decoration: none;"
       >
         <slot />
       </NuxtLink>

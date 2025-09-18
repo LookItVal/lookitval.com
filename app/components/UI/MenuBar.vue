@@ -2,7 +2,7 @@
   <div
     ref="menuBar"
     :class="[
-      'fixed left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
+      'fixed left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl z-9',
       props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)',
       props.type === 'micro' ? 'w-sm' : 'w-4xl',
       loaded ? 'visible' : 'invisible',
@@ -49,6 +49,7 @@ const props = withDefaults(defineProps<{
   featuredAction?: (() => void) | string,
   primaryColor?: keyof typeof _COLORS,
   secondaryColor?: keyof typeof _COLORS,
+  startPosition?: 'start' | 'first' | 'second' | 'third' | 'final',
   animateOnMount?: boolean,
   duration?: number,
   initialDelay?: number,
@@ -60,6 +61,7 @@ const props = withDefaults(defineProps<{
   featuredAction: () => {},
   primaryColor: 'lavender-100',
   secondaryColor: 'mauve-100',
+  startPosition: 'final',
   animateOnMount: true,
   duration: 1,
   initialDelay: 0,
@@ -272,9 +274,12 @@ onMounted(() => {
   loaded.value = true;
   if (props.animateOnMount) {
     const ctx = gsap.context(() => {
+      toPosition('start');
       const timeline = gsap.timeline({ onComplete: () => { ctx.revert(); } });
       timeline.add(animateEntrance());
     });
+  } else {
+    toPosition(props.startPosition!);
   }
 });
 

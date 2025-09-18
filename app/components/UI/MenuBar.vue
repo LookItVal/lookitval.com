@@ -108,10 +108,6 @@ function toPosition(position: 'start' | 'first' | 'second' | 'third' | 'final') 
         width : buttonHeight.value,
       });
       gsap.set(menuBar.value, {
-        borderBottomLeftRadius: barTopRightRadius.value,
-        borderTopRightRadius: barTopRightRadius.value,
-        borderBottomRightRadius: barTopRightRadius.value,
-        borderTopLeftRadius: barTopRightRadius.value,
         width: barWidth.value
       });
       gsap.set(logo.value!.$el, {
@@ -130,10 +126,10 @@ function toPosition(position: 'start' | 'first' | 'second' | 'third' | 'final') 
         width : buttonWidth.value,
       });
       gsap.set(menuBar.value, {
-        borderBottomLeftRadius: barTopLeftRadius.value,
+        borderBottomLeftRadius: barTopRightRadius.value,
         borderTopRightRadius: barTopRightRadius.value,
         borderBottomRightRadius: barTopRightRadius.value,
-        borderTopLeftRadius: barTopLeftRadius.value,
+        borderTopLeftRadius: barTopRightRadius.value,
       });
       gsap.set(featuredButtonText.value, { text: '' });
       gsap.set(logo.value!.$el.querySelectorAll('svg'), {
@@ -144,6 +140,12 @@ function toPosition(position: 'start' | 'first' | 'second' | 'third' | 'final') 
       
     case 'final':
       logo.value?.toPosition('final');
+      gsap.set(menuBar.value, {
+        borderBottomLeftRadius: barTopLeftRadius.value,
+        borderTopRightRadius: barTopRightRadius.value,
+        borderBottomRightRadius: barTopRightRadius.value,
+        borderTopLeftRadius: barTopLeftRadius.value,
+      });
       gsap.set(featuredButtonText.value, { text: props.featuredItemText });
       break;
   }
@@ -208,12 +210,6 @@ function animateToThirdPosition({paused = false, duration = props.duration, ease
     duration
   });
   subTimeline.add(logo.value!.animateToMiddle({ duration }), 0)
-  subTimeline.to(menuBar.value, {
-    borderBottomLeftRadius: barTopLeftRadius.value,
-    borderTopLeftRadius: barTopLeftRadius.value,
-    duration,
-    ease: 'power2.inOut'
-  }, `<`)
 
   timeline.to(subTimeline, {
     progress: 1,
@@ -241,6 +237,13 @@ function animateToFinalPosition({paused = false, duration = props.duration, ease
     duration,
     ease: easeFunction
   }, `<`)
+  timeline.to(menuBar.value, {
+    borderBottomLeftRadius: barTopLeftRadius.value,
+    borderTopLeftRadius: barTopLeftRadius.value,
+    duration,
+    ease: easeFunction
+  }, `<`)
+
   return timeline;
 }
 

@@ -27,6 +27,14 @@
       :background-alpha="0.0"
       :quantity="3"
     />
+    <UIMenuBar
+        ref="menuBar"
+        position="top"
+        start-position="start"
+        :animate-on-mount="false"
+        pin="default"
+        featured-action="/bird-recognition"
+      />
     <UICard
       ref="mainContentCard"
       class="flex flex-col items-center justify-center p-(--s-em) w-full max-w-6xl"
@@ -86,6 +94,7 @@ import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
 import type RecordButton from '~/components/BirdClassification/RecordButton.vue';
 import type LiveWaveform from '~/components/BirdClassification/LiveWaveform.vue';
+import type MenuBar from '~/components/UI/MenuBar.vue';
 import type Card from '~/components/UI/Card.vue';
 
 const { toggleRecording, isRecording } = useAudio();
@@ -100,13 +109,14 @@ const mainHeadingLoading = ref<HTMLElement>();
 const predictionsHeading = ref<HTMLElement>();
 const recordButton = ref<InstanceType<typeof RecordButton>>();
 const liveWaveform = ref<InstanceType<typeof LiveWaveform>>();
+const menuBar = ref<InstanceType<typeof MenuBar>>();
 const mainContentCard = ref<InstanceType<typeof Card>>();
 const predictionsCard = ref<InstanceType<typeof Card>>();
 const birdList = ref<string[]>([...classifierBuffer.value]);
 
 async function revealPage() {
   if (loadingScreen.value) {
-    console.log('Revealing page');
+    menuBar.value?.animateEntrance({ initialDelay: 1 });
     const timeline = gsap.timeline();
     const beginningState = Flip.getState([mainHeading.value!, mainHeadingLoading.value!]);
     gsap.set(mainHeadingLoading.value!, { display: 'none' });

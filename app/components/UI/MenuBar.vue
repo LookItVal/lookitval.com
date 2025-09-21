@@ -1,35 +1,44 @@
 <template>
   <div
-    ref="menuBar"
+    ref="menuContainer"
     :class="[
-      'fixed left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl z-9',
-      props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)',
-      props.type === 'micro' ? 'w-sm' : 'w-4xl',
-      loaded ? 'visible' : 'invisible',
+      'absolute left-0 w-full z-100 text-3xl',
+      props.pin === 'top' ? (props.position === 'top' ? 'top-(--m-em) h-(--l-em)' : 'bottom-(--m-em) h-(--l-em)') : 'h-full'
     ]"
-    style="border-radius: 20em 50em 50em 20em;"
   >
-    <UILogo
-      ref="logo"
-      :animate-on-mount="false"
-      start-position="final"
-      :primary-color="props.primaryColor"
-      :secondary-color="props.secondaryColor"
-    />
-    <Socials 
-      v-if="props.type === 'simple'"
-      ref="socialsSection"
-      class="py-(--xxs-em) rounded-full bg-base-100 aspect-square"
-    />
-    <UIShimmeringButton
-      ref="featuredButton"
-      :color1="props.secondaryColor"
-      :color2="props.primaryColor"
-      :speed="30"
-      :click="props.featuredAction"
+    <div
+      ref="menuBar"
+      :class="[
+        'absolute left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
+        props.type === 'micro' ? 'w-sm' : 'w-4xl',
+        props.pin !== 'top' ? (props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)') : '',
+        loaded ? 'visible' : 'invisible',
+      ]"
+      style="border-radius: 20em 50em 50em 20em;"
+      data-lag="0.25"
     >
-      <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredItemText }}</p>
-    </UIShimmeringButton>
+      <UILogo
+        ref="logo"
+        :animate-on-mount="false"
+        start-position="final"
+        :primary-color="props.primaryColor"
+        :secondary-color="props.secondaryColor"
+      />
+      <Socials 
+        v-if="props.type === 'simple'"
+        ref="socialsSection"
+        class="py-(--xxs-em) rounded-full bg-base-100 aspect-square"
+      />
+      <UIShimmeringButton
+        ref="featuredButton"
+        :color1="props.secondaryColor"
+        :color2="props.primaryColor"
+        :speed="30"
+        :click="props.featuredAction"
+      >
+        <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredItemText }}</p>
+      </UIShimmeringButton>
+    </div>
   </div>
 </template>
 
@@ -43,8 +52,9 @@ import type ShimmeringButton from '@/components/UI/ShimmeringButton.vue';
 const { COLORS: _COLORS } = useConstants();
 
 const props = withDefaults(defineProps<{
-  position?: 'top' | 'bottom',
+  position?: 'top' | 'bottom' | 'bottomToTop',
   type?: 'micro' | 'simple' | 'full'
+  pin?: 'default' | 'top' | 'none',
   featuredItemText?: string,
   featuredAction?: (() => void) | string,
   primaryColor?: keyof typeof _COLORS,
@@ -57,6 +67,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   position: 'top',
   type: 'micro',
+  pin: 'default',
   featuredItemText: 'Featured',
   featuredAction: () => {},
   primaryColor: 'lavender-100',
@@ -71,6 +82,7 @@ const props = withDefaults(defineProps<{
 const loaded = ref(false);
 
 const menuBar = ref<HTMLElement | null>(null);
+const menuContainer = ref<HTMLElement | null>(null);
 const logo = ref<InstanceType<typeof Logo> | null>(null);
 const socialsSection = ref<InstanceType<typeof Socials> | null>(null);
 const featuredButton = ref<InstanceType<typeof ShimmeringButton> | null>(null);
@@ -82,6 +94,7 @@ const barTopLeftRadius = ref('0px');
 const barTopRightRadius = ref('0px');
 const buttonHeight = ref(0);
 const buttonWidth = ref(0);
+const margin = ref(0);
 
 function toPosition(position: 'start' | 'first' | 'second' | 'third' | 'final') {
   switch (position) {
@@ -252,9 +265,9 @@ function animateToFinalPosition({paused = false, duration = props.duration, ease
   return timeline;
 }
 
-function animateEntrance({paused = false} = {}) {
+function animateEntrance({paused = false, initialDelay = props.initialDelay} = {}) {
   const timeline = gsap.timeline({ paused });
-  timeline.add(animateToFirstPosition());
+  timeline.add(animateToFirstPosition( { delay: initialDelay } ));
   timeline.add(animateToSecondPosition());
   timeline.add(animateToThirdPosition());
   timeline.add(animateToFinalPosition());
@@ -264,6 +277,10 @@ function animateEntrance({paused = false} = {}) {
 
 
 onMounted(() => {
+  if (props.position === 'top' && props.pin === 'top') {
+    console.warn('UIMenuBar: You have set both position and pin to "top". This may cause unexpected behavior.');
+  }
+
   // Initialize reactive values after DOM is mounted
   barWidth.value = menuBar.value?.offsetWidth || 0;
   barHeight.value = menuBar.value?.offsetHeight || 0;
@@ -271,6 +288,7 @@ onMounted(() => {
   barTopRightRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopRightRadius || '0px';
   buttonHeight.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
   buttonWidth.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
+  margin.value = props.position === 'top' ? parseFloat(getComputedStyle(menuContainer.value || document.documentElement).top) : parseFloat(getComputedStyle(menuContainer.value || document.documentElement).bottom);
 
   loaded.value = true;
   if (props.animateOnMount) {
@@ -281,6 +299,43 @@ onMounted(() => {
     });
   } else {
     toPosition(props.startPosition!);
+  }
+  if (props.pin === 'default') {
+    gsap.to(menuContainer.value, {
+      scrollTrigger: {
+        trigger: menuContainer.value,
+        start: 'top top',
+        end: () => document.body.scrollHeight,
+        pin: true,
+        onUpdate: (self) => {
+          const velocity = self.getVelocity();
+          gsap.to(menuBar.value, {
+            y: Math.min(Math.max(velocity / -50, -20), 20),
+            ease: 'power2.out',
+            duration: 0.5
+          });
+        }
+      }
+    });
+  }
+  if (props.pin === 'top') {
+    gsap.to(menuContainer.value, {
+      duration: 1,
+      scrollTrigger: {
+        trigger: menuContainer.value,
+        start: `top ${margin.value}`,
+        end: () => document.body.scrollHeight,
+        pin: true,
+        onUpdate: (self) => {
+          const velocity = self.getVelocity();
+          gsap.to(menuBar.value, {
+            y: Math.min(Math.max(velocity / -25, -20), 20),
+            ease: 'power2.out',
+            duration: 0.5
+          });
+        }
+      }
+    });
   }
 });
 

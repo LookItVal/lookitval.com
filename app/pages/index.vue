@@ -16,13 +16,14 @@
         animate-on="view"
       />
     </div>
-    <UIMenuBar
-      ref="menuBar"
-      position="bottom"
-      featured-action="/bird-recognition"
-      :initial-delay="3"
-    />
-    <div class="background-lambda landing flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em) overflow-hidden">
+    <div class="background-lambda landing relative flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em)">
+      <UIMenuBar
+        ref="menuBar"
+        position="bottom"
+        pin="top"
+        featured-action="/bird-recognition"
+        :initial-delay="3"
+      />
       <div class="home-text z-1 flex flex-col card-background-lambda absolute md:relative max-md:right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem]">
         <h1 ref="pageText" class="text-3xl md:text-6xl !font-black whitespace-nowrap z-50">Quinn Valencia Cecil</h1>
         <HomeJobTitles class="mb-(--s-em) z-0 text-2xl md:text-3xl" />
@@ -32,7 +33,7 @@
         <img
           src="/images/DitherPortrait.png"
           alt="Quinn Valencia Cecil"
-          class="relative object-cover object-right right-0 top-0 h-[100vh] z-0 drop-shadow-xl"
+          class="relative object-cover object-right right-0 top-0 h-[100svh] z-0 drop-shadow-xl"
         >
       </div>
       <BackgroundsDither
@@ -45,7 +46,7 @@
         :color-num="5"
       />
     </div>
-    <HomeAbout />
+    <HomeAbout class="h-min-[100svh]" />
   </div>
 </template>
 <script lang="ts" setup>

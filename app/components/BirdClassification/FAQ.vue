@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-lag="1">
     <UICard 
       v-if="openButtonState"
       ref="openButton"
@@ -42,22 +42,20 @@
           >
             {{ item.question }}
           </summary>
-          <p></p>
+          <p/>
         </details>
         <p
+          v-gsap.onState-state-open.animateText.fast
           class="text-base mt-2"
           :data-state="faqStates[index] ? 'open' : 'hidden'"
-          v-gsap.onState-state-open.animateText.fast
           v-html="parseLinks(item.answer)"
-        >
-        </p>
+        />
         <p
             class="absolute text-base -translate-y-full"
             :style="`padding-right: ${faqPadding}; opacity: ${faqStates[index] ? 1 : 0}; transition: opacity ${faqStates[index] ? 2 : 0}s ease-in-out ${faqStates[index] ? item.answer.length * 0.005 : 0}s; pointer-events: ${faqStates[index] ? 'auto' : 'none'};`"
             :data-state="faqStates[index] ? 'hidden' : 'open'"
             v-html="parseLinks(item.answer)"
-          >
-        </p>
+          />
       </div>
     </UICard>
   </div>
@@ -66,9 +64,9 @@
 <script lang="ts" setup>
 import { gsap } from 'gsap';
 import { Flip } from "gsap/Flip";
-gsap.registerPlugin(Flip);
 
-import Card from '@/components/UI/Card.vue';
+import type Card from '@/components/UI/Card.vue';
+gsap.registerPlugin(Flip);
 
 const { data: faqData } = await useAsyncData('faq', () => queryCollection('faq').first())
 

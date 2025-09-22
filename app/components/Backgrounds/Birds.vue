@@ -78,6 +78,12 @@ const props = defineProps({
   }
 });
 
+const handleResize = () => {
+  if (vantaEffect.value) {
+    vantaEffect.value.resize();
+  }
+};
+
 const validColor = (value) => Object.keys(COLORS).includes(value);
 
 watchEffect(() => {
@@ -139,6 +145,8 @@ onMounted(async () => {
     cohesion: props.cohesion,
     quantity: props.quantity
   });
+
+  window.addEventListener('resize', handleResize);
 });
 
 onBeforeUnmount(() => {
@@ -146,6 +154,7 @@ onBeforeUnmount(() => {
 });
 
 onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
   cleanup();
 });
 

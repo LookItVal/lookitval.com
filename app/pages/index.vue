@@ -50,7 +50,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-// const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
+// "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯"
 
 const { highPerformance, calculatePerformance } = usePerformance();
 
@@ -86,7 +86,6 @@ onMounted(() => {
       window.scrollTo({ top: 0, behavior: 'auto' });
       document.removeEventListener('scroll', scrollHandler);
 
-      // If loadingText is a component, use $el to get the DOM element
       const loadingEl = (loadingText.value && (loadingText.value as ComponentPublicInstance).$el) ? (loadingText.value as ComponentPublicInstance).$el : loadingText.value;
       const pageEl = (pageText.value && (pageText.value as ComponentPublicInstance).$el) ? (pageText.value as ComponentPublicInstance).$el : pageText.value;
       loadingTextBoundingClientRect.value = loadingEl?.getBoundingClientRect?.();

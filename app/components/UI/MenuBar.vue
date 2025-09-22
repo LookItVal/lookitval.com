@@ -3,42 +3,45 @@
     ref="menuContainer"
     :class="[
       'left-0 w-full z-100 text-3xl',
-      props.pin === 'top' ? (props.position === 'top' ? 'top-(--m-em) h-(--l-em)' : 'bottom-(--m-em) h-(--l-em)') : props.pin === 'none' ? 'h-(--l-em)' : 'h-full',
-      props.positioning === 'absolute' ? 'absolute' : 'relative m-(--s-em)'
+      props.pin === 'top' ? (props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)') : props.pin === 'none' ? '' : 'h-full',
+      props.positioning === 'absolute' ? 'absolute h-(--l-em)' : 'relative h-content'
     ]"
   >
-    <div
-      ref="menuBar"
-      :class="[
-        'absolute left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
-        props.type === 'micro' ? 'w-sm' : 'w-4xl',
-        props.positioning === 'absolute' ? (props.pin !== 'top' ? (props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)') : '') : '',
-        loaded ? 'visible' : 'invisible',
-      ]"
-      style="border-radius: 20em 50em 50em 20em;"
-      data-lag="0.25"
-    >
-      <UILogo
-        ref="logo"
-        :animate-on-mount="false"
-        start-position="final"
-        :primary-color="props.primaryColor"
-        :secondary-color="props.secondaryColor"
-      />
-      <Socials 
-        v-if="props.type === 'simple'"
-        ref="socialsSection"
-        class="py-(--xxs-em) rounded-full bg-base-100 aspect-square"
-      />
-      <UIShimmeringButton
-        ref="featuredButton"
-        :color1="props.secondaryColor"
-        :color2="props.primaryColor"
-        :speed="30"
-        :click="props.featuredAction"
+    <div class="w-full h-content full py-(--s-em)">
+      <div
+        ref="menuBar"
+        :class="[
+          'left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
+          props.type === 'micro' ? 'w-sm' : 'w-4xl',
+          props.positioning === 'absolute' ? (props.pin !== 'top' ? (props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)') : '') : '',
+          props.positioning,
+          loaded ? 'visible' : 'invisible',
+        ]"
+        style="border-radius: 20em 50em 50em 20em;"
+        data-lag="0.25"
       >
-        <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredItemText }}</p>
-      </UIShimmeringButton>
+        <UILogo
+          ref="logo"
+          :animate-on-mount="false"
+          start-position="final"
+          :primary-color="props.primaryColor"
+          :secondary-color="props.secondaryColor"
+        />
+        <Socials 
+          v-if="props.type === 'simple'"
+          ref="socialsSection"
+          class="py-(--xxs-em) rounded-full bg-base-100 aspect-square"
+        />
+        <UIShimmeringButton
+          ref="featuredButton"
+          :color1="props.secondaryColor"
+          :color2="props.primaryColor"
+          :speed="30"
+          :click="props.featuredAction"
+        >
+          <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredItemText }}</p>
+        </UIShimmeringButton>
+      </div>
     </div>
   </div>
 </template>

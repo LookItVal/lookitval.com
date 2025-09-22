@@ -1,6 +1,22 @@
 <template>
-  <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center px-(--m-em)">
-    <div ref="loadingScreen" class="loading-screen fixed top-0 left-0 w-full h-full bg-base-100 z-10 flex flex-col items-center justify-center">
+  <div class="min-h-screen overflow-clip">
+    <BackgroundsBirds
+      v-if="highPerformance"
+      ref="backgroundBirds"
+      class="absolute top-0 left-0 w-screen h-screen -z-10 opacity-75"
+      :mouse-controls="false"
+      :touch-controls="false"
+      color1="mauve-500"
+      color2="lavender-500"
+      background-color="crust-100"
+      :background-alpha="0.0"
+      :quantity="3"
+    />
+    <div 
+      ref="loadingScreen"
+      class="loading-screen absolute top-0 left-0 w-screen h-screen bg-base-100 z-10 flex flex-col items-center justify-center"
+      :style="isLoaded ? 'display: none;' : ''"
+    >
       <div class="z-11 h-(--xl-em)">
         <h1
           ref="mainHeadingLoading"
@@ -16,74 +32,65 @@
       />
       <p class="mt-(--s-em) text-center text-lg">{{ loadingStep }}</p>
     </div>
-    <BackgroundsBirds
-      v-if="highPerformance"
-      class="fixed top-0 left-0 w-full h-full -z-10 opacity-75"
-      :mouse-controls="false"
-      :touch-controls="false"
-      color1="mauve-500"
-      color2="lavender-500"
-      background-color="crust-100"
-      :background-alpha="0.0"
-      :quantity="3"
-    />
     <UIMenuBar
-        ref="menuBar"
-        position="top"
-        start-position="start"
-        :animate-on-mount="false"
-        pin="none"
-        positioning="relative"
-        featured-action="/bird-recognition"
-      />
-    <UICard
-      ref="mainContentCard"
-      class="flex flex-col items-center justify-center p-(--s-em) w-full max-w-6xl"
-      depth="surface"
-      :opacity="0.5"
-    >
-      <div class="z-11 h-(--xl-em)">
-        <h1
-          ref="mainHeading"
-          class="text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
-          data-flip-id="main-heading"
-          style="display: none;"
-        >
-          Bird Recognition
-        </h1>
-      </div>
+      ref="menuBar"
+      position="top"
+      start-position="start"
+      :animate-on-mount="false"
+      pin="none"
+      positioning="relative"
+      featured-action="/bird-recognition"
+    />
+    <div ref="contentBlock" class="flex flex-col items-center justify-center px-(--m-em)">
       <UICard
-        ref="predictionsCard"
-        class="flex flex-col items-center justify-center w-min-[10rem] w-min-[45%] p-(--s-em) mb-(--s-em)"
-        depth="overlay"
+        ref="mainContentCard"
+        class="flex flex-col items-center justify-center p-(--s-em) w-full max-w-6xl"
+        depth="surface"
         :opacity="0.5"
       >
-        <h2 ref="predictionsHeading" class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em) mx-(--l-em)">Sounds like...</h2>
-        <div>
-          <div v-for="(bird, idx) in birdList" :key="bird">
-            <UICard
-              class="prediction mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
-              depth="item"
-              :opacity="0.5"
-              :data-flip-id="idx"
-            >
-              <p>{{ bird }}</p>
-            </UICard>
-          </div>
+        <div class="z-11 h-(--xl-em)">
+          <h1
+            ref="mainHeading"
+            class="text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
+            data-flip-id="main-heading"
+            style="display: none;"
+          >
+            Bird Recognition
+          </h1>
         </div>
+        <UICard
+          ref="predictionsCard"
+          class="flex flex-col items-center justify-center w-min-[10rem] w-min-[45%] p-(--s-em) mb-(--s-em)"
+          depth="overlay"
+          :opacity="0.5"
+        >
+          <h2 ref="predictionsHeading" class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em) mx-(--l-em)">Sounds like...</h2>
+          <div>
+            <div v-for="(bird, idx) in birdList" :key="bird">
+              <UICard
+                class="prediction mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
+                depth="item"
+                :opacity="0.5"
+                :data-flip-id="idx"
+              >
+                <p>{{ bird }}</p>
+              </UICard>
+            </div>
+          </div>
+        </UICard>
+        <BirdClassificationLiveWaveform ref="liveWaveform" />
       </UICard>
-      <BirdClassificationLiveWaveform ref="liveWaveform" />
-    </UICard>
-    <BirdClassificationRecordButton 
-      ref="recordButton"
-      class="mt-(--s-em)"
-      @click="toggleRecording"
-    />
-    <BirdClassificationFAQ 
-      v-if="loadingProgress >= 0.99" 
-      v-gsap.whenVisible.once.from='{ opacity: 0, delay: 0.5, duration: 2 }'
-      class="fixed bottom-(--m-em) right-(--m-em) z-50" 
-    />
+      <BirdClassificationRecordButton 
+        ref="recordButton"
+        class="mt-(--s-em)"
+        @click="toggleRecording"
+      />
+      <BirdClassificationFAQ 
+        v-if="loadingProgress >= 0.99" 
+        v-gsap.whenVisible.once.from='{ opacity: 0, delay: 0.5, duration: 2 }'
+        class="absolute bottom-(--m-em) right-(--m-em) z-50" 
+      />
+    </div>
   </div>
 </template>
 
@@ -95,21 +102,25 @@ import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
 import type RecordButton from '~/components/BirdClassification/RecordButton.vue';
 import type LiveWaveform from '~/components/BirdClassification/LiveWaveform.vue';
+import type Birds from '~/components/Backgrounds/Birds.vue';
 import type MenuBar from '~/components/UI/MenuBar.vue';
 import type Card from '~/components/UI/Card.vue';
 
 const { toggleRecording, isRecording } = useAudio();
 const { classifierBuffer, bufferSize, initPackages, loadingProgress, loadingStep } = useClassifier();
 const { highPerformance, calculatePerformance } = usePerformance();
+const isLoaded = ref(false);
 
 gsap.registerPlugin(Flip);
 
 const loadingScreen = ref<HTMLElement>();
+const contentBlock = ref<HTMLElement>();
 const mainHeading = ref<HTMLElement>();
 const mainHeadingLoading = ref<HTMLElement>();
 const predictionsHeading = ref<HTMLElement>();
 const recordButton = ref<InstanceType<typeof RecordButton>>();
 const liveWaveform = ref<InstanceType<typeof LiveWaveform>>();
+const backgroundBirds = ref<InstanceType<typeof Birds>>();
 const menuBar = ref<InstanceType<typeof MenuBar>>();
 const mainContentCard = ref<InstanceType<typeof Card>>();
 const predictionsCard = ref<InstanceType<typeof Card>>();
@@ -135,7 +146,11 @@ async function revealPage() {
     const flipAnimation = Flip.from(beginningState, {
       duration: 0.75,
       delay: 0.25,
-      ease: 'power1.inOut'
+      ease: 'power1.inOut',
+      onComplete: () => {
+        isLoaded.value = true;
+        console.log(isLoaded.value);
+      }
     });
     timeline.add(flipAnimation, 0);
   }
@@ -157,6 +172,22 @@ onMounted(async () => {
   calculatePerformance();
   await initPackages();
   document.addEventListener('visibilitychange', handleVisibilityChange);
+
+  // Set size of content block
+  const menuHeight = menuBar.value?.$el?.clientHeight || 0;
+  if (contentBlock.value) {
+    contentBlock.value.style.minHeight = `calc(100vh - ${menuHeight}px)`;
+  }
+
+  // Pin fixed objects
+  gsap.to(backgroundBirds.value?.$el, {
+    scrollTrigger: {
+      trigger: backgroundBirds.value?.$el,
+      start: "top top",
+      end: () => document.body.scrollHeight,
+      pin: true
+    }
+  });
 });
 
 onUnmounted(() => {

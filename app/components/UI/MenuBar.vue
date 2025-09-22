@@ -2,8 +2,9 @@
   <div
     ref="menuContainer"
     :class="[
-      'absolute left-0 w-full z-100 text-3xl',
-      props.pin === 'top' ? (props.position === 'top' ? 'top-(--m-em) h-(--l-em)' : 'bottom-(--m-em) h-(--l-em)') : 'h-full'
+      'left-0 w-full z-100 text-3xl',
+      props.pin === 'top' ? (props.position === 'top' ? 'top-(--m-em) h-(--l-em)' : 'bottom-(--m-em) h-(--l-em)') : props.pin === 'none' ? 'h-(--l-em)' : 'h-full',
+      props.positioning === 'absolute' ? 'absolute' : 'relative m-(--s-em)'
     ]"
   >
     <div
@@ -11,7 +12,7 @@
       :class="[
         'absolute left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
         props.type === 'micro' ? 'w-sm' : 'w-4xl',
-        props.pin !== 'top' ? (props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)') : '',
+        props.positioning === 'absolute' ? (props.pin !== 'top' ? (props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)') : '') : '',
         loaded ? 'visible' : 'invisible',
       ]"
       style="border-radius: 20em 50em 50em 20em;"
@@ -53,8 +54,9 @@ const { COLORS: _COLORS } = useConstants();
 
 const props = withDefaults(defineProps<{
   position?: 'top' | 'bottom' | 'bottomToTop',
-  type?: 'micro' | 'simple' | 'full'
+  type?: 'micro' | 'simple' | 'full',
   pin?: 'default' | 'top' | 'none',
+  positioning?: 'absolute' | 'relative',
   featuredItemText?: string,
   featuredAction?: (() => void) | string,
   primaryColor?: keyof typeof _COLORS,
@@ -66,6 +68,7 @@ const props = withDefaults(defineProps<{
   delayBetweenItems?: number
 }>(), {
   position: 'top',
+  positioning: 'absolute',
   type: 'micro',
   pin: 'default',
   featuredItemText: 'Featured',

@@ -1,5 +1,5 @@
 <template>
-  <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center p-(--m-em)">
+  <div id="bird-recognition-page" class="flex flex-col min-h-screen items-center justify-center px-(--m-em)">
     <div ref="loadingScreen" class="loading-screen fixed top-0 left-0 w-full h-full bg-base-100 z-10 flex flex-col items-center justify-center">
       <div class="z-11 h-(--xl-em)">
         <h1
@@ -32,7 +32,8 @@
         position="top"
         start-position="start"
         :animate-on-mount="false"
-        pin="default"
+        pin="none"
+        positioning="relative"
         featured-action="/bird-recognition"
       />
     <UICard

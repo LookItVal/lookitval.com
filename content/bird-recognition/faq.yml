@@ -6,4 +6,4 @@ faq:
   - question: "Wait, there is no server?"
     answer: "Correct! This entire application runs in your browser. I wrote the model in python, and saved the model's weights to a file. This webpage loads a version of python that runs in the browser (Pyodide) and downloads all the dependencies and then my saved model, then it's sent arrays of audio data and metadata to classify. This is all done on your computer, no data is sent to any server."
   - question: "How did you make this?"
-    answer: "There's a write-up coming soon, but for now you can check out the github repo on the model architecture [here](https://github.com/LookItVal/Bird-Classification-Final-Project/blob/master/revised_final.ipynb) and the repo for this web app [here](https://github.com/LookItVal/lookitval.com)."
+    answer: "There's a write-up coming soon, but for now you can check out my paper on the model architecture [here](https://github.com/LookItVal/Bird-Classification-Final-Project/blob/master/revised_final.ipynb) and the github repo for this web app [here](https://github.com/LookItVal/lookitval.com)."

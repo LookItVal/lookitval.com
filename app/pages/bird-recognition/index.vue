@@ -176,16 +176,6 @@ onMounted(async () => {
   if (contentBlock.value) {
     contentBlock.value.style.minHeight = `calc(100vh - ${menuHeight}px)`;
   }
-
-  // Pin fixed objects
-  gsap.to(backgroundBirds.value?.$el, {
-    scrollTrigger: {
-      trigger: backgroundBirds.value?.$el,
-      start: "top top",
-      end: () => document.body.scrollHeight,
-      pin: true
-    }
-  });
 });
 
 onUnmounted(() => {

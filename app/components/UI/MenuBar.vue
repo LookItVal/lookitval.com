@@ -306,43 +306,6 @@ onMounted(() => {
   } else {
     toPosition(props.startPosition!);
   }
-  if (props.pin === 'default') {
-    gsap.to(menuContainer.value, {
-      scrollTrigger: {
-        trigger: menuContainer.value,
-        start: 'top top',
-        end: () => document.body.scrollHeight,
-        pin: true,
-        onUpdate: (self) => {
-          const velocity = self.getVelocity();
-          gsap.to(menuBar.value, {
-            y: Math.min(Math.max(velocity / -50, -20), 20),
-            ease: 'power2.out',
-            duration: 0.5
-          });
-        }
-      }
-    });
-  }
-  if (props.pin === 'top') {
-    gsap.to(menuContainer.value, {
-      duration: 1,
-      scrollTrigger: {
-        trigger: menuContainer.value,
-        start: `top ${margin.value}`,
-        end: () => document.body.scrollHeight,
-        pin: true,
-        onUpdate: (self) => {
-          const velocity = self.getVelocity();
-          gsap.to(menuBar.value, {
-            y: Math.min(Math.max(velocity / -25, -20), 20),
-            ease: 'power2.out',
-            duration: 0.5
-          });
-        }
-      }
-    });
-  }
 });
 
 defineExpose({

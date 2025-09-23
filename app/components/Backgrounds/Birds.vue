@@ -149,10 +149,6 @@ onMounted(async () => {
   window.addEventListener('resize', handleResize);
 });
 
-onBeforeUnmount(() => {
-  cleanup();
-});
-
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
   cleanup();

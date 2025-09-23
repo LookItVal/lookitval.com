@@ -111,8 +111,6 @@ const { classifierBuffer, bufferSize, initPackages, loadingProgress, loadingStep
 const { highPerformance, calculatePerformance } = usePerformance();
 const isLoaded = ref(false);
 
-gsap.registerPlugin(Flip);
-
 const loadingScreen = ref<HTMLElement>();
 const contentBlock = ref<HTMLElement>();
 const mainHeading = ref<HTMLElement>();

@@ -79,11 +79,6 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
-// Register GSAP plugins
-gsap.registerPlugin(MotionPathPlugin, MorphSVGPlugin);
-
 
 const isAnimating = ref<boolean>(false);
 const logoSvg = ref<SVGSVGElement | null>(null);

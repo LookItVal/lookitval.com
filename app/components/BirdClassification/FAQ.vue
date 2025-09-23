@@ -66,7 +66,6 @@ import { gsap } from 'gsap';
 import { Flip } from "gsap/Flip";
 
 import type Card from '@/components/UI/Card.vue';
-gsap.registerPlugin(Flip);
 
 const { data: faqData } = await useAsyncData('faq', () => queryCollection('faq').first())
 

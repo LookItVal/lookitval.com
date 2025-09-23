@@ -16,7 +16,7 @@ const sampleCount = ref<number>(0);
 let processingInterval: number | null = null;
 const isProcessing = ref(false); // Flag to prevent overlapping processing
 
-export const useAudio = () => {
+export function useAudio() {
   const processAudioChunk = () => {
     // Skip if already processing or no data
     if (isProcessing.value || !audioBuffer.value || sampleCount.value === 0) return;
@@ -186,4 +186,4 @@ export const useAudio = () => {
     stopRecording,
     toggleRecording
   };
-};
+}

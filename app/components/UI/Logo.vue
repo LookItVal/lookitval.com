@@ -134,11 +134,9 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
-import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 import { useConstants } from '@/composables/constants';
 
 const { COLORS: _COLORS } = useConstants();
-gsap.registerPlugin(MorphSVGPlugin);
 
 const props = withDefaults(defineProps<{
   startPosition?: 'final' | 'middle' | 'start',

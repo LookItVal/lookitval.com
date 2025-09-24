@@ -43,7 +43,9 @@
           <UIMenuBar
             ref="menuBar"
             position="top"
-            pin="default"
+            :animate-on-mount="true"
+            class="absolute z-9 left-1/2 -translate-x-1/2 top-0 py-(--s-em)"
+            :pin="true"
             featured-action="/bird-recognition"
             :initial-delay="3"
           />

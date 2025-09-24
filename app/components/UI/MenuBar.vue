@@ -1,7 +1,36 @@
 <template>
   <nav>
     <AnimateScrollLag v-if="loaded" :active="!!props.scrollLag" :reverse="props.scrollLag === 'reverse'">
-      <div />
+      <div
+        ref="menuBar"
+        :class="[
+          'h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
+          props.type === 'micro' ? 'w-sm' : 'w-4xl'
+        ]"
+        style="border-radius: 20em 50em 50em 20em;"
+      >
+        <UILogo
+          ref="logo"
+          :animate-on-mount="false"
+          start-position="final"
+          :primary-color="props.primaryColor"
+          :secondary-color="props.secondaryColor"
+        />
+        <Socials
+          v-if="props.type === 'simple'"
+          ref="socialsSection"
+          class="py-(--xxs-em) rounded-full bg-base-100"
+        />
+        <UIShimmeringButton
+          ref="featuredButton"
+          :color1="props.secondaryColor"
+          :color2="props.primaryColor"
+          :speed="30"
+          :click="props.featuredAction"
+        >
+          <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredText }}</p>
+        </UIShimmeringButton>
+      </div>
     </AnimateScrollLag>
   </nav>
 </template>
@@ -41,5 +70,4 @@ const props = withDefaults(defineProps<{
 });
 
 const loaded = ref(false);
-
 </script>

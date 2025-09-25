@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav ref="menuContainer" class="w-full flex flex-row justify-center">
     <AnimationsScrollLag v-if="loaded" :active="!!props.scrollLag" :reverse="props.scrollLag === 'reverse'">
       <div
         ref="menuBar"
@@ -268,16 +268,17 @@ function animateEntrance({paused = false, initialDelay = props.initialDelay} = {
 }
 
 onMounted(() => {
-  // Initialize reactive values after DOM is mounted
-  barWidth.value = menuBar.value?.offsetWidth || 0;
-  barHeight.value = menuBar.value?.offsetHeight || 0;
-  barTopLeftRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopLeftRadius || '0px';
-  barTopRightRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopRightRadius || '0px';
-  buttonHeight.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
-  buttonWidth.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
-
   loaded.value = true;
+
   nextTick(() => {
+    // Initialize reactive values after DOM is mounted
+    barWidth.value = menuBar.value?.offsetWidth || 0;
+    barHeight.value = menuBar.value?.offsetHeight || 0;
+    barTopLeftRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopLeftRadius || '0px';
+    barTopRightRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopRightRadius || '0px';
+    buttonHeight.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
+    buttonWidth.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
+
     if (props.animateOnMount) {
       const ctx = gsap.context(() => {
         toPosition('start');

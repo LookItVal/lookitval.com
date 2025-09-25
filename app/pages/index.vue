@@ -16,6 +16,15 @@
         animate-on="view"
       />
     </div>
+    <UIMenuBar
+      ref="menuBar"
+      :animate-on-mount="true"
+      class="fixed z-9 top-0 py-(--s-em)"
+      :pin="false"
+      featured-action="/bird-recognition"
+      :initial-delay="3"
+      scroll-lag="reverse"
+    />
     <div ref="pageWrapper">
       <div ref="pageContent">
         <div class="background-lambda landing relative flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em)">
@@ -39,15 +48,6 @@
             :wave-speed="0.01"
             :pixel-size="2"
             :color-num="5"
-          />
-          <UIMenuBar
-            ref="menuBar"
-            position="top"
-            :animate-on-mount="true"
-            class="absolute z-9 left-1/2 -translate-x-1/2 top-0 py-(--s-em)"
-            :pin="true"
-            featured-action="/bird-recognition"
-            :initial-delay="3"
           />
         </div>
         <HomeAbout class="h-min-[100svh]" />

@@ -38,28 +38,26 @@
       <UIShimmeringButton
         :color1="fgColor"
         :color2="bgColor"
-        :click="viewResume"
+        :click="props.viewResume"
       >
         <p class="text-2xl md:text-3xl py-(--xs-em) px-(--s-em) font-black">
           <UIShimmeringText
-            text="View Resume"
+            text="My Résumé"
             as="span"
             fg-color="base-100"
             bg-color="surface-100"
           />
         </p>
       </UIShimmeringButton>
-      <PDFViewer ref="resumePDF" pdf-url="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
     </UICard>
   </div>
 </template>
 
 <script lang="ts" setup>
-const resumePDF: Ref<PDFViewer | null> = ref(null);
+const props = defineProps<{
+  viewResume: () => void
+}>();
+
 const fgColor = 'green-500';
 const bgColor = 'teal-100';
-
-function viewResume() {
-    resumePDF.value!.toggleVisibility();
-}
 </script>

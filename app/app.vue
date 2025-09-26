@@ -29,6 +29,9 @@
       <defs/>
     </svg>
 
+    <!-- Loading Page -->
+    <div id='globalLoadingScreen' class="global-loading-screen fixed top-0 left-0 right-0 bottom-0 bg-base-100 z-50" />
+
     <!-- Page Content -->
     <NuxtPage />
   </div>
@@ -36,3 +39,36 @@
 
 <script lang="ts" setup>
 </script>
+
+<style>
+.global-loading-screen {
+  transform: translateY(-100%);
+}
+
+/* Global loading screen animations during page transitions */
+.page-leave-active .global-loading-screen,
+.page-enter-from .global-loading-screen {
+  transition: transform 5s ease-in-out;
+}
+
+.page-enter-active .global-loading-screen {
+  transform: translateY(0%);
+}
+
+.page-leave-to .global-loading-screen {
+  transform: translateY(0%);
+}
+</style>
+
+<style>
+/* Page transition styles */
+.page-enter-active, 
+.page-leave-active {
+  transition: opacity 0.4s ease-in-out;
+}
+
+.page-enter-from, 
+.page-leave-to {
+  opacity: 1;
+}
+</style>

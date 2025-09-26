@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
 
 const yOffset = computed(() => {
   if (!props.active) return 0;
-  const clampedVelocity = Math.max(-100, Math.min(100, currentVelocity.value / 20));
+  const clampedVelocity = Math.max(-100, Math.min(100, currentVelocity.value / 40));
   return props.reverse ? -clampedVelocity : clampedVelocity;
 });
 </script>

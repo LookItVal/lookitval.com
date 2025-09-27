@@ -6,13 +6,13 @@
         ref="loadingText"
         parent-class-name="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap leading-[1.2] z-11"
         text="Quinn Valencia Cecil"
-        :speed="50"
+        :speed="80"
         :max-iterations="20"
         :sequential="true"
         reveal-direction="center"
         :use-original-chars-only="false"
         :show-pre-text="true"
-        characters="⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯oO0"
+        characters="᛫·•⋅∙◦∘◌⊙⊛⊚⦿◉◯"
         animate-on="view"
       />
     </div>
@@ -60,7 +60,7 @@
 import type PDFViewer from '~/components/PDFViewer.vue';
 import { useSmoothScroller } from '@/composables/smoothScroller';
 const { initSmoothScroller } = useSmoothScroller();
-// "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯"
+// "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯oO0"
 
 const { highPerformance, calculatePerformance } = usePerformance();
 

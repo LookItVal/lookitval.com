@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div :class="['loading-screen-container fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
-      <div class="loading-screen absolute top-0 left-0 right-0 bottom-0 bg-base-100 z-10"/>
+    <div :class="['loading-screen-container fixed top-0 left-0 h-screen w-screen flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
+      <div class="loading-screen absolute top-0 left-0 h-full w-full bg-base-100 z-10"/>
       <TextAnimationsDecryptedText
         ref="loadingText"
         parent-class-name="loading-text flip-transition text-3xl md:text-6xl font-black whitespace-nowrap leading-[1.2] z-11"

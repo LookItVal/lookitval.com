@@ -14,11 +14,20 @@
       :quantity="3"
     />
     <PDFViewer ref="resumePDF" pdf-url="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
+    <h1
+      ref="intermediateMainHeading"
+      class="fixed text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
+      data-flip-id="main-heading"
+      style="display: none;"
+    >
+      Bird Recognition
+    </h1>
     <div 
       ref="loadingScreen"
-      class="loading-screen fixed top-0 left-0 right-0 bottom-0 bg-base-100 z-10 flex flex-col items-center justify-center"
+      class="loading-screen fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col items-center justify-center"
       :style="isLoaded ? 'display: none;' : ''"
     >
+      <div ref="loadingBackground" class="absolute top-0 left-0 right-0 bottom-0 bg-base-100 -z-10" />
       <div class="z-11 h-(--xl-em)">
         <h1
           ref="mainHeadingLoading"
@@ -29,10 +38,11 @@
         </h1>
       </div>
       <UIFeatherLoadingBar
+        ref="loadingBar"
         class="w-full h-(--xxl-em) px-(--m-em)"
         :progress="loadingProgress"
       />
-      <p class="mt-(--s-em) text-center text-lg">{{ loadingStep }}</p>
+      <p ref="loadingStepText" class="mt-(--s-em) text-center text-lg">{{ loadingStep }}</p>
     </div>
     <AnimationsScrollLag
       v-if="loadingProgress >= 0.99" 
@@ -64,7 +74,7 @@
           <div class="z-11 h-(--xl-em)">
             <h1
               ref="mainHeading"
-              class="text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
+              class="relative text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
               data-flip-id="main-heading"
               style="display: none;"
             >
@@ -115,6 +125,7 @@ import type PDFViewer from '~/components/PDFViewer.vue';
 import type Birds from '~/components/Backgrounds/Birds.vue';
 import type MenuBar from '~/components/UI/MenuBar.vue';
 import type Card from '~/components/UI/Card.vue';
+import type { ComponentPublicInstance } from 'vue';
 
 const { initSmoothScroller } = useSmoothScroller();
 const { toggleRecording, isRecording } = useAudio();
@@ -129,9 +140,13 @@ initSmoothScroller(pageWrapper, pageContent);
 const loaded = ref(false);
 
 const loadingScreen = ref<HTMLElement>();
+const loadingBackground = ref<HTMLElement>();
+const loadingBar = ref<ComponentPublicInstance>();
+const loadingStepText = ref<HTMLElement>();
 const contentBlock = ref<HTMLElement>();
 const mainHeading = ref<HTMLElement>();
 const mainHeadingLoading = ref<HTMLElement>();
+const intermediateMainHeading = ref<HTMLElement>();
 const predictionsHeading = ref<HTMLElement>();
 const resumePDF = ref<InstanceType<typeof PDFViewer>>();
 const recordButton = ref<InstanceType<typeof RecordButton>>();
@@ -148,28 +163,36 @@ function viewResume() {
 
 async function revealPage() {
   if (loadingScreen.value) {
+
     menuBar.value?.animateEntrance({ initialDelay: 1 });
     const timeline = gsap.timeline();
-    const beginningState = Flip.getState([mainHeading.value!, mainHeadingLoading.value!]);
+    gsap.set(intermediateMainHeading.value!, { display: 'block' });
+    Flip.fit(intermediateMainHeading.value!, mainHeadingLoading.value!);
     gsap.set(mainHeadingLoading.value!, { display: 'none' });
-    gsap.set(mainHeading.value!, { display: 'block' });
+    gsap.set(mainHeading.value!, { display: 'block', opacity: 0 });
     await nextTick();
-    timeline.to(loadingScreen.value, {
+    const beginningState = Flip.getState([mainHeading.value!, intermediateMainHeading.value!]);
+    await nextTick();
+    timeline.to([loadingScreen.value!], {
       translateY: '-100%',
       duration: 0.75,
       delay: 0.25,
       ease: 'power1.inOut',
       onComplete: () => {
       loadingScreen.value!.style.display = 'none';
+      gsap.set(mainHeadingLoading.value!, { display: 'none' });
+      gsap.set(mainHeading.value!, { display: 'block' });
       }
     });
-    const flipAnimation = Flip.from(beginningState, {
+    const flipAnimation = Flip.to(beginningState, {
       duration: 0.75,
       delay: 0.25,
       ease: 'power1.inOut',
       onComplete: () => {
         isLoaded.value = true;
         console.log(isLoaded.value);
+        gsap.set(intermediateMainHeading.value!, { display: 'none' });
+        gsap.set(mainHeading.value!, { display: 'block', opacity: 1 });
       }
     });
     timeline.add(flipAnimation, 0);

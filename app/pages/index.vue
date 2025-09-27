@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="['fixed h-svh w-svw flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
+    <div :class="['loading-screen-container fixed h-svh w-svw flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
       <div class="loading-screen absolute top-0 left-0 w-full h-full bg-base-100 z-10"/>
       <TextAnimationsDecryptedText
         ref="loadingText"
@@ -12,48 +12,63 @@
         reveal-direction="center"
         :use-original-chars-only="false"
         :show-pre-text="true"
-        characters="⋅·∙‧◦•"
+        characters="⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯oO0"
         animate-on="view"
       />
     </div>
-    <div class="background-lambda landing relative flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em)">
-      <UIMenuBar
-        ref="menuBar"
-        position="bottom"
-        pin="top"
-        featured-action="/bird-recognition"
-        :initial-delay="3"
-      />
-      <div class="home-text z-1 flex flex-col card-background-lambda absolute md:relative max-md:right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem]">
-        <h1 ref="pageText" class="text-3xl md:text-6xl !font-black whitespace-nowrap z-50">Quinn Valencia Cecil</h1>
-        <HomeJobTitles class="mb-(--s-em) z-0 text-2xl md:text-3xl" />
-        <Socials class="z-1 h-[1.5em]" />
+    <UIMenuBar
+      ref="menuBar"
+      :animate-on-mount="true"
+      class="fixed z-9 top-0 py-(--s-em)"
+      :pin="false"
+      featured-action="/bird-recognition"
+      :initial-delay="3"
+      scroll-lag="reverse"
+    />
+    <PDFViewer ref="resumePDF" pdf-url="https://docs.google.com/document/d/1ZvWFu-CFvC8oW8W4hgGEbTAkc00s-URR3osO16rttos/export?format=pdf" />
+    <div ref="pageWrapper">
+      <div ref="pageContent">
+        <div class="background-lambda landing relative flex flex-row-reverse md:flex-row justify-between items-center h-[100svh] md:pl-(--l-em)">
+          <div class="home-text z-1 flex flex-col card-background-lambda absolute md:relative max-md:right-(--l-em) max-md:top-[5rem] p-[1.5rem] gap-[0.5rem] w-max rounded-[3rem]">
+            <h1 ref="pageText" class="text-3xl md:text-6xl !font-black whitespace-nowrap z-50">Quinn Valencia Cecil</h1>
+            <HomeJobTitles class="mb-(--s-em) z-0 text-2xl md:text-3xl" />
+            <Socials class="z-1 h-[1.5em]" />
+          </div>
+          <div class="portrait">
+            <img
+              src="/images/DitherPortrait.png"
+              alt="Quinn Valencia Cecil"
+              class="relative object-cover object-right right-0 top-0 h-[100svh] z-0 drop-shadow-xl"
+            >
+          </div>
+          <BackgroundsDither
+            v-if="highPerformance"
+            class="-z-10"
+            :wave-color="[0.3451, 0.3569, 0.4392]"
+            :enable-mouse-interaction="false"
+            :wave-speed="0.01"
+            :pixel-size="2"
+            :color-num="5"
+          />
+        </div>
+        <HomeAbout class="h-min-[100svh]" :view-resume="viewResume"/>
       </div>
-      <div class="portrait">
-        <img
-          src="/images/DitherPortrait.png"
-          alt="Quinn Valencia Cecil"
-          class="relative object-cover object-right right-0 top-0 h-[100svh] z-0 drop-shadow-xl"
-        >
-      </div>
-      <BackgroundsDither
-        v-if="highPerformance"
-        class="-z-10"
-        :wave-color="[0.3451, 0.3569, 0.4392]"
-        :enable-mouse-interaction="false"
-        :wave-speed="0.01"
-        :pixel-size="2"
-        :color-num="5"
-      />
     </div>
-    <HomeAbout class="h-min-[100svh]" />
   </div>
 </template>
 <script lang="ts" setup>
-// const test = "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯";
+import type PDFViewer from '~/components/PDFViewer.vue';
+import { useSmoothScroller } from '@/composables/smoothScroller';
+const { initSmoothScroller } = useSmoothScroller();
+// "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯"
 
 const { highPerformance, calculatePerformance } = usePerformance();
 
+const pageWrapper = ref<HTMLElement | null>(null);
+const pageContent = ref<HTMLElement | null>(null);
+initSmoothScroller(pageWrapper, pageContent);
+
+const resumePDF = ref<InstanceType<typeof PDFViewer>>();
 const loadingText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 const pageText = ref<ComponentPublicInstance | HTMLElement | null>(null);
 
@@ -61,6 +76,10 @@ const loadingTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 const pageTextBoundingClientRect: Ref<DOMRect | null> = ref(null);
 
 const loaded = ref(false);
+
+function viewResume() {
+    resumePDF.value!.toggleVisibility();
+}
 
 useHead({
   title: "Look, It's Val!",
@@ -86,7 +105,6 @@ onMounted(() => {
       window.scrollTo({ top: 0, behavior: 'auto' });
       document.removeEventListener('scroll', scrollHandler);
 
-      // If loadingText is a component, use $el to get the DOM element
       const loadingEl = (loadingText.value && (loadingText.value as ComponentPublicInstance).$el) ? (loadingText.value as ComponentPublicInstance).$el : loadingText.value;
       const pageEl = (pageText.value && (pageText.value as ComponentPublicInstance).$el) ? (pageText.value as ComponentPublicInstance).$el : pageText.value;
       loadingTextBoundingClientRect.value = loadingEl?.getBoundingClientRect?.();
@@ -166,6 +184,19 @@ const landingTextAdjustment = computed(() => {
 </script>
 
 <style scoped>
+/* Page transition styles */
+.page-leave-active {
+  & .loading-screen {
+    transition: transform 0.4s ease-in-out;
+  }
+}
+
+.page-leave-to {
+  & .loading-screen {
+    transform: scale(100%) !important;
+    opacity: 1 !important;
+  }
+}
 
 .loading-screen {
   top: 0;

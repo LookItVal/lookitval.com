@@ -1,82 +1,75 @@
 <template>
-  <div
-    ref="menuContainer"
-    :class="[
-      'absolute left-0 w-full z-100 text-3xl',
-      props.pin === 'top' ? (props.position === 'top' ? 'top-(--m-em) h-(--l-em)' : 'bottom-(--m-em) h-(--l-em)') : 'h-full'
-    ]"
-  >
-    <div
-      ref="menuBar"
-      :class="[
-        'absolute left-1/2 transform -translate-x-1/2 h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
-        props.type === 'micro' ? 'w-sm' : 'w-4xl',
-        props.pin !== 'top' ? (props.position === 'top' ? 'top-(--m-em)' : 'bottom-(--m-em)') : '',
-        loaded ? 'visible' : 'invisible',
-      ]"
-      style="border-radius: 20em 50em 50em 20em;"
-      data-lag="0.25"
-    >
-      <UILogo
-        ref="logo"
-        :animate-on-mount="false"
-        start-position="final"
-        :primary-color="props.primaryColor"
-        :secondary-color="props.secondaryColor"
-      />
-      <Socials 
-        v-if="props.type === 'simple'"
-        ref="socialsSection"
-        class="py-(--xxs-em) rounded-full bg-base-100 aspect-square"
-      />
-      <UIShimmeringButton
-        ref="featuredButton"
-        :color1="props.secondaryColor"
-        :color2="props.primaryColor"
-        :speed="30"
-        :click="props.featuredAction"
+  <nav ref="menuContainer" class="w-full flex flex-row justify-center">
+    <AnimationsScrollLag v-if="loaded" :active="!!props.scrollLag" :reverse="props.scrollLag === 'reverse'">
+      <div
+        ref="menuBar"
+        :class="[
+          'h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
+          props.type === 'micro' ? 'w-sm' : 'w-4xl'
+        ]"
+        style="border-radius: 20em 50em 50em 20em;"
       >
-        <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredItemText }}</p>
-      </UIShimmeringButton>
-    </div>
-  </div>
+        <UILogo
+          ref="logo"
+          :animate-on-mount="false"
+          start-position="final"
+          :primary-color="props.primaryColor"
+          :secondary-color="props.secondaryColor"
+        />
+        <Socials
+          v-if="props.type === 'simple'"
+          ref="socialsSection"
+          class="py-(--xxs-em) rounded-full bg-base-100"
+        />
+        <UIShimmeringButton
+          ref="featuredButton"
+          :color1="props.secondaryColor"
+          :color2="props.primaryColor"
+          :speed="30"
+          :click="props.featuredAction"
+        >
+          <p ref="featuredButtonText" class="text-base-100 font-black px-(--s-em) text-nowrap">{{ props.featuredText }}</p>
+        </UIShimmeringButton>
+      </div>
+    </AnimationsScrollLag>
+  </nav>
 </template>
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
 import { useConstants } from '@/composables/constants';
-import type Logo from '~/components/UI/Logo.vue';
+import type Logo from '@/components/UI/Logo.vue';
 import type Socials from '@/components/Socials/Socials.vue';
 import type ShimmeringButton from '@/components/UI/ShimmeringButton.vue';
 
 const { COLORS: _COLORS } = useConstants();
 
 const props = withDefaults(defineProps<{
-  position?: 'top' | 'bottom' | 'bottomToTop',
-  type?: 'micro' | 'simple' | 'full'
-  pin?: 'default' | 'top' | 'none',
-  featuredItemText?: string,
+  type?: 'micro' | 'simple' | 'full',
+  featuredText?: string,
   featuredAction?: (() => void) | string,
   primaryColor?: keyof typeof _COLORS,
   secondaryColor?: keyof typeof _COLORS,
-  startPosition?: 'start' | 'first' | 'second' | 'third' | 'final',
+  startPosition?: 'start' | 'final',
   animateOnMount?: boolean,
   duration?: number,
   initialDelay?: number,
-  delayBetweenItems?: number
+  delayBetweenItems?: number,
+  pin?: boolean,
+  scrollLag?: boolean | 'reverse' 
 }>(), {
-  position: 'top',
   type: 'micro',
-  pin: 'default',
-  featuredItemText: 'Featured',
+  featuredText: 'Featured',
   featuredAction: () => {},
   primaryColor: 'lavender-100',
   secondaryColor: 'mauve-100',
   startPosition: 'final',
-  animateOnMount: true,
+  animateOnMount: false,
   duration: 1,
   initialDelay: 0,
-  delayBetweenItems: 0
+  delayBetweenItems: 0,
+  pin: false,
+  scrollLag: false
 });
 
 const loaded = ref(false);
@@ -92,9 +85,8 @@ const barWidth = ref(0);
 const barHeight = ref(0);
 const barTopLeftRadius = ref('0px');
 const barTopRightRadius = ref('0px');
-const buttonHeight = ref(0);
 const buttonWidth = ref(0);
-const margin = ref(0);
+const buttonHeight = ref(0);
 
 function toPosition(position: 'start' | 'first' | 'second' | 'third' | 'final') {
   switch (position) {
@@ -164,7 +156,7 @@ function toPosition(position: 'start' | 'first' | 'second' | 'third' | 'final') 
         borderBottomRightRadius: barTopRightRadius.value,
         borderTopLeftRadius: barTopLeftRadius.value,
       });
-      gsap.set(featuredButtonText.value, { text: props.featuredItemText });
+      gsap.set(featuredButtonText.value, { text: props.featuredText });
       break;
   }
 }
@@ -251,7 +243,7 @@ function animateToFinalPosition({paused = false, duration = props.duration, ease
 
   timeline.add(logo.value!.animateToFinal({ duration }), 0)
   timeline.to(featuredButtonText.value, {
-    text: props.featuredItemText,
+    text: props.featuredText,
     duration,
     ease: easeFunction
   }, `<`)
@@ -275,68 +267,39 @@ function animateEntrance({paused = false, initialDelay = props.initialDelay} = {
   return timeline;
 }
 
-
 onMounted(() => {
-  if (props.position === 'top' && props.pin === 'top') {
-    console.warn('UIMenuBar: You have set both position and pin to "top". This may cause unexpected behavior.');
-  }
-
-  // Initialize reactive values after DOM is mounted
-  barWidth.value = menuBar.value?.offsetWidth || 0;
-  barHeight.value = menuBar.value?.offsetHeight || 0;
-  barTopLeftRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopLeftRadius || '0px';
-  barTopRightRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopRightRadius || '0px';
-  buttonHeight.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
-  buttonWidth.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
-  margin.value = props.position === 'top' ? parseFloat(getComputedStyle(menuContainer.value || document.documentElement).top) : parseFloat(getComputedStyle(menuContainer.value || document.documentElement).bottom);
-
   loaded.value = true;
-  if (props.animateOnMount) {
-    const ctx = gsap.context(() => {
-      toPosition('start');
-      const timeline = gsap.timeline({ onComplete: () => { ctx.revert(); } });
-      timeline.add(animateEntrance());
-    });
-  } else {
-    toPosition(props.startPosition!);
-  }
-  if (props.pin === 'default') {
-    gsap.to(menuContainer.value, {
-      scrollTrigger: {
-        trigger: menuContainer.value,
-        start: 'top top',
-        end: () => document.body.scrollHeight,
-        pin: true,
-        onUpdate: (self) => {
-          const velocity = self.getVelocity();
-          gsap.to(menuBar.value, {
-            y: Math.min(Math.max(velocity / -50, -20), 20),
-            ease: 'power2.out',
-            duration: 0.5
-          });
+
+  nextTick(() => {
+    // Initialize reactive values after DOM is mounted
+    barWidth.value = menuBar.value?.offsetWidth || 0;
+    barHeight.value = menuBar.value?.offsetHeight || 0;
+    barTopLeftRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopLeftRadius || '0px';
+    barTopRightRadius.value = getComputedStyle(menuBar.value || document.documentElement).borderTopRightRadius || '0px';
+    buttonHeight.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientHeight || 0;
+    buttonWidth.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
+
+    if (props.animateOnMount) {
+      const ctx = gsap.context(() => {
+        toPosition('start');
+        const timeline = gsap.timeline({ onComplete: () => { ctx.revert(); } });
+        timeline.add(animateEntrance());
+      });
+    } else {
+      toPosition(props.startPosition!);
+    }
+    if (props.pin) {
+      gsap.to(menuContainer.value, {
+        scrollTrigger: {
+          trigger: menuContainer.value,
+          start: 'top top',
+          end: () => document.body.scrollHeight,
+          pin: true,
+          pinType: 'transform'
         }
-      }
-    });
-  }
-  if (props.pin === 'top') {
-    gsap.to(menuContainer.value, {
-      duration: 1,
-      scrollTrigger: {
-        trigger: menuContainer.value,
-        start: `top ${margin.value}`,
-        end: () => document.body.scrollHeight,
-        pin: true,
-        onUpdate: (self) => {
-          const velocity = self.getVelocity();
-          gsap.to(menuBar.value, {
-            y: Math.min(Math.max(velocity / -25, -20), 20),
-            ease: 'power2.out',
-            duration: 0.5
-          });
-        }
-      }
-    });
-  }
+      });
+    }
+  });
 });
 
 defineExpose({

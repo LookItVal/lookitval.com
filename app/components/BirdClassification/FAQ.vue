@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-lag="1">
     <UICard 
       v-if="openButtonState"
       ref="openButton"
@@ -24,7 +24,7 @@
       data-flip-id="faq-card"
     >
       <button 
-        class="absolute top-(--xxs-em) right-(--xxs-em) p-(--xs-em) text-subtext-300 hover:text-text-100 transition-colors duration-300"
+        class="absolute top-(--s-em) right-(--s-em) p-(--xxxs-em) text-subtext-300 hover:text-text-100 transition-colors duration-300"
         @click="toggleOpened"
       >
         <Icon ref="cancelIcon" name="material-symbols:cancel-outline-rounded" />
@@ -66,7 +66,6 @@ import { gsap } from 'gsap';
 import { Flip } from "gsap/Flip";
 
 import type Card from '@/components/UI/Card.vue';
-gsap.registerPlugin(Flip);
 
 const { data: faqData } = await useAsyncData('faq', () => queryCollection('faq').first())
 

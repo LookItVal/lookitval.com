@@ -66,9 +66,9 @@ const SHIMMER_COLORS = [
   'trans'
 ] as const;
 
-export const useConstants = () => {   
+export function useConstants() {   
   return {
     COLORS,
     SHIMMER_COLORS
   };
-};
+}

@@ -2,10 +2,13 @@ import tailwindcss from "@tailwindcss/vite"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   devServer: {
-    https: false, // Set to true and provide certs to enable HTTPS
+    https: true, // Set to true and provide certs to enable HTTPS
     // https: {
     //   key: './ssl/localhost-key.pem',
     //   cert: './ssl/localhost.pem'

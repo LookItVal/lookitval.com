@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="['loading-screen-container fixed h-svh w-svw flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
+    <div :class="['loading-screen-container fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-10 pointer-events-none', { hide: loaded }]">
       <div class="loading-screen absolute top-0 left-0 w-full h-full bg-base-100 z-10"/>
       <TextAnimationsDecryptedText
         ref="loadingText"

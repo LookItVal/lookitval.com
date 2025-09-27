@@ -1,11 +1,11 @@
 <template>
-  <nav ref="menuContainer" class="w-full flex flex-row justify-center">
+  <nav ref="menuContainer" class="w-screen flex flex-row justify-center">
     <AnimationsScrollLag v-if="loaded" :active="!!props.scrollLag" :reverse="props.scrollLag === 'reverse'">
       <div
         ref="menuBar"
         :class="[
-          'h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 text-3xl',
-          props.type === 'micro' ? 'w-sm' : 'w-4xl'
+          'h-(--l-em) p-(--xxs-em) flex flex-row justify-between bg-surface-300 md:text-3xl text-xl',
+          props.type === 'micro' ? 'md:w-sm w-xs' : 'w-4xl'
         ]"
         style="border-radius: 20em 50em 50em 20em;"
       >

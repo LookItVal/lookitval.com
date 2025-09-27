@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen">
-    <div class="page-initializer fixed top-0 left-0 right-0 bottom-0 bg-base-100 z-20 -translate-y-full" />
+    <div class="page-initializer fixed top-0 left-0 right-0 bottom-0 bg-base-100 -translate-y-full z-10000" />
     <BackgroundsBirds
       v-if="highPerformance"
       ref="backgroundBirds"
@@ -46,14 +46,14 @@
     </div>
     <AnimationsScrollLag
       v-if="loadingProgress >= 0.99" 
-      v-gsap.whenVisible.once.from='{ opacity: 0, delay: 0.5, duration: 2 }'
-      class="fixed bottom-(--m-em) right-(--m-em) z-50" 
+      ref="faqSection"
+      class="fixed bottom-(--m-em) right-(--m-em) z-50 opacity-0" 
       :reverse="true"
     >
       <BirdClassificationFAQ />
     </AnimationsScrollLag>
     <div ref="pageWrapper">
-      <div ref="pageContent" class="flex flex-col items-center justify-center px-(--m-em)">
+      <div ref="pageContent" class="flex flex-col items-center justify-between px-(--m-em) min-h-screen">
         <UIMenuBar
           v-if="loaded"
           ref="menuBar"
@@ -65,49 +65,54 @@
           featured-text="Résumé"
           :scroll-lag="true"
         />
-        <UICard
-          ref="mainContentCard"
-          class="flex flex-col items-center justify-center p-(--s-em) w-full max-w-6xl"
-          depth="surface"
-          :opacity="0.5"
+        <div
+          class="flex flex-col items-center justify-center md:text-3xl text-xl w-full"
+          style="min-height: calc(100svh - var(--l-em) - (var(--s-em) * 2));"
         >
-          <div class="z-11 h-(--xl-em)">
-            <h1
-              ref="mainHeading"
-              class="relative text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
-              data-flip-id="main-heading"
-              style="display: none;"
-            >
-              Bird Recognition
-            </h1>
-          </div>
           <UICard
-            ref="predictionsCard"
-            class="flex flex-col items-center justify-center w-min-[10rem] w-min-[45%] p-(--s-em) mb-(--s-em)"
-            depth="overlay"
+            ref="mainContentCard"
+            class="flex flex-col items-center justify-center p-(--s-em) w-full max-w-6xl"
+            depth="surface"
             :opacity="0.5"
           >
-            <h2 ref="predictionsHeading" class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em) mx-(--l-em)">Sounds like...</h2>
-            <div>
-              <div v-for="(bird, idx) in birdList" :key="bird">
-                <UICard
-                  class="prediction mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
-                  depth="item"
-                  :opacity="0.5"
-                  :data-flip-id="idx"
-                >
-                  <p>{{ bird }}</p>
-                </UICard>
-              </div>
+            <div class="z-11 h-(--xl-em)">
+              <h1
+                ref="mainHeading"
+                class="relative text-2xl lg:text-6xl font-bold text-center text-nowrap mb-(--s-em) z-11"
+                data-flip-id="main-heading"
+                style="display: none;"
+              >
+                Bird Recognition
+              </h1>
             </div>
+            <UICard
+              ref="predictionsCard"
+              class="flex flex-col items-center justify-center w-min-[10rem] w-min-[45%] p-(--s-em) mb-(--s-em)"
+              depth="overlay"
+              :opacity="0.5"
+            >
+              <h2 ref="predictionsHeading" class="text-lg lg:text-2xl font-semibold text-center mb-(--s-em) mx-(--l-em)">Sounds like...</h2>
+              <div>
+                <div v-for="(bird, idx) in birdList" :key="bird">
+                  <UICard
+                    class="prediction mb-(--xxs-em) px-(--xs-em) py-(--xxs-em) text-center text-sm lg:text-lg"
+                    depth="item"
+                    :opacity="0.5"
+                    :data-flip-id="idx"
+                  >
+                    <p>{{ bird }}</p>
+                  </UICard>
+                </div>
+              </div>
+            </UICard>
+            <BirdClassificationLiveWaveform ref="liveWaveform" />
           </UICard>
-          <BirdClassificationLiveWaveform ref="liveWaveform" />
-        </UICard>
-        <BirdClassificationRecordButton 
-          ref="recordButton"
-          class="mt-(--s-em)"
-          @click="toggleRecording"
-        />
+          <BirdClassificationRecordButton 
+            ref="recordButton"
+            class="mt-(--s-em)"
+            @click="toggleRecording"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -119,6 +124,7 @@ import { Flip } from "gsap/Flip";
 import { useAudio } from '@/composables/audio';
 import { useClassifier } from '@/composables/birdClassifier';
 import { useSmoothScroller } from '@/composables/smoothScroller';
+import type FAQ from '~/components/BirdClassification/FAQ.vue';
 import type RecordButton from '~/components/BirdClassification/RecordButton.vue';
 import type LiveWaveform from '~/components/BirdClassification/LiveWaveform.vue';
 import type PDFViewer from '~/components/PDFViewer.vue';
@@ -139,6 +145,7 @@ initSmoothScroller(pageWrapper, pageContent);
 
 const loaded = ref(false);
 
+const faqSection = ref<InstanceType<typeof FAQ>>();
 const loadingScreen = ref<HTMLElement>();
 const loadingBackground = ref<HTMLElement>();
 const loadingBar = ref<ComponentPublicInstance>();
@@ -196,6 +203,11 @@ async function revealPage() {
       }
     });
     timeline.add(flipAnimation, 0);
+    timeline.to(faqSection.value!.$el, {
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.inOut'
+    }, '> + 3');
   }
 }
 

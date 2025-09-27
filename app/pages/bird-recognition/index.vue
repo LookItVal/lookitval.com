@@ -169,6 +169,7 @@ function viewResume() {
 }
 
 async function revealPage() {
+  if (isLoaded.value) return;
   if (loadingScreen.value) {
 
     menuBar.value?.animateEntrance({ initialDelay: 1 });

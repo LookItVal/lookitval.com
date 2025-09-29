@@ -58,7 +58,7 @@
           v-if="loaded"
           ref="menuBar"
           class="py-(--s-em)"
-          startPosition="start"
+          start-position="start"
           :animate-on-mount="false"
           :pin="false"
           :featured-action="viewResume"
@@ -163,6 +163,16 @@ const menuBar = ref<InstanceType<typeof MenuBar>>();
 const mainContentCard = ref<InstanceType<typeof Card>>();
 const predictionsCard = ref<InstanceType<typeof Card>>();
 const birdList = ref<string[]>([...classifierBuffer.value]);
+
+useHead({
+  title: "Birdcall Recognition",
+  meta: [
+    {
+      name: 'description',
+      content: 'A web app that uses machine learning to recognize bird calls in real-time using your microphone.'
+    }
+  ]
+});
 
 function viewResume() {
     resumePDF.value!.toggleVisibility();

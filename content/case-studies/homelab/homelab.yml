@@ -1,8 +1,8 @@
 title: "Homelab"
 description: "how to make a homelab"
 sections:
- - name: "Introduction: Concept, Plan, and Goals"
-   url: "case-studies/homelab/1-introduction"
+  - name: "Introduction: Concept, Plan, and Goals"
+    url: "case-studies/homelab/1-introduction"
   
   - name: "Hardware Overview, and OS Setup"
     url: "case-studies/homelab/2-hardware-overview"

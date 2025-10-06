@@ -23,4 +23,44 @@ The Boot image had the same issue as the minimal image. I am going to assume the
 The first thing this guide mentions to do is open the flash drive on another computer that can access the contents. On mac or windows this may be a little weird, but the machine I'm going to put this on is already loaded with arch linux using my personal dotfiles, so I can just plug the flash drive in and mount it. The guide says to open the file `/EFI/BOOT/grub.cfg`, mine looked like this: 
 
 ```cfg
+set default="1"
+
+function load_video {
+  insmod efi_gop
+  insmod efi_uga
+  insmod video_bochs
+  insmod video_cirrus
+  insmod all_video
+}
+
+load_video
+set gfxpayload=keep
+insmod gzio
+insmod part_gpt
+insmod ext2
+
+set timeout=60
+### END /etc/grub.d/00_header ###
+
+search --no-floppy --set=root -l 'AlmaLinux-10-0-x86_64-dvd'
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Install AlmaLinux 10.0' --class fedora --class gnu-linux --class gnu --class os {
+	linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:LABEL=AlmaLinux-10-0-x86_64-dvd quiet
+	initrdefi /images/pxeboot/initrd.img
+}
+menuentry 'Test this media & install AlmaLinux 10.0' --class fedora --class gnu-linux --class gnu --class os {
+	linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:LABEL=AlmaLinux-10-0-x86_64-dvd rd.live.check quiet
+	initrdefi /images/pxeboot/initrd.img
+}
+submenu 'Troubleshooting -->' {
+	menuentry 'Install AlmaLinux 10.0 in basic graphics mode' --class fedora --class gnu-linux --class gnu --class os {
+		linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:LABEL=AlmaLinux-10-0-x86_64-dvd nomodeset quiet
+		initrdefi /images/pxeboot/initrd.img
+	}
+	menuentry 'Rescue an AlmaLinux system' --class fedora --class gnu-linux --class gnu --class os {
+		linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:LABEL=AlmaLinux-10-0-x86_64-dvd inst.rescue quiet
+		initrdefi /images/pxeboot/initrd.img
+	}
+}
 ```

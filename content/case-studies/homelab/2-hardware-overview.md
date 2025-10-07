@@ -79,6 +79,77 @@ Then it asks what the source of the installation will be. My ISO was freshly bur
 
 I decided the best way to deal with my hard drive because it had been partitioned into a thousand pieces from previous installs, was to just make a gParted live USB and use that to wipe the drive, so the only thing on the hard drive is rEFInd. I booted into the alma 9 installer again, then went through the instilation process.
 
-During the installation, I set the computer to custom partitioning, set a swap partition matching my RAM, boot partition of 1GB, a system partition of 70mb, a home partition of 16gb for only local files, and the rest of the drive as a shared data partition. on this machine that ende dup in 352 GB of shared storage.
+During the installation, I set the computer to custom partitioning, set a swap partition matching my RAM, boot partition of 1GB, a root partition of 70gb, a home partition of 16gb for only local files, and the rest of the drive as a shared data partition. on this machine that ended up in 352 GB of shared storage.
 
-Then i needed network access. I need a usb hub.
+Then i needed network access. I need a usb hub. so I got one.
+
+Alma linux normally asks for your network connection during the installation, and helps you set it up. I'm not going to connect this machine to a switch or router with a hardlined connection until later, so I need to set up wifi, and I will not set a static IP address in the begining. I will set up a static IP address later, once I add a switch to the system and put this machine on a hardlined connection. For now I will connect with Ethernet over USB using my phone. Using something called "USB Tethering", I can share my phones internet connection with the computer over USB. I find this to be one of the most effective ways to give internet to a computer during installation, before you have the proper drivers installed for your wifi card. I have done this many times before, and it works great.
+
+So i partitioned the drive using an LVM, i stuck with the existing boot loader on the drive, which is rEFInd. I made a swap partition thats the size of my ram, a boot partition of 1GB, a root partition of 64GB, a home partition of 16GB, and the rest of the drive as a shared data partition. That shared data partition ended up being 358GB. The fact that this is an LVM means that I can resize these partitions later if I need to however.
+
+For the network I went ahead and gave this machine a hostname of "manager1", since this will serve as the initial management node for the homelab for some time. Right now its connected using DHCP over the USB tethering, but later I will set up a static IP address once I have a switch and router in place.
+
+I set the root password to something secure, and created an admin user with sudo privileges, and then I let the installation run.
+
+It did warn me that it could not find the package mactel-boot, which is a package that helps macs boot properly. I think this is because this is an old macbook pro, and the package is not compatible with this version of alma linux. I am going to ignore this warning for now, since i told it not do install the bootloader, and rEFInd should be able to handle it.
+
+To my surprise, refind was in fact not able to handle it. When I rebooted, the OS did not show up in the rEFInd menu. I booted back into the live alma linux USB drive, and confirmed that the OS was present, but the boot loader seems to not be able to find it.
+
+This may be because of the LVM partitioning scheme, so im going to try and open up the rEFInd config file and add the OS manually. The config file is located at `/boot/efi/EFI/refind/refind.conf`, but i dont actually have an operating system i can boot into yet, so I need a bootable OS I can use to edit this file. gParted could probably do it, but I also have an arch linux live USB drive here I can use. I booted into that, mounted the efi partition, and opened up the config file in vim.
+
+This may feel excessive but these 3 drives if kept around will be incredibly useful for troubleshooting and fixing problems in the server. Between these 3 drives I can control almost anything about the system without an installed OS.
+
+When running `fdisk -l` I can see that there is an efi partition at `/dev/sda1` for refind, and the boot partition for alma linux is at `/dev/sda2`, and the rest of the partitions are in an LVM group. rEFInd should be able to see the OS, but either way i will continue on.
+
+I am going to mount the EFI partition, then open up the refind config file located at `/mnt/EFI/refind/refind.conf`. At the bottom of the file I added the following menu item:
+
+```
+menuentry "AlmaLinux 9" {
+    volume /dev/sda2 # The location of the boot partition
+		loader /vmlinuz-<version> # The location of the kernel
+		initrd /initramfs-<version>.img # The location of the initramfs
+		options "ro root=/dev/mapper/almalinux-root rhgb quiet" # The root partition and any kernel options
+}
+```
+
+The only thing is we have to find the version of our kernel, which we can do by looking in the boot partition. It should be in a file named something like `vmlinuz-<version>` in the root of the boot partition. I found mine to be `vmlinuz-5.14.0-570.12.1.e19_6.x86_64`, and the initramfs to be `initramfs-5.14.0-570.12.1.e19_6.x86_64.img`. So the final menu entry looks like this:
+
+```
+menuentry "AlmaLinux 9" {
+		volume /dev/sda2
+		loader /vmlinuz-5.14.0-570.12.1.e19_6.x86_64
+		initrd /initramfs-5.14.0-570.12.1.e19_6.x86_64.img
+		options "ro root=/dev/mapper/almalinux-root rhgb quiet"
+}
+```
+
+From there I rebooted and rEFInd was able to see the OS but when i booted into it, it told me it could not find the loader file. So i booted back into arch and checked the boot partition and make sure i listed the correct path. Sure enough, the kernel version didnt actally say `e19_6`, it said `el9_6`. So I fixed that in the config file, rebooted, and this time it worked. Just kidding it told me.
+
+```log
+Invalid loader file!
+Error: Not found while loading vmlinuz-5.14.0-570.12.1.el9_6.x86_64
+```
+
+Lets Take a closer look at this boot name again. Im like 99.9% sure the file names match. Except that the volume is wrong. Its not `/dev/sda2`, its actually the uuid of that drive. you can find that with `blkid /dev/sda2`. So I changed the volume line to that value and rebooted. Didnt work. So tried giving it a label and using that. Still didnt work. So I suspect refind has an issue with XFS partitions. Lets double check thats whats on the boot partition, and if that is the case, then I will reformat the boot partition to ext4. `blkid /dev/sda2` shows that it is in fact XFS. I am going to copy all the files off the boot partition, reformat it to ext4, then copy the files back.
+
+```bash
+mount /dev/mapper/almalinux-data /mnt
+mount --mkdir /dev/sda2 /mnt/boot
+cp -r /mnt/boot/* /mnt/backup
+umount /mnt/boot
+mkfs.ext4 /dev/sda2
+mount --mkdir /dev/sda2 /mnt/boot
+cp -r /mnt/backup/* /mnt/boot
+```
+
+After doing that, I rebooted. rEFInd was able to see the OS, seperate from the manual entry i added. the manual entry i added now loads, but did not run. The new entry got me into the OS, and tried to boot and got very close, but it still failed. It got failed trying to switch root.
+
+Going to try and completely burn this hard drive to the ground and recover its original boot loader, and try and use that. The thing that is a little concerning is the mac boot loader does not seem to be able to open the alma 9 boot disk, so I am not sure if it will be able to open the alma 9 instilation on the hard drive. But its worth a try.
+
+As suspected, The Alma 9 Boot disk also does not work with the mac boot loader. So I am going to try and install Alma 8. That means flashing yet another USB drive. This is getting ridiculous.
+
+Alma 8 had no issues booting from the mac boot loader. So I went through the instilation process again, using the same settings. same warrning popped up about missing packages: mactel-boot, but I ignored it again. In the end it was not able to boot either, but at least i could go back into the live usb.
+
+One more try, this time manually telling it to make the boot drive ext4. That wasnt it.
+
+This time I completely wiped the drive, added a new partition for the efi system manually, and then went through the alma 8 instalation process again, telling it to use the efi partition i made. Once it finished installing i am going to try chroot into it from the arch usb and make sure grub is set up properly

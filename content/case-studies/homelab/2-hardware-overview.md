@@ -64,3 +64,21 @@ submenu 'Troubleshooting -->' {
 	}
 }
 ```
+
+The guide says to make sure the path to the drive is properly linked, which it is. It continues on to much more but it get very CentOS specific, so I'm veering away. its possible this is befcause of issues with the RHEL efi bootloader, and if that were the case, I could replace the native apple bootloader with something that can handle most uefi bootloaders, like rEFInd. I don't know why i didnt have this issue with arch linux, but if it works with refind than i know it must be because of the bootloader. rEFInd is a boot manager that can be installed on macs and other computers to make booting multiple OSes easier. Its instilation is a little technical, but the guide is pretty good.
+
+After installing rEFInd, it saw multiple sections of the USB drive: Boot EFU\BOOT\grubx64.efi from AlmaLinux-10-0-x86_64-dvd, Boot EFU\BOOT\grubx64.efi from AlmaLinux-10-0-x86_64-dvd and unfortunately I found i could not boot into a single one of them. There is definitely some problem with this instilation that is causing it not to run on this hardware. This is the newest version of alma linux, it came out only a few months ago, so its hard to find specific information about it. Worth downgradging to alma 9 anyway. Best to try it out.
+
+Good news is alma 9 booted right up. So safe to use it as a baseline.
+
+## Installing Alma Linux 9
+
+First it asks the basic questions, language, keyboard layout, and time zone.
+
+Then it asks what the source of the installation will be. My ISO was freshly burned onto the USB drive, so I selected local media. For Software Selection, Im going to select Minimal Install, so that I can add only the packages I want later. Most of these servers will be running headless, so I don't need a desktop environment. 
+
+I decided the best way to deal with my hard drive because it had been partitioned into a thousand pieces from previous installs, was to just make a gParted live USB and use that to wipe the drive, so the only thing on the hard drive is rEFInd. I booted into the alma 9 installer again, then went through the instilation process.
+
+During the installation, I set the computer to custom partitioning, set a swap partition matching my RAM, boot partition of 1GB, a system partition of 70mb, a home partition of 16gb for only local files, and the rest of the drive as a shared data partition. on this machine that ende dup in 352 GB of shared storage.
+
+Then i needed network access. I need a usb hub.

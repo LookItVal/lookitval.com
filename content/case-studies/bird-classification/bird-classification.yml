@@ -1,7 +1,43 @@
 title: "Classification of Birds based on audio of their call"
 sections:
+
   - name: "§ N: Preface"
     url: "/case-studies/bird-classification/0-preface"
   
   - name: "§ I: Introduction
     url: "/case-studies/bird-classification/1-introduction"
+    sections:
+
+      - name: "A. Overview of Project Goals"
+        url: "/case-studies/bird-classification/1-introduction#A-overview-of-project-goals"
+        sections:
+
+          - name: "1. Data Cleaning and Integration"
+            url: "/case-studies/bird-classification/1-introduction#1-data-cleaning-and-integration"
+
+          - name: "2. Feature Engineering"
+            url: "/case-studies/bird-classification/1-introduction#2-feature-engineering"
+
+          - name: "3. Model Training and Evaluation"
+            url: "/case-studies/bird-classification/1-introduction#3-model-training-and-evaluation"
+
+          - name: "4. Practical Application"
+            url: "/case-studies/bird-classification/1-introduction#4-practical-application"
+
+
+  - name: "§ II: Data Preparation and Exploration"
+    url: "/case-studies/bird-classification/2-1-1-initial-setup"
+    sections:
+
+      - name: "A. Initial Setup"
+        url: "/case-studies/bird-classification/2-1-1-initial-setup"
+        sections:
+
+          - name: "1. Building the Virtual Environment"
+            url: "/case-studies/bird-classification/2-1-1-initial-setup#1-building-the-virtual-environment"
+          
+          - name: "2. Importing the Libraries"
+            url: "/case-studies/bird-classification/2-1-1-initial-setup#2-importing-the-libraries"
+          
+          - name: "3. 
+    

@@ -152,4 +152,34 @@ Alma 8 had no issues booting from the mac boot loader. So I went through the ins
 
 One more try, this time manually telling it to make the boot drive ext4. That wasnt it.
 
-This time I completely wiped the drive, added a new partition for the efi system manually, and then went through the alma 8 instalation process again, telling it to use the efi partition i made. Once it finished installing i am going to try chroot into it from the arch usb and make sure grub is set up properly
+This time I completely wiped the drive, added a new partition for the efi system manually, and then went through the alma 8 instalation process again, telling it to use the efi partition i made. Once it finished installing i am going to try chroot into it from the arch usb and make sure grub is set up properly.
+
+### New Day: New Plan
+
+The new plan is simple in premise: 
+1. wipe the drive completely. no EFI system partition no nothing.
+2. Within gParted, added the new EFI system partition. We will give it the `ESP` flag and make sure its labeled, and set it to FAT32. 
+3. Install Alma 8 from the bootable media. Tell alma to mount that efi system partition at /boot/efi. Tell alma not to install the boot loader.
+4. Reboot and open the Alma 8 bootable media again, open with the Troubleshooting flag and open the rescue environment
+5. chroot into the newly installed system. There there should be a partition mounted at /boot and /boot/efi.
+6. manually make sure the grub configuration files are setup.
+
+Grub will successfully boot through this same mac for sure, because when i set it up with the command line on arch there was no issue. The key here is using the alma environment to chroot into the system, that was the biggest thing i did not do yesterday. so lets begin.
+
+1. Burn the drive to the ground. I am going to do this at the same time as the next step
+2. in gParted, make the EFI System Partition and flag it ESP.
+3. Install alma 8. Do not install the boot loader.
+4. Reboot alma 8 in the Rescue Environment
+5. I found the /boot/efi partition was not mounted so i mounted it
+redoing `grub2-mkconfig -o /boot/efi/EFI/almalinux/grub.cfg` was at least enough to get grub to at least load something, but it did eventually fail to switch to the root.
+
+I can not do this now but what I would like to do when I am home is
+1. Burn the HD to the ground. Completely. Do not recycle the existing ESP
+2. Make a new EFI System Partition. `ESP` flag and all.
+3. Connect to Ethernet
+4. Install Alma 8. Do not install a boot loader, but do set the boot location. Do set static IP connection.
+5. Reboot in the rescue environment
+6. Mount all needed drives, update dnf and install needed packages. reinstall grub2.
+7. `grub2-mkconfig -o /boot/efi/EFI/almalinux/grub.cfg`
+8. reboot into HD grub
+9. remove any lingering unneeded boot options?

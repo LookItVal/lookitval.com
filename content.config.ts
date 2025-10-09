@@ -1,4 +1,18 @@
-import { defineCollection, defineContentConfig, z } from '@nuxt/content'
+import { defineCollection, defineContentConfig } from '@nuxt/content'
+import { z } from 'zod'
+
+
+type Section = {
+  name: string
+  url: string
+  sections?: Section[]
+}
+
+const SectionSchema: z.ZodType<Section> = z.object({
+  name: z.string(),
+  url: z.string(),
+  sections: z.array(z.lazy(() => SectionSchema)).optional()
+}).strict()
 
 export default defineContentConfig({
   collections: {
@@ -13,6 +27,21 @@ export default defineContentConfig({
           answer: z.string()
         }))
       })
+    }),
+
+    caseStudies: defineCollection({
+      type: 'data',
+      source: 'case-studies/**/*.yml',
+      schema: z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        sections: z.array(SectionSchema)
+      }).strict()
+    }),
+
+    caseStudyPages: defineCollection({
+      type: 'page',
+      source: 'case-studies/**/*.md'
     })
   }
 })

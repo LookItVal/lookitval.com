@@ -38,6 +38,43 @@ sections:
           
           - name: "2. Importing the Libraries"
             url: "/case-studies/bird-classification/2-1-1-initial-setup#2-importing-the-libraries"
-          
-          - name: "3. 
+            sections:
+              
+              - name: "a) Overview of Libraries and their purposes"
+                url: "/case-studies/bird-classification/2-1-1-initial-setup#a-overview-of-libraries"
+                sections:
+
+                  - name: "(i) pydub"
+                    url: "/case-studies/bird-classification/2-1-1-initial-setup#i-pydub"
+                  
+                  - name: "(ii) ffmpeg"
+                    url: "/case-studies/bird-classification/2-1-1-initial-setup#ii-ffmpeg"
+                  
+                  - name: "(iii) cupy"
+                    url: "/case-studies/bird-classification/2-1-1-initial-setup#iii-cupy"
+              
+          - name: "3. Establishing Utility Functions"
+            url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions"
+            sections: 
+
+              - name: "a) Simple Aliases"
+                url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#a-simple-aliases"
+              
+              - name: "b) Data Conversions"
+                url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#b-data-conversions"
+              
+              - name: "c) Human-Readable Conversion Functions"
+                url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#c-human-readable-conversion-functions"
+
+              - name: "d) Process Monitoring and Caching"
+                url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#d-process-monitoring-and-caching"
+                sections:
+
+                  - name: "(i) Normal, not insane functions"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#i-normal-not-insane-functions"
+                  
+                  - name: "(ii) Insane ideas that worked better than expected"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#ii-insane-ideas-that-worked-better-than-expected"
+
+
     

@@ -187,7 +187,3 @@ with cufft.get_fft_plan(signal, value_type='R2C'):  # Create FFT plan and pass i
 # or clear the cache at any point
 cp.fft.config.clear_plan_cache()
 ```
-
-### 3. Establishing Utility Functions
-
-*Moved to its own section [here](/case-studies/bird-classification/2-3-establishing-utility-functions)*

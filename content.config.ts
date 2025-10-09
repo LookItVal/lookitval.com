@@ -6,7 +6,7 @@ export default defineContentConfig({
       // Specify the type of content in this collection
       type: 'data',
       // Load every file inside the `content` directory
-      source: '**/*.yml',
+      source: '**/faq.yml',
       schema: z.object({
         faq: z.array(z.object({
           question: z.string(),

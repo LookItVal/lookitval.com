@@ -141,7 +141,6 @@ const isLoaded = ref(false);
 
 const pageWrapper = ref<HTMLElement | null>(null);
 const pageContent = ref<HTMLElement | null>(null);
-initSmoothScroller(pageWrapper, pageContent);
 
 const loaded = ref(false);
 
@@ -234,6 +233,7 @@ const handleVisibilityChange = () => {
   };
 
 onMounted(async () => {
+  initSmoothScroller(pageWrapper, pageContent);
   loaded.value = true;
   // Start performance calculation in parallel with package initialization
   calculatePerformance();

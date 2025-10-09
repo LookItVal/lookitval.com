@@ -86,7 +86,7 @@ const faqPadding = computed(() => {
 
 function parseLinks(text: string) {
   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-  return text.replace(linkRegex, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  return text.replace(linkRegex, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-mauve-100 hover:text-lavender-100">$1</a>');
 }
 
 // Initialize faqStates array when faqData is loaded

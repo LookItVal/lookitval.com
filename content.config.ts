@@ -34,6 +34,7 @@ export default defineContentConfig({
       source: 'case-studies/**/*.yml',
       schema: z.object({
         title: z.string(),
+        slug: z.string(),
         description: z.string().optional(),
         sections: z.array(SectionSchema)
       }).strict()

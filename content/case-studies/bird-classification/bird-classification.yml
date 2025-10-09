@@ -1,10 +1,11 @@
 title: "Classification of Birds based on audio of their call"
+slug: "bird-classification"
 sections:
 
   - name: "§ N: Preface"
     url: "/case-studies/bird-classification/0-preface"
   
-  - name: "§ I: Introduction
+  - name: "§ I: Introduction"
     url: "/case-studies/bird-classification/1-introduction"
     sections:
 

@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   devServer: {
-    https: true, // Set to true and provide certs to enable HTTPS
+    https: false, // Set to true and provide certs to enable HTTPS
     // https: {
     //   key: './ssl/localhost-key.pem',
     //   cert: './ssl/localhost.pem'
@@ -27,8 +27,16 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/image', '@nuxt/ui', 'v-gsap-nuxt'],
   content: {
+    build: {
+      markdown: {
+        highlight: {
+          theme: 'catppuccin-macchiato',
+          langs: ['python', 'javascript']
+        }
+      }
+    },
     watch: {
       hostname: 'localhost' // If HTTPS, set hostname to localhost to ensure WebSocket works
     }
   }
-})
+});

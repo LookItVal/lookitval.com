@@ -9,7 +9,7 @@
         <div v-else class="w-full flex flex-col items-center">
           <div class="max-w-4xl flex flex-col items-center">
             <h1 class="text-4xl font-bold mb-(--m-em)">{{ project.title }}</h1>
-            <UITableOfContents :sections='project.sections as Section[]' class="text-sm rounded-4xl p-(--m-em) bg-mantle-100" />
+            <UITableOfContents :sections='(project.sections as Section[])' class="text-sm rounded-4xl p-(--m-em) bg-mantle-100" />
           </div>
         </div>
       </div>

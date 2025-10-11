@@ -30,7 +30,7 @@ const pageWrapper = ref<HTMLElement | null>(null);
 const pageContent = ref<HTMLElement | null>(null);
 
 const { data: project, pending, error } = await useAsyncData('project', () => {
-  return queryCollection('caseStudies').where('slug', '=', route.params.project).first();
+  return queryCollection('caseStudies').where('id', '=', `caseStudies/case-studies/${route.params.project}/${route.params.project}.yml`).first();
 });
 
 onMounted(() => {

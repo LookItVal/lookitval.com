@@ -29,9 +29,8 @@ const route = useRoute();
 const pageWrapper = ref<HTMLElement | null>(null);
 const pageContent = ref<HTMLElement | null>(null);
 
-const { data: project, pending, error } = await useAsyncData('project', () => {
-  return queryCollection('caseStudies').where('id', '=', `caseStudies/case-studies/${route.params.project}/${route.params.project}.yml`).first();
-});
+const project = await queryCollection('caseStudies').first();
+console.log(project);
 
 onMounted(() => {
   if (pageWrapper.value && pageContent.value) {

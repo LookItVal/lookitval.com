@@ -66,6 +66,7 @@ const { highPerformance, calculatePerformance } = usePerformance();
 
 const pageWrapper = ref<HTMLElement | null>(null);
 const pageContent = ref<HTMLElement | null>(null);
+initSmoothScroller(pageWrapper, pageContent);
 
 const resumePDF = ref<InstanceType<typeof PDFViewer>>();
 const loadingText = ref<ComponentPublicInstance | HTMLElement | null>(null);
@@ -92,7 +93,6 @@ useHead({
 
 onMounted(() => {
   if (typeof window === 'undefined') return;
-  initSmoothScroller(pageWrapper, pageContent);
   window.scrollTo({ top: 0, behavior: 'auto' });
   function scrollHandler() {
     window.scrollTo({ top: 0, behavior: 'auto' });

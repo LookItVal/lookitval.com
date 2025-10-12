@@ -5,9 +5,7 @@ description: ''
 
 # § I: Introduction
 
-Bird species classification based on audio recordings has significant implications for ecological monitoring, biodiversity studies, and conservation efforts, as well as being applicable and interesting to a population of bird watchers and nature lovers. This project focuses on developing a robust machine learning pipeline capable of identifying bird species from basic metadata recordable by a smartphone. By leveraging audio signal processing techniques and modern classification algorithms, the project aims to create a reliable and scalable solution for bird call recognition.[^1]
-
-[^1]: Would you believe me if I said this was not written by AI?
+Bird species classification based on audio recordings has significant implications for ecological monitoring, biodiversity studies, and conservation efforts, as well as being applicable and interesting to a population of bird watchers and nature lovers. This project focuses on developing a robust machine learning pipeline capable of identifying bird species from basic metadata recordable by a smartphone. By leveraging audio signal processing techniques and modern classification algorithms, the project aims to create a reliable and scalable solution for bird call recognition. :u-i-footnote{note='Would you believe me if I said this was not written by AI?' icon='1'}
 
 ## A. Overview of project goals
 
@@ -27,6 +25,4 @@ Train and compare multiple classification models, including neural networks and 
 
 ### 4. Practical Application:
 
-Build a functional tool capable of processing new audio files to classify bird species throughout an audio file.[^2]
-
-[^2]: At the time of turning this in, I actually had not done this part, but now I have! You can check it out [here](/bird-recognition).
+Build a functional tool capable of processing new audio files to classify bird species throughout an audio file. :u-i-footnote{note='At the time of turning this in, I actually had not done this part, but now I have! You can check it out [here](/bird-recognition).' icon='2'}

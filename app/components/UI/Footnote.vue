@@ -1,5 +1,9 @@
 <template>
-  <sup :class='`text-${props.color} hover:text-${props.hoverColor} pointer`' @mouseenter="setFootnote(props.note)" @mouseleave="clearFootnote"><slot /></sup>
+  <span @mouseenter="setFootnote(props.note)" @mouseleave="clearFootnote">
+    <sup :class='`text-${props.color} hover:text-${props.hoverColor} pointer`'>
+      {{ props.icon }}
+    </sup>
+  </span>
 </template>
 
 <script lang="ts" setup>
@@ -10,7 +14,8 @@ const { COLORS: _COLORS } = useConstants();
 const { setFootnote, clearFootnote } = useFootnotes();
 
 const props = withDefaults(defineProps<{
-  note: string
+  note: string,
+  icon: string,
   color?: keyof typeof _COLORS
   hoverColor?: keyof typeof _COLORS
 }>(), {

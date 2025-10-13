@@ -29,4 +29,5 @@ const pageContent = ref<HTMLElement | null>(null);
 initSmoothScroller(pageWrapper, pageContent);
 
 const project = await queryCollection('caseStudies').where('id', '=', `caseStudies/case-studies/${route.params.project}/${route.params.project}.yml`).first();
+console.log(project);
 </script>

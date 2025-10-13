@@ -4,7 +4,7 @@
     <UIFootnoteViewer class="fixed bottom-(--s-em) left-(--s-em)" />
     <div ref="pageWrapper">
       <div ref="pageContent" class="max-w-6xl mx-auto">
-        <ContentRenderer v-if="pageData" :value="pageData" />
+        <ContentRenderer v-if="pageData" :value="pageData" class="pb-(--xxl-em)"/>
         <div v-else>
           <h1>
             Oops, Seems like you got the wrong link. There is no project here.

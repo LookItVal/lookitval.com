@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Fixed position items go here -->
-    <UIFootnoteViewer />
+    <UIFootnoteViewer class="fixed bottom-(--s-em) left-(--s-em)" />
     <div ref="pageWrapper">
       <div ref="pageContent" class="max-w-6xl mx-auto">
         <ContentRenderer v-if="pageData" :value="pageData" />

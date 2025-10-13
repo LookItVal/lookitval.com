@@ -1,6 +1,9 @@
 <template>
-  <span @mouseenter="setFootnote(props.note)" @mouseleave="clearFootnote">
-    <sup :class='`text-${props.color} hover:text-${props.hoverColor} pointer`'>
+  <span
+    :class='`text-${props.color} hover:text-mauve-500 pointer`'
+    @mouseenter="setFootnote(props.note)" @mouseleave="clearFootnote"
+  >
+    <sup>
       {{ props.icon }}
     </sup>
   </span>
@@ -19,7 +22,7 @@ const props = withDefaults(defineProps<{
   color?: keyof typeof _COLORS
   hoverColor?: keyof typeof _COLORS
 }>(), {
-  color: 'text-100',
-  hoverColor: 'mauve-100'
+  color: 'subtext-100',
+  hoverColor: 'mauve-500'
 })
 </script>

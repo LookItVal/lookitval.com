@@ -1,5 +1,9 @@
 title: "Classification of Birds based on audio of their call"
 slug: "bird-classification"
+primary_color: "mauve-100"
+primary_color_highlight: "mauve-500"
+secondary_color: "lavender-100"
+secondary_color_highlight: "lavender-500"
 sections:
 
   - name: "§ N: Preface"

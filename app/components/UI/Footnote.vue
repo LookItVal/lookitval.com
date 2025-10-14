@@ -1,22 +1,27 @@
 <template>
-  <span
-    ref="footnoteSpan"
-    class='cursor-pointer px-0.5 transition-colors duration-300'
-    @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
-    @click="handleClick"
-  >
-    <sup class="relative">
-      <div
-        ref="footnoteBackground"
-        class="absolute top-0 bottom-0 rounded-full aspect-square bg-surface-300 -z-10 -translate-x-1/2 left-1/2 border-1 border-surface-300 transition-border duration-300"
-      />
-      {{ props.icon }}
-    </sup>
-  </span>
+  <ClientOnly>
+    <span
+      ref="footnoteSpan"
+      class='cursor-pointer px-0.5 transition-colors duration-300'
+      :style="footnoteSpanStyles"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
+      @click="handleClick"
+    >
+      <sup class="relative">
+        <div
+          class="absolute top-0 bottom-0 rounded-full aspect-square bg-base-100 -z-10 -translate-x-1/2 left-1/2 border-1 transition-border duration-300"
+          :style="footnoteBackgroundStyles"
+        />
+        {{ props.icon }}
+      </sup>
+    </span>
+  </ClientOnly>
 </template>
 
 <script lang="ts" setup>
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 import { useConstants } from '@/composables/constants';
 import { useFootnotes } from '@/composables/footnotes';
 
@@ -34,60 +39,86 @@ const props = withDefaults(defineProps<{
 })
 
 const stateLocked = ref(false);
-
+const isHovered = ref(false);
+const scrollTrigger = ref<ScrollTrigger | null>(null);
 const footnoteSpan = ref<HTMLElement | null>(null);
-const footnoteBackground = ref<HTMLElement | null>(null);
+
+// Use reactive styles instead of direct DOM manipulation
+const footnoteSpanStyles = computed(() => {
+  if (stateLocked.value) {
+    return {
+      color: isHovered.value ? COLORS[props.hoverColor] : COLORS['crust-100']
+    };
+  }
+  return {
+    color: isHovered.value ? COLORS[props.color] : COLORS['subtext-100']
+  };
+});
+
+const footnoteBackgroundStyles = computed(() => {
+  if (stateLocked.value) {
+    return {
+      backgroundColor: COLORS[props.color],
+      borderColor: isHovered.value ? COLORS[props.hoverColor] : COLORS['crust-100']
+    };
+  }
+  return {
+    backgroundColor: COLORS['base-100'],
+    borderColor: isHovered.value ? COLORS[props.color] : COLORS['base-100']
+  };
+});
 
 function handleMouseEnter() {
   setPreview(props.note);
-  if (!stateLocked.value) {
-    footnoteSpan.value!.style.color = COLORS[props.color];
-    footnoteBackground.value!.style.borderColor = COLORS[props.color];
-  } else {
-    footnoteSpan.value!.style.color = COLORS[props.hoverColor];
-    footnoteBackground.value!.style.borderColor = COLORS[props.hoverColor];
-  }
+  isHovered.value = true;
 }
 
 function handleMouseLeave() {
   clearPreview();
-  if (!stateLocked.value) {
-    footnoteSpan.value!.style.color = COLORS['subtext-100'];
-    footnoteBackground.value!.style.borderColor = COLORS['surface-300'];
-  } else {
-    footnoteSpan.value!.style.color = COLORS['crust-100'];
-    footnoteBackground.value!.style.borderColor = COLORS['crust-100'];
-  }
+  isHovered.value = false;
 }
 
 function handleClick() {
+  if (!import.meta.client) return;
+  
   if (!stateLocked.value) {
     setFootnote(props.note);
-    lock();
-  }
-  else {
+    stateLocked.value = true;
+  } else {
     clearFootnote();
-    unlock();
+    stateLocked.value = false;
   }
-}
-
-function lock() {
-  stateLocked.value = true;
-  footnoteBackground.value!.style.backgroundColor = COLORS[props.color];
-  footnoteSpan.value!.style.color = COLORS[props.hoverColor];
-  footnoteBackground.value!.style.borderColor = COLORS[props.hoverColor];
-}
-
-function unlock() {
-  stateLocked.value = false;
-  footnoteBackground.value!.style.backgroundColor = COLORS['surface-300'];
-  footnoteSpan.value!.style.color = COLORS['subtext-100'];
-  footnoteBackground.value!.style.borderColor = COLORS['surface-300'];
 }
 
 watch(footnote, (newVal) => {
   if (newVal !== props.note) {
-    unlock();
+    stateLocked.value = false;
   }
+});
+
+onMounted(async () => {
+  await nextTick();
+  if (!footnoteSpan.value) return;
+  scrollTrigger.value = ScrollTrigger.create({
+    trigger: footnoteSpan.value,
+    start: "top bottom", 
+    end: "bottom top", 
+    onLeave: () => {
+      if (stateLocked.value) {
+        clearFootnote();
+        stateLocked.value = false;
+      }
+    },
+    onLeaveBack: () => {
+      if (stateLocked.value) {
+        clearFootnote();
+        stateLocked.value = false;
+      }
+    }
+  });
+});
+
+onUnmounted(() => {
+  scrollTrigger.value?.kill();
 });
 </script>

@@ -10,8 +10,10 @@
     <div v-for="section in props.sections" :key="section.url">
       <a
         :href="section.url"
-        :style="{ paddingLeft: depth + 'em' }"
-        class="block py-1 text-mauve-100 hover:text-lavender-100"
+        :style="{ paddingLeft: depth + 'em', color: `${COLORS[props.primaryColor]}` }"
+        class="block py-1 transition-colors duration-300"
+        @mouseenter="handleMouseEnter($event)"
+        @mouseleave="handleMouseLeave($event)"
       >
         {{ section.name }}
       </a>
@@ -19,12 +21,17 @@
         :sections="section.sections || []"
         :show-title="false"
         :depth="depth + 1"
+        :primary-color="props.primaryColor"
+        :secondary-color="props.secondaryColor"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useConstants } from '@/composables/constants';
+const { COLORS } = useConstants();
+
 interface Section {
   name: string
   url: string
@@ -35,8 +42,20 @@ const props = withDefaults(defineProps<{
   sections: Section[]
   showTitle?: boolean
   depth?: number
+  primaryColor: keyof typeof COLORS
+  secondaryColor: keyof typeof COLORS
 }>(), {
   showTitle: true,
   depth: 0
 })
+
+function handleMouseEnter(event: MouseEvent) {
+  const target = event.target as HTMLElement;
+  target.style.color = COLORS[props.secondaryColor];
+}
+
+function handleMouseLeave(event: MouseEvent) {
+  const target = event.target as HTMLElement;
+  target.style.color = COLORS[props.primaryColor];
+}
 </script>

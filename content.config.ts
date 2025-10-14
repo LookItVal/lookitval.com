@@ -36,6 +36,10 @@ export default defineContentConfig({
         title: z.string(),
         slug: z.string(),
         description: z.string().optional(),
+        primary_color: z.string(),
+        primary_color_highlight: z.string(),
+        secondary_color: z.string(),
+        secondary_color_highlight: z.string(),
         sections: z.array(SectionSchema)
       }).strict()
     }),

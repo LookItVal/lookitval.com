@@ -1,6 +1,7 @@
 <template>
   <div>
     <div ref="footnoteContainer" class="rounded-full p-(--xs-em) bg-surface-300 z-9" style="min-height: calc(var(--xs-em) * 2 + 1em); min-width:  calc(var(--xs-em) * 2 + 1em); transform-origin: bottom center; transform: scale(0);">
+      <p ref="parsedFootnoteText" class="absolute text-base md:text-lg pr-(--xs-em)" v-html="parseLinks(note)" />
       <p ref="footnoteText" class="text-base md:text-lg" />
     </div>
   </div>
@@ -8,7 +9,6 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
-import { useFootnotes } from '@/composables/footnotes';
 
 const { footnote, footnotePreview } = useFootnotes();
 
@@ -17,6 +17,7 @@ const activeAnimation = ref<gsap.core.Timeline | null>(null);
 
 const footnoteContainer = ref<HTMLElement | null>(null);
 const footnoteText = ref<HTMLElement | null>(null);
+const parsedFootnoteText = ref<HTMLElement | null>(null);
 
 async function updateFootnote() {
   const original = note.value;
@@ -30,12 +31,18 @@ async function updateFootnote() {
   if (original === note.value) {
     return;
   }
+  gsap.to(parsedFootnoteText.value, {
+    duration: 0.1,
+    opacity: 0
+  });
   if (activeAnimation.value) {
     activeAnimation.value.kill();
     activeAnimation.value = null;
   }
+  await nextTick();
+  const parsedText = parsedFootnoteText.value?.textContent || "";
   if (original === '') {
-    activeAnimation.value = animateIn(note.value);
+    activeAnimation.value = animateIn(parsedText);
   } else if (note.value === '') {
     activeAnimation.value = animateOut();
   } else if (original !== note.value) {
@@ -46,7 +53,11 @@ async function updateFootnote() {
     });
     activeAnimation.value = timeline;
     timeline.add(updateText(''));
-    timeline.add(updateText(note.value), '+=0.1');
+    timeline.add(updateText(parsedText), '+=0.1');
+    timeline.add(gsap.to(parsedFootnoteText.value, {
+      duration: 0.3,
+      opacity: 1
+    }));
   }
 }
 
@@ -65,6 +76,10 @@ function animateIn(text: string) {
     ease: 'back.out'
   }), 0);
   timeline.add(updateText(text));
+  timeline.add(gsap.to(parsedFootnoteText.value, {
+    duration: 0.3,
+    opacity: 1
+  }));
   return timeline;
 }
 
@@ -87,9 +102,14 @@ function updateText(newText: string) {
   const timeline = gsap.timeline();
   timeline.to(footnoteText.value, {
     text: newText,
-    duration: 0.3,
+    duration: 0.5,
     ease: 'power1.out'
   }, 0);
   return timeline;
+}
+
+function parseLinks(text: string) {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  return text.replace(linkRegex, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 }
 </script>

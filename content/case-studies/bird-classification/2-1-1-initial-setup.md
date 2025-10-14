@@ -103,7 +103,7 @@ mediainfo(filename)['sample_fmt']
 
 ##### (ii) `ffmpeg`
 
-`ffmpeg` is a powerful tool for handling a wide variety of media formats, including audio and video. Within this environment, `ffmpeg` serves as the backend for `pydub` to decode `.mp3` files. By default, when an `.mp3` file is loaded using `pydub`, `ffmpeg` is called automatically to handle the decoding. This integration ensures that the project can work seamlessly with compressed audio formats like `.mp3`. :u-i-footnote{note="This really doesn't accent exactly how ubiquitous `ffmpeg` is in the media processing world, and that `ffmpeg` is not a python library, but a tool. `ffmpeg` is a tool that powers the whole media world. See relevant XKCD about `ffmpeg` [here](https://xkcd.com/2347/)." icon='4'}
+`ffmpeg` is a powerful tool for handling a wide variety of media formats, including audio and video. Within this environment, `ffmpeg` serves as the backend for `pydub` to decode `.mp3` files. By default, when an `.mp3` file is loaded using `pydub`, `ffmpeg` is called automatically to handle the decoding. This integration ensures that the project can work seamlessly with compressed audio formats like `.mp3`. :u-i-footnote{note="This really doesn't accent exactly how ubiquitous ffmpeg is in the media processing world, and that ffmpeg is not a python library, but a tool. ffmpeg is a tool that powers the whole media world. [See relevant XKCD](https://xkcd.com/2347/)." icon='4'}
 
 ```python
 # decodes codec with ffmpeg and returns the AudioSegment object as normal

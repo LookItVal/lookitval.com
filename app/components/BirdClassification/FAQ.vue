@@ -51,11 +51,11 @@
           v-html="parseLinks(item.answer)"
         />
         <p
-            class="absolute text-base -translate-y-full"
-            :style="`padding-right: ${faqPadding}; opacity: ${faqStates[index] ? 1 : 0}; transition: opacity ${faqStates[index] ? 2 : 0}s ease-in-out ${faqStates[index] ? item.answer.length * 0.005 : 0}s; pointer-events: ${faqStates[index] ? 'auto' : 'none'};`"
-            :data-state="faqStates[index] ? 'hidden' : 'open'"
-            v-html="parseLinks(item.answer)"
-          />
+          class="absolute text-base -translate-y-full"
+          :style="`padding-right: ${faqPadding}; opacity: ${faqStates[index] ? 1 : 0}; transition: opacity ${faqStates[index] ? 2 : 0}s ease-in-out ${faqStates[index] ? item.answer.length * 0.005 : 0}s; pointer-events: ${faqStates[index] ? 'auto' : 'none'};`"
+          :data-state="faqStates[index] ? 'hidden' : 'open'"
+          v-html="parseLinks(item.answer)"
+        />
       </div>
     </UICard>
   </div>
@@ -106,7 +106,6 @@ function closeAllDetails() {
 
 function updateDataState(event: Event, index: number) {
   const target = (event.target as HTMLElement).closest('details') as HTMLDetailsElement;
-  console.log(target);
   const setTo = target.open;
   closeAllDetails();
   target.open = !setTo;

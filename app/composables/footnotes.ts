@@ -11,7 +11,6 @@ export const useFootnotes = () => {
     footnote.value = "";
   };
   const clearPreview = () => {
-    console.log("Clearing preview");
     footnotePreview.value = "";
   };
   return {

@@ -1,6 +1,6 @@
 <template>
   <pre
-]    :class="[
+    :class="[
       'relative overflow-hidden text-sm md:text-base p-(--m-em)',
       language == 'output' ? '-mt-(--xl-em) mb-(--s-em) pt-(--l-em)' : 'my-(--s-em)'
     ]"

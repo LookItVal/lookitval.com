@@ -1,7 +1,7 @@
 <template>
   <span
-    class='cursor-pointer px-0.5 transition-colors duration-300'
     ref="footnoteSpan"
+    class='cursor-pointer px-0.5 transition-colors duration-300'
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
     @click="handleClick"

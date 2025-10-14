@@ -13,17 +13,12 @@ import { useFootnotes } from '@/composables/footnotes';
 const { footnote, footnotePreview } = useFootnotes();
 
 const note = ref<string>('');
-const isAnimating = ref(false);
-const cancelAnimation = ref(false);
+const activeAnimation = ref<gsap.core.Timeline | null>(null);
 
 const footnoteContainer = ref<HTMLElement | null>(null);
 const footnoteText = ref<HTMLElement | null>(null);
 
 async function updateFootnote() {
-  if (isAnimating.value) {
-    cancelAnimation.value = true;
-    await nextTick();
-  }
   const original = note.value;
   if (footnotePreview.value) {
     note.value = footnotePreview.value;
@@ -32,12 +27,24 @@ async function updateFootnote() {
   } else {
     note.value = '';
   }
+  if (original === note.value) {
+    return;
+  }
+  if (activeAnimation.value) {
+    activeAnimation.value.kill();
+    activeAnimation.value = null;
+  }
   if (original === '') {
-    animateIn(note.value);
+    activeAnimation.value = animateIn(note.value);
   } else if (note.value === '') {
-    animateOut();
+    activeAnimation.value = animateOut();
   } else if (original !== note.value) {
-    const timeline = gsap.timeline();
+    const timeline = gsap.timeline({
+      onComplete: () => {
+        activeAnimation.value = null;
+      }
+    });
+    activeAnimation.value = timeline;
     timeline.add(updateText(''));
     timeline.add(updateText(note.value), '+=0.1');
   }
@@ -47,23 +54,15 @@ watch(footnote, updateFootnote);
 watch(footnotePreview, updateFootnote);
 
 function animateIn(text: string) {
-  isAnimating.value = true;
   const timeline = gsap.timeline({
     onComplete: () => {
-      isAnimating.value = false;
+      activeAnimation.value = null;
     }
   });
   timeline.add(gsap.to(footnoteContainer.value, { 
     scale: 1,
     duration: 0.3,
-    ease: 'back.out',
-    onUpdate: () => {
-      if (cancelAnimation.value) {
-        timeline.kill();
-        isAnimating.value = false;
-        cancelAnimation.value = false;
-      }
-    }
+    ease: 'back.out'
   }), 0);
   timeline.add(updateText(text));
   return timeline;
@@ -72,21 +71,14 @@ function animateIn(text: string) {
 function animateOut() {
   const timeline = gsap.timeline({
     onComplete: () => {
-      isAnimating.value = false;
+      activeAnimation.value = null;
     }
   });
   timeline.add(updateText(''));
   timeline.add(gsap.to(footnoteContainer.value, { 
     scale: 0,
-    duration: 3,
-    ease: 'power1.in',
-    onUpdate: () => {
-      if (cancelAnimation.value) {
-        timeline.kill();
-        isAnimating.value = false;
-        cancelAnimation.value = false;
-      }
-    }
+    duration: 0.3,
+    ease: 'power1.in'
   }));
   return timeline;
 }

@@ -1,9 +1,11 @@
 <template>
   <div>
     <!-- Fixed position items go here -->
-    <UIFootnoteViewer class="fixed bottom-(--s-em) left-(--s-em)" />
+    <div class="fixed z-9 bottom-(--s-em) w-screen flex justify-center">
+      <UIFootnoteViewer />
+    </div>
     <div ref="pageWrapper">
-      <div ref="pageContent" class="max-w-6xl mx-auto">
+      <div ref="pageContent" class="max-w-6xl mx-auto z-1">
         <ContentRenderer v-if="pageData" :value="pageData" />
         <div v-else>
           <h1>

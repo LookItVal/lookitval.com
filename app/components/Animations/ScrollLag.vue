@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useSmoothScroller } from '@/composables/smoothScroller';
 const { currentVelocity } = useSmoothScroller();
 
 const props = withDefaults(defineProps<{

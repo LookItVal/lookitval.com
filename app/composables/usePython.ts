@@ -5,7 +5,7 @@ const messageId = ref(0)
 const pendingMessages = new Map<number, { resolve: (value: unknown) => void, reject: (reason?: unknown) => void }>()
 
 
-export function usePython() {
+export default function () {
   const createWorker = () => {
     if (worker.value) return worker.value
 

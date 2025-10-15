@@ -4,7 +4,7 @@ import type { gsap } from 'gsap';
 const smoothness = ref(0.75);
 const currentVelocity = ref(0);
 
-export function useSmoothScroller() {
+export default function () {
   let smoother: ScrollSmoother | null = null;
   let velocityTween: gsap.core.Tween | null = null;
 

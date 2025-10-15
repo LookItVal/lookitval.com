@@ -5,8 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useConstants } from '@/composables/constants';
-
 const { COLORS: _COLORS } = useConstants();
 const texts = [
   { text: "Data Scientist", color: "peach-100", bg: "red-100" },

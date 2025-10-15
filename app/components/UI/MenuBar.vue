@@ -37,7 +37,6 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
-import { useConstants } from '@/composables/constants';
 import type Logo from '@/components/UI/Logo.vue';
 import type Socials from '@/components/Socials/Socials.vue';
 import type ShimmeringButton from '@/components/UI/ShimmeringButton.vue';

@@ -3,7 +3,7 @@ const latitude = ref<number | null>(null)
 const longitude = ref<number | null>(null)
 const elevation = ref<number | null>(null)
 
-export function useLocation() {
+export default function () {
   const requestAccess = async () => {
     if (!navigator.geolocation) {
       console.error('Geolocation is not supported by your browser');

@@ -22,9 +22,6 @@
 <script lang="ts" setup>
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import { useConstants } from '@/composables/constants';
-import { useFootnotes } from '@/composables/footnotes';
-
 const { COLORS } = useConstants();
 const { setFootnote, clearFootnote, setPreview, clearPreview, footnote } = useFootnotes();
 

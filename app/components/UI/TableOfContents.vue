@@ -29,7 +29,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useConstants } from '@/composables/constants';
 const { COLORS } = useConstants();
 
 interface Section {

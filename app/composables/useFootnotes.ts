@@ -1,6 +1,7 @@
 const footnotePreview = ref("");
 const footnote = ref("");
-export const useFootnotes = () => {
+
+export default function () {
   const setFootnote = (text: string) => {
     footnote.value = text;
   };

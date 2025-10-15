@@ -1,4 +1,3 @@
-import { usePython } from './python';
 const { runPython, installPackage, initialize, isReady} = usePython();
 const { latitude, longitude, elevation, requestAccess } = useLocation();
 const bufferSize = ref(3); // length of the classifier buffer
@@ -6,7 +5,7 @@ const classifierBuffer = ref<string[]>([]); // buffer to hold recent classificat
 const loadingProgress = ref(0);
 const loadingStep = ref<string>('Initializing Python environment');
 
-export function useClassifier() {
+export default function () {
   const initPackages = async () => {
     const steps = 15; // Total number of steps
     const updateProgress = (step: string) => { loadingProgress.value += 1 / steps; loadingStep.value = step; };

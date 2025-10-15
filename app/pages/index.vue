@@ -58,7 +58,6 @@
 </template>
 <script lang="ts" setup>
 import type PDFViewer from '~/components/PDFViewer.vue';
-import { useSmoothScroller } from '@/composables/smoothScroller';
 const { initSmoothScroller } = useSmoothScroller();
 // "⋅·∙‧᛫◦•∘*●◌⊙⊛⊚⦿Ｏ○◉◯oO0"
 

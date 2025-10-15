@@ -1,5 +1,5 @@
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
-import { gsap } from 'gsap';
+import type { gsap } from 'gsap';
 
 const smoothness = ref(0.75);
 const currentVelocity = ref(0);
@@ -24,7 +24,7 @@ export function useSmoothScroller() {
             const maxScroll = contentEl.scrollHeight - wrapperEl.clientHeight;
             
             // Check if at top or bottom (with small tolerance)
-            const tolerance = 5;
+            const tolerance = 0;
             const atTop = scrollTop <= tolerance;
             const atBottom = scrollTop >= maxScroll - tolerance;
             
@@ -33,21 +33,7 @@ export function useSmoothScroller() {
               if (velocityTween) {
                 velocityTween.kill();
               }
-              
-              // Create a new tween to gradually reduce velocity to 0
-              const startVelocity = velocity;
-              velocityTween = gsap.to({ velocity: startVelocity }, {
-                velocity: 0,
-                duration: smoothness.value,
-                ease: "power2.out",
-                onUpdate: function() {
-                  currentVelocity.value = this.targets()[0].velocity;
-                },
-                onComplete: () => {
-                  currentVelocity.value = 0;
-                  velocityTween = null;
-                }
-              });
+              currentVelocity.value = 0;
             } else if (!velocityTween) {
               // Normal velocity update when not tweening
               currentVelocity.value = velocity;

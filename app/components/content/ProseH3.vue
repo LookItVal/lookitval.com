@@ -1,5 +1,5 @@
 <template>
-  <h3 class="text-xl md:text-2xl mb-(--xs-em)"><slot /></h3>
+  <h4 class="text-xl md:text-2xl mb-(--xs-em)"><slot /></h4>
 </template>
 
 <script lang="ts" setup>

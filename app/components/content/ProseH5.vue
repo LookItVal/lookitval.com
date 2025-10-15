@@ -1,5 +1,5 @@
 <template>
-  <h5 class="text-base md:text-lg mb-(--xs-em)"><slot /></h5>
+  <h6 class="text-base md:text-lg mb-(--xs-em)"><slot /></h6>
 </template>
 
 <script lang="ts" setup>

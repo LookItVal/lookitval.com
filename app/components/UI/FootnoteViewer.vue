@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div ref="footnoteContainer" class="rounded-full p-(--xs-em) bg-surface-300 z-9" style="min-height: calc(var(--xs-em) * 2 + 1em); min-width:  calc(var(--xs-em) * 2 + 1em); transform-origin: bottom center; transform: scale(0);">
-      <p ref="parsedFootnoteText" class="absolute text-base md:text-lg pr-(--xs-em)" v-html="parseLinks(note)" />
-      <p ref="footnoteText" class="text-base md:text-lg" />
+    <div ref="footnoteContainer" class="text-base md:text-lg rounded-full p-(--m-em) bg-surface-300 z-9" style="min-height: calc(var(--m-em) * 2 + 1.5em); min-width:  calc(var(--m-em) * 2 + 1.5em); transform-origin: bottom center; transform: scale(0);">
+      <p ref="parsedFootnoteText" class="absolute pr-(--m-em)" style="opacity: 0;" v-html="parseLinks(note)" />
+      <p ref="footnoteText" />
     </div>
   </div>
 </template>

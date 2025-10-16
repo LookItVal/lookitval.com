@@ -25,19 +25,29 @@
             scroll-lag="reverse"
           />
         </div>
-        <div class="w-full flex flex-row justify-between p-(--s-em)">
-          <UINavigationButton direction="back" :to="previousPage?.url || ''" :label="previousPage?.name" />
-          <UINavigationButton direction="forward" :to="nextPage?.url || ''" :label="nextPage?.name" />
-        </div>
-        <div class="z-9 pb-(--s-em) px-(--s-em) w-full flex justify-center">
-          <UIFootnoteViewer class="pointer-events-auto" />
-        </div>
+        <AnimationsScrollLag :reverse="true">
+          <div ref="navigationButtons" class="w-full flex flex-row justify-between p-(--s-em)">
+            <UINavigationButton direction="back" :to="previousPage?.url || ''" :label="previousPage?.name" />
+            <UINavigationButton direction="forward" :to="nextPage?.url || ''" :label="nextPage?.name" />
+          </div>
+        </AnimationsScrollLag>
+        <AnimationsScrollLag :reverse="true">
+          <div class="z-9 pb-(--s-em) px-(--s-em) w-full flex justify-center">
+            <UIFootnoteViewer class="pointer-events-auto" />
+          </div>
+        </AnimationsScrollLag>
       </div>
     </div>
-    <div ref="pageWrapper" :style="{paddingLeft: sidebarWidth, paddingTop: headingHeight}">
+    <div
+      ref="pageWrapper"
+      :style="{
+        paddingLeft: sidebarWidth,
+        paddingTop: headingHeight
+      }"
+    >
       <div ref="pageContent" class="max-w-6xl mx-auto z-1">
         <h1 class="text-4xl md:text-6xl">{{ project?.title || 'Project Title' }}</h1>
-        <ContentRenderer v-if="pageData" :value="pageData" />
+        <ContentRenderer v-if="pageData" :value="pageData" :style="{paddingBottom: navigationButtonsHeight}"/>
         <div v-else>
           <h1>
             Oops, Seems like you got the wrong link. There is no project here.
@@ -93,6 +103,11 @@ const heading = ref<HTMLElement | null>(null);
 const headingHeight = computed(() => {
   if (!heading.value) return '0px';
   return (heading.value.getBoundingClientRect().height * 2) + 'px';
+});
+const navigationButtons = ref<HTMLElement | null>(null);
+const navigationButtonsHeight = computed(() => {
+  if (!navigationButtons.value) return '100px';
+  return (navigationButtons.value.getBoundingClientRect().height * 2) + 'px';
 });
 
 const pageData = await queryCollection('caseStudyPages').path(`/case-studies/${route.params.project}/${route.params.slug}`).first()

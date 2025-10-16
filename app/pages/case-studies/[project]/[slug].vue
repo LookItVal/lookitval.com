@@ -121,6 +121,19 @@ onMounted(() => {
     nextPage.value = getNextPage(project, getCurrentUrl()) || null;
     previousPage.value = getPreviousPage(project, getCurrentUrl()) || null;
   }
+
+  if (route.hash) {
+    setTimeout(() => {
+      gsap.to(window, {
+        scrollTo: {
+          y: route.hash,
+          offsetY: parseInt(headingHeight.value.split('px')[0]!) || 0
+        },
+        duration: 1,
+        ease: 'power2.out'
+      });
+    }, 100);
+  }
 });
 </script>
 

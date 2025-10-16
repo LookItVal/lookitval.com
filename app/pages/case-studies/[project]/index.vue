@@ -9,6 +9,7 @@
             <h1 class="text-4xl font-bold mb-(--m-em)">{{ project.title }}</h1>
             <UITableOfContents
               :sections='(project.sections as Section[])'
+              :full-project="project"
               class="text-sm rounded-4xl p-(--m-em) bg-mantle-100"
               :primary-color="project.primary_color"
               :secondary-color="project.secondary_color"

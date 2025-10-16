@@ -121,9 +121,6 @@
 <script lang="ts" setup>
 import { gsap } from 'gsap';
 import { Flip } from "gsap/Flip";
-import { useAudio } from '~/composables/useAudio';
-import { useClassifier } from '~/composables/useClassifier';
-import { useSmoothScroller } from '~/composables/useSmoothScroller';
 import type FAQ from '~/components/BirdClassification/FAQ.vue';
 import type RecordButton from '~/components/BirdClassification/RecordButton.vue';
 import type LiveWaveform from '~/components/BirdClassification/LiveWaveform.vue';

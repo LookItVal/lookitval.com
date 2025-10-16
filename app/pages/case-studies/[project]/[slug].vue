@@ -2,10 +2,11 @@
   <div>
     <!-- Fixed position items go here -->
     <div class="fixed w-screen h-screen grid grid-cols-[auto_1fr] z-9 pointer-events-none">
-      <div ref="sidebar" class="h-full p-(--s-em) flex items-center justify-center">
+      <div ref="sidebar" class="h-full p-(--s-em) flex items-center justify-center"> 
         <AnimationsScrollLag :reverse="true">
           <UITableOfContents
             v-if="project"
+            :full-project="project"
             :sections="project.sections"
             class="text-sm rounded-4xl p-(--m-em) bg-base-100 pointer-events-auto"
             :primary-color="project.primary_color"
@@ -24,8 +25,14 @@
             scroll-lag="reverse"
           />
         </div>
-        <div>
-          bottom content
+        <div class="w-full flex flex-row justify-between p-(--s-em)">
+          <div class="h-10 w-10 bg-surface-300 rounded-full pointer-events-auto">
+            <Icon name="material-symbols:arrow-back-ios-rounded" class="pl-[1.5em]" />
+          </div>
+          
+          <div class="h-10 w-10 bg-surface-300 rounded-full pointer-events-auto">
+            <Icon name="material-symbols:arrow-forward-ios-rounded" class="pl-[1.5em]" />
+          </div>
         </div>
         <div class="z-9 pb-(--s-em) px-(--s-em) w-full flex justify-center">
           <UIFootnoteViewer class="pointer-events-auto" />

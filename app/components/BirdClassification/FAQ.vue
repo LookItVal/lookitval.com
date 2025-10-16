@@ -67,7 +67,7 @@ import { Flip } from "gsap/Flip";
 
 import type Card from '@/components/UI/Card.vue';
 
-const { data: faqData } = await useAsyncData('faq', () => queryCollection('faq').first())
+const faqData = (await useAsyncData('faq', () => queryCollection('faq').first())).data.value!.meta.body
 
 const faqCard = ref<InstanceType<typeof Card> | null>(null);
 const openButton = ref<InstanceType<typeof Card> | null>(null);

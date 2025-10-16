@@ -50,7 +50,7 @@ export default function () {
     return flatSectionsWithoutAnchors;
   }
 
-  const nextPage = (project: Project, currentUrl: string) => {
+  const getNextPage = (project: Project, currentUrl: string) => {
     const flatSections = getFlatSectionsWithoutAnchors(project);
     const currentIndex = flatSections.findIndex(section => section.url === currentUrl);
     if (currentIndex !== -1 && currentIndex < flatSections.length - 1) {
@@ -59,7 +59,7 @@ export default function () {
     return undefined;
   }
 
-  const previousPage = (project: Project, currentUrl: string) => {
+  const getPreviousPage = (project: Project, currentUrl: string) => {
     const flatSections = getFlatSectionsWithoutAnchors(project);
     const currentIndex = flatSections.findIndex(section => section.url === currentUrl);
     if (currentIndex > 0) {
@@ -80,8 +80,8 @@ export default function () {
   
   return {
     getItemsOnThisPage,
-    nextPage,
-    previousPage,
+    getNextPage,
+    getPreviousPage,
     getProject,
     getFlatSections,
     getFlatSectionsWithoutAnchors,

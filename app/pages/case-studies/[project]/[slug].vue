@@ -26,13 +26,8 @@
           />
         </div>
         <div class="w-full flex flex-row justify-between p-(--s-em)">
-          <div class="h-10 w-10 bg-surface-300 rounded-full pointer-events-auto">
-            <Icon name="material-symbols:arrow-back-ios-rounded" class="pl-[1.5em]" />
-          </div>
-          
-          <div class="h-10 w-10 bg-surface-300 rounded-full pointer-events-auto">
-            <Icon name="material-symbols:arrow-forward-ios-rounded" class="pl-[1.5em]" />
-          </div>
+          <UINavigationButton direction="back" :to="previousPage?.url || ''" :label="previousPage?.name" />
+          <UINavigationButton direction="forward" :to="nextPage?.url || ''" :label="nextPage?.name" />
         </div>
         <div class="z-9 pb-(--s-em) px-(--s-em) w-full flex justify-center">
           <UIFootnoteViewer class="pointer-events-auto" />
@@ -55,8 +50,11 @@
 
 <script lang="ts" setup>
 const { initSmoothScroller } = useSmoothScroller();
+const { getNextPage, getPreviousPage } = useCaseStudyNavigationTools();
+const { getCurrentUrl } = useNavigationTracking();
 const route = useRoute();
 const { COLORS } = useConstants();
+
 
 interface Section {
   name: string
@@ -78,6 +76,14 @@ const pageWrapper = ref<HTMLElement | null>(null);
 const pageContent = ref<HTMLElement | null>(null);
 initSmoothScroller(pageWrapper, pageContent, true);
 
+interface NavigationPage {
+  name: string;
+  url: string;
+}
+
+const nextPage = ref<NavigationPage | null>(null);
+const previousPage = ref<NavigationPage | null>(null);
+
 const sidebar = ref<HTMLElement | null>(null);
 const sidebarWidth = computed(() => {
   if (!sidebar.value) return '0px';
@@ -94,6 +100,13 @@ const project = (await queryCollection('caseStudies').where('id', '=', `caseStud
 
 const primaryColor = computed(() => COLORS[project?.primary_color || 'lavender-100']);
 const secondaryColor = computed(() => COLORS[project?.secondary_color || 'mauve-100']);
+
+onMounted(() => {
+  if (project) {
+    nextPage.value = getNextPage(project, getCurrentUrl()) || null;
+    previousPage.value = getPreviousPage(project, getCurrentUrl()) || null;
+  }
+});
 </script>
 
 <style scoped>

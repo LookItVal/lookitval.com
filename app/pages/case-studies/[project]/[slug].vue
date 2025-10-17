@@ -2,6 +2,11 @@
   <div>
     <!-- Fixed position items go here -->
     <div class="fixed w-screen h-screen grid grid-cols-[auto_1fr] z-9 pointer-events-none">
+      <div class="gradient-blur-overlay-top" :style="{height: headingHeight}"></div>
+      <div
+        class="gradient-blur-overlay-bottom"
+        :style="{ height: (parseFloat(navigationButtonsHeight) / 2) + 'px' }"
+      ></div>
       <div ref="sidebar" class="h-full p-(--s-em) flex items-center justify-center"> 
         <AnimationsScrollLag :reverse="true">
           <UITableOfContents
@@ -138,6 +143,60 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.gradient-blur-overlay-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.gradient-blur-overlay-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  mask-image: linear-gradient(to bottom,
+    black 0%,
+    black 5%,
+    rgba(0, 0, 0, 0.75) 50%,
+    rgba(0, 0, 0, 0.5) 75%,
+    transparent 100%
+  );
+}
+
+.gradient-blur-overlay-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.gradient-blur-overlay-bottom::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  mask-image: linear-gradient(to top,
+    black 0%,
+    black 5%,
+    rgba(0, 0, 0, 0.75) 50%,
+    rgba(0, 0, 0, 0.5) 75%,
+    transparent 100%
+  );
+}
+
 :deep(a) {
   color: v-bind(primaryColor);
 }

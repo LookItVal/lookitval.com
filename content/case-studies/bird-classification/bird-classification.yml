@@ -39,14 +39,14 @@ sections:
         sections:
 
           - name: "1. Building the Virtual Environment"
-            url: "/case-studies/bird-classification/2-1-1-initial-setup#1-building-the-virtual-environment"
+            url: "/case-studies/bird-classification/2-1-1-initial-setup#_1-building-the-virtual-environment"
           
           - name: "2. Importing the Libraries"
-            url: "/case-studies/bird-classification/2-1-1-initial-setup#2-importing-the-libraries"
+            url: "/case-studies/bird-classification/2-1-1-initial-setup#_2-importing-libraries"
             sections:
               
               - name: "a) Overview of Libraries and their purposes"
-                url: "/case-studies/bird-classification/2-1-1-initial-setup#a-overview-of-libraries"
+                url: "/case-studies/bird-classification/2-1-1-initial-setup#a-overview-of-libraries-and-their-purposes"
                 sections:
 
                   - name: "(i) pydub"

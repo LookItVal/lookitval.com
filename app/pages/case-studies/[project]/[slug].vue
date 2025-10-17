@@ -64,6 +64,8 @@
 </template>
 
 <script lang="ts" setup>
+import { gsap } from 'gsap';
+import { SplitText } from 'gsap/SplitText';
 const { initSmoothScroller } = useSmoothScroller();
 const { getNextPage, getPreviousPage } = useCaseStudyNavigationTools();
 const { getCurrentUrl } = useNavigationTracking();
@@ -129,7 +131,9 @@ onMounted(() => {
 
   if (route.hash) {
     setTimeout(() => {
-      gsap.to(window, {
+      const splitText = SplitText.create(route.hash, {type: "chars"});
+      const timeline = gsap.timeline( {onComplete: () => splitText.revert()} );
+      timeline.to(window, {
         scrollTo: {
           y: route.hash,
           offsetY: parseInt(headingHeight.value.split('px')[0]!) || 0
@@ -137,6 +141,16 @@ onMounted(() => {
         duration: 1,
         ease: 'power2.out'
       });
+      timeline.add(gsap.to(splitText.chars, {
+        scale: 1.5,
+        duration: 0.3,
+        stagger: 0.05
+      }));
+      timeline.add(gsap.to(splitText.chars, {
+        scale: 1,
+        duration: 0.3,
+        stagger: 0.05
+      }), '<+0.1');
     }, 100);
   }
 });

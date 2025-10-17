@@ -11,8 +11,9 @@
       v-for="(section, index) in props.sections"
       :key="section.url"
       >
-      <a
-        :href="section.url"
+      <NuxtLink
+        v-if="!isOnThisPage(section.url)"
+        :to="section.url"
         :style="{
           borderRadius: calcBorderRadius(section.name),
           paddingLeft: depth + 'em',
@@ -25,7 +26,25 @@
         @mouseleave="handleMouseLeave($event)"
       >
         {{ section.name }}
-      </a>
+      </NuxtLink>
+      <button
+        v-else
+        :to="section.url"
+        @click="isOnThisPage(section.url) ? handleClick : null"
+        :style="{
+          borderRadius: calcBorderRadius(section.name),
+          paddingLeft: depth + 'em',
+          paddingRight: '1em',
+          color: `${COLORS[props.fullProject.primary_color]}`,
+          backgroundColor: calcBackgroundColor(section.url)
+        }"
+        class="block py-1 transition-colors duration-300"
+        @mouseenter="handleMouseEnter($event)"
+        @mouseleave="handleMouseLeave($event)"
+
+      >
+        {{ section.name }}
+      </button>
       <TableOfContents
         :full-project="props.fullProject"
         :sections="section.sections || []"
@@ -40,6 +59,7 @@
 const { COLORS } = useConstants();
 const { trackNavigation, currentSection } = useNavigationTracking();
 const { getItemsOnThisPage, removeAnchorHash } = useCaseStudyNavigationTools();
+const { moveToAnchorWithAnimation } = useGsapAnimations();
 
 interface Section {
   name: string
@@ -83,15 +103,27 @@ function isOnThisPage(url: string): boolean {
   return urls.includes(removeAnchorHash(url));
 }
 
-const calcBackgroundColor = (url: string) => {
+function calcBackgroundColor(url: string): string {
   return isOnThisPage(url) ? COLORS['mantle-100'] : 'transparent';
-};
+}
 
-const calcBorderRadius = (name: string) => {
+function calcBorderRadius(name: string): string {
   const itemsOnPage = getItemsOnThisPage(props.fullProject);
   const names = itemsOnPage.map(item => item.name);
   const isFirst = names[0] === name;
   const isLast = names[names.length - 1] === name;
   return `${isFirst ? '1em' : '0'} ${isFirst ? '1em' : '0'} ${isLast ? '1em' : '0'} ${isLast ? '1em' : '0'}`;
-};
+}
+
+function handleClick(event: Event) {
+  const currentUrl = (event.currentTarget as HTMLElement).getAttribute('to');
+  const anchorHash = currentUrl && currentUrl.includes('#') ? currentUrl.split('#')[1] : null;
+  const heading = document.getElementById('heading');
+  const offsetY = heading ? heading.getBoundingClientRect().height : 0;
+  if (anchorHash) {
+    moveToAnchorWithAnimation(`#${anchorHash}`, offsetY);
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
 </script>

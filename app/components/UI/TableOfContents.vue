@@ -10,7 +10,6 @@
     <div
       v-for="(section, index) in props.sections"
       :key="section.url"
-      class="overflow-visible"
       >
       <NuxtLink
         v-if="!isOnThisPage(section.url)"
@@ -41,7 +40,7 @@
           color: `${COLORS[props.fullProject.primary_color]}`,
           backgroundColor: calcBackgroundColor(section.url)
         }"
-        class="py-1 transition-colors duration-300 w-full text-left overflow-visible z-0"
+        class="py-1 transition-colors duration-300 w-full text-left overflow-visible"
         @mouseenter="handleMouseEnter($event)"
         @mouseleave="handleMouseLeave($event)"
 

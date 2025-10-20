@@ -40,7 +40,6 @@ const isHovered = ref(false);
 const scrollTrigger = ref<ScrollTrigger | null>(null);
 const footnoteSpan = ref<HTMLElement | null>(null);
 
-// Use reactive styles instead of direct DOM manipulation
 const footnoteSpanStyles = computed(() => {
   if (stateLocked.value) {
     return {

@@ -1,9 +1,22 @@
+const { getCurrentProject, getPreviousSection, getFlatSections } = useCaseStudyNavigationTools();
+
 const currentSection = ref<string | null>(null);
 const trackNavigation = ref(false);
 
 export default function () {
-  const setCurrentSection = (sectionId: string | null) => {
+  const setCurrentSection = (sectionId: string) => {
+    sectionId = sectionId.replace(/\n/g, ' ');
     currentSection.value = sectionId;
+  };
+
+  const setToPreviousSection = async () => {
+    const project = await getCurrentProject();
+    if (project && currentSection.value) {
+      const previousSection = getPreviousSection(project, currentSection.value);
+      if (previousSection) {
+        currentSection.value = previousSection.name;
+      }
+    }
   };
 
   const enableTracking = () => {
@@ -26,6 +39,7 @@ export default function () {
     currentSection,
     trackNavigation,
     setCurrentSection,
+    setToPreviousSection,
     enableTracking,
     disableTracking,
     getCurrentUrl

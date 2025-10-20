@@ -33,6 +33,7 @@
         :to="section.url"
         @click="handleClick($event)"
         :style="{
+          position: 'relative',
           borderRadius: calcBorderRadius(section.name),
           paddingLeft: depth + 'em',
           paddingRight: '1em',
@@ -44,7 +45,15 @@
         @mouseleave="handleMouseLeave($event)"
 
       >
-        {{ section.name }}
+        <div
+          v-if="isInCurrentSection(section.name)"
+          class="absolute left-0 right-0 top-0 bottom-0 rounded-full z-0"
+          :style="{
+            backgroundColor: COLORS['surface-300']
+          }"
+            
+        />
+        <p class="relative z-1">{{ section.name }}</p>
       </button>
       <TableOfContents
         :full-project="props.fullProject"
@@ -59,7 +68,7 @@
 <script lang="ts" setup>
 const { COLORS } = useConstants();
 const { trackNavigation, currentSection } = useNavigationTracking();
-const { getItemsOnThisPage, removeAnchorHash } = useCaseStudyNavigationTools();
+const { getItemsOnThisPage, removeAnchorHash, getFlatSections } = useCaseStudyNavigationTools();
 const { moveToAnchorWithAnimation } = useGsapAnimations();
 
 interface Section {
@@ -114,6 +123,11 @@ function calcBorderRadius(name: string): string {
   const isFirst = names[0] === name;
   const isLast = names[names.length - 1] === name;
   return `${isFirst ? '1em' : '0'} ${isFirst ? '1em' : '0'} ${isLast ? '1em' : '0'} ${isLast ? '1em' : '0'}`;
+}
+
+function isInCurrentSection(name: string): boolean {
+  console.log('Current section:', currentSection.value, 'Checking against:', name, 'Result:', currentSection.value === name);
+  return currentSection.value === name;
 }
 
 function handleClick(event: Event) {

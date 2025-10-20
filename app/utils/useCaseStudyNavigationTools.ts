@@ -1,5 +1,4 @@
 const { COLORS: _COLORS } = useConstants();
-const { getCurrentUrl } = useNavigationTracking();
 
 interface Section {
   name: string
@@ -18,6 +17,12 @@ interface Project {
 }
 
 export default function () {
+  const getCurrentProject = async () => {
+    const route = useRoute();
+    const projectName = route.params.project as string;
+    return getProject(projectName);
+  }
+
   const getProject = async (projectName: string) => {
     return (await queryCollection('caseStudies').where('id', '=', `caseStudies/case-studies/${projectName}/${projectName}.yml`).first())?.meta.body as Project | null;
   }
@@ -68,12 +73,30 @@ export default function () {
     return undefined;
   }
 
+  const getNextSection = (project: Project, sectionName: string) => {
+    const flatSections = getFlatSections(project);
+    const currentIndex = flatSections.findIndex(section => section.name === sectionName);
+    if (currentIndex !== -1 && currentIndex < flatSections.length - 1) {
+      return flatSections[currentIndex + 1];
+    }
+    return undefined;
+  }
+
+  const getPreviousSection = (project: Project, sectionName: string) => {
+    const flatSections = getFlatSections(project);
+    const currentIndex = flatSections.findIndex(section => section.name === sectionName);
+    if (currentIndex > 0) {
+      return flatSections[currentIndex - 1];
+    }
+    return undefined;
+  }
+
   const removeAnchorHash = (url: string): string => {
     return url.split('#')[0] || url;
   }
 
   const getItemsOnThisPage = (project: Project) => {
-    const currentUrl = getCurrentUrl();
+    const currentUrl = useRoute().fullPath.split('#')[0] || '';
     const flatSections = getFlatSections(project);
     return flatSections.filter(section => removeAnchorHash(section.url) === currentUrl);
   }
@@ -82,7 +105,10 @@ export default function () {
     getItemsOnThisPage,
     getNextPage,
     getPreviousPage,
+    getNextSection,
+    getPreviousSection,
     getProject,
+    getCurrentProject,
     getFlatSections,
     getFlatSectionsWithoutAnchors,
     removeAnchorHash

@@ -67,7 +67,7 @@
 const { moveToAnchorWithAnimation } = useGsapAnimations();
 const { initSmoothScroller } = useSmoothScroller();
 const { getNextPage, getPreviousPage } = useCaseStudyNavigationTools();
-const { getCurrentUrl } = useNavigationTracking();
+const { getCurrentUrl, enableTracking, disableTracking, setCurrentSection } = useNavigationTracking();
 const route = useRoute();
 const { COLORS } = useConstants();
 
@@ -123,16 +123,22 @@ const primaryColor = computed(() => COLORS[project?.primary_color || 'lavender-1
 const secondaryColor = computed(() => COLORS[project?.secondary_color || 'mauve-100']);
 
 onMounted(() => {
+  enableTracking();
   if (project) {
     nextPage.value = getNextPage(project, getCurrentUrl()) || null;
     previousPage.value = getPreviousPage(project, getCurrentUrl()) || null;
   }
 
   if (route.hash) {
+    setCurrentSection(route.hash.split('#')[1] || '');
     setTimeout(() => {
       moveToAnchorWithAnimation(route.hash, parseInt(headingHeight.value.split('px')[0]!) || 0);
     }, 500);
   }
+});
+
+onUnmounted(() => {
+  disableTracking();
 });
 </script>
 
@@ -185,8 +191,9 @@ onMounted(() => {
   mask-image: linear-gradient(to top,
     black 0%,
     black 5%,
-    rgba(0, 0, 0, 0.75) 50%,
-    rgba(0, 0, 0, 0.5) 75%,
+    rgba(0, 0, 0, 0.75) 12.5%,
+    rgba(0, 0, 0, 0.5) 33%,
+    transparent 50%,
     transparent 100%
   );
 }

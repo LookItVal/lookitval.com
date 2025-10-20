@@ -41,7 +41,7 @@ sections:
           - name: "1. Building the Virtual Environment"
             url: "/case-studies/bird-classification/2-1-1-initial-setup#_1-building-the-virtual-environment"
           
-          - name: "2. Importing the Libraries"
+          - name: "2. Importing Libraries"
             url: "/case-studies/bird-classification/2-1-1-initial-setup#_2-importing-libraries"
             sections:
               

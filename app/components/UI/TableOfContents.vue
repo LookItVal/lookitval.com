@@ -10,6 +10,7 @@
     <div
       v-for="(section, index) in props.sections"
       :key="section.url"
+      class="overflow-visible"
       >
       <NuxtLink
         v-if="!isOnThisPage(section.url)"
@@ -40,20 +41,25 @@
           color: `${COLORS[props.fullProject.primary_color]}`,
           backgroundColor: calcBackgroundColor(section.url)
         }"
-        class="block py-1 transition-colors duration-300 w-full text-left"
+        class="py-1 transition-colors duration-300 w-full text-left overflow-visible z-0"
         @mouseenter="handleMouseEnter($event)"
         @mouseleave="handleMouseLeave($event)"
 
       >
         <div
-          v-if="isInCurrentSection(section.name)"
-          class="absolute left-0 right-0 top-0 bottom-0 rounded-full z-0"
+          v-if="isInCurrentSection(section.name) || isInOldSection(section.name)"
+          data-flip-id="active-section"
+            :class="[
+            'toc-active-section',
+            isInCurrentSection(section.name) ? 'current' : '',
+            isInOldSection(section.name) ? 'old' : '',
+            'absolute left-0 right-0 top-0 bottom-0 rounded-full z-1'
+            ]"
           :style="{
             backgroundColor: COLORS['surface-300']
           }"
-            
         />
-        <p class="relative z-1">{{ section.name }}</p>
+        <p class="relative z-2">{{ section.name }}</p>
       </button>
       <TableOfContents
         :full-project="props.fullProject"
@@ -67,8 +73,8 @@
 
 <script lang="ts" setup>
 const { COLORS } = useConstants();
-const { trackNavigation, currentSection } = useNavigationTracking();
-const { getItemsOnThisPage, removeAnchorHash, getFlatSections } = useCaseStudyNavigationTools();
+const { currentSection, oldSection } = useNavigationTracking();
+const { getItemsOnThisPage, removeAnchorHash } = useCaseStudyNavigationTools();
 const { moveToAnchorWithAnimation } = useGsapAnimations();
 
 interface Section {
@@ -87,6 +93,9 @@ interface Project {
   sections: Section[]
 }
 
+const hasActiveSection = ref(false);
+const hasNewSection = ref(false);
+
 const props = withDefaults(defineProps<{
   fullProject: Project
   sections: Section[]
@@ -96,6 +105,10 @@ const props = withDefaults(defineProps<{
   showTitle: true,
   depth: 1
 })
+
+watch(() => currentSection.value, (newVal) => {
+  if (!hasActiveSection.value && !hasNewSection.value) return;
+});
 
 function handleMouseEnter(event: MouseEvent) {
   const target = event.target as HTMLElement;
@@ -127,6 +140,10 @@ function calcBorderRadius(name: string): string {
 
 function isInCurrentSection(name: string): boolean {
   return currentSection.value === name;
+}
+
+function isInOldSection(name: string): boolean {
+  return oldSection.value === name;
 }
 
 function handleClick(event: Event) {

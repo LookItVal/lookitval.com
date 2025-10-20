@@ -1,6 +1,7 @@
 <template>
   <NuxtLink
     :to="to"
+    :external="true"
     :class="`navigationButton h-(--m-em) flex ${direction === 'back' ? 'flex-row' : 'flex-row-reverse'} items-center text-nowrap bg-surface-300 rounded-full ${!to ? 'invisible pointer-events-none' : 'visible pointer-events-auto'}`"
     @mouseenter="handleMouseEnter()"
     @mouseleave="handleMouseLeave()"

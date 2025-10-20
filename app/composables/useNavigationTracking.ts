@@ -39,9 +39,14 @@ export default function () {
     oldSection.value = null;
   };
 
-  const setCurrentSection = (sectionId: string) => {
+  const setCurrentSection = async (sectionId: string) => {
     sectionId = sectionId.replace(/\n/g, ' ');
     const animate = currentSection.value !== null;
+    const project = await getCurrentProject();
+    if (!project) return;
+    const itemsOnPage = getItemsOnThisPage(project);
+    const isValidSection = itemsOnPage.some(item => item.name === sectionId);
+    if (!isValidSection) return;
     oldSection.value = currentSection.value;
     currentSection.value = sectionId;
     if (animate) {

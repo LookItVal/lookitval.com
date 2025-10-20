@@ -13,6 +13,7 @@
       >
       <NuxtLink
         v-if="!isOnThisPage(section.url)"
+        :external="true"
         :to="section.url"
         :style="{
           borderRadius: calcBorderRadius(section.name),
@@ -21,7 +22,7 @@
           color: `${COLORS[props.fullProject.primary_color]}`,
           backgroundColor: calcBackgroundColor(section.url)
         }"
-        class="block py-1 transition-colors duration-300"
+        class="block py-1 transition-colors duration-300 text-decoration-none !no-underline"
         @mouseenter="handleMouseEnter($event)"
         @mouseleave="handleMouseLeave($event)"
       >
@@ -30,7 +31,7 @@
       <button
         v-else
         :to="section.url"
-        @click="isOnThisPage(section.url) ? handleClick : null"
+        @click="handleClick($event)"
         :style="{
           borderRadius: calcBorderRadius(section.name),
           paddingLeft: depth + 'em',
@@ -38,7 +39,7 @@
           color: `${COLORS[props.fullProject.primary_color]}`,
           backgroundColor: calcBackgroundColor(section.url)
         }"
-        class="block py-1 transition-colors duration-300"
+        class="block py-1 transition-colors duration-300 w-full text-left"
         @mouseenter="handleMouseEnter($event)"
         @mouseleave="handleMouseLeave($event)"
 

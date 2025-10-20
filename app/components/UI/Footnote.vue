@@ -2,7 +2,7 @@
   <ClientOnly>
     <span
       ref="footnoteSpan"
-      class='cursor-pointer px-0.5 transition-colors duration-300'
+      class='cursor-pointer px-0.5 transition-colors duration-300 no-split'
       :style="footnoteSpanStyles"
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"

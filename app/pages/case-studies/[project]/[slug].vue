@@ -24,7 +24,7 @@
           <UIMenuBar
             ref="menuBar"
             :animate-on-mount="true"
-            class="z-9 py-(--s-em) pointer-events-auto"
+            class="z-9 my-(--s-em) pointer-events-auto"
             :pin="false"
             featured-action="/bird-recognition"
             scroll-lag="reverse"
@@ -131,7 +131,7 @@ onMounted(() => {
   if (route.hash) {
     setTimeout(() => {
       moveToAnchorWithAnimation(route.hash, parseInt(headingHeight.value.split('px')[0]!) || 0);
-    }, 100);
+    }, 500);
   }
 });
 </script>

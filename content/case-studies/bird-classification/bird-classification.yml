@@ -35,7 +35,7 @@ sections:
     sections:
 
       - name: "A. Initial Setup"
-        url: "/case-studies/bird-classification/2-1-1-initial-setup"
+        url: "/case-studies/bird-classification/2-1-1-initial-setup#a-initial-setup"
         sections:
 
           - name: "1. Building the Virtual Environment"

@@ -1,4 +1,4 @@
-const { getCurrentProject, getPreviousSection, getFlatSections } = useCaseStudyNavigationTools();
+const { getCurrentProject, getPreviousSection, getItemsOnThisPage } = useCaseStudyNavigationTools();
 
 const currentSection = ref<string | null>(null);
 const trackNavigation = ref(false);
@@ -9,18 +9,28 @@ export default function () {
     currentSection.value = sectionId;
   };
 
-  const setToPreviousSection = async () => {
+  const setToPreviousSection = async (sectionId: string) => {
+    sectionId = sectionId.replace(/\n/g, ' ');
     const project = await getCurrentProject();
     if (project && currentSection.value) {
-      const previousSection = getPreviousSection(project, currentSection.value);
+      const firstItemOnPage = getItemsOnThisPage(project)[0];
+      if (firstItemOnPage && firstItemOnPage.name === currentSection.value) return;
+      const previousSection = getPreviousSection(project, sectionId);
       if (previousSection) {
         currentSection.value = previousSection.name;
       }
     }
   };
 
-  const enableTracking = () => {
+  const enableTracking = async () => {
     trackNavigation.value = true;
+    const project = await getCurrentProject();
+    if (project && currentSection.value === null) {
+      const firstItemOnPage = getItemsOnThisPage(project)[0];
+      if (firstItemOnPage) {
+        currentSection.value = firstItemOnPage.name;
+      }
+    }
   };
   
   const disableTracking = () => {

@@ -19,7 +19,7 @@ onMounted(() => {
     scrollTrigger.value = ScrollTrigger.create({
       trigger: heading.value,
       start: `top top+=${menuBarHeight}`,
-      end: 'bottom top',
+      end: `top top+=${menuBarHeight}`,
       onEnter: () => {
         let sectionText = heading.value?.innerText || '';
         const span = heading.value?.querySelector('span');
@@ -30,7 +30,13 @@ onMounted(() => {
         setCurrentSection(sectionText);
       },
       onEnterBack: () => {
-        setToPreviousSection();
+        let sectionText = heading.value?.innerText || '';
+        const span = heading.value?.querySelector('span');
+        if (span) {
+          const spanText = span.innerText;
+          sectionText = sectionText.replace(spanText, '').trim();
+        }
+        setToPreviousSection(sectionText);
       }
     });
   }, 100);

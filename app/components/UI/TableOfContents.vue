@@ -126,7 +126,6 @@ function calcBorderRadius(name: string): string {
 }
 
 function isInCurrentSection(name: string): boolean {
-  console.log('Current section:', currentSection.value, 'Checking against:', name, 'Result:', currentSection.value === name);
   return currentSection.value === name;
 }
 

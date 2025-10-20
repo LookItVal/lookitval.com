@@ -50,9 +50,9 @@
         paddingTop: headingHeight
       }"
     >
-      <div ref="pageContent" class="max-w-6xl mx-auto z-1">
+      <div ref="pageContent" class="max-w-6xl mx-auto z-1" :style="{paddingBottom: navigationButtonsHeight}">
         <h1 class="text-4xl md:text-6xl">{{ project?.title || 'Project Title' }}</h1>
-        <ContentRenderer v-if="pageData" :value="pageData" :style="{paddingBottom: navigationButtonsHeight}"/>
+        <ContentRenderer v-if="pageData" :value="pageData" />
         <div v-else>
           <h1>
             Oops, Seems like you got the wrong link. There is no project here.
@@ -90,23 +90,7 @@ interface Project {
 
 const pageWrapper = ref<HTMLElement | null>(null);
 const pageContent = ref<HTMLElement | null>(null);
-
-// Initialize smooth scroller with proper re-initialization handling
-let smoothScrollerInitialized = false;
-
-const initScrollerSafely = () => {
-  if (!smoothScrollerInitialized && pageWrapper.value && pageContent.value) {
-    initSmoothScroller(pageWrapper, pageContent, true);
-    smoothScrollerInitialized = true;
-  }
-};
-
-// Watch for wrapper/content changes and re-initialize if needed
-watch([pageWrapper, pageContent], () => {
-  nextTick(() => {
-    initScrollerSafely();
-  });
-}, { immediate: true });
+initSmoothScroller(pageWrapper, pageContent);
 
 interface NavigationPage {
   name: string;
@@ -135,7 +119,7 @@ const updateDimensions = () => {
       headingHeight.value = (heading.value.getBoundingClientRect().height) + 'px';
     }
     if (navigationButtons.value) {
-      navigationButtonsHeight.value = (navigationButtons.value.getBoundingClientRect().height) + 'px';
+      navigationButtonsHeight.value = (navigationButtons.value.getBoundingClientRect().height * 2) + 'px';
     }
   });
 };

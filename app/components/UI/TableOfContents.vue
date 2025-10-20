@@ -13,7 +13,6 @@
       >
       <NuxtLink
         v-if="!isOnThisPage(section.url)"
-        :external="true"
         :to="section.url"
         :style="{
           borderRadius: calcBorderRadius(section.name),

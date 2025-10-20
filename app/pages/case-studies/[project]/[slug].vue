@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="`${route.params.project}-${route.params.slug}`">
     <!-- Fixed position items go here -->
     <div class="fixed w-screen h-screen grid grid-cols-[auto_1fr] z-9 pointer-events-none">
       <div class="gradient-blur-overlay-top" :style="{height: headingHeight}"></div>
@@ -65,9 +65,9 @@
 
 <script lang="ts" setup>
 const { moveToAnchorWithAnimation } = useGsapAnimations();
-const { initSmoothScroller } = useSmoothScroller();
 const { getNextPage, getPreviousPage } = useCaseStudyNavigationTools();
 const { getCurrentUrl, enableTracking, disableTracking, setCurrentSection } = useNavigationTracking();
+const { initSmoothScroller } = useSmoothScroller();
 const route = useRoute();
 const { COLORS } = useConstants();
 
@@ -90,7 +90,23 @@ interface Project {
 
 const pageWrapper = ref<HTMLElement | null>(null);
 const pageContent = ref<HTMLElement | null>(null);
-initSmoothScroller(pageWrapper, pageContent, true);
+
+// Initialize smooth scroller with proper re-initialization handling
+let smoothScrollerInitialized = false;
+
+const initScrollerSafely = () => {
+  if (!smoothScrollerInitialized && pageWrapper.value && pageContent.value) {
+    initSmoothScroller(pageWrapper, pageContent, true);
+    smoothScrollerInitialized = true;
+  }
+};
+
+// Watch for wrapper/content changes and re-initialize if needed
+watch([pageWrapper, pageContent], () => {
+  nextTick(() => {
+    initScrollerSafely();
+  });
+}, { immediate: true });
 
 interface NavigationPage {
   name: string;
@@ -101,20 +117,31 @@ const nextPage = ref<NavigationPage | null>(null);
 const previousPage = ref<NavigationPage | null>(null);
 
 const sidebar = ref<HTMLElement | null>(null);
-const sidebarWidth = computed(() => {
-  if (!sidebar.value) return '0px';
-  return sidebar.value.getBoundingClientRect().width + 'px';
-});
 const heading = ref<HTMLElement | null>(null);
-const headingHeight = computed(() => {
-  if (!heading.value) return '0px';
-  return (heading.value.getBoundingClientRect().height * 2) + 'px';
-});
 const navigationButtons = ref<HTMLElement | null>(null);
-const navigationButtonsHeight = computed(() => {
-  if (!navigationButtons.value) return '100px';
-  return (navigationButtons.value.getBoundingClientRect().height * 2) + 'px';
-});
+
+// Reactive dimension tracking
+const sidebarWidth = ref('0px');
+const headingHeight = ref('0px');
+const navigationButtonsHeight = ref('100px');
+
+// Force re-measurement when DOM updates
+const updateDimensions = () => {
+  nextTick(() => {
+    if (sidebar.value) {
+      sidebarWidth.value = sidebar.value.getBoundingClientRect().width + 'px';
+    }
+    if (heading.value) {
+      headingHeight.value = (heading.value.getBoundingClientRect().height) + 'px';
+    }
+    if (navigationButtons.value) {
+      navigationButtonsHeight.value = (navigationButtons.value.getBoundingClientRect().height) + 'px';
+    }
+  });
+};
+
+// Create a resize observer to track dimension changes
+const resizeObserver = ref<ResizeObserver | null>(null);
 
 const pageData = await queryCollection('caseStudyPages').path(`/case-studies/${route.params.project}/${route.params.slug}`).first()
 const project = (await queryCollection('caseStudies').where('id', '=', `caseStudies/case-studies/${route.params.project}/${route.params.project}.yml`).first())?.meta.body as Project | null;
@@ -124,22 +151,47 @@ const secondaryColor = computed(() => COLORS[project?.secondary_color || 'mauve-
 
 onMounted(() => {
   enableTracking();
+  
   if (project) {
     nextPage.value = getNextPage(project, getCurrentUrl()) || null;
     previousPage.value = getPreviousPage(project, getCurrentUrl()) || null;
   }
 
+  // Setup resize observer for dimension tracking
+  resizeObserver.value = new ResizeObserver(updateDimensions);
+  if (sidebar.value) resizeObserver.value.observe(sidebar.value);
+  if (heading.value) resizeObserver.value.observe(heading.value);
+  if (navigationButtons.value) resizeObserver.value.observe(navigationButtons.value);
+
+  // Initial dimension measurement with proper timing
+  setTimeout(updateDimensions, 0);
+  setTimeout(updateDimensions, 100); // Fallback for slower renders
+
   if (route.hash) {
     setCurrentSection(route.hash.split('#')[1] || '');
     setTimeout(() => {
       moveToAnchorWithAnimation(route.hash, parseInt(headingHeight.value.split('px')[0]!) || 0);
-    }, 500);
+    }, 600); // Increased delay to ensure dimensions are ready
   }
 });
 
 onUnmounted(() => {
   disableTracking();
+  if (resizeObserver.value) {
+    resizeObserver.value.disconnect();
+  }
 });
+
+// Watch for route changes and re-initialize
+watch(() => route.params, () => {
+  nextTick(() => {
+    updateDimensions();
+    if (project) {
+      nextPage.value = getNextPage(project, getCurrentUrl()) || null;
+      previousPage.value = getPreviousPage(project, getCurrentUrl()) || null;
+    }
+  });
+}, { deep: true });
 </script>
 
 <style scoped>

@@ -39,7 +39,7 @@
           color: `${COLORS[props.fullProject.primary_color]}`,
           backgroundColor: calcBackgroundColor(section.url)
         }"
-        class="py-1 transition-colors duration-300 w-full text-left overflow-visible"
+        class="py-1 transition-colors duration-300 w-full text-left overflow-visible cursor-pointer"
         @mouseenter="handleMouseEnter($event)"
         @mouseleave="handleMouseLeave($event)"
 

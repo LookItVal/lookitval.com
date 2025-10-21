@@ -2,6 +2,7 @@
   <div :key="`${route.params.project}-${route.params.slug}`">
     <!-- Fixed position items go here -->
     <div class="fixed w-screen h-screen grid grid-cols-[auto_1fr] z-9 pointer-events-none">
+      <div class="page-initializer fixed top-0 left-0 right-0 bottom-0 bg-base-100 -translate-y-full z-10000" />
       <div class="gradient-blur-overlay-top" :style="{height: headingHeight}"></div>
       <div
         class="gradient-blur-overlay-bottom"
@@ -28,6 +29,7 @@
             :pin="false"
             featured-action="/bird-recognition"
             scroll-lag="reverse"
+            :initial-delay="0.5"
           />
         </div>
         <AnimationsScrollLag :reverse="true">
@@ -240,5 +242,18 @@ watch(() => route.params, () => {
 
 :deep(a:hover) {
   color: v-bind(secondaryColor);
+}
+
+/* Page transition styles */
+.page-leave-active, .page-enter-active {
+  & .page-initializer {
+    transition: transform 0.4s ease-in-out;
+  }
+}
+
+.page-leave-to, .page-enter-from {
+  & .page-initializer {
+    transform: translateY(100%) !important;
+  }
 }
 </style>

@@ -79,8 +79,10 @@ export default function () {
   }
 
   const router = useRouter();
-  router.beforeEach(() => {
-    clearContext();
+  router.afterEach(() => {
+      setTimeout(() => {
+        clearContext();
+      }, 350); // Adjust this delay based on your transition duration
   });
 
   return {

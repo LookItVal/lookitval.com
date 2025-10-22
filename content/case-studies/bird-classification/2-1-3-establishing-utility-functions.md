@@ -5,9 +5,7 @@ description: ''
 
 # § II: Data Preparation and Exploration
 ## A. Initial Setup
-### 3. Establishing Utility Functions[^1]
-
-[^1]: All of the functions in this section were not set up like a page of documentation like you might hope, but were all the actual source code in the original notebook. All of these functions are documented using PEP 257 docstrings so you can use that as the documentation.
+### 3. Establishing Utility Functions :u-i-footnote{note='All of the functions in this section were not set up like a page of documentation like you might hope, but were all the actual source code in the original notebook. All of these functions are documented using PEP 257 docstrings so you can use that as the documentation.' icon='1'}
 
 #### a) Simple Aliases
 
@@ -31,9 +29,7 @@ def load_sound_file(file: str) -> Optional[AudioSegment]:
         return None
 ```
 
-Believe it or not, sometimes the filename ends in `.mp3` but the actual internal format is used is that of a `.wav` file. In those cases `mediainfo(file)['format_name']` will return the actual internal format.[^2]
-
-[^2]: I need you to just re-read that last sentence. You can not believe how confusing that was
+Believe it or not, sometimes the filename ends in `.mp3` but the actual internal format is used is that of a `.wav` file. In those cases `mediainfo(file)['format_name']` will return the actual internal format. :u-i-footnote{note='I need you to just re-read that last sentence. You can not believe how confusing that was.' icon='2'}
 
 ```python
 def print_boundry(message: str="") -> None:
@@ -257,10 +253,7 @@ def print_progress_bar(iteration: int,
     return display_handler # Return the display handler for updating the progress bar
 ```
 
-The `print_progress_bar` is not the simplest design for what that is[^3], and there is no reason for it to be rendered in html[^4] except that it allows for a smoother gradient of color, and organizing it like this allows its output to be separated from other prints in output cells in Jupyter notebook. The main reason for this was to integrate easier when overriding the standard IO later in the project.
-
-[^3]: Not sure why its in the "Normal, not insane functions" section tbh
-[^4]: That's probably not 100% clear to anyone skimming this code but the `print_progress_bar` function is just a progress bar that is rendered in html in the jupyter notebook that slowly changes color over time. I made this purely because I spend a lot of time waiting on slow processes and I wanted something to look at while I waited.
+The `print_progress_bar` is not the simplest design for what that is :u-i-footnote{note='Not sure why its in the "Normal, not insane functions" section tbh' icon='3'}, and there is no reason for it to be rendered in html :u-i-footnote{note="That's probably not 100% clear to anyone skimming this code but the `print_progress_bar` function is just a progress bar that is rendered in html in the jupyter notebook that slowly changes color over time. I made this purely because I spend a lot of time waiting on slow processes and I wanted something to look at while I waited." icon='4'} except that it allows for a smoother gradient of color, and organizing it like this allows its output to be separated from other prints in output cells in Jupyter notebook. The main reason for this was to integrate easier when overriding the standard IO later in the project.
 
 ```python
 display_handler = None
@@ -269,14 +262,12 @@ for i in range(100):
     display_handler = print_progress_bar(i+1, 100, message=f'Progress: {i+1}%', display_handler=display_handler)
 del display_handler
 ```
-[^5]
-[^5]: I'm not going to display the output of this code block. I do not want to rebuilt it for a fully web context just for this.
+:u-i-footnote{class='text-base md:text-lg' note="I'm not going to display the output of this code block. I do not want to rebuilt it for a fully web context just for this." icon='5'}
+
 
 ##### (ii) Insane ideas that worked better than expected
 
-The following script is used exclusively to replace the "verbose" form of the training phase of a `sklearn.neural_network.MLPClassifier` instance. Below is an in depth description of what is going on so it is clear how this works, but this is nothing more than a means of monitoring the training process of a `sklearn.neural_network.MLPClassifier` instance. This section can be skipped if that is not important to you.[^6]
-
-[^6]: I am not going to lie, this is actually remarkably useful when actually training a model. It's a bit much to read through if you are not actively training and retraining models though.
+The following script is used exclusively to replace the "verbose" form of the training phase of a `sklearn.neural_network.MLPClassifier` instance. Below is an in depth description of what is going on so it is clear how this works, but this is nothing more than a means of monitoring the training process of a `sklearn.neural_network.MLPClassifier` instance. This section can be skipped if that is not important to you. :u-i-footnote{note="I am not going to lie, this is actually remarkably useful when actually training a model. It's a bit much to read through if you are not actively training and retraining models though." icon='6'}
 
 ```python
 class MLPTrainingMonitor:
@@ -517,9 +508,7 @@ class MLPTrainingMonitor:
         finally:
             sys.stdout = original_stdout # Restore the original standard output stream
 ```
-This is a complicated[^7] class that allows for one simple thing: to reformat the verbose message in the `sklearn.neural_network.MLPClassifier` training function. By default the `MLPClassifier` prints messages that look something like the result of this method:
-
-[^7]: For the context.
+This is a complicated :u-i-footnote{note="For the context." icon='7'} class that allows for one simple thing: to reformat the verbose message in the `sklearn.neural_network.MLPClassifier` training function. By default the `MLPClassifier` prints messages that look something like the result of this method:
 
 ```python
 MLPTrainingMonitor.training_simulator(5)
@@ -558,8 +547,7 @@ with MLPTrainingMonitor.monitor_engine():
 [====================================================================================================] - 10/10 - 
 Loss: 0.780100 - Min Loss: 0.067700 - Iterations Since Minimum: 5 - Learning Rate: 0.010000 - Estimated Time Remaining: 00:00:00
 ```
-[^8]
-[^8]: Again, this code block looks slightly different because its generated by the `print_progress_bar` function which uses html to render the progress bar in a jupyter notebook. The output here is just a static text representation of what it looks like without color.
+:u-i-footnote{class='text-base md:text-lg' note="Again, this code block looks slightly different because its generated by the `print_progress_bar` function which uses html to render the progress bar in a jupyter notebook. The output here is just a static text representation of what it looks like without color." icon='8'}
 
 #### e) Signal Generation
 (Hopefully what these do is relatively self evident)

@@ -1,13 +1,78 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <h2
       v-if="props.showTitle"
-      class="font-semibold text-gray-900 dark:text-gray-100 mb-(--xxs-em)"
+      class="font-semibold text-gray-900 dark:text-gray-100 mb-(--xxs-em) flex-shrink-0"
       style="font-size: 1.5em"
     >
       Table of Contents
     </h2>
+    <div 
+      v-if="props.showTitle"
+      class="flex-1 min-h-0 overflow-y-auto"
+    >
+      <div
+        v-for="(section, index) in props.sections"
+        :key="section.url"
+        >
+        <NuxtLink
+          v-if="!isOnThisPage(section.url)"
+          :to="section.url"
+          :style="{
+            borderRadius: calcBorderRadius(section.name),
+            paddingLeft: depth + 'em',
+            paddingRight: '1em',
+            color: `${COLORS[props.fullProject.primary_color]}`,
+            backgroundColor: calcBackgroundColor(section.url)
+          }"
+          class="block py-1 transition-colors duration-300 text-decoration-none !no-underline"
+          @mouseenter="handleMouseEnter($event)"
+          @mouseleave="handleMouseLeave($event)"
+        >
+          {{ section.name }}
+        </NuxtLink>
+        <button
+          v-else
+          :to="section.url"
+          @click="handleClick($event)"
+          :style="{
+            position: 'relative',
+            borderRadius: calcBorderRadius(section.name),
+            paddingLeft: depth + 'em',
+            paddingRight: '1em',
+            color: `${COLORS[props.fullProject.primary_color]}`,
+            backgroundColor: calcBackgroundColor(section.url)
+          }"
+          class="py-1 transition-colors duration-300 w-full text-left overflow-visible cursor-pointer"
+          @mouseenter="handleMouseEnter($event)"
+          @mouseleave="handleMouseLeave($event)"
+
+        >
+          <div
+            v-if="isInCurrentSection(section.name) || isInOldSection(section.name)"
+            data-flip-id="active-section"
+              :class="[
+              'toc-active-section',
+              isInCurrentSection(section.name) ? 'current' : '',
+              isInOldSection(section.name) ? 'old' : '',
+              'absolute left-0 right-0 top-0 bottom-0 rounded-full z-1'
+              ]"
+            :style="{
+              backgroundColor: COLORS['surface-300']
+            }"
+          />
+          <p class="relative z-2">{{ section.name }}</p>
+        </button>
+        <TableOfContents
+          :full-project="props.fullProject"
+          :sections="section.sections || []"
+          :show-title="false"
+          :depth="depth + 1"
+        />
+      </div>
+    </div>
     <div
+      v-else
       v-for="(section, index) in props.sections"
       :key="section.url"
       >

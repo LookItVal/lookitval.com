@@ -17,6 +17,7 @@
             class="text-sm rounded-4xl p-(--m-em) bg-base-100 pointer-events-auto"
             :primary-color="project.primary_color"
             :secondary-color="project.secondary_color"
+            style="max-height: calc(100vh - 4em);"
           />
         </AnimationsScrollLag>
       </div>

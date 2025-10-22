@@ -3,8 +3,6 @@
 </template>
 
 <script lang="js" setup>
-import { useConstants } from '@/composables/constants';
-
 const { COLORS } = useConstants();
 
 const props = defineProps({

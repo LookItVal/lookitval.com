@@ -12,12 +12,13 @@ Bird species classification based on audio recordings has significant implicatio
 The primary objectives of this project are:
 
 ### 1. Data Cleaning and Integration:
-
+### <!-- This is ensuring correct formatting of the following sentence. I think. -->
 Analyze problems with the audio files and reduces those problems with techniques for noise reduction, and compare how a data preprocessing step effects the success of different classification models.
 
 ### 2. Feature Engineering:
 
 Extract meaningful features from raw audio signals, including frequency-domain representations, time-frequency representations, and reprocess the signal to make the target sound the loudest part of the signal.
+
 
 ### 3. Model Training and Evaluation:
 

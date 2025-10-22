@@ -23,8 +23,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useConstants } from '@/composables/constants';
-
 const { COLORS } = useConstants();
 const allowedColors = Object.keys(COLORS) as (keyof typeof COLORS)[];
 

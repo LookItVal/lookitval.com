@@ -29,5 +29,8 @@
     "vanta": "^0.5.24",
     "vue": "^3.5.17",
     "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@iconify-json/material-symbols": "^1.2.42"
   }
 }

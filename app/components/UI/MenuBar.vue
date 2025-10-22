@@ -37,12 +37,12 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
-import { useConstants } from '@/composables/constants';
 import type Logo from '@/components/UI/Logo.vue';
 import type Socials from '@/components/Socials/Socials.vue';
 import type ShimmeringButton from '@/components/UI/ShimmeringButton.vue';
 
 const { COLORS: _COLORS } = useConstants();
+const { initContext } = useGsapAnimations(); // Add this line
 
 const props = withDefaults(defineProps<{
   type?: 'micro' | 'simple' | 'full',
@@ -280,23 +280,29 @@ onMounted(() => {
     buttonWidth.value = featuredButton.value?.$el.querySelectorAll('.shimmering-button')[0]?.clientWidth || 0;
 
     if (props.animateOnMount) {
-      const ctx = gsap.context(() => {
+      const ctx = initContext(); // Use global context
+      ctx.add(() => {
         toPosition('start');
-        const timeline = gsap.timeline({ onComplete: () => { ctx.revert(); } });
+        const timeline = gsap.timeline();
         timeline.add(animateEntrance());
+        return timeline;
       });
     } else {
       toPosition(props.startPosition!);
     }
+    
     if (props.pin) {
-      gsap.to(menuContainer.value, {
-        scrollTrigger: {
-          trigger: menuContainer.value,
-          start: 'top top',
-          end: () => document.body.scrollHeight,
-          pin: true,
-          pinType: 'transform'
-        }
+      const ctx = initContext(); // Use global context for ScrollTrigger too
+      ctx.add(() => {
+        return gsap.to(menuContainer.value, {
+          scrollTrigger: {
+            trigger: menuContainer.value,
+            start: 'top top',
+            end: () => document.body.scrollHeight,
+            pin: true,
+            pinType: 'transform'
+          }
+        });
       });
     }
   });

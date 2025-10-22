@@ -134,7 +134,6 @@
 
 <script lang="ts" setup>
 import { gsap } from 'gsap';
-import { useConstants } from '@/composables/constants';
 
 const { COLORS: _COLORS } = useConstants();
 

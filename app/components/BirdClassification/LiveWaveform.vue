@@ -16,8 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useConstants } from '@/composables/constants';
-import { useAudio } from '@/composables/audio';
 const { COLORS } = useConstants();
 const { isRecording, analyserNode } = useAudio();
 

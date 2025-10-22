@@ -1,5 +1,3 @@
-import { useClassifier } from './birdClassifier';
-import { ref } from 'vue';
 const { classifySignal } = useClassifier();
 
 const audioContext = ref<AudioContext | null>(null);
@@ -16,7 +14,7 @@ const sampleCount = ref<number>(0);
 let processingInterval: number | null = null;
 const isProcessing = ref(false); // Flag to prevent overlapping processing
 
-export function useAudio() {
+export default function () {
   const processAudioChunk = () => {
     // Skip if already processing or no data
     if (isProcessing.value || !audioBuffer.value || sampleCount.value === 0) return;

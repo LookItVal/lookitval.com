@@ -77,7 +77,6 @@
 
 
 <script lang="ts" setup>
-import { useConstants } from '@/composables/constants';
 const { COLORS: _COLORS } = useConstants();
 
 interface Props {

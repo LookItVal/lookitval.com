@@ -61,11 +61,11 @@ from pydub.utils import mediainfo
 OutOfMemoryError = cp.cuda.memory.OutOfMemoryError
 ```
 
-#### a) Overview of Libraries and their purposes :u-i-footnote{note='Except its really only an overview of the libraries I used that are not part of the standard library or Anaconda.' icon='1'}
+#### a) Overview of Libraries and their purposes :u-i-footnote{note='Except its really only an overview of the libraries I used that are not part of the standard library or Anaconda.' icon='2'}
 
 ##### (i) `pydub`
 
-`pydub` is a library used for simple processing of audio files. It provides a simple means for decoding mp3 files in python, and manipulating the audio data in a relatively basic way. `pydub` provides the ability to split up audio files as if they were python lists where the index of the list is the number of milliseconds from the beginning of the file. With the addition of another library called `simpleaudio`, audio can be played directly with python, but for this project all audio files will exported and displayed with html in markdown cells.:u-i-footnote{note='The exported audio files did not come through in the final paper, and here they will be rendered with full html audio players, because, of course, this is a website.' icon='2'} Below are basic examples of what working with audio in `pydub` looks like:
+`pydub` is a library used for simple processing of audio files. It provides a simple means for decoding mp3 files in python, and manipulating the audio data in a relatively basic way. `pydub` provides the ability to split up audio files as if they were python lists where the index of the list is the number of milliseconds from the beginning of the file. With the addition of another library called `simpleaudio`, audio can be played directly with python, but for this project all audio files will exported and displayed with html in markdown cells. :u-i-footnote{note='The exported audio files did not come through in the final paper, and here they will be rendered with full html audio players, because, of course, this is a website.' icon='3'} Below are basic examples of what working with audio in `pydub` looks like:
 
 
 ```python
@@ -80,8 +80,11 @@ signal = sound.get_array_of_samples()
 
 # returns a list of mono sounds for each channel in the audio file
 sounds = sound.split_to_mono()
-Metadata of audio files is also accessed with pydub either through the pydub.AudioSegment object or through the pydub.utils.mediainfo function.
+```
 
+Metadata of audio files is also accessed with `pydub` either through the `pydub.AudioSegment` object or through the `pydub.utils.mediainfo` function.
+
+```python
 # the length of the audio file in miliseconds
 len(sound)
 
@@ -100,7 +103,7 @@ mediainfo(filename)['sample_fmt']
 
 ##### (ii) `ffmpeg`
 
-`ffmpeg` is a powerful tool for handling a wide variety of media formats, including audio and video. Within this environment, `ffmpeg` serves as the backend for `pydub` to decode `.mp3` files. By default, when an `.mp3` file is loaded using `pydub`, `ffmpeg` is called automatically to handle the decoding. This integration ensures that the project can work seamlessly with compressed audio formats like `.mp3`. :u-i-footnote{note='This really doesn't accent exactly how ubiquitous `ffmpeg` is in the media processing world, and that `ffmpeg` is not a python library, but a tool. `ffmpeg` is a tool that powers the whole media world. See relevant XKCD about `ffmpeg` [here](https://xkcd.com/2347/).' icon='3'}
+`ffmpeg` is a powerful tool for handling a wide variety of media formats, including audio and video. Within this environment, `ffmpeg` serves as the backend for `pydub` to decode `.mp3` files. By default, when an `.mp3` file is loaded using `pydub`, `ffmpeg` is called automatically to handle the decoding. This integration ensures that the project can work seamlessly with compressed audio formats like `.mp3`. :u-i-footnote{note="This really doesn't accent exactly how ubiquitous ffmpeg is in the media processing world, and that ffmpeg is not a python library, but a tool. ffmpeg is a tool that powers the whole media world. [See relevant XKCD](https://xkcd.com/2347/)." icon='4'}
 
 ```python
 # decodes codec with ffmpeg and returns the AudioSegment object as normal
@@ -123,7 +126,7 @@ gpu_array = cp.random.rand(1000000)
 mean_value = cp.mean(gpu_array)
 ```
 
-Arrays in `cupy` match the syntax of `numpy.ndarray` objects :u-i-footnote{note='You can convert between `numpy` and `cupy` arrays with `cp.asarray()` and `cp.asnumpy()`, and kind of think of the type as information about where the data is stored, with `numpy.ndarray` being stored in system RAM and `cupy.ndarray` being stored in GPU VRAM.' icon='4'} and `scipy` methods can be called via the `cupyx.scipy` library.
+Arrays in `cupy` match the syntax of `numpy.ndarray` objects :u-i-footnote{note='You can convert between `numpy` and `cupy` arrays with `cp.asarray()` and `cp.asnumpy()`, and kind of think of the type as information about where the data is stored, with `numpy.ndarray` being stored in system RAM and `cupy.ndarray` being stored in GPU VRAM.' icon='5'} and `scipy` methods can be called via the `cupyx.scipy` library.
 
 ###### CUDA-Specific Features
 
@@ -163,9 +166,9 @@ def clear_gpu_memory() -> None:
     cp.fft.config.clear_plan_cache() # Clear the FFT plan cache
 ```
 
-Manually allocating memory like this helps ensure explicit memory errors occur and stop the program, speeding up debugging time. `cupy` will run without manual allocation of VRAM, it is just more likely to have problems related to memory overflow without explicitly explaining the cause of the program error, and memory management is not managed well by the native python garbage collector in `cupy` so the use of the `clear_gpu_memory` function will become more necessary for some complex functions. :u-i-footnote{note='The function does more than it likely needs to every time but its pretty through in making sure the GPU memory is cleared, and that became a big issue when working on this project.' icon='5'}
+Manually allocating memory like this helps ensure explicit memory errors occur and stop the program, speeding up debugging time. `cupy` will run without manual allocation of VRAM, it is just more likely to have problems related to memory overflow without explicitly explaining the cause of the program error, and memory management is not managed well by the native python garbage collector in `cupy` so the use of the `clear_gpu_memory` function will become more necessary for some complex functions. :u-i-footnote{note='The function does more than it likely needs to every time but its pretty through in making sure the GPU memory is cleared, and that became a big issue when working on this project.' icon='6'}
 
-- **FFT Plans with `cupy.cuda.cufft`:** `cupy` provides access to CUDA's FFT library (cuFFT), which allows for pre-planning and optimizing FFT operations. Each FFT plan is formed based on the shape of the input array. To improve performance an prevent recalculating FFT plans, the resulting FFT plan is automatically cached in the default memory pool. To perform an FFT without caching the FFT plan, you can manually create a plan and pass the plan into the FFT, or you can clear the cache of the FFT plan whenever you like with a simple syntax. :u-i-footnote{note='This is mostly important knowledge in that it always makes the FFT plan by default, so if you are doing a lot of FFTs on different sized arrays, you can fill up your GPU memory with FFT plans that are not needed anymore.' icon='6'}
+- **FFT Plans with `cupy.cuda.cufft`:** `cupy` provides access to CUDA's FFT library (cuFFT), which allows for pre-planning and optimizing FFT operations. Each FFT plan is formed based on the shape of the input array. To improve performance an prevent recalculating FFT plans, the resulting FFT plan is automatically cached in the default memory pool. To perform an FFT without caching the FFT plan, you can manually create a plan and pass the plan into the FFT, or you can clear the cache of the FFT plan whenever you like with a simple syntax. :u-i-footnote{note='This is mostly important knowledge in that it always makes the FFT plan by default, so if you are doing a lot of FFTs on different sized arrays, you can fill up your GPU memory with FFT plans that are not needed anymore.' icon='7'}
 
 ```python
 with cufft.get_fft_plan(signal, value_type='R2C'):  # Create FFT plan and pass into FFT function

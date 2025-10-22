@@ -1,5 +1,9 @@
 title: "Classification of Birds based on audio of their call"
 slug: "bird-classification"
+primary_color: "mauve-100"
+primary_color_highlight: "mauve-500"
+secondary_color: "lavender-100"
+secondary_color_highlight: "lavender-500"
 sections:
 
   - name: "§ N: Preface"
@@ -10,20 +14,20 @@ sections:
     sections:
 
       - name: "A. Overview of Project Goals"
-        url: "/case-studies/bird-classification/1-introduction#A-overview-of-project-goals"
+        url: "/case-studies/bird-classification/1-introduction#a-overview-of-project-goals"
         sections:
 
           - name: "1. Data Cleaning and Integration"
-            url: "/case-studies/bird-classification/1-introduction#1-data-cleaning-and-integration"
+            url: "/case-studies/bird-classification/1-introduction#_1-data-cleaning-and-integration"
 
           - name: "2. Feature Engineering"
-            url: "/case-studies/bird-classification/1-introduction#2-feature-engineering"
+            url: "/case-studies/bird-classification/1-introduction#_2-feature-engineering"
 
           - name: "3. Model Training and Evaluation"
-            url: "/case-studies/bird-classification/1-introduction#3-model-training-and-evaluation"
+            url: "/case-studies/bird-classification/1-introduction#_3-model-training-and-evaluation"
 
           - name: "4. Practical Application"
-            url: "/case-studies/bird-classification/1-introduction#4-practical-application"
+            url: "/case-studies/bird-classification/1-introduction#_4-practical-application"
 
 
   - name: "§ II: Data Preparation and Exploration"
@@ -31,18 +35,18 @@ sections:
     sections:
 
       - name: "A. Initial Setup"
-        url: "/case-studies/bird-classification/2-1-1-initial-setup"
+        url: "/case-studies/bird-classification/2-1-1-initial-setup#a-initial-setup"
         sections:
 
           - name: "1. Building the Virtual Environment"
-            url: "/case-studies/bird-classification/2-1-1-initial-setup#1-building-the-virtual-environment"
+            url: "/case-studies/bird-classification/2-1-1-initial-setup#_1-building-the-virtual-environment"
           
-          - name: "2. Importing the Libraries"
-            url: "/case-studies/bird-classification/2-1-1-initial-setup#2-importing-the-libraries"
+          - name: "2. Importing Libraries"
+            url: "/case-studies/bird-classification/2-1-1-initial-setup#_2-importing-libraries"
             sections:
               
               - name: "a) Overview of Libraries and their purposes"
-                url: "/case-studies/bird-classification/2-1-1-initial-setup#a-overview-of-libraries"
+                url: "/case-studies/bird-classification/2-1-1-initial-setup#a-overview-of-libraries-and-their-purposes"
                 sections:
 
                   - name: "(i) pydub"

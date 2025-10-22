@@ -3,7 +3,7 @@ const highFramerate = ref(true);
 const highPerformance = computed(() => webGLSupported.value && highFramerate.value);
 const isPerformanceCalculated = ref(false);
 
-export function usePerformance() {
+export default function () {
   const calculatePerformance = (measurementDuration: number = 2000, measurementDelay: number = 500) => {
     if (typeof window === 'undefined') return Promise.resolve();
     return new Promise<void>((resolve) => {

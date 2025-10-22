@@ -5,9 +5,7 @@ description: ''
 
 # § II: Data Preparation and Exploration
 ## A. Initial Setup
-### 3. Establishing Utility Functions[^1]
-
-[^1]: All of the functions in this section were not set up like a page of documentation like you might hope, but were all the actual source code in the original notebook. All of these functions are documented using PEP 257 docstrings so you can use that as the documentation.
+### 3. Establishing Utility Functions :u-i-footnote{note='All of the functions in this section were not set up like a page of documentation like you might hope, but were all the actual source code in the original notebook. All of these functions are documented using PEP 257 docstrings so you can use that as the documentation." icon='1'}
 
 #### a) Simple Aliases
 
@@ -31,9 +29,7 @@ def load_sound_file(file: str) -> Optional[AudioSegment]:
         return None
 ```
 
-Believe it or not, sometimes the filename ends in `.mp3` but the actual internal format is used is that of a `.wav` file. In those cases `mediainfo(file)['format_name']` will return the actual internal format.[^2]
-
-[^2]: I need you to just re-read that last sentence. You can not believe how confusing that was
+Believe it or not, sometimes the filename ends in `.mp3` but the actual internal format is used is that of a `.wav` file. In those cases `mediainfo(file)['format_name']` will return the actual internal format. :u-i-footnote{note='I need you to just re-read that last sentence. You can not believe how confusing that was' icon='2'}
 
 ```python
 def print_boundry(message: str="") -> None:

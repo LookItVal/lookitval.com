@@ -80,6 +80,35 @@ sections:
                   
                   - name: "(ii) Insane ideas that worked better than expected"
                     url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#ii-insane-ideas-that-worked-better-than-expected"
+              
+              - name: "e) Signal Generation"
+                url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#e-signal-generation"
+                sections:
 
+                  - name: "(i) Sine Wave"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#i-sine-wave"
+                  
+                  - name: "(ii) Triangle Wave"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#ii-triangle-wave"
+                  
+                  - name: "(iii) Sawtooth Wave"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#iii-sawtooth-wave"
+                  
+                  - name: "(iv) Square Wave"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#iv-square-wave"
+                  
+                  - name: "(v) White Noise"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#v-white-noise"
+                  
+                  - name: "(vi) Pink Noise"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#vi-pink-noise"
+              
+              - name: "f) Data Analysis"
+                url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#f-data-analysis"
+                sections:
 
-    
+                  - name: "(i) Print Aliases"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#i-print-aliases"
+                  
+                  - name: "(ii) Plots"
+                    url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#ii-plots"

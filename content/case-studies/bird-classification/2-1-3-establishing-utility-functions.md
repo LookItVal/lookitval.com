@@ -581,7 +581,7 @@ def generate_sine_wave(frequency: int, duration: number, sample_rate: int=44100,
 generate_sine_wave(440, 10).export('exports/440hz.wav', format='wav')
 ```
 
-:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/440hz.wav', title='Sine Wave'}
+:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/440hz.wav' title='Sine Wave'}
 
 ##### (ii) Triangle Wave
 
@@ -612,7 +612,7 @@ def generate_triangle_wave(frequency: int, duration: number, sample_rate: int=44
 generate_triangle_wave(440, 10).export('exports/440hz_triangle.wav', format='wav')
 ```
 
-:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/440hz_triangle.wav', title='Triangle Wave'}
+:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/440hz_triangle.wav' title='Triangle Wave'}
 
 ##### (iii) Sawtooth Wave
 
@@ -642,7 +642,7 @@ def generate_sawtooth_wave(frequency: int, duration: number, sample_rate: int=44
 generate_sawtooth_wave(440, 10).export('exports/440hz_sawtooth.wav', format='wav')
 ```
 
-:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/440hz_sawtooth.wav', title='Sawtooth Wave'}
+:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/440hz_sawtooth.wav' title='Sawtooth Wave'}
 
 ##### (iv) Square Wave
 
@@ -672,7 +672,7 @@ def generate_square_wave(frequency: int, duration: number, sample_rate: int=4410
 generate_square_wave(440, 10).export('exports/440hz_square.wav', format='wav')
 ```
 
-:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/440hz_square.wav', title='Square Wave'}
+:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/440hz_square.wav' title='Square Wave'}
 
 ##### (v) White Noise
 
@@ -703,7 +703,7 @@ def generate_white_noise(duration: number, sample_rate: int=44100, magnitude: fl
 generate_white_noise(10).export('exports/white_noise.wav', format='wav')
 ```
 
-:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/white_noise.wav', title='White Noise'}
+:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/white_noise.wav' title='White Noise'}
 
 ##### (vi) Pink Noise
 
@@ -734,7 +734,7 @@ def generate_pink_noise(duration: number, sample_rate: int=44100, magnitude: flo
 generate_pink_noise(10).export('exports/pink_noise.wav', format='wav')
 ```
 
-:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/pink_noise.wav', title='Pink Noise'}
+:u-i-audio-player{src='https://github.com/LookItVal/Bird-Classification-Final-Project/raw/refs/heads/master/exports/pink_noise.wav' title='Pink Noise'}
 
 #### f) Data Analysis
 

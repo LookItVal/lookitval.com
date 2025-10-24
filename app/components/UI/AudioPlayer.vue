@@ -1,25 +1,25 @@
 <template>
   <div
-    class="w-full flex flex-row items-center text-base gap-2 my-(--s-em)"
+    class="w-full flex flex-row items-center text-base gap-2 my-(--m-em) bg-base-100 rounded-full"
   >
     <div
-      class="relative aspect-square p-(--m-em) transition-colors duration-600 rounded-full pointer-cursor"
+      class="relative aspect-square p-(--m-em) transition-colors duration-600 rounded-full cursor-pointer text-subtext-300 hover:text-text-100"
       :style="{
-        backgroundColor: playing ? COLORS['surface-100'] : COLORS['surface-300']
+        backgroundColor: playing ? COLORS['surface-200'] : COLORS['surface-300']
       }"
       @click="togglePlay"
     >
       <Icon
         :name="playing ? 'material-symbols:pause-rounded' : 'material-symbols:play-arrow-rounded'"
-        :class="[ 'absolute text-4xl -translate-x-1/2 -translate-y-1/2 transition-colors duration-300', playing ? 'text-subtext-300 hover:text-text-100' : 'text-subtext-300 hover:text-text-100' ]"
+        class="absolute text-4xl -translate-x-1/2 -translate-y-1/2 transition-colors duration-300"
       />
     </div>
     <div class="flex-1 flex flex-col">
       <div
-        class="h-(--m-em) flex flex-row justify-between"
+        class="h-[1.25em] flex flex-row justify-between"
       >
         <p
-          class="text-subtext-300 font-bold"
+          class="text-sm text-subtext-300 font-bold"
         >
           {{ props.title }}
         </p>
@@ -30,10 +30,10 @@
         </p>
       </div>
       <div
-        class="h-(--m-em) flex items-center"
+        class="h-(--s-em) flex items-center"
       >
         <div
-          class="h-2 relative w-full bg-surface-200 rounded-full"
+          class="h-2 relative w-full bg-crust-100 rounded-full"
         >
           <div
             class="h-2 absolute left-0 top-0"
@@ -60,9 +60,9 @@
       class="relative aspect-square p-(--m-em) text-subtext-300 hover:text-text-100 transition-colors duration-500"
     >
       <div
-        class="absolute left-0 right-0 bottom-0 aspect-square rounded-full z-5 transition-colors duration-500"
+        class="absolute left-0 right-0 bottom-0 aspect-square rounded-full z-5 transition-colors duration-500 cursor-pointer"
         :style="{ 
-          backgroundColor: volumeControlOpen ? COLORS['surface-100'] : COLORS['surface-300']
+          backgroundColor: volumeControlOpen ? COLORS['surface-200'] : COLORS['surface-300']
         }"
         @click="toggleVolumeControl"
       />
@@ -70,20 +70,22 @@
         ref="volumeControlSurface"
         class="absolute left-0 top-0 right-0 bottom-0 flex flex-col items-center bg-surface-300 rounded-full"        
       >
-        <div class="relative h-full bg-base-100 w-2 rounded-full mt-(--s-em) mb-[4em]">
+        <div ref="volumeControlTrack" class="relative h-full bg-base-100 w-2 rounded-full mt-(--s-em) mb-[4em]">
           <div 
             class="absolute left-0 bottom-0 right-0"
             :style="{
               height: `${volume * 100}%`,
               borderRadius: '0 0 10em 10em',
-              background: `linear-gradient(180deg, ${COLORS[props.color2!]} 0%, ${COLORS[props.color1!]} 100%)`
+              background: `linear-gradient(180deg, ${COLORS[props.color2!]} 0%, ${COLORS[props.color1!]} 100%)`,
+              visibility: 'hidden'
             }"
           />
           <div 
             ref="volumeControlSliderHead"
-            class="absolute h-2 aspect-square scale-150 rounded-full"
+            class="absolute h-2 bottom-0 aspect-square scale-150 rounded-full"
             :style="{
-              backgroundColor: COLORS[props.color1!]
+              backgroundColor: COLORS[props.color1!],
+              visibility: 'hidden'
             }"
             @mouseenter="volumeControlHoverEnter"
             @mouseleave="volumeControlHoverLeave"
@@ -120,6 +122,7 @@ const playhead = ref<HTMLElement | null>(null);
 const audio = ref<HTMLAudioElement | null>(null);
 const volumeControlSurface = ref<HTMLElement | null>(null);
 const volumeControlSliderHead = ref<HTMLElement | null>(null);
+const volumeControlTrack = ref<HTMLElement | null>(null);
 
 const playing = ref(false);
 const volumeControlOpen = ref(false);
@@ -147,16 +150,33 @@ function openVolumeControl() {
   const timeline = gsap.timeline();
   timeline.to(volumeControlSurface.value, {
     top: '-7.5em',
-    duration: 0.3,
+    duration: 0.4,
     ease: "back.out"
   });
+  timeline.set(volumeControlSliderHead.value, {
+    visibility: 'visible',
+    scale: 0
+  }, "<+0.2");
+  timeline.to(volumeControlSliderHead.value, {
+    scale: 1.5,
+    duration: 0.4,
+    ease: "back.out(4)"
+  }, "<");
+  const volumeControlHeight = volumeControlTrack.value!.getBoundingClientRect().height;
+  console.log('volumeControlHeight:', volumeControlHeight);
+  console.log('volume:', volume.value);
+  timeline.to(volumeControlSliderHead.value, {
+    y: volumeControlHeight - (volumeControlHeight * volume.value),
+    duration: 0.4,
+    ease: "power2.out"
+  }, "<");
 }
 
 function closeVolumeControl() {
   const timeline = gsap.timeline();
   timeline.to(volumeControlSurface.value, {
     top: '0em',
-    duration: 0.3,
+    duration: 0.4,
     ease: "power2.in"
   });
 }

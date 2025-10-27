@@ -33,7 +33,11 @@
         class="h-(--s-em) flex items-center"
       >
         <div
-          class="h-2 relative w-full bg-crust-100 rounded-full"
+          ref="progressTrack"
+          class="h-2 relative w-full bg-crust-100 rounded-full cursor-pointer"
+          @mouseenter="handlePlayheadHoverEnter"
+          @mouseleave="handlePlayheadHoverLeave"
+          @mousedown="handlePlayheadGrab"
         >
           <div
             class="h-2 absolute left-0 top-0"
@@ -45,13 +49,11 @@
           />
           <div
             ref="playhead"
-            class="h-2 aspect-square absolute scale-150 rounded-full"
+            class="h-2 aspect-square absolute scale-150 rounded-full -translate-x-1/2"
             :style="{
-              left: `${playheadPosition * 100}%`,
+              left: `${progress * 100}%`,
               backgroundColor: COLORS[props.color1!]
             }"
-            @mouseenter="playheadHoverEnter"
-            @mouseleave="playheadHoverLeave"
           />
         </div>
       </div>
@@ -70,25 +72,30 @@
         ref="volumeControlSurface"
         class="absolute left-0 top-0 right-0 bottom-0 flex flex-col items-center bg-surface-300 rounded-full"        
       >
-        <div ref="volumeControlTrack" class="relative h-full bg-base-100 w-2 rounded-full mt-(--s-em) mb-[4em]">
+        <div
+          ref="volumeControlTrack"
+          class="relative h-full bg-base-100 w-2 rounded-full mt-[1.25em] mb-[4em] cursor-pointer"
+          @mouseenter="handleVolumeControlHoverEnter"
+          @mouseleave="handleVolumeControlHoverLeave"
+          @mousedown="handleVolumeGrab"
+        >
           <div 
+            ref="volumeControlFill"
             class="absolute left-0 bottom-0 right-0"
             :style="{
               height: `${volume * 100}%`,
               borderRadius: '0 0 10em 10em',
               background: `linear-gradient(180deg, ${COLORS[props.color2!]} 0%, ${COLORS[props.color1!]} 100%)`,
-              visibility: 'hidden'
+              visibility: volumeControlOpen ? 'visible' : 'hidden'
             }"
           />
           <div 
             ref="volumeControlSliderHead"
-            class="absolute h-2 bottom-0 aspect-square scale-150 rounded-full"
+            class="absolute h-2 -bottom-1 aspect-square scale-150 rounded-full"
             :style="{
               backgroundColor: COLORS[props.color1!],
-              visibility: 'hidden'
+              visibility: volumeControlOpen ? 'visible' : 'hidden'
             }"
-            @mouseenter="volumeControlHoverEnter"
-            @mouseleave="volumeControlHoverLeave"
           />
         </div>
       </div>
@@ -102,7 +109,6 @@
 </template>
 
 <script lang='ts' setup>
-import { Draggable } from 'gsap/Draggable';
 import { gsap } from 'gsap';
 
 const { COLORS } = useConstants();
@@ -119,16 +125,17 @@ const props = withDefaults(defineProps<{
 })
 
 const playhead = ref<HTMLElement | null>(null);
+const progressTrack = ref<HTMLElement | null>(null);
 const audio = ref<HTMLAudioElement | null>(null);
 const volumeControlSurface = ref<HTMLElement | null>(null);
 const volumeControlSliderHead = ref<HTMLElement | null>(null);
 const volumeControlTrack = ref<HTMLElement | null>(null);
+const volumeControlFill = ref<HTMLElement | null>(null);
 
 const playing = ref(false);
 const volumeControlOpen = ref(false);
 const volume = ref(1.0);
 const progress = ref(0);
-const playheadPosition = ref(0);
 const isDraggingPlayhead = ref(false);
 const isDraggingVolume = ref(false);
 const currentTime = ref(0);
@@ -146,38 +153,85 @@ const timeDisplay = computed(() => {
   return `${formatTime(currentTime.value)} / ${formatTime(duration.value)}`;
 });
 
-function openVolumeControl() {
-  const timeline = gsap.timeline();
-  timeline.to(volumeControlSurface.value, {
-    top: '-7.5em',
-    duration: 0.4,
-    ease: "back.out"
+async function openVolumeControl() {
+  const ctx = initContext();
+  gsap.set(volumeControlSurface.value, {
+    top: '-7.5em'
   });
-  timeline.set(volumeControlSliderHead.value, {
-    visibility: 'visible',
-    scale: 0
-  }, "<+0.2");
-  timeline.to(volumeControlSliderHead.value, {
-    scale: 1.5,
-    duration: 0.4,
-    ease: "back.out(4)"
-  }, "<");
-  const volumeControlHeight = volumeControlTrack.value!.getBoundingClientRect().height;
-  console.log('volumeControlHeight:', volumeControlHeight);
-  console.log('volume:', volume.value);
-  timeline.to(volumeControlSliderHead.value, {
-    y: volumeControlHeight - (volumeControlHeight * volume.value),
-    duration: 0.4,
-    ease: "power2.out"
-  }, "<");
+  gsap.set(volumeControlSliderHead.value, {
+    visibility: 'hidden',
+    scale: 0,
+    y: 0
+  });
+  await nextTick();
+  const volumeControlHeight = volumeControlTrack.value!.getBoundingClientRect().height - (volumeControlSliderHead.value!.getBoundingClientRect().height / 2);
+  gsap.set(volumeControlSurface.value, {
+    top: '0em'
+  });
+  await nextTick();
+  ctx.add(() => {
+    const timeline = gsap.timeline();
+    timeline.set(volumeControlFill.value, {
+      height: '0%'
+    });
+    timeline.to(volumeControlSurface.value, {
+      top: '-7.5em',
+      duration: 0.4,
+      ease: "back.out"
+    });
+    timeline.set(volumeControlSliderHead.value, {
+      visibility: 'visible',
+      scale: 0
+    }, "<+0.2");
+    timeline.to(volumeControlSliderHead.value, {
+      scale: 1.5,
+      duration: 0.4,
+      ease: "back.out(4)"
+    }, "<");
+    timeline.to(volumeControlSliderHead.value, {
+      y: -1 * (volumeControlHeight * volume.value),
+      duration: 0.4,
+      ease: "power2.out"
+    });
+    timeline.to(volumeControlFill.value, {
+      height: `${volume.value * 100}%`,
+      duration: 0.4,
+      ease: "power2.out"
+    }, "<");
+  });
 }
 
 function closeVolumeControl() {
-  const timeline = gsap.timeline();
-  timeline.to(volumeControlSurface.value, {
-    top: '0em',
-    duration: 0.4,
-    ease: "power2.in"
+  const ctx = initContext();
+  ctx.add(() => {
+    const timeline = gsap.timeline();
+    timeline.set(volumeControlSliderHead.value, {
+      visibility: 'visible',
+      scale: 1.5
+    });
+    timeline.set(volumeControlFill.value, {
+      visibility: 'visible'
+    });
+    timeline.to(volumeControlSliderHead.value, {
+      y: 0,
+      duration: 0.3,
+      ease: "power2.in"
+    });
+    timeline.to(volumeControlFill.value, {
+      height: '0%',
+      duration: 0.3,
+      ease: "power2.in"
+    }, "<");
+    timeline.to(volumeControlSliderHead.value, {
+      scale: 0,
+      duration: 0.3,
+      ease: "back.in(4)"
+    });
+    timeline.to(volumeControlSurface.value, {
+      top: '0em',
+      duration: 0.3,
+      ease: "power2.in"
+    }, "<+0.2");
   });
 }
 
@@ -200,20 +254,32 @@ function toggleVolumeControl() {
   volumeControlOpen.value = !volumeControlOpen.value;
 }
 
-// Watch for volume changes and apply to audio element
 watch(volume, (newVolume) => {
+  // Update audio element volume using a logarithmic scale for better audio perception
+  // Follows the following formula
+  // f(x) = (10^(x-1)) * (1/0.9)-(1/9)
+
   if (audio.value) {
+    newVolume = (Math.pow(10, newVolume - 1)) * (1 / 0.9) - (1 / 9);
     audio.value.volume = newVolume;
   }
 });
 
-// Debug duration changes
-watch(duration, (newDuration) => {
-  console.log('Duration changed:', newDuration);
-});
+function playheadMouseWatcher(event: MouseEvent) {
+  if (!isDraggingPlayhead.value) return;
+  if (!progressTrack.value || !audio.value) return;
+  const rect = progressTrack.value.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  let newProgress = mouseX / rect.width;
+  newProgress = Math.min(Math.max(newProgress, 0), 1);
+  progress.value = newProgress;
+  audio.value.currentTime = newProgress * duration.value;
+}
 
-function handlePlayheadGrab() {
-  isDraggingPlayhead.value = true;
+function handlePlayheadGrab(event: MouseEvent) {
+  isDraggingPlayhead.value = true;  
+  playheadMouseWatcher(event);
+
   const ctx = initContext();
   ctx.add(() => {
     gsap.to(playhead.value, {
@@ -222,42 +288,39 @@ function handlePlayheadGrab() {
       ease: "back.out(4)"
     });
   });
+
+  document.addEventListener('mousemove', playheadMouseWatcher);
+  document.addEventListener('mouseup', handlePlayheadRelease);
 }
 
 function handlePlayheadRelease() {
   isDraggingPlayhead.value = false;
-  
-  // Seek audio to new position
-  if (audio.value && audio.value.duration) {
-    audio.value.currentTime = progress.value * audio.value.duration;
-  }
-  
-  playheadPosition.value = progress.value;
   const ctx = initContext();
   ctx.add(() => {
-    // Clear the draggable transform and return to CSS positioning
-    gsap.set(playhead.value, { x: 0 });
     gsap.to(playhead.value, {
       scale: 1.5,
       duration: 0.3,
       ease: "back.out(4)"
     });
   });
+
+  document.removeEventListener('mousemove', playheadMouseWatcher);
+  document.removeEventListener('mouseup', handlePlayheadRelease);
 }
   
-function playheadHoverEnter() {
+function handlePlayheadHoverEnter() {
   if (isDraggingPlayhead.value) return;
   const ctx = initContext();
   ctx.add(() => {
     gsap.to(playhead.value, {
-      scale: 2.0,
+      scale: 2,
       duration: 0.3,
       ease: "back.out(4)"
     });
   });
 }
 
-function playheadHoverLeave() {
+function handlePlayheadHoverLeave() {
   if (isDraggingPlayhead.value) return;
   const ctx = initContext();
   ctx.add(() => {
@@ -269,8 +332,32 @@ function playheadHoverLeave() {
   });
 }
 
-function handleVolumeGrab() {
-  isDraggingVolume.value = true;
+function volumeMouseWatcher(event: MouseEvent) {
+  if (!isDraggingVolume.value) return;
+  if (!volumeControlTrack.value) return;
+  const rect = volumeControlTrack.value.getBoundingClientRect();
+  const mouseY = event.clientY - rect.top;
+  let newVolume = 1 - (mouseY / rect.height);
+  newVolume = Math.min(Math.max(newVolume, 0), 1);
+  volume.value = newVolume;
+
+  const volumeControlHeight = volumeControlTrack.value!.getBoundingClientRect().height;
+  gsap.to(volumeControlSliderHead.value, {
+    y: -1 * (volumeControlHeight * volume.value),
+    duration: 0.1,
+    ease: "power2.out"
+  });
+  gsap.to(volumeControlFill.value, {
+    height: `${volume.value * 100}%`,
+    duration: 0.1,
+    ease: "power2.out"
+  });
+}
+
+function handleVolumeGrab(event: MouseEvent) {
+  isDraggingVolume.value = true;  
+  volumeMouseWatcher(event);
+
   const ctx = initContext();
   ctx.add(() => {
     gsap.to(volumeControlSliderHead.value, {
@@ -279,37 +366,39 @@ function handleVolumeGrab() {
       ease: "back.out(4)"
     });
   });
+
+  document.addEventListener('mousemove', volumeMouseWatcher);
+  document.addEventListener('mouseup', handleVolumeRelease);
 }
 
 function handleVolumeRelease() {
   isDraggingVolume.value = false;
   const ctx = initContext();
   ctx.add(() => {
-    // Clear the draggable transform and return to CSS positioning
-    gsap.set(volumeControlSliderHead.value, { y: 0 });
     gsap.to(volumeControlSliderHead.value, {
       scale: 1.5,
       duration: 0.3,
       ease: "back.out(4)"
     });
   });
+
+  document.removeEventListener('mousemove', volumeMouseWatcher);
+  document.removeEventListener('mouseup', handleVolumeRelease);
 }
 
-function volumeControlHoverEnter() {
-  console.log('hover enter');
+function handleVolumeControlHoverEnter() {
   if (isDraggingVolume.value) return;
   const ctx = initContext();
   ctx.add(() => {
     gsap.to(volumeControlSliderHead.value, {
-      scale: 2.0,
+      scale: 2,
       duration: 0.3,
       ease: "back.out(4)"
     });
   });
 }
 
-function volumeControlHoverLeave() {
-  console.log('hover leave');
+function handleVolumeControlHoverLeave() {
   if (isDraggingVolume.value) return;
   const ctx = initContext();
   ctx.add(() => {
@@ -323,7 +412,6 @@ function volumeControlHoverLeave() {
 
 onMounted(() => {
   if (audio.value) {
-    // Set up audio event listeners
     audio.value.addEventListener('play', () => {
       playing.value = true;
     });
@@ -335,7 +423,6 @@ onMounted(() => {
     audio.value.addEventListener('ended', () => {
       playing.value = false;
       progress.value = 0;
-      playheadPosition.value = 0;
       currentTime.value = 0;
     });
     
@@ -346,18 +433,15 @@ onMounted(() => {
         // Try to get duration if we don't have it yet
         if (duration.value === 0 && !isNaN(audio.value.duration)) {
           duration.value = audio.value.duration;
-          console.log('timeupdate - got duration:', audio.value.duration);
         }
         
         const currentProgress = audio.value.currentTime / audio.value.duration;
         progress.value = isNaN(currentProgress) ? 0 : currentProgress;
-        playheadPosition.value = progress.value;
       }
     });
     
     audio.value.addEventListener('loadedmetadata', () => {
       if (audio.value) {
-        console.log('loadedmetadata - duration:', audio.value.duration);
         duration.value = audio.value.duration;
         audio.value.volume = volume.value;
       }
@@ -365,34 +449,14 @@ onMounted(() => {
     
     audio.value.addEventListener('durationchange', () => {
       if (audio.value && !isNaN(audio.value.duration)) {
-        console.log('durationchange - duration:', audio.value.duration);
         duration.value = audio.value.duration;
       }
     });
     
     audio.value.addEventListener('canplay', () => {
       if (audio.value && !isNaN(audio.value.duration)) {
-        console.log('canplay - duration:', audio.value.duration);
         duration.value = audio.value.duration;
       }
-    });
-  }
-
-  if (playhead.value) {
-    const ctx = initContext();
-    ctx.add(() => {
-      Draggable.create(playhead.value, {
-        type: "x",
-        bounds: playhead.value!.parentElement!,
-        onPress: handlePlayheadGrab,
-        onRelease: handlePlayheadRelease,
-        onDrag: function() {
-          const position = this.pointerX;
-          const offset = playhead.value!.parentElement!.getBoundingClientRect().left;
-          const progressValue = (position - offset) / playhead.value!.parentElement!.offsetWidth;
-          progress.value = Math.max(0, Math.min(1, progressValue));
-        }
-      });
     });
   }
 });

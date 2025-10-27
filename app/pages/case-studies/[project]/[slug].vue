@@ -55,7 +55,7 @@
     >
       <div ref="pageContent" class="max-w-6xl mx-auto z-1" :style="{paddingBottom: navigationButtonsHeight}">
         <h1 class="text-4xl md:text-6xl">{{ project?.title || 'Project Title' }}</h1>
-        <ContentRenderer v-if="pageData" :value="pageData" />
+        <ContentRenderer v-if="pageData" :value="pageData" class="p-(--s-em)"/>
         <div v-else>
           <h1>
             Oops, Seems like you got the wrong link. There is no project here.

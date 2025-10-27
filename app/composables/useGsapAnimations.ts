@@ -35,11 +35,10 @@ export default function () {
         const text = anchorElement.textContent.replace(childSpan.textContent || '', '') || '';
         p.textContent = text;
         anchorElement.insertBefore(p, anchorElement.firstChild);
-        anchorElement.childNodes.forEach(node => {
-          if (node.nodeType === Node.TEXT_NODE) {
-            node.remove();
-          }
-        });
+        const textNodes = Array.from(anchorElement.childNodes).filter(
+          node => node.nodeType === Node.TEXT_NODE
+        );
+        textNodes.forEach(node => node.remove());
       }
       
       anchorElement = document.querySelector(anchor);

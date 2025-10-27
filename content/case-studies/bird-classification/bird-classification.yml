@@ -112,3 +112,6 @@ sections:
                   
                   - name: "(ii) Plots"
                     url: "/case-studies/bird-classification/2-1-3-establishing-utility-functions#ii-plots"
+
+      - name: "B. Dataset Exploration and Enhancement"
+        url: "/case-studies/bird-classification/2-2-1-dataset-exploration-and-enhancement"

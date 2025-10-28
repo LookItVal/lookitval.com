@@ -184,39 +184,7 @@ I can not do this now but what I would like to do when I am home is
 8. reboot into HD grub
 9. remove any lingering unneeded boot options?
 
-### Begining the process again
 
-1. Burn the drive to the ground. done.
-2. Make a new EFI System Partition. done.
-3. Connect to Ethernet. done.
-4. Install Alma 8.
-  - Do not install a boot loader, but do set the boot location. done
-	- Do set the hostname. done The hostname is manager1.homelab.local
-	- Do set static IP connection. done
-	  - This was simple enough and useful to be done during the instilation process. set the Ethernet connection to Wake on LAN, I set my link negotiation to manual, and forced a 1Gbps connection.
-		- Under IPv4 settings, I set the method to manual, and added an unused static IP address using the CIDR notation (192.168.1.xxx), and the netmask (255.255.255.0, this just tells the computer how to read the IP address), and the gateway (the ip address of the router, usually default is 192.168.1.1).
-		- For DNS servers I used the router IP address as the primary, and the cloudflare DNS server (1.1.1.1) as the secondary.
-		- I set the Search domains to homelab.local, so that I can use short hostnames on the local network.
-		- I manually disabled IPv6, since I do not plan on using it in the homelab.
+## What is `mactel-boot`?
 
----
-
-Here is where I made a notable change that requires talking about. I am going to add a Security Policy. This was the plan anyway but now I'm going to make sure all of this happens during the installation process. The Security policy i am going with is "CIS AlmaLinux OS 8 Benchmark for Level 1 - Server". This is a good baseline security policy that will help harden the system against common attacks. It adds many common security measures, but notable does require changing my partition scheme. It requires a separate /var partition, a separate /tmp partition, and a seperate /var/tmp. Both of those directories are used for temporary files and have global write access, so its good to have them on separate partitions that can be mounted with the `noexec` and `nosuid` flags. Additionally it requires a seperate /var/log partition and /var/log/audit, which is good for keeping logs separate from the root filesystem in the event of a full disk. 
-
-That puts the full partition scheme at:
-- 600mb EFI System Partition, FAT32, ESP flag
-- 1GB /boot, XFS
-- 8GB swap, LVM
-- 64GB /, LVM
-- 8GB /tmp, LVM, noexec,nosuid
-- 16GB /var, LVM
-- 8GB /var/tmp, LVM, noexec,nosuid
-- 16GB /var/log, LVM
-- 4GB /var/log/audit, LVM
-- 8GB /var/log, LVM
-- 16GB /home, LVM
-- Rest of drive (about 314GB) /data, LVM
-
-Then I began the installation. Onto step 5.
-
-5. Reboot in the rescue environment. done.
+mactel-boot appears to be a legacy package of utilities specifically for booting linux on an intel macs from around this era. it included specific customizations for linux distributions to work with Apple's EFI, Because apples efi was buggy and non traditional. Now it seems as tho most modern distros should be able to boot using the standard efi boot process without too much trouble.

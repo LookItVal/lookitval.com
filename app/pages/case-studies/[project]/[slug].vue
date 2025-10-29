@@ -3,11 +3,11 @@
     <!-- Fixed position items go here -->
     <div class="fixed w-screen h-screen grid grid-cols-[auto_1fr] z-9 pointer-events-none">
       <div class="page-initializer fixed top-0 left-0 right-0 bottom-0 bg-base-100 -translate-y-full z-10000" />
-      <div class="gradient-blur-overlay-top" :style="{height: headingHeight}"></div>
+      <div class="gradient-blur-overlay-top" :style="{height: headingHeight}"/>
       <div
         class="gradient-blur-overlay-bottom"
         :style="{ height: (parseFloat(navigationButtonsHeight) / 2) + 'px' }"
-      ></div>
+      />
       <div ref="sidebar" class="h-full p-(--s-em) flex items-center justify-center"> 
         <AnimationsScrollLag :reverse="true">
           <UITableOfContents
@@ -22,7 +22,7 @@
         </AnimationsScrollLag>
       </div>
       <div class="relative flex flex-col-reverse">
-        <div ref="heading" id="heading" class="absolute top-0 w-full flex justify-center items-center">
+        <div id="heading" ref="heading" class="absolute top-0 w-full flex justify-center items-center">
           <UIMenuBar
             ref="menuBar"
             :animate-on-mount="true"

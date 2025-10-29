@@ -5,7 +5,7 @@ description: ''
 
 # § II: Data Preparation and Exploration
 ## B. Dataset Exploration and Enhancement
-### 1. Initial Dataset Assesment
+### 1. Initial Dataset Assessment
 #### a) Downloading and Viewing Primary Dataset
 
 The first data source is from a [kaggle competition](https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/october-2023/download/). This dataset provides preorganized bird audio data, structured as .mp3 files grouped by bird species. Each species is identified by a unique eBird code, a standard maintained by the Cornell Lab of Ornithology.
@@ -66,4 +66,5 @@ Index(['rating', 'playback_used', 'ebird_code', 'channels', 'date', 'pitch',
 | 2 | 4.0    | no            | aldfly     | 2 (stereo) | 2013-05-27 | both          | 39       | XC135455.mp3 | both          | Alder Flycatcher | ... | 135455 | https://www.xeno-canto.org/135455 | United States | Mike Nelson      | Empidonax alnorum_Alder Flycatcher | -82.1106  | 0-3(s)        | 08:30 | Mike Nelson      | Creative Commons Attribution-NonCommercial-Sha... |
 | 3 | 3.5    | no            | aldfly     | 2 (stereo) | 2013-05-27 | both          | 33       | XC135456.mp3 | both          | Alder Flycatcher | ... | 135456 | https://www.xeno-canto.org/135456 | United States | Mike Nelson      | Empidonax alnorum_Alder Flycatcher | -82.1106  | 0-3(s)        | 08:30 | Mike Nelson      | Creative Commons Attribution-NonCommercial-Sha... |
 | 4 | 4.0    | no            | aldfly     | 2 (stereo) | 2013-05-27 | both          | 36       | XC135457.mp3 | both          | Alder Flycatcher | ... | 135457 | https://www.xeno-canto.org/135457 | United States | Mike Nelson      | Empidonax alnorum_Alder Flycatcher | -82.1106  | 0-3(s)        | 08:30 | Mike Nelson      | Creative Commons Attribution-NonCommercial-Sha... |
+
 *5 rows × 35 columns*

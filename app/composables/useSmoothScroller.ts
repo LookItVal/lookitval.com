@@ -7,7 +7,7 @@ const currentVelocity = ref(0);
 export default function () {
   const { initContext } = useGsapAnimations();
   let smoother: ScrollSmoother | null = null;
-  let velocityTween: gsap.core.Tween | null = null;
+  const velocityTween: gsap.core.Tween | null = null;
 
   const initSmoothScroller = (wrapperRef: Ref<HTMLElement | null>, contentRef: Ref<HTMLElement | null>, effects: boolean = false) => {
     onMounted(() => {

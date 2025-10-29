@@ -34,7 +34,6 @@
         <button
           v-else
           :to="section.url"
-          @click="handleClick($event)"
           :style="{
             position: 'relative',
             borderRadius: calcBorderRadius(section.name),
@@ -44,6 +43,7 @@
             backgroundColor: calcBackgroundColor(section.url)
           }"
           class="py-1 transition-colors duration-300 w-full text-left overflow-visible cursor-pointer"
+          @click="handleClick($event)"
           @mouseenter="handleMouseEnter($event)"
           @mouseleave="handleMouseLeave($event)"
 
@@ -72,8 +72,8 @@
       </div>
     </div>
     <div
-      v-else
       v-for="(section, index) in props.sections"
+      v-else
       :key="section.url"
       >
       <NuxtLink
@@ -95,7 +95,6 @@
       <button
         v-else
         :to="section.url"
-        @click="handleClick($event)"
         :style="{
           position: 'relative',
           borderRadius: calcBorderRadius(section.name),
@@ -105,6 +104,7 @@
           backgroundColor: calcBackgroundColor(section.url)
         }"
         class="py-1 transition-colors duration-300 w-full text-left overflow-visible cursor-pointer"
+        @click="handleClick($event)"
         @mouseenter="handleMouseEnter($event)"
         @mouseleave="handleMouseLeave($event)"
 

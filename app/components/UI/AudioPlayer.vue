@@ -104,7 +104,7 @@
         class="absolute text-4xl -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none"
       />
     </div>
-    <audio ref="audio" :src="src" :style="{ width: '100%' }"></audio>
+    <audio ref="audio" :src="src" :style="{ width: '100%' }"/>
   </div>
 </template>
 
@@ -257,10 +257,11 @@ function toggleVolumeControl() {
 watch(volume, (newVolume) => {
   // Update audio element volume using a logarithmic scale for better audio perception
   // Follows the following formula
-  // f(x) = (10^(x-1)) * (1/0.9)-(1/9)
+  // f(x) = (e^(x-1)) * (1/((e-1)/e)) - (1/(e-1))
+  // f(x) = (e^x)/(e-1) - (1/(e-1))
 
   if (audio.value) {
-    newVolume = (Math.pow(10, newVolume - 1)) * (1 / 0.9) - (1 / 9);
+    newVolume = (Math.exp(newVolume) / (Math.E - 1)) - (1 / (Math.E - 1));
     audio.value.volume = newVolume;
   }
 });
